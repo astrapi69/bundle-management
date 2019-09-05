@@ -22,45 +22,47 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package de.alpharogroup.db.resource.bundles.entities;
+package de.alpharogroup.bundlemanagement.jpa.entity;
 
+import de.alpharogroup.db.entity.text.versionable.VersionableUniqueTextEntity;
+import lombok.*;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import de.alpharogroup.db.entity.text.TextEntity;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 /**
- * Entity class for saving in database base names of the resource bundles. The base name if you see
- * it from the properties file view the name of the properties file without the locale suffix.
+ * The entity class {@link LanguageLocales} holds the data for the languages.
  */
 @Entity
-@Table(name = "basenames")
+@Table(name = "languages")
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
 @NoArgsConstructor
-public class BaseNames extends TextEntity<Integer> implements Cloneable
+public class Languages extends VersionableUniqueTextEntity<Integer> implements Cloneable
 {
 
-	/**
-	 * Serial Version UID
-	 */
+	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;
 
+	/** The iso639_1 code with two characters. */
+	@Column(unique = true, name = "iso639_1", length = 2)
+	private String iso639Dash1;
+
 	/**
-	 * Instantiates a new {@link BaseNames} entity object.
+	 * Instantiates a new {@link Languages} entity object.
 	 *
 	 * @param name
 	 *            the name
+	 * @param iso639Dash1
+	 *            the iso 639 dash 1
 	 */
 	@Builder
-	BaseNames(String name)
+	Languages(String name, String iso639Dash1)
 	{
-		super(name);
+		setText(name);
+		this.iso639Dash1 = iso639Dash1;
 	}
+
 }
