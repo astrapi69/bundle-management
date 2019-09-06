@@ -24,6 +24,7 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
+import de.alpharogroup.db.entity.name.versionable.VersionableUniqueNameEntity;
 import de.alpharogroup.db.entity.text.versionable.VersionableUniqueTextEntity;
 import lombok.*;
 
@@ -40,7 +41,7 @@ import javax.persistence.Table;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Languages extends VersionableUniqueTextEntity<Integer> implements Cloneable
+public class Languages extends VersionableUniqueNameEntity<Integer> implements Cloneable
 {
 
 	/** Serial Version UID */
@@ -61,7 +62,7 @@ public class Languages extends VersionableUniqueTextEntity<Integer> implements C
 	@Builder
 	Languages(String name, String iso639Dash1)
 	{
-		setText(name);
+		super(name);
 		this.iso639Dash1 = iso639Dash1;
 	}
 

@@ -22,43 +22,13 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package de.alpharogroup.bundlemanagement.jpa.entity;
+package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
-import de.alpharogroup.db.entity.text.versionable.VersionableTextEntity;
-import lombok.*;
+import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
-/**
- * The entity class {@link PropertiesKeys} holds the data only for the properties keys not the
- * values. <br>
- * <br>
- * Note: The values of the properties keys is in the entity class {@link PropertiesValues}.
- */
-@Entity
-@Table(name = "properties_keys")
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
-public class PropertiesKeys extends VersionableNameEntity<Integer> implements Cloneable
+@Repository
+public interface PropertiesKeysRepository extends JpaRepository<PropertiesKeys, Integer>
 {
-
-	/** Serial Version UID */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * Instantiates a new {@link PropertiesKeys} entity object.
-	 *
-	 * @param name
-	 *            the name
-	 */
-	@Builder
-	PropertiesKeys(String name)
-	{
-		super(name);
-	}
-
 }

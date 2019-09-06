@@ -28,6 +28,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import de.alpharogroup.db.entity.name.UniqueNameEntity;
 import de.alpharogroup.db.entity.text.UniqueTextEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -46,7 +47,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Countries extends UniqueTextEntity<Integer> implements Cloneable
+public class Countries extends UniqueNameEntity<Integer> implements Cloneable
 {
 
 	/** The serial Version UID. */

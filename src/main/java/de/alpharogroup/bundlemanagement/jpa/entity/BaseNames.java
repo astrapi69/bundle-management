@@ -27,6 +27,7 @@ package de.alpharogroup.bundlemanagement.jpa.entity;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import de.alpharogroup.db.entity.name.NameEntity;
 import de.alpharogroup.db.entity.text.TextEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -44,7 +45,7 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class BaseNames extends TextEntity<Integer> implements Cloneable
+public class BaseNames extends NameEntity<Integer> implements Cloneable
 {
 
 	/**

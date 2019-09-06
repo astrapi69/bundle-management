@@ -18,9 +18,9 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Configuration
-@ComponentScan(basePackages = "de.alpharogroup.user.auth")
-@EntityScan(basePackages = "de.alpharogroup.user.auth.jpa.entities")
-@EnableJpaRepositories(basePackages = { "de.alpharogroup.user.auth.jpa.repositories" })
+@ComponentScan(basePackages = "de.alpharogroup.bundlemanagement")
+@EntityScan(basePackages = "de.alpharogroup.bundlemanagement.jpa.entity")
+@EnableJpaRepositories(basePackages = { "de.alpharogroup.bundlemanagement.jpa.repository" })
 @EnableTransactionManagement
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)

@@ -24,6 +24,7 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
+import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
 import de.alpharogroup.db.entity.text.versionable.VersionableTextEntity;
 import lombok.*;
 
@@ -40,7 +41,7 @@ import javax.persistence.Table;
 @Setter
 @ToString
 @NoArgsConstructor
-public class PropertiesValues extends VersionableTextEntity<Integer> implements Cloneable
+public class PropertiesValues extends VersionableNameEntity<Integer> implements Cloneable
 {
 
 	/** Serial Version UID */
@@ -55,7 +56,7 @@ public class PropertiesValues extends VersionableTextEntity<Integer> implements 
 	@Builder
 	PropertiesValues(String name)
 	{
-		setText(name);
+		super(name);
 	}
 
 }

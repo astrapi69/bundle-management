@@ -22,43 +22,45 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package de.alpharogroup.bundlemanagement.jpa.entity;
+package de.alpharogroup.bundlemanagement.service;
 
-import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
-import de.alpharogroup.db.entity.text.versionable.VersionableTextEntity;
-import lombok.*;
+import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
+import de.alpharogroup.bundlemanagement.jpa.repository.BaseNamesRepository;
+import de.alpharogroup.bundlemanagement.service.api.NameEntityService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import java.util.List;
 
 /**
- * The entity class {@link PropertiesKeys} holds the data only for the properties keys not the
- * values. <br>
- * <br>
- * Note: The values of the properties keys is in the entity class {@link PropertiesValues}.
+ * The class {@link BaseNamesService}.
  */
-@Entity
-@Table(name = "properties_keys")
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
-public class PropertiesKeys extends VersionableNameEntity<Integer> implements Cloneable
+@Transactional
+@Service("baseNamesService")
+public class BaseNamesService
+	implements NameEntityService<BaseNames, Integer>
 {
 
-	/** Serial Version UID */
-	private static final long serialVersionUID = 1L;
+	@Autowired BaseNamesRepository baseNamesRepository;
+
+	public List<BaseNames> findEntities(final String nameValue)
+	{
+		return baseNamesRepository.findByName(nameValue);
+	}
+
+	@Override public BaseNames merge(BaseNames object)
+	{
+		return baseNamesRepository.save(object);
+	}
 
 	/**
-	 * Instantiates a new {@link PropertiesKeys} entity object.
-	 *
-	 * @param name
-	 *            the name
+	 * {@inheritDoc}
 	 */
-	@Builder
-	PropertiesKeys(String name)
+	@Override
+	public BaseNames newNameEntity(String value)
 	{
-		super(name);
+		return BaseNames.builder().name(value).build();
 	}
 
 }
