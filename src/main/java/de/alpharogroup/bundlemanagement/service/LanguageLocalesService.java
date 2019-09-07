@@ -41,7 +41,7 @@ import de.alpharogroup.resourcebundle.locale.LocaleResolver;
  * The class {@link LanguageLocalesService}
  */
 @Transactional
-@Service("languageLocalesService")
+@Service
 public class LanguageLocalesService
 {
 	@Autowired

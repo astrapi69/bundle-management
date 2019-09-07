@@ -48,7 +48,7 @@ import lombok.NonNull;
  * The class {@link BundleApplicationsService}
  */
 @Transactional
-@Service("bundleApplicationsService")
+@Service
 public class BundleApplicationsService
 {
 

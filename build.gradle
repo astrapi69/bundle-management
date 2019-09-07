@@ -3,7 +3,12 @@ plugins {
 	id 'org.springframework.boot' version '2.1.7.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
+	id 'idea'
+	id 'net.ltgt.apt' version '0.20'
+	id 'net.ltgt.apt-idea' version '0.17'
 }
+
+apply plugin: 'net.ltgt.apt-idea'
 
 group = 'de.alpharogroup'
 version = '0.0.1-SNAPSHOT'
@@ -22,7 +27,8 @@ configurations {
 ext {
 	lombokVersion = '1.18.8'
 	entApiVersion = '1.2'
-	entCoreVersion = '1.3'
+	entCoreVersion = '1.3.2'
+	mapstructVersion = "1.3.0.Final"
 }
 
 repositories {
@@ -31,11 +37,15 @@ repositories {
 }
 
 dependencies {
+	compile 'org.mapstruct:mapstruct:1.3.0.Final'
+	compileOnly 'org.mapstruct:mapstruct-processor:1.3.0.Final'
 	compileOnly 'org.projectlombok:lombok:${lombokVersion}'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.3.0.Final'
 	annotationProcessor 'org.projectlombok:lombok:${lombokVersion}'
 	compile 'de.alpharogroup:ent-api:1.2'
 	compile 'de.alpharogroup:silly-collections:5.2.1'
 	compile 'de.alpharogroup:resourcebundle-inspector:3.0.1'
+	compile 'de.alpharogroup:resource-bundles-view-model:1'
 	compile 'de.alpharogroup:ent-core:1.3.2'
 	implementation 'org.postgresql:postgresql'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -43,5 +53,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'// If you are using mapstruct in test code
+	testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+}
+
+compileJava {
+	options.compilerArgs += "-Amapstruct.suppressGeneratorTimestamp=true"
+	options.compilerArgs += "-Amapstruct.defaultComponentModel=spring"
+	options.compilerArgs += "-Amapstruct.suppressGeneratorVersionInfoComment=true"
+}
+
+test {
+	useTestNG()
 }

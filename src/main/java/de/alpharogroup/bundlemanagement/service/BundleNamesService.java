@@ -45,10 +45,10 @@ import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
 
 /**
- * The class {@link BundleNamesService}.
+ * The class {@link BundleNamesService}
  */
 @Transactional
-@Service("bundleNamesService")
+@Service
 public class BundleNamesService
 {
 

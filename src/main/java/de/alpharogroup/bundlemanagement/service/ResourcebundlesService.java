@@ -54,7 +54,7 @@ import lombok.extern.java.Log;
  */
 @Log
 @Transactional
-@Service("resourcebundlesService")
+@Service
 public class ResourcebundlesService
 {
 

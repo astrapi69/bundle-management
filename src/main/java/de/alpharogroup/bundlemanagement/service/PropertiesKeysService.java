@@ -37,7 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
  * The class {@link PropertiesKeysService}.
  */
 @Transactional
-@Service("propertiesKeysService")
+@Service
 public class PropertiesKeysService
 	implements NameEntityService<PropertiesKeys, Integer>
 {

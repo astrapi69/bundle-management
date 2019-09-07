@@ -37,7 +37,7 @@ import java.util.List;
  * The class {@link BaseNamesService}.
  */
 @Transactional
-@Service("baseNamesService")
+@Service
 public class BaseNamesService
 	implements NameEntityService<BaseNames, Integer>
 {
