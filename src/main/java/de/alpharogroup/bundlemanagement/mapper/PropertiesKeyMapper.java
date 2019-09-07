@@ -5,11 +5,6 @@ import de.alpharogroup.db.resource.bundles.domain.PropertiesKey;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface PropertiesKeyMapper
+public interface PropertiesKeyMapper extends GenericMapper<PropertiesKeys,PropertiesKey>
 {
-
-    PropertiesKey toDto(PropertiesKeys entity);
-
-    PropertiesKeys toEntity(PropertiesKey dto);
-
 }

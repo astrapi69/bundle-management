@@ -5,11 +5,6 @@ import de.alpharogroup.db.resource.bundles.domain.PropertiesValue;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface PropertiesValueMapper
+public interface PropertiesValueMapper extends GenericMapper<PropertiesValues,PropertiesValue>
 {
-
-    PropertiesValue toDto(PropertiesValues entity);
-
-    PropertiesValues toEntity(PropertiesValue dto);
-
 }

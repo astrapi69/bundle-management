@@ -1,8 +1,8 @@
 /**
  * The MIT License
- *
+ * <p>
  * Copyright (C) 2007 - 2015 Asterios Raptis
- *
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- *  *
+ * *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- *  *
+ * *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -36,6 +36,9 @@ import de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsReposit
 import de.alpharogroup.bundlemanagement.jpa.repository.PropertiesKeysRepository;
 import de.alpharogroup.bundlemanagement.jpa.repository.PropertiesValuesRepository;
 import de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -52,43 +55,17 @@ import lombok.extern.java.Log;
 /**
  * The class {@link ResourcebundlesService}.
  */
-@Log
-@Transactional
-@Service
-public class ResourcebundlesService
+@Log @Transactional @Service @AllArgsConstructor @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true) public class ResourcebundlesService
 {
-
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = 1L;
-
-	@Autowired
 	ResourcebundlesRepository resourcebundlesRepository;
-
-	@Autowired PropertiesKeysRepository propertiesKeysRepository;
-
-	@Autowired PropertiesValuesRepository propertiesValuesRepository;
-
-	@Autowired BundleApplicationsRepository bundleApplicationsRepository;
-
-	/** The bundle applications service. */
-	@Autowired
-	private BundleApplicationsService bundleApplicationsService;
-
-	/** The Bundle names service. */
-	@Autowired
-	private BundleNamesService bundleNamesService;
-
-	/** The language locales service. */
-	@Autowired
-	private LanguageLocalesService languageLocalesService;
-
-	/** The properties keys service. */
-	@Autowired
-	private PropertiesKeysService propertiesKeysService;
-
-	/** The properties values service. */
-	@Autowired
-	private PropertiesValuesService propertiesValuesService;
+	PropertiesKeysRepository propertiesKeysRepository;
+	PropertiesValuesRepository propertiesValuesRepository;
+	BundleApplicationsRepository bundleApplicationsRepository;
+	BundleApplicationsService bundleApplicationsService;
+	BundleNamesService bundleNamesService;
+	LanguageLocalesService languageLocalesService;
+	PropertiesKeysService propertiesKeysService;
+	PropertiesValuesService propertiesValuesService;
 
 	public Resourcebundles contains(BundleApplications owner, String baseName, Locale locale,
 		String key)
@@ -130,11 +107,11 @@ public class ResourcebundlesService
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Resourcebundles> find(BundleApplications owner, String baseName, String locale,
-		String key, String value)
+	public List<Resourcebundles> find(BundleApplications owner,
+		String baseName, String locale, String key)
 	{
-		final List<Resourcebundles> resourcebundles = resourcebundlesRepository.findByOwnerAndBaseNameAndLocaleAndKeyAndValue(owner, baseName, locale, key, value);
+		final List<Resourcebundles> resourcebundles = resourcebundlesRepository
+			.findByOwnerAndBaseNameAndLocaleAndKeyAndValue(owner, baseName, locale, key);
 
 		return resourcebundles;
 	}
@@ -142,17 +119,20 @@ public class ResourcebundlesService
 	public List<Resourcebundles> find(BundleNames bundleName)
 	{
 		return find(bundleName.getOwner(), bundleName.getBaseName().getName(),
-			bundleName.getLocale().getLocale(), null, null);
+			bundleName.getLocale().getLocale(), null);
 	}
 
 	public List<Resourcebundles> find(PropertiesKeys key)
 	{
-		return find(null, null, null, key.getName(), null);
+		return find(null, null, null, key.getName());
 	}
 
 	public List<Resourcebundles> find(PropertiesValues value)
 	{
-		return find(null, null, null, null, value.getName());
+		// TODO fixme
+		return find(null, null, null, null
+			//			, value.getName()
+		);
 	}
 
 	public BundleApplications find(String name)
@@ -168,13 +148,13 @@ public class ResourcebundlesService
 	public List<Resourcebundles> findResourceBundles(BundleApplications owner, String baseName,
 		Locale locale)
 	{
-		return find(owner, baseName, LocaleExtensions.getLocaleFilenameSuffix(locale), null, null);
+		return find(owner, baseName, LocaleExtensions.getLocaleFilenameSuffix(locale), null);
 	}
 
 	public List<Resourcebundles> findResourceBundles(BundleApplications owner, String baseName,
 		Locale locale, String key)
 	{
-		return find(owner, baseName, LocaleExtensions.getLocaleFilenameSuffix(locale), key, null);
+		return find(owner, baseName, LocaleExtensions.getLocaleFilenameSuffix(locale), key);
 	}
 
 	public List<Resourcebundles> findResourceBundles(final BundleNames bundleName)
@@ -243,10 +223,10 @@ public class ResourcebundlesService
 		LanguageLocales languageLocales = languageLocalesService
 			.getOrCreateNewLanguageLocales(resourcebundles.getBundleName().getLocale().getLocale());
 
-		BundleNames bundleNames = bundleNamesService.getOrCreateNewBundleNames(
-			resourcebundles.getBundleName().getOwner(),
-			resourcebundles.getBundleName().getBaseName().getName(),
-			languageLocalesService.resolveLocale(languageLocales));
+		BundleNames bundleNames = bundleNamesService
+			.getOrCreateNewBundleNames(resourcebundles.getBundleName().getOwner(),
+				resourcebundles.getBundleName().getBaseName().getName(),
+				languageLocalesService.resolveLocale(languageLocales));
 
 		PropertiesKeys propertiesKeys = propertiesKeysService
 			.getOrCreateNewNameEntity(resourcebundles.getKey().getName());
@@ -255,14 +235,14 @@ public class ResourcebundlesService
 		resourcebundles.setKey(propertiesKeys);
 	}
 
-	@Transactional
-	public Resourcebundles merge(final Resourcebundles resourcebundles)
+	@Transactional public Resourcebundles merge(final Resourcebundles resourcebundles)
 	{
 		PropertiesKeys key;
 		PropertiesValues value;
 		Optional<Resourcebundles> byId = resourcebundlesRepository
 			.findById(resourcebundles.getId());
-		if(byId.isPresent()){
+		if (byId.isPresent())
+		{
 			Resourcebundles dbEntity = byId.get();
 			key = dbEntity.getKey();
 			value = dbEntity.getValue();
@@ -292,9 +272,9 @@ public class ResourcebundlesService
 		}
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public Resourcebundles saveOrUpdateEntry(final BundleNames bundleName, final String baseName,
-		final Locale locale, final String key, final String value, final boolean update)
+	@Transactional(propagation = Propagation.REQUIRES_NEW) public Resourcebundles saveOrUpdateEntry(
+		final BundleNames bundleName, final String baseName, final Locale locale, final String key,
+		final String value, final boolean update)
 	{
 		Resourcebundles resourcebundle = getResourcebundle(bundleName.getOwner(), baseName, locale,
 			key);
@@ -323,13 +303,12 @@ public class ResourcebundlesService
 		return updateProperties(owner, properties, baseName, locale, true);
 	}
 
-	@Transactional
-	public BundleNames updateProperties(final @NonNull BundleApplications owner,
+	@Transactional public BundleNames updateProperties(final @NonNull BundleApplications owner,
 		final @NonNull Properties properties, final @NonNull String baseName,
 		final @NonNull Locale locale, final boolean update)
 	{
-		final BundleNames bundleName = bundleNamesService.getOrCreateNewBundleNames(owner, baseName,
-			locale);
+		final BundleNames bundleName = bundleNamesService
+			.getOrCreateNewBundleNames(owner, baseName, locale);
 		final Properties dbProperties = getProperties(bundleName);
 
 		properties.entrySet().parallelStream().forEach(element -> {

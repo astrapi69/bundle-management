@@ -5,11 +5,6 @@ import de.alpharogroup.db.resource.bundles.domain.BundleApplication;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface BundleApplicationMapper
+public interface BundleApplicationMapper extends GenericMapper<BundleApplications,BundleApplication>
 {
-
-    BundleApplication toDto(BundleApplications entity);
-
-    BundleApplications toEntity(BundleApplication dto);
-
 }

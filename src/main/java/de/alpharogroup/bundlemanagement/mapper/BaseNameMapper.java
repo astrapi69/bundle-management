@@ -5,10 +5,6 @@ import de.alpharogroup.db.resource.bundles.domain.BaseName;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface BaseNameMapper {
-
-    BaseName toDto(BaseNames entity);
-
-    BaseNames toEntity(BaseName dto);
-
+public interface BaseNameMapper extends GenericMapper<BaseNames,BaseName>
+{
 }

@@ -27,7 +27,10 @@ package de.alpharogroup.bundlemanagement.jpa.repository;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,6 +38,15 @@ import java.util.List;
 public interface ResourcebundlesRepository extends JpaRepository<Resourcebundles, Integer>
 {
 	// TODO create unit test
-	List<Resourcebundles> findByOwnerAndBaseNameAndLocaleAndKeyAndValue(BundleApplications owner, String baseName, String locale,
-		String key, String value);
+	@Transactional
+	@Query("select rp from Resourcebundles rp "
+		+ "where rp.bundleName.owner = :owner "
+		+ "and rp.bundleName.baseName.name = :baseName "
+		+ "and rp.bundleName.locale.locale = :locale "
+		+ "and rp.key.name = :key ")
+	List<Resourcebundles> findByOwnerAndBaseNameAndLocaleAndKeyAndValue(
+		@Param("owner") BundleApplications owner,
+		@Param("baseName") String baseName,
+		@Param("locale") String locale,
+		@Param("key") String key);
 }

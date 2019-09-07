@@ -31,7 +31,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CountriesRepository extends JpaRepository<Countries, Integer>
 {
-	Countries find(String iso3166a2name);
+	Countries findByIso3166A2name(String iso3166a2name);
 
-	Countries find(String name, String iso3166a2name);
+	Countries findByNameAndIso3166A2name(String name, String iso3166a2name);
 }

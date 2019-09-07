@@ -5,11 +5,6 @@ import de.alpharogroup.db.resource.bundles.domain.Resourcebundle;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface ResourcebundleMapper
+public interface ResourcebundleMapper extends GenericMapper<Resourcebundles,Resourcebundle>
 {
-
-    Resourcebundle toDto(Resourcebundles entity);
-
-    Resourcebundles toEntity(Resourcebundle dto);
-
 }

@@ -5,11 +5,6 @@ import de.alpharogroup.db.resource.bundles.domain.LanguageLocale;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface LanguageLocaleMapper
+public interface LanguageLocaleMapper extends GenericMapper<LanguageLocales,LanguageLocale>
 {
-
-    LanguageLocale toDto(LanguageLocales entity);
-
-    LanguageLocales toEntity(LanguageLocale dto);
-
 }
