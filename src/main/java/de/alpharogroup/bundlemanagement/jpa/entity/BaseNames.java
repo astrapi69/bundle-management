@@ -41,8 +41,6 @@ import lombok.ToString;
  */
 @Entity
 @Table(name = "basenames")
-@Getter
-@Setter
 @ToString(callSuper = true)
 @NoArgsConstructor
 public class BaseNames extends VersionableNameEntity<Integer> implements Cloneable
