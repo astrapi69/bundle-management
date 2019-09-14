@@ -24,12 +24,15 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
-import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
-import de.alpharogroup.db.entity.text.versionable.VersionableTextEntity;
-import lombok.*;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * The entity class {@link PropertiesKeys} holds the data only for the properties keys not the

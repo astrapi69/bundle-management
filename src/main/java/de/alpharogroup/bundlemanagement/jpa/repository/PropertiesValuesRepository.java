@@ -24,9 +24,10 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
 
 @Repository
 public interface PropertiesValuesRepository extends JpaRepository<PropertiesValues, Integer>

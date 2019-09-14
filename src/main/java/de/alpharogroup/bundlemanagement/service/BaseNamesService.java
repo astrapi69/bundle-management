@@ -24,6 +24,11 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
 import de.alpharogroup.bundlemanagement.jpa.repository.BaseNamesRepository;
 import de.alpharogroup.bundlemanagement.service.api.NameEntityService;
@@ -32,11 +37,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * The class {@link BaseNamesService}.
@@ -50,7 +50,6 @@ public class BaseNamesService
 	implements NameEntityService<BaseNames, Integer>, GenericService<BaseNames, Integer, BaseNamesRepository>
 {
 
-	@Autowired
 	BaseNamesRepository repository;
 
 	public List<BaseNames> findEntities(final String nameValue)

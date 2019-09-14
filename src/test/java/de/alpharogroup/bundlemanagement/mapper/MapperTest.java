@@ -1,16 +1,29 @@
 package de.alpharogroup.bundlemanagement.mapper;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.*;
-import de.alpharogroup.collections.set.SetFactory;
-import de.alpharogroup.db.resource.bundles.domain.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
+import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
+import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
+import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
+import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
+import de.alpharogroup.collections.set.SetFactory;
+import de.alpharogroup.db.resource.bundles.domain.BaseName;
+import de.alpharogroup.db.resource.bundles.domain.BundleApplication;
+import de.alpharogroup.db.resource.bundles.domain.BundleName;
+import de.alpharogroup.db.resource.bundles.domain.LanguageLocale;
+import de.alpharogroup.db.resource.bundles.domain.PropertiesKey;
+import de.alpharogroup.db.resource.bundles.domain.PropertiesValue;
+import de.alpharogroup.db.resource.bundles.domain.Resourcebundle;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

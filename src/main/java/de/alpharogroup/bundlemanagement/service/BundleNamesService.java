@@ -28,24 +28,24 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.*;
-import de.alpharogroup.bundlemanagement.jpa.repository.BaseNamesRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
+import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 import de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsRepository;
 import de.alpharogroup.bundlemanagement.jpa.repository.BundleNamesRepository;
-import de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository;
+import de.alpharogroup.collections.CollectionExtensions;
+import de.alpharogroup.collections.list.ListExtensions;
+import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
 import de.alpharogroup.spring.service.api.GenericService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import de.alpharogroup.collections.CollectionExtensions;
-import de.alpharogroup.collections.list.ListExtensions;
-import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
 
 /**
  * The class {@link BundleNamesService}
@@ -58,32 +58,14 @@ import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
 public class BundleNamesService
 	implements GenericService<BundleNames, Integer, BundleNamesRepository>
 {
-	@Autowired
-	BundleNamesRepository repository;
-	@Autowired
-	BaseNamesService baseNamesService;
-	@Autowired
-	BundleApplicationsService bundleApplicationsService;
-	@Autowired
-	LanguageLocalesService languageLocalesService;
-	@Autowired
-	ResourcebundlesService resourcebundlesService;
 
-	public void delete(BundleNames bundleNames)
-	{
-		List<Resourcebundles> list = resourcebundlesService.find(bundleNames);
-		resourcebundlesService.delete(list);
-		BaseNames baseName = bundleNames.getBaseName();
-		bundleNames.setBaseName(null);
-		bundleNames.setLocale(null);
-		bundleNames.setOwner(null);
-		final BundleNames merged = repository.save(bundleNames);
-		repository.delete(merged);
-		if (0 == find(baseName).size())
-		{
-			baseNamesService.delete(baseName);
-		}
-	}
+	BundleNamesRepository repository;
+
+	BundleApplicationsRepository bundleApplicationsRepository;
+
+	BaseNamesService baseNamesService;
+
+	LanguageLocalesService languageLocalesService;
 
 	public List<BundleNames> find(BaseNames baseName)
 	{
@@ -160,10 +142,11 @@ public class BundleNamesService
 
 	public LanguageLocales getDefaultLocale(final BundleNames bundleNames)
 	{
-		final BundleApplications bundleApplications = bundleApplicationsService.get(bundleNames);
-		if (bundleApplications != null)
+		Optional<BundleApplications> byId = bundleApplicationsRepository
+			.findById(bundleNames.getId());
+		if (byId.isPresent())
 		{
-			return bundleApplications.getDefaultLocale();
+			return byId.get().getDefaultLocale();
 		}
 		return null;
 	}
@@ -184,12 +167,12 @@ public class BundleNamesService
 
 			if (!owner.isSupported(dbLocale))
 			{
-				Optional<BundleApplications> byId = bundleApplicationsService
+				Optional<BundleApplications> byId = bundleApplicationsRepository
 					.findById(owner.getId());
 				if(byId.isPresent()){
 					owner = byId.get();
 					owner.addSupportedLanguageLocale(dbLocale);
-					bundleApplicationsService.save(owner);
+					bundleApplicationsRepository.save(owner);
 				}
 			}
 		}

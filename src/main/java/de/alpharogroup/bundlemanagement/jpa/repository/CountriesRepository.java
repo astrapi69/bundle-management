@@ -24,9 +24,10 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.Countries;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import de.alpharogroup.bundlemanagement.jpa.entity.Countries;
 
 @Repository
 public interface CountriesRepository extends JpaRepository<Countries, Integer>

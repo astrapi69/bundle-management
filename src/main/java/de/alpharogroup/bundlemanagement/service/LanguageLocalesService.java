@@ -27,22 +27,20 @@ package de.alpharogroup.bundlemanagement.service;
 import java.util.List;
 import java.util.Locale;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
-import de.alpharogroup.bundlemanagement.jpa.repository.BundleNamesRepository;
 import de.alpharogroup.bundlemanagement.jpa.repository.LanguageLocalesRepository;
+import de.alpharogroup.collections.list.ListExtensions;
+import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
+import de.alpharogroup.resourcebundle.locale.LocaleResolver;
 import de.alpharogroup.spring.service.api.GenericService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import de.alpharogroup.collections.list.ListExtensions;
-import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
-import de.alpharogroup.resourcebundle.locale.LocaleResolver;
 
 /**
  * The class {@link LanguageLocalesService}
@@ -55,7 +53,7 @@ import de.alpharogroup.resourcebundle.locale.LocaleResolver;
 public class LanguageLocalesService
 	implements GenericService<LanguageLocales, Integer, LanguageLocalesRepository>
 {
-	@Autowired
+
 	LanguageLocalesRepository repository;
 
 	public LanguageLocales find(Locale locale)

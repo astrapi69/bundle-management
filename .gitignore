@@ -23,6 +23,7 @@
 .idea/copyright
 .idea/libraries
 .idea/*.*
+/.idea/$PRODUCT_WORKSPACE_FILE$
 
 #################
 # eclipse files #

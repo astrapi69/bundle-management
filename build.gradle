@@ -1,6 +1,6 @@
 plugins {
 	id 'io.franzbecker.gradle-lombok' version '3.1.0'
-	id 'org.springframework.boot' version '2.1.7.RELEASE'
+	id 'org.springframework.boot' version '2.1.8.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
 	id 'idea'
@@ -32,6 +32,7 @@ ext {
 }
 
 repositories {
+	jcenter()
 	mavenLocal()
 	mavenCentral()
 }
@@ -50,6 +51,7 @@ dependencies {
 	compile 'de.alpharogroup:jobject-copy:3.1.2'
 	compile 'de.alpharogroup:spring-tool-extensions:1.1.1'
 	compile 'io.springfox:springfox-swagger2:2.9.2'
+	compile 'io.springfox:springfox-swagger-ui:2.9.2'
 	implementation 'org.postgresql:postgresql'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'

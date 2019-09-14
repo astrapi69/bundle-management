@@ -1,7 +1,6 @@
 package de.alpharogroup.bundlemanagement.configuration;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -27,7 +26,8 @@ import lombok.experimental.FieldDefaults;
 public class ApplicationConfiguration implements WebMvcConfigurer
 {
 
-	public static final String REST_VERSION = "/v1";
+	public static final String VERSION_API_1 = "v1";
+	public static final String REST_VERSION = "/" + VERSION_API_1;
 
 	@SuppressWarnings("unused")
 	Environment env;

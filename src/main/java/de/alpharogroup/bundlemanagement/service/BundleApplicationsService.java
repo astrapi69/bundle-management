@@ -31,22 +31,21 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
 import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 import de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsRepository;
+import de.alpharogroup.collections.list.ListExtensions;
+import de.alpharogroup.collections.set.SetFactory;
 import de.alpharogroup.spring.service.api.GenericService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import de.alpharogroup.collections.list.ListExtensions;
-import de.alpharogroup.collections.set.SetFactory;
 import lombok.NonNull;
+import lombok.experimental.FieldDefaults;
 
 /**
  * The class {@link BundleApplicationsService}
@@ -59,15 +58,16 @@ import lombok.NonNull;
 public class BundleApplicationsService implements GenericService<BundleApplications, Integer, BundleApplicationsRepository>
 {
 
-	@PersistenceContext
-	EntityManager em;
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	@Autowired
+
+	@PersistenceContext
+	EntityManager em;
+
 	BundleApplicationsRepository repository;
-	@Autowired
+
 	BundleNamesService bundleNamesService;
-	@Autowired
+
 	LanguageLocalesService languageLocalesService;
 
 	public void delete(BundleApplications bundleApplications)

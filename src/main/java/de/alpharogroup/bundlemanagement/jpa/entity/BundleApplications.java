@@ -40,7 +40,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import de.alpharogroup.db.entity.name.versionable.VersionableUniqueNameEntity;
-import de.alpharogroup.db.entity.text.versionable.VersionableUniqueTextEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

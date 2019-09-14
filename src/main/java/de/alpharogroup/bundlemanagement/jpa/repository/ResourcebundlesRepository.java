@@ -24,29 +24,32 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
-import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
+import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
 
 @Repository
 public interface ResourcebundlesRepository extends JpaRepository<Resourcebundles, Integer>
 {
 	// TODO create unit test
 	@Transactional
-	@Query("select rp from Resourcebundles rp "
-		+ "where rp.bundleName.owner = :owner "
-		+ "and rp.bundleName.baseName.name = :baseName "
-		+ "and rp.bundleName.locale.locale = :locale "
-		+ "and rp.key.name = :key ")
+	@Query(
+		"select rb from Resourcebundles rb "
+		+ "where rb.bundleName.owner.name=:owner "
+		+ "and rb.bundleName.baseName.name=:basename "
+		+ "and rb.bundleName.locale.locale=:locale "
+		+ "and rb.key.name=:pkey "
+	)
 	List<Resourcebundles> findByOwnerAndBaseNameAndLocaleAndKeyAndValue(
-		@Param("owner") BundleApplications owner,
-		@Param("baseName") String baseName,
+		@Param("owner") String owner,
+		@Param("basename") String baseName,
 		@Param("locale") String locale,
-		@Param("key") String key);
+		@Param("pkey") String key);
 }

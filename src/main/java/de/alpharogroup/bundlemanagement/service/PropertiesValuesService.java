@@ -24,9 +24,12 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
-import de.alpharogroup.bundlemanagement.jpa.repository.PropertiesKeysRepository;
 import de.alpharogroup.bundlemanagement.jpa.repository.PropertiesValuesRepository;
 import de.alpharogroup.bundlemanagement.service.api.NameEntityService;
 import de.alpharogroup.spring.service.api.GenericService;
@@ -34,10 +37,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The class {@link PropertiesValuesService}.
@@ -51,7 +50,7 @@ public class PropertiesValuesService
 	implements NameEntityService<PropertiesValues, Integer>, GenericService<PropertiesValues, Integer, PropertiesValuesRepository>
 
 {
-	@Autowired
+
 	PropertiesValuesRepository repository;
 
 	/**

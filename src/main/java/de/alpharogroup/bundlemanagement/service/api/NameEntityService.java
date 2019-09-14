@@ -20,10 +20,9 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import de.alpharogroup.bundlemanagement.util.JpqlStringFactory;
-import de.alpharogroup.db.entity.text.TextEntity;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.alpharogroup.bundlemanagement.util.JpqlStringFactory;
 import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.db.entity.name.NameEntity;
 import de.alpharogroup.lang.TypeArgumentsExtensions;
