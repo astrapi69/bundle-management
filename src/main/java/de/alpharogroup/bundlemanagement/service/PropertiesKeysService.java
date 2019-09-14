@@ -24,10 +24,14 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
 import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
 import de.alpharogroup.bundlemanagement.jpa.repository.PropertiesKeysRepository;
 import de.alpharogroup.bundlemanagement.service.api.NameEntityService;
+import de.alpharogroup.spring.service.api.GenericService;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -38,11 +42,14 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Service
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Getter
 public class PropertiesKeysService
-	implements NameEntityService<PropertiesKeys, Integer>
+	implements NameEntityService<PropertiesKeys, Integer>, GenericService<PropertiesKeys, Integer, PropertiesKeysRepository>
 {
 	@Autowired
-	PropertiesKeysRepository propertiesKeysRepository;
+	PropertiesKeysRepository repository;
 	/**
 	 * {@inheritDoc}
 	 */
@@ -55,7 +62,7 @@ public class PropertiesKeysService
 
 	@Override public PropertiesKeys merge(PropertiesKeys object)
 	{
-		return propertiesKeysRepository.save(object);
+		return repository.save(object);
 	}
 
 	/**

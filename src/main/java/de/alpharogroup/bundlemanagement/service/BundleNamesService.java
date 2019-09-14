@@ -28,13 +28,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-import javax.persistence.Query;
-
 import de.alpharogroup.bundlemanagement.jpa.entity.*;
 import de.alpharogroup.bundlemanagement.jpa.repository.BaseNamesRepository;
 import de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsRepository;
 import de.alpharogroup.bundlemanagement.jpa.repository.BundleNamesRepository;
 import de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository;
+import de.alpharogroup.spring.service.api.GenericService;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -49,31 +52,22 @@ import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
  */
 @Transactional
 @Service
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Getter
 public class BundleNamesService
+	implements GenericService<BundleNames, Integer, BundleNamesRepository>
 {
-
 	@Autowired
-	BaseNamesRepository baseNamesRepository;
+	BundleNamesRepository repository;
 	@Autowired
-	BundleNamesRepository bundleNamesRepository;
+	BaseNamesService baseNamesService;
 	@Autowired
-	ResourcebundlesRepository resourcebundlesRepository;
-
-	@Autowired BundleApplicationsRepository bundleApplicationsRepository;
-
-	/** The base names service. */
+	BundleApplicationsService bundleApplicationsService;
 	@Autowired
-	private BaseNamesService baseNamesService;
-
+	LanguageLocalesService languageLocalesService;
 	@Autowired
-	private BundleApplicationsService bundleApplicationsService;
-
-	/** The language locales service. */
-	@Autowired
-	private LanguageLocalesService languageLocalesService;
-
-	@Autowired
-	private ResourcebundlesService resourcebundlesService;
+	ResourcebundlesService resourcebundlesService;
 
 	public void delete(BundleNames bundleNames)
 	{
@@ -83,11 +77,11 @@ public class BundleNamesService
 		bundleNames.setBaseName(null);
 		bundleNames.setLocale(null);
 		bundleNames.setOwner(null);
-		final BundleNames merged = bundleNamesRepository.save(bundleNames);
-		bundleNamesRepository.delete(merged);
+		final BundleNames merged = repository.save(bundleNames);
+		repository.delete(merged);
 		if (0 == find(baseName).size())
 		{
-			baseNamesRepository.delete(baseName);
+			baseNamesService.delete(baseName);
 		}
 	}
 
@@ -149,7 +143,7 @@ public class BundleNamesService
 	public List<BundleNames> find(final BundleApplications owner, final String baseName,
 		final String locale)
 	{
-		final List<BundleNames> bundleNames = bundleNamesRepository.findByOwnerAndBaseNameAndLocale(owner,
+		final List<BundleNames> bundleNames = repository.findByOwnerAndBaseNameAndLocale(owner,
 			baseName, locale);
 		return bundleNames;
 	}
@@ -190,12 +184,12 @@ public class BundleNamesService
 
 			if (!owner.isSupported(dbLocale))
 			{
-				Optional<BundleApplications> byId = bundleApplicationsRepository
+				Optional<BundleApplications> byId = bundleApplicationsService
 					.findById(owner.getId());
 				if(byId.isPresent()){
 					owner = byId.get();
 					owner.addSupportedLanguageLocale(dbLocale);
-					bundleApplicationsRepository.save(owner);
+					bundleApplicationsService.save(owner);
 				}
 			}
 		}
@@ -204,7 +198,7 @@ public class BundleNamesService
 
 	public BundleNames merge(BundleNames object)
 	{
-		Optional<BundleNames> byId = bundleNamesRepository.findById(object.getId());
+		Optional<BundleNames> byId = repository.findById(object.getId());
 		if(!byId.isPresent())
 		{
 			BundleNames dbBundleNames = byId.get();
@@ -226,12 +220,12 @@ public class BundleNamesService
 					bn.setBaseName(newBaseName);
 					if (!bn.equals(object))
 					{
-						bundleNamesRepository.save(bn);
+						repository.save(bn);
 					}
 				}
 			}
 		}
-		return bundleNamesRepository.save(object);
+		return repository.save(object);
 	}
 
 }

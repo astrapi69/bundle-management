@@ -29,15 +29,13 @@ import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 
-import javax.persistence.Query;
-
 import de.alpharogroup.bundlemanagement.jpa.entity.*;
-import de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsRepository;
-import de.alpharogroup.bundlemanagement.jpa.repository.PropertiesKeysRepository;
-import de.alpharogroup.bundlemanagement.jpa.repository.PropertiesValuesRepository;
-import de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository;
+import de.alpharogroup.bundlemanagement.jpa.repository.*;
+import de.alpharogroup.collections.list.ListFactory;
+import de.alpharogroup.spring.service.api.GenericService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,16 +53,26 @@ import lombok.extern.java.Log;
 /**
  * The class {@link ResourcebundlesService}.
  */
-@Log @Transactional @Service @AllArgsConstructor @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true) public class ResourcebundlesService
+@Log
+@Transactional
+@Service
+@Getter
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class ResourcebundlesService
+	implements GenericService<Resourcebundles, Integer, ResourcebundlesRepository>
 {
-	ResourcebundlesRepository resourcebundlesRepository;
-	PropertiesKeysRepository propertiesKeysRepository;
-	PropertiesValuesRepository propertiesValuesRepository;
-	BundleApplicationsRepository bundleApplicationsRepository;
+	@Autowired
+	ResourcebundlesRepository repository;
+	@Autowired
 	BundleApplicationsService bundleApplicationsService;
+	@Autowired
 	BundleNamesService bundleNamesService;
+	@Autowired
 	LanguageLocalesService languageLocalesService;
+	@Autowired
 	PropertiesKeysService propertiesKeysService;
+	@Autowired
 	PropertiesValuesService propertiesValuesService;
 
 	public Resourcebundles contains(BundleApplications owner, String baseName, Locale locale,
@@ -95,22 +103,22 @@ import lombok.extern.java.Log;
 		resourcebundles.setBundleName(null);
 		resourcebundles.setKey(null);
 		resourcebundles.setValue(null);
-		resourcebundles = resourcebundlesRepository.save(resourcebundles);
-		resourcebundlesRepository.delete(resourcebundles);
+		resourcebundles = repository.save(resourcebundles);
+		repository.delete(resourcebundles);
 		if (0 == find(key).size())
 		{
-			propertiesKeysRepository.delete(key);
+			propertiesKeysService.delete(key);
 		}
 		if (0 == find(value).size())
 		{
-			propertiesValuesRepository.delete(value);
+			propertiesValuesService.delete(value);
 		}
 	}
 
 	public List<Resourcebundles> find(BundleApplications owner,
 		String baseName, String locale, String key)
 	{
-		final List<Resourcebundles> resourcebundles = resourcebundlesRepository
+		final List<Resourcebundles> resourcebundles = repository
 			.findByOwnerAndBaseNameAndLocaleAndKeyAndValue(owner, baseName, locale, key);
 
 		return resourcebundles;
@@ -142,7 +150,10 @@ import lombok.extern.java.Log;
 
 	public List<BundleApplications> findAllBundleApplications()
 	{
-		return bundleApplicationsRepository.findAll();
+		Iterable<BundleApplications> all = bundleApplicationsService.findAll();
+		List<BundleApplications> target = ListFactory.newArrayList();
+		all.forEach(target::add);
+		return target;
 	}
 
 	public List<Resourcebundles> findResourceBundles(BundleApplications owner, String baseName,
@@ -213,7 +224,7 @@ import lombok.extern.java.Log;
 			final BundleNames bundleNames = updateProperties(bundleApplication, properties,
 				bundlename, locale, false);
 			list.add(bundleNames);
-			bundleApplication = bundleApplicationsRepository.save(bundleApplication);
+			bundleApplication = bundleApplicationsService.save(bundleApplication);
 		}
 		return list;
 	}
@@ -239,7 +250,7 @@ import lombok.extern.java.Log;
 	{
 		PropertiesKeys key;
 		PropertiesValues value;
-		Optional<Resourcebundles> byId = resourcebundlesRepository
+		Optional<Resourcebundles> byId = repository
 			.findById(resourcebundles.getId());
 		if (byId.isPresent())
 		{
@@ -262,13 +273,13 @@ import lombok.extern.java.Log;
 		}
 		try
 		{
-			return resourcebundlesRepository.save(resourcebundles);
+			return repository.save(resourcebundles);
 		}
 		catch (final Exception e)
 		{
 			log.log(Level.SEVERE, "merge fail with super.merge(resourcebundles)", e);
 			initialize(resourcebundles);
-			return resourcebundlesRepository.save(resourcebundles);
+			return repository.save(resourcebundles);
 		}
 	}
 

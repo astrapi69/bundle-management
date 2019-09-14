@@ -29,13 +29,17 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
 import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 import de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsRepository;
+import de.alpharogroup.spring.service.api.GenericService;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,22 +53,22 @@ import lombok.NonNull;
  */
 @Transactional
 @Service
-public class BundleApplicationsService
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Getter
+public class BundleApplicationsService implements GenericService<BundleApplications, Integer, BundleApplicationsRepository>
 {
 
 	@PersistenceContext
-	private EntityManager em;
+	EntityManager em;
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	@Autowired
-	BundleApplicationsRepository bundleApplicationsRepository;
-	/** The Bundle names service. */
+	BundleApplicationsRepository repository;
 	@Autowired
-	private BundleNamesService bundleNamesService;
-
-	/** The language locales service. */
+	BundleNamesService bundleNamesService;
 	@Autowired
-	private LanguageLocalesService languageLocalesService;
+	LanguageLocalesService languageLocalesService;
 
 	public void delete(BundleApplications bundleApplications)
 	{
@@ -75,8 +79,8 @@ public class BundleApplicationsService
 		}
 		bundleApplications.setDefaultLocale(null);
 		bundleApplications.getSupportedLocales().clear();
-		BundleApplications merged = bundleApplicationsRepository.save(bundleApplications);
-		bundleApplicationsRepository.delete(merged);
+		BundleApplications merged = repository.save(bundleApplications);
+		repository.delete(merged);
 	}
 
 	public Set<BundleNames> find(final BundleApplications owner)
@@ -91,7 +95,7 @@ public class BundleApplicationsService
 
 	public BundleApplications find(final String name)
 	{
-		final List<BundleApplications> applications = bundleApplicationsRepository.findByName(name);
+		final List<BundleApplications> applications = repository.findByName(name);
 		return ListExtensions.getFirst(applications);
 	}
 
@@ -115,7 +119,7 @@ public class BundleApplicationsService
 			baseBundleApplication = BundleApplications.builder().name(name)
 				.defaultLocale(defaultLocale).supportedLocales(supportedLocales).build();
 
-			baseBundleApplication = bundleApplicationsRepository.save(baseBundleApplication);
+			baseBundleApplication = repository.save(baseBundleApplication);
 		}
 		return baseBundleApplication;
 	}

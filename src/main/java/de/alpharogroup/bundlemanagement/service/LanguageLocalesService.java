@@ -27,8 +27,15 @@ package de.alpharogroup.bundlemanagement.service;
 import java.util.List;
 import java.util.Locale;
 
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
 import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
+import de.alpharogroup.bundlemanagement.jpa.repository.BundleNamesRepository;
 import de.alpharogroup.bundlemanagement.jpa.repository.LanguageLocalesRepository;
+import de.alpharogroup.spring.service.api.GenericService;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,10 +49,14 @@ import de.alpharogroup.resourcebundle.locale.LocaleResolver;
  */
 @Transactional
 @Service
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Getter
 public class LanguageLocalesService
+	implements GenericService<LanguageLocales, Integer, LanguageLocalesRepository>
 {
 	@Autowired
-	LanguageLocalesRepository languageLocalesRepository;
+	LanguageLocalesRepository repository;
 
 	public LanguageLocales find(Locale locale)
 	{
@@ -54,7 +65,7 @@ public class LanguageLocalesService
 
 	public LanguageLocales find(String locale)
 	{
-		final List<LanguageLocales> languageLocales = languageLocalesRepository.findByLocale(locale);
+		final List<LanguageLocales> languageLocales = repository.findByLocale(locale);
 		return ListExtensions.getFirst(languageLocales);
 	}
 
@@ -65,7 +76,7 @@ public class LanguageLocalesService
 		{
 			expected = LanguageLocales.builder()
 				.locale(LocaleExtensions.getLocaleFilenameSuffix(locale)).build();
-			expected = languageLocalesRepository.save(expected);
+			expected = repository.save(expected);
 		}
 		return expected;
 	}
@@ -77,7 +88,7 @@ public class LanguageLocalesService
 		{
 			expected = LanguageLocales.builder()
 				.locale(locale).build();
-			expected = languageLocalesRepository.save(expected);
+			expected = repository.save(expected);
 		}
 		return expected;
 	}
