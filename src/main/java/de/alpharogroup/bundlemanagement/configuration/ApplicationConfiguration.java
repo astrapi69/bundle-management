@@ -1,5 +1,6 @@
 package de.alpharogroup.bundlemanagement.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+
+import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @Configuration
 @ComponentScan(basePackages = "de.alpharogroup.bundlemanagement")
@@ -32,7 +39,6 @@ public class ApplicationConfiguration implements WebMvcConfigurer
 	@SuppressWarnings("unused")
 	Environment env;
 
-
 	@Override
 	public void addCorsMappings(CorsRegistry registry)
 	{
@@ -49,4 +55,25 @@ public class ApplicationConfiguration implements WebMvcConfigurer
 		return messageSource;
 	}
 
+	@Bean
+	public ObjectMapper objectMapper() {
+		return initialize(new ObjectMapper());
+	}
+
+	public static ObjectMapper initialize(ObjectMapper objectMapper) {
+
+		SimpleModule module;
+		JavaTimeModule javaTimeModule;
+		SimpleAbstractTypeResolver resolver;
+
+		module = new SimpleModule("bundles", Version.unknownVersion());
+		resolver = new SimpleAbstractTypeResolver();
+		module.setAbstractTypes(resolver);
+		objectMapper.registerModule(module);
+
+		javaTimeModule = new JavaTimeModule();
+		objectMapper.registerModule(javaTimeModule);
+		objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		return objectMapper;
+	}
 }
