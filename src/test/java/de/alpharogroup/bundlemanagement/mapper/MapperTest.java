@@ -3,27 +3,15 @@ package de.alpharogroup.bundlemanagement.mapper;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import de.alpharogroup.bundlemanagement.jpa.entity.*;
+import de.alpharogroup.db.resource.bundles.domain.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
-import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
-import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
-import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
-import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
-import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
-import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
 import de.alpharogroup.collections.set.SetFactory;
-import de.alpharogroup.db.resource.bundles.domain.BaseName;
-import de.alpharogroup.db.resource.bundles.domain.BundleApplication;
-import de.alpharogroup.db.resource.bundles.domain.BundleName;
-import de.alpharogroup.db.resource.bundles.domain.LanguageLocale;
-import de.alpharogroup.db.resource.bundles.domain.PropertiesKey;
-import de.alpharogroup.db.resource.bundles.domain.PropertiesValue;
-import de.alpharogroup.db.resource.bundles.domain.Resourcebundle;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -37,6 +25,10 @@ public class MapperTest
 	BundleNameMapper bundleNameMapper;
 	@Autowired
 	LanguageLocaleMapper languageLocaleMapper;
+	@Autowired
+	LanguageMapper languageMapper;
+	@Autowired
+	CountryMapper countryMapper;
 	@Autowired
 	PropertiesKeyMapper propertiesKeyMapper;
 	@Autowired
@@ -78,6 +70,22 @@ public class MapperTest
 		assertNotNull(languageLocale);
 		LanguageLocales languageLocaleEntity = languageLocaleMapper.toEntity(languageLocale);
 		assertEquals(languageLocales, languageLocaleEntity);
+
+		Countries countries = Countries.builder()
+			.iso3166a2name("GR")
+			.build();
+		Country country = countryMapper.toDto(countries);
+		assertNotNull(country);
+		Countries countryEntity = countryMapper.toEntity(country);
+		assertEquals(countries, countryEntity);
+
+		Languages languages = Languages.builder()
+			.iso639Dash1("el")
+			.build();
+		Language language = languageMapper.toDto(languages);
+		assertNotNull(language);
+		Languages languageEntity = languageMapper.toEntity(language);
+		assertEquals(languages, languageEntity);
 
 		BundleApplications bundleApplications = BundleApplications.builder()
 			.defaultLocale(languageLocales)

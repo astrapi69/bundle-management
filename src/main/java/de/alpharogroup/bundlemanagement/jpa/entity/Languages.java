@@ -44,6 +44,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
+@Builder(toBuilder = true)
 public class Languages extends VersionableUniqueNameEntity<Integer> implements Cloneable
 {
 

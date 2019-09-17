@@ -46,6 +46,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder(toBuilder = true)
 public class Countries extends UniqueNameEntity<Integer> implements Cloneable
 {
 
