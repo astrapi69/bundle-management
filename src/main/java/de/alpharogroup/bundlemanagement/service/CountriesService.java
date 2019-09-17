@@ -22,20 +22,43 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package de.alpharogroup.bundlemanagement.jpa.repository;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
+package de.alpharogroup.bundlemanagement.service;
 
 import de.alpharogroup.bundlemanagement.jpa.entity.Countries;
+import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
+import de.alpharogroup.bundlemanagement.jpa.repository.CountriesRepository;
+import de.alpharogroup.bundlemanagement.jpa.repository.LanguageLocalesRepository;
+import de.alpharogroup.collections.list.ListExtensions;
+import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
+import de.alpharogroup.resourcebundle.locale.LocaleResolver;
+import de.alpharogroup.spring.service.api.GenericService;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@Repository
-public interface CountriesRepository extends JpaRepository<Countries, Integer>
+import java.util.List;
+import java.util.Locale;
+
+/**
+ * The class {@link CountriesService}
+ */
+@Transactional
+@Service
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Getter
+public class CountriesService
+	implements GenericService<Countries, Integer, CountriesRepository>
 {
-	Countries findByName(@Param("name") String name);
 
-	Countries findByIso3166A2name(@Param("iso3166A2name") String iso3166A2name);
+	CountriesRepository repository;
 
-	Countries findByNameAndIso3166A2name(@Param("name") String name, @Param("iso3166A2name") String iso3166A2name);
+	public Countries findByName(String name)
+	{
+		return repository.findByName(name);
+	}
+
 }

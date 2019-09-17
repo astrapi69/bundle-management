@@ -34,10 +34,12 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 @RestController
-@RequestMapping(ApplicationConfiguration.REST_VERSION + "/resourcebundle")
+@RequestMapping(ApplicationConfiguration.REST_VERSION + ResourcebundlesController.REST_PATH)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ResourcebundlesController extends AbstractRestController<Resourcebundles, Integer, ResourcebundlesRepository, Resourcebundle>
 {
+
+	public static final String REST_PATH = "/resourcebundle";
 
 	ResourcebundleMapper mapper;
 

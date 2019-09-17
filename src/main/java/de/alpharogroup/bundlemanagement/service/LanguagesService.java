@@ -22,20 +22,41 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package de.alpharogroup.bundlemanagement.jpa.repository;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
+package de.alpharogroup.bundlemanagement.service;
 
 import de.alpharogroup.bundlemanagement.jpa.entity.Countries;
+import de.alpharogroup.bundlemanagement.jpa.entity.Languages;
+import de.alpharogroup.bundlemanagement.jpa.repository.CountriesRepository;
+import de.alpharogroup.bundlemanagement.jpa.repository.LanguagesRepository;
+import de.alpharogroup.spring.service.api.GenericService;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@Repository
-public interface CountriesRepository extends JpaRepository<Countries, Integer>
+/**
+ * The class {@link LanguagesService}
+ */
+@Transactional
+@Service
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Getter
+public class LanguagesService
+	implements GenericService<Languages, Integer, LanguagesRepository>
 {
-	Countries findByName(@Param("name") String name);
 
-	Countries findByIso3166A2name(@Param("iso3166A2name") String iso3166A2name);
+	LanguagesRepository repository;
 
-	Countries findByNameAndIso3166A2name(@Param("name") String name, @Param("iso3166A2name") String iso3166A2name);
+	public Languages findByName(String name)
+	{
+		return repository.findDistinctByName(name);
+	}
+	public Languages findByCode(String code)
+	{
+		return repository.findDistinctByIso639Dash1(code);
+	}
+
 }

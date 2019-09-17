@@ -32,5 +32,7 @@ import de.alpharogroup.bundlemanagement.jpa.entity.Languages;
 @Repository
 public interface LanguagesRepository extends JpaRepository<Languages, Integer>
 {
+	Languages findDistinctByName(String name);
 
+	Languages findDistinctByIso639Dash1(String iso639Dash1);
 }
