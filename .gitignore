@@ -70,6 +70,7 @@
 # gradle files #
 ################
 /build
+/out
 /.gradle
 /gradle
 # Ignore Gradle GUI config
