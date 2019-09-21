@@ -47,17 +47,21 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Getter
 public class BaseNamesService
-	implements NameEntityService<BaseNames, Integer>, GenericService<BaseNames, Integer, BaseNamesRepository>
+	implements
+		NameEntityService<BaseNames, Integer>,
+		GenericService<BaseNames, Integer, BaseNamesRepository>
 {
 
 	BaseNamesRepository repository;
 
+	@Override
 	public List<BaseNames> findEntities(final String nameValue)
 	{
 		return repository.findByName(nameValue);
 	}
 
-	@Override public BaseNames merge(BaseNames object)
+	@Override
+	public BaseNames merge(BaseNames object)
 	{
 		return repository.save(object);
 	}

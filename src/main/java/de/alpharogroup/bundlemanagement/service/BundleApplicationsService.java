@@ -27,10 +27,6 @@ package de.alpharogroup.bundlemanagement.service;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,9 +38,9 @@ import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.collections.set.SetFactory;
 import de.alpharogroup.spring.service.api.GenericService;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 /**
@@ -52,24 +48,24 @@ import lombok.experimental.FieldDefaults;
  */
 @Transactional
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Getter
-public class BundleApplicationsService implements GenericService<BundleApplications, Integer, BundleApplicationsRepository>
+public class BundleApplicationsService
+	implements
+		GenericService<BundleApplications, Integer, BundleApplicationsRepository>
 {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	@PersistenceContext
-	EntityManager em;
-
-	BundleApplicationsRepository repository;
-
 	BundleNamesService bundleNamesService;
 
 	LanguageLocalesService languageLocalesService;
 
+	BundleApplicationsRepository repository;
+
+	@Override
 	public void delete(BundleApplications bundleApplications)
 	{
 		List<BundleNames> bundleNames = bundleNamesService.find(bundleApplications);
@@ -85,12 +81,7 @@ public class BundleApplicationsService implements GenericService<BundleApplicati
 
 	public Set<BundleNames> find(final BundleApplications owner)
 	{
-		final TypedQuery<BundleNames> typedQuery = em
-			.createNamedQuery(BundleNames.NQ_FIND_BY_OWNER, BundleNames.class)
-			.setParameter("owner", owner);
-
-		final List<BundleNames> bundleNames = typedQuery.getResultList();
-		return SetFactory.newHashSet(bundleNames);
+		return SetFactory.newHashSet(bundleNamesService.find(owner));
 	}
 
 	public BundleApplications find(final String name)

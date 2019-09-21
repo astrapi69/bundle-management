@@ -7,6 +7,6 @@ import de.alpharogroup.db.resource.bundles.domain.PropertiesValue;
 import de.alpharogroup.mapstruct.mapper.GenericMapper;
 
 @Mapper
-public interface PropertiesValueMapper extends GenericMapper<PropertiesValues,PropertiesValue>
+public interface PropertiesValueMapper extends GenericMapper<PropertiesValues, PropertiesValue>
 {
 }

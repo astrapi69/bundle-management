@@ -24,6 +24,8 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -32,4 +34,5 @@ import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
 @Repository
 public interface PropertiesKeysRepository extends JpaRepository<PropertiesKeys, Integer>
 {
+	List<PropertiesKeys> findByName(String name);
 }

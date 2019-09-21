@@ -33,9 +33,10 @@ import de.alpharogroup.bundlemanagement.jpa.entity.Countries;
 @Repository
 public interface CountriesRepository extends JpaRepository<Countries, Integer>
 {
-	Countries findByName(@Param("name") String name);
-
 	Countries findByIso3166A2name(@Param("iso3166A2name") String iso3166A2name);
 
-	Countries findByNameAndIso3166A2name(@Param("name") String name, @Param("iso3166A2name") String iso3166A2name);
+	Countries findByName(@Param("name") String name);
+
+	Countries findByNameAndIso3166A2name(@Param("name") String name,
+		@Param("iso3166A2name") String iso3166A2name);
 }

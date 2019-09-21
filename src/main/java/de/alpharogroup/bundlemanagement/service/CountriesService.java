@@ -24,23 +24,16 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import de.alpharogroup.bundlemanagement.jpa.entity.Countries;
-import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 import de.alpharogroup.bundlemanagement.jpa.repository.CountriesRepository;
-import de.alpharogroup.bundlemanagement.jpa.repository.LanguageLocalesRepository;
-import de.alpharogroup.collections.list.ListExtensions;
-import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
-import de.alpharogroup.resourcebundle.locale.LocaleResolver;
 import de.alpharogroup.spring.service.api.GenericService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Locale;
 
 /**
  * The class {@link CountriesService}
@@ -50,8 +43,7 @@ import java.util.Locale;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Getter
-public class CountriesService
-	implements GenericService<Countries, Integer, CountriesRepository>
+public class CountriesService implements GenericService<Countries, Integer, CountriesRepository>
 {
 
 	CountriesRepository repository;

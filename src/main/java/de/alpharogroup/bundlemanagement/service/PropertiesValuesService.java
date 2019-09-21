@@ -24,7 +24,8 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,11 +48,19 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Getter
 public class PropertiesValuesService
-	implements NameEntityService<PropertiesValues, Integer>, GenericService<PropertiesValues, Integer, PropertiesValuesRepository>
+	implements
+		NameEntityService<PropertiesValues, Integer>,
+		GenericService<PropertiesValues, Integer, PropertiesValuesRepository>
 
 {
 
 	PropertiesValuesRepository repository;
+
+	@Override
+	public List<PropertiesValues> findEntities(final String nameValue)
+	{
+		return repository.findByName(nameValue);
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -63,7 +72,8 @@ public class PropertiesValuesService
 		return NameEntityService.super.getOrCreateNewNameEntity(value);
 	}
 
-	@Override public PropertiesValues merge(PropertiesValues object)
+	@Override
+	public PropertiesValues merge(PropertiesValues object)
 	{
 		return repository.save(object);
 	}

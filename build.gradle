@@ -8,7 +8,12 @@ plugins {
 	id 'net.ltgt.apt-idea' version '0.17'
 }
 
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply plugin: 'net.ltgt.apt-idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 group = 'de.alpharogroup'
 version = '0.0.1-SNAPSHOT'
@@ -47,18 +52,23 @@ dependencies {
 	compile 'de.alpharogroup:silly-collections:5.2.1'
 	compile 'de.alpharogroup:resourcebundle-inspector:3.0.1'
 	compile 'de.alpharogroup:resource-bundles-view-model:1'
-	compile 'de.alpharogroup:ent-core:1.3.2'
+	compile 'de.alpharogroup:ent-core:1.4'
 	compile 'de.alpharogroup:jobject-copy:3.1.2'
-	compile 'de.alpharogroup:spring-tool-extensions:1.1.2'
+	compile 'de.alpharogroup:xml-extensions:6.2.1'
+	compile 'de.alpharogroup:throw-able:1.1'
+	compile 'de.alpharogroup:spring-tool-extensions:1.2'
 	compile 'io.springfox:springfox-swagger2:2.9.2'
 	compile 'io.springfox:springfox-swagger-ui:2.9.2'
+	compile 'com.thoughtworks.xstream:xstream:1.4.9'
 	implementation 'org.postgresql:postgresql'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework:spring-oxm'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'// If you are using mapstruct in test code
+	testCompile 'com.damnhandy:handy-uri-templates:2.1.7'
 	testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 }
 
@@ -69,5 +79,5 @@ compileJava {
 }
 
 test {
-	useTestNG()
+	useJUnitPlatform()
 }

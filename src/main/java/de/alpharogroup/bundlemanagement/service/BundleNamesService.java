@@ -56,16 +56,17 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Getter
 public class BundleNamesService
-	implements GenericService<BundleNames, Integer, BundleNamesRepository>
+	implements
+		GenericService<BundleNames, Integer, BundleNamesRepository>
 {
-
-	BundleNamesRepository repository;
-
-	BundleApplicationsRepository bundleApplicationsRepository;
 
 	BaseNamesService baseNamesService;
 
+	BundleApplicationsRepository bundleApplicationsRepository;
+
 	LanguageLocalesService languageLocalesService;
+
+	BundleNamesRepository repository;
 
 	public List<BundleNames> find(BaseNames baseName)
 	{
@@ -74,7 +75,7 @@ public class BundleNamesService
 
 	public List<BundleNames> find(BundleApplications owner)
 	{
-		return find(owner, null, (String)null);
+		return repository.findByOwner(owner);
 	}
 
 	public List<BundleNames> find(final BundleApplications owner, final BaseNames baseName)
@@ -125,7 +126,7 @@ public class BundleNamesService
 	public List<BundleNames> find(final BundleApplications owner, final String baseName,
 		final String locale)
 	{
-		final List<BundleNames> bundleNames = repository.findByOwnerAndBaseNameAndLocale(owner,
+		final List<BundleNames> bundleNames = repository.findByOwnerAndBaseNameAndLocale(owner.getName(),
 			baseName, locale);
 		return bundleNames;
 	}
@@ -169,7 +170,8 @@ public class BundleNamesService
 			{
 				Optional<BundleApplications> byId = bundleApplicationsRepository
 					.findById(owner.getId());
-				if(byId.isPresent()){
+				if (byId.isPresent())
+				{
 					owner = byId.get();
 					owner.addSupportedLanguageLocale(dbLocale);
 					bundleApplicationsRepository.save(owner);
@@ -182,7 +184,7 @@ public class BundleNamesService
 	public BundleNames merge(BundleNames object)
 	{
 		Optional<BundleNames> byId = repository.findById(object.getId());
-		if(!byId.isPresent())
+		if (!byId.isPresent())
 		{
 			BundleNames dbBundleNames = byId.get();
 			BaseNames dbBaseName;

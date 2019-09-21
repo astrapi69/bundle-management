@@ -27,12 +27,9 @@ package de.alpharogroup.bundlemanagement.jpa.entity;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import de.alpharogroup.db.entity.name.NameEntity;
 import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 /**

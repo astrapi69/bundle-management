@@ -7,6 +7,8 @@ import de.alpharogroup.db.resource.bundles.domain.BundleApplication;
 import de.alpharogroup.mapstruct.mapper.GenericMapper;
 
 @Mapper
-public interface BundleApplicationMapper extends GenericMapper<BundleApplications,BundleApplication>
+public interface BundleApplicationMapper
+	extends
+		GenericMapper<BundleApplications, BundleApplication>
 {
 }

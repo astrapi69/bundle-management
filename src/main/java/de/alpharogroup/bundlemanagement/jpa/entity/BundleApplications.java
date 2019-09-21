@@ -68,9 +68,7 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 @NoArgsConstructor
-public class BundleApplications extends VersionableUniqueNameEntity<Integer>
-	implements
-		Cloneable
+public class BundleApplications extends VersionableUniqueNameEntity<Integer> implements Cloneable
 {
 
 	/** The Constant BASE_BUNDLE_APPLICATION is the base name of the initial bundle application. */

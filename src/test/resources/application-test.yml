@@ -10,7 +10,7 @@ app:
   db-port: 5432
   db-url-prefix: jdbc:postgresql://
 
-spring:  
+spring:
   datasource:
     username: postgres
     password: postgres

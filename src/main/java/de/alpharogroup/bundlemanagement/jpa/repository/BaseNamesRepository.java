@@ -35,4 +35,6 @@ import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
 public interface BaseNamesRepository extends JpaRepository<BaseNames, Integer>
 {
 	List<BaseNames> findByName(String name);
+
+	BaseNames findDistinctByName(String name);
 }

@@ -24,13 +24,15 @@ public class SwaggerConfiguration
 	{
 		return new Docket(DocumentationType.SWAGGER_2).select()
 			.apis(RequestHandlerSelectors.basePackage("de.alpharogroup.bundlemanagement"))
-			.paths(regex(ApplicationConfiguration.REST_VERSION + "/.*|")).build().apiInfo(metaData());
+			.paths(regex(ApplicationConfiguration.REST_VERSION + "/.*|")).build()
+			.apiInfo(metaData());
 	}
 
 	private ApiInfo metaData()
 	{
 		return new ApiInfo("Resourcebundles REST API",
-			"REST API for manage several resourcebundles applications", ApplicationConfiguration.VERSION_API_1, "",
+			"REST API for manage several resourcebundles applications",
+			ApplicationConfiguration.VERSION_API_1, "",
 			new Contact("resourcebundles org.", "www.resourcebundles-applications.com", ""), "", "",
 			Collections.emptyList());
 	}

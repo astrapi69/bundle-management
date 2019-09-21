@@ -1,8 +1,8 @@
 /**
  * The MIT License
- *
+ * <p>
  * Copyright (C) 2007 - 2015 Asterios Raptis
- *
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- *  *
+ * *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- *  *
+ * *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -27,15 +27,24 @@ package de.alpharogroup.bundlemanagement.jpa.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
+import org.springframework.transaction.annotation.Transactional;
 
-@Repository
-public interface BundleNamesRepository extends JpaRepository<BundleNames, Integer>
+@Repository public interface BundleNamesRepository extends JpaRepository<BundleNames, Integer>
 {
 
-	List<BundleNames> findByOwnerAndBaseNameAndLocale(final BundleApplications owner, final String baseName,
-		final String locale);
+	@Transactional
+	@Query("select bn from BundleNames bn " + "where bn.owner=:owner ")
+	List<BundleNames> findByOwner(@Param("owner") final BundleApplications owner);
+
+	@Transactional
+	@Query("select bn from BundleNames bn " + "where bn.owner.name=:owner "
+		+ "and bn.baseName.name=:basename " + "and bn.locale=:locale ")
+	List<BundleNames> findByOwnerAndBaseNameAndLocale(@Param("owner") String owner,
+		@Param("basename") String basename, final @Param("locale") String locale);
 }

@@ -18,14 +18,10 @@ package de.alpharogroup.bundlemanagement.service.api;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.springframework.transaction.annotation.Transactional;
 
-import de.alpharogroup.bundlemanagement.util.JpqlStringFactory;
 import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.db.entity.name.NameEntity;
-import de.alpharogroup.lang.TypeArgumentsExtensions;
 
 public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializable>
 {
@@ -37,31 +33,7 @@ public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializ
 	 *            the name value
 	 * @return the list with the entities
 	 */
-	default List<T> findEntities(final String nameValue)
-	{
-		@SuppressWarnings("unchecked")
-		Class<T> type = (Class<T>)TypeArgumentsExtensions.getFirstTypeArgument(this.getClass());
-		final String hqlString = JpqlStringFactory.forNameEntity(type, nameValue);
-		final Query query = getQuery(hqlString);
-		if (nameValue != null && !nameValue.isEmpty())
-		{
-			query.setParameter("name", nameValue);
-		}
-		@SuppressWarnings("unchecked")
-		final List<T> nameEntities = query.getResultList();
-		return nameEntities;
-	}
-
-	/**
-	 * Gets the {@link Query} from the given string.
-	 *
-	 * @param jpqlString
-	 *            the jpql query as string
-	 * @return the query
-	 */
-	default Query getQuery(String jpqlString){
-		return null;
-	}
+	List<T> findEntities(final String nameValue);
 
 	/**
 	 * Find the entity object from the given name value.

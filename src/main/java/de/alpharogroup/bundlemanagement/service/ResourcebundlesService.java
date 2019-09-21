@@ -33,7 +33,6 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Level;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,7 +46,6 @@ import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
 import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
 import de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsRepository;
 import de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository;
-import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.collections.list.ListFactory;
 import de.alpharogroup.collections.pairs.KeyValuePair;
 import de.alpharogroup.collections.properties.PropertiesExtensions;
@@ -71,10 +69,11 @@ import lombok.extern.java.Log;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Getter
 public class ResourcebundlesService
-	implements GenericService<Resourcebundles, Integer, ResourcebundlesRepository>
+	implements
+		GenericService<Resourcebundles, Integer, ResourcebundlesRepository>
 {
 
-	ResourcebundlesRepository repository;
+	BaseNamesService baseNamesService;
 
 	BundleApplicationsRepository bundleApplicationsRepository;
 
@@ -86,7 +85,13 @@ public class ResourcebundlesService
 
 	PropertiesValuesService propertiesValuesService;
 
-	BaseNamesService baseNamesService;
+	ResourcebundlesRepository repository;
+
+	public Resourcebundles contains(BundleApplications owner, String baseName, Locale locale,
+		String key)
+	{
+		return getResourcebundle(owner, baseName, locale, key);
+	}
 
 	public void delete(BundleNames bundleNames)
 	{
@@ -104,12 +109,6 @@ public class ResourcebundlesService
 		}
 	}
 
-	public Resourcebundles contains(BundleApplications owner, String baseName, Locale locale,
-		String key)
-	{
-		return getResourcebundle(owner, baseName, locale, key);
-	}
-
 	public void delete(final List<Resourcebundles> resourcebundles)
 	{
 		for (final Resourcebundles resourcebundle : resourcebundles)
@@ -118,6 +117,7 @@ public class ResourcebundlesService
 		}
 	}
 
+	@Override
 	public void delete(Resourcebundles resourcebundles)
 	{
 		PropertiesKeys key = resourcebundles.getKey();
@@ -137,12 +137,20 @@ public class ResourcebundlesService
 		}
 	}
 
-	public List<Resourcebundles> find(BundleApplications owner,
-		String baseName, String locale, String key)
+	public List<Resourcebundles> find(BundleApplications owner, String baseName, String locale,
+		String key)
 	{
-		final List<Resourcebundles> resourcebundles = repository
-			.findByOwnerAndBaseNameAndLocaleAndKeyAndValue(owner.getName(), baseName, locale, key);
-
+		List<Resourcebundles> resourcebundles;
+		if (key != null)
+		{
+			resourcebundles = repository.findByOwnerAndBaseNameAndLocaleAndKeyAndValue(
+				owner.getName(), baseName, locale, key);
+		}
+		else
+		{
+			resourcebundles = repository.findByOwnerAndBaseNameAndLocale(owner.getName(), baseName,
+				locale);
+		}
 		return resourcebundles;
 	}
 
@@ -161,7 +169,7 @@ public class ResourcebundlesService
 	{
 		// TODO fixme
 		return find(null, null, null, null
-			//			, value.getName()
+		// , value.getName()
 		);
 	}
 
@@ -230,7 +238,8 @@ public class ResourcebundlesService
 	public Resourcebundles getResourcebundle(BundleApplications owner, String baseName,
 		Locale locale, String key)
 	{
-		return ListExtensions.getFirst(findResourceBundles(owner, baseName, locale, key));
+		return repository.findDistinctByOwnerAndBaseNameAndLocaleAndKeyAndValue(owner.getName(),
+			baseName, LocaleExtensions.getLocaleFilenameSuffix(locale), key);
 	}
 
 	public List<BundleNames> importProperties(BundleApplications bundleApplication,
@@ -256,10 +265,10 @@ public class ResourcebundlesService
 		LanguageLocales languageLocales = languageLocalesService
 			.getOrCreateNewLanguageLocales(resourcebundles.getBundleName().getLocale().getLocale());
 
-		BundleNames bundleNames = bundleNamesService
-			.getOrCreateNewBundleNames(resourcebundles.getBundleName().getOwner(),
-				resourcebundles.getBundleName().getBaseName().getName(),
-				languageLocalesService.resolveLocale(languageLocales));
+		BundleNames bundleNames = bundleNamesService.getOrCreateNewBundleNames(
+			resourcebundles.getBundleName().getOwner(),
+			resourcebundles.getBundleName().getBaseName().getName(),
+			languageLocalesService.resolveLocale(languageLocales));
 
 		PropertiesKeys propertiesKeys = propertiesKeysService
 			.getOrCreateNewNameEntity(resourcebundles.getKey().getName());
@@ -268,12 +277,12 @@ public class ResourcebundlesService
 		resourcebundles.setKey(propertiesKeys);
 	}
 
-	@Transactional public Resourcebundles merge(final Resourcebundles resourcebundles)
+	@Transactional
+	public Resourcebundles merge(final Resourcebundles resourcebundles)
 	{
 		PropertiesKeys key;
 		PropertiesValues value;
-		Optional<Resourcebundles> byId = repository
-			.findById(resourcebundles.getId());
+		Optional<Resourcebundles> byId = repository.findById(resourcebundles.getId());
 		if (byId.isPresent())
 		{
 			Resourcebundles dbEntity = byId.get();
@@ -305,9 +314,9 @@ public class ResourcebundlesService
 		}
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW) public Resourcebundles saveOrUpdateEntry(
-		final BundleNames bundleName, final String baseName, final Locale locale, final String key,
-		final String value, final boolean update)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public Resourcebundles saveOrUpdateEntry(final BundleNames bundleName, final String baseName,
+		final Locale locale, final String key, final String value, final boolean update)
 	{
 		Resourcebundles resourcebundle = getResourcebundle(bundleName.getOwner(), baseName, locale,
 			key);
@@ -336,12 +345,24 @@ public class ResourcebundlesService
 		return updateProperties(owner, properties, baseName, locale, true);
 	}
 
-	@Transactional public BundleNames updateProperties(final @NonNull BundleApplications owner,
+	public BundleNames updateProperties(final @NonNull BundleApplications owner,
 		final @NonNull Properties properties, final @NonNull String baseName,
 		final @NonNull Locale locale, final boolean update)
 	{
-		final BundleNames bundleName = bundleNamesService
-			.getOrCreateNewBundleNames(owner, baseName, locale);
+		return updateProperties(owner, properties, baseName, null, locale, update);
+	}
+
+	@Transactional
+	public BundleNames updateProperties(final @NonNull BundleApplications owner,
+		final @NonNull Properties properties, final @NonNull String baseName, final String filepath,
+		final @NonNull Locale locale, final boolean update)
+	{
+		final BundleNames bundleName = bundleNamesService.getOrCreateNewBundleNames(owner, baseName,
+			locale);
+		if (filepath != null)
+		{
+			bundleName.setFilepath(filepath);
+		}
 		final Properties dbProperties = getProperties(bundleName);
 
 		properties.entrySet().parallelStream().forEach(element -> {
@@ -364,7 +385,8 @@ public class ResourcebundlesService
 		final @NonNull String owner, final @NonNull String baseName,
 		final @NonNull String localeCode)
 	{
-		BundleApplications bundleApplications = bundleApplicationsRepository.findDistinctByName(owner);
+		BundleApplications bundleApplications = bundleApplicationsRepository
+			.findDistinctByName(owner);
 		Locale locale = LocaleResolver.resolveLocale(localeCode, false);
 		return updateProperties(bundleApplications, properties, baseName, locale);
 	}

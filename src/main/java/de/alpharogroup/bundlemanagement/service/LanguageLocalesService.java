@@ -27,7 +27,6 @@ package de.alpharogroup.bundlemanagement.service;
 import java.util.List;
 import java.util.Locale;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,7 +50,8 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Getter
 public class LanguageLocalesService
-	implements GenericService<LanguageLocales, Integer, LanguageLocalesRepository>
+	implements
+		GenericService<LanguageLocales, Integer, LanguageLocalesRepository>
 {
 
 	LanguageLocalesRepository repository;
@@ -84,8 +84,7 @@ public class LanguageLocalesService
 		LanguageLocales expected = find(locale);
 		if (expected == null)
 		{
-			expected = LanguageLocales.builder()
-				.locale(locale).build();
+			expected = LanguageLocales.builder().locale(locale).build();
 			expected = repository.save(expected);
 		}
 		return expected;

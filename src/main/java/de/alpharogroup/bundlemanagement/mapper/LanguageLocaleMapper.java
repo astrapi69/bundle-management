@@ -7,6 +7,6 @@ import de.alpharogroup.db.resource.bundles.domain.LanguageLocale;
 import de.alpharogroup.mapstruct.mapper.GenericMapper;
 
 @Mapper
-public interface LanguageLocaleMapper extends GenericMapper<LanguageLocales,LanguageLocale>
+public interface LanguageLocaleMapper extends GenericMapper<LanguageLocales, LanguageLocale>
 {
 }

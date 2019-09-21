@@ -32,24 +32,30 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
 
 @Repository
 public interface ResourcebundlesRepository extends JpaRepository<Resourcebundles, Integer>
 {
-	// TODO create unit test
 	@Transactional
-	@Query(
-		"select rb from Resourcebundles rb "
-		+ "where rb.bundleName.owner.name=:owner "
-		+ "and rb.bundleName.baseName.name=:basename "
-		+ "and rb.bundleName.locale.locale=:locale "
-		+ "and rb.key.name=:pkey "
-	)
+	@Query("select rb from Resourcebundles rb " + "where rb.bundleName.owner.name=:owner "
+		+ "and rb.bundleName.baseName.name=:basename " + "and rb.bundleName.locale.locale=:locale")
+	List<Resourcebundles> findByOwnerAndBaseNameAndLocale(@Param("owner") String owner,
+		@Param("basename") String baseName, @Param("locale") String locale);
+
+	@Transactional
+	@Query("select rb from Resourcebundles rb " + "where rb.bundleName.owner.name=:owner "
+		+ "and rb.bundleName.baseName.name=:basename " + "and rb.bundleName.locale.locale=:locale "
+		+ "and rb.key.name=:pkey ")
 	List<Resourcebundles> findByOwnerAndBaseNameAndLocaleAndKeyAndValue(
-		@Param("owner") String owner,
-		@Param("basename") String baseName,
-		@Param("locale") String locale,
-		@Param("pkey") String key);
+		@Param("owner") String owner, @Param("basename") String baseName,
+		@Param("locale") String locale, @Param("pkey") String key);
+
+	@Transactional
+	@Query("select distinct rb from Resourcebundles rb " + "where rb.bundleName.owner.name=:owner "
+		+ "and rb.bundleName.baseName.name=:basename " + "and rb.bundleName.locale.locale=:locale "
+		+ "and rb.key.name=:pkey ")
+	Resourcebundles findDistinctByOwnerAndBaseNameAndLocaleAndKeyAndValue(
+		@Param("owner") String owner, @Param("basename") String baseName,
+		@Param("locale") String locale, @Param("pkey") String key);
 }

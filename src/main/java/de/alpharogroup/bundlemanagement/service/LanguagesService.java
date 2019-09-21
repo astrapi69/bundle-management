@@ -24,17 +24,16 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.Countries;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import de.alpharogroup.bundlemanagement.jpa.entity.Languages;
-import de.alpharogroup.bundlemanagement.jpa.repository.CountriesRepository;
 import de.alpharogroup.bundlemanagement.jpa.repository.LanguagesRepository;
 import de.alpharogroup.spring.service.api.GenericService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The class {@link LanguagesService}
@@ -44,19 +43,19 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Getter
-public class LanguagesService
-	implements GenericService<Languages, Integer, LanguagesRepository>
+public class LanguagesService implements GenericService<Languages, Integer, LanguagesRepository>
 {
 
 	LanguagesRepository repository;
 
-	public Languages findByName(String name)
-	{
-		return repository.findDistinctByName(name);
-	}
 	public Languages findByCode(String code)
 	{
 		return repository.findDistinctByIso639Dash1(code);
+	}
+
+	public Languages findByName(String name)
+	{
+		return repository.findDistinctByName(name);
 	}
 
 }
