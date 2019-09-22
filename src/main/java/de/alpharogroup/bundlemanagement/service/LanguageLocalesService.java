@@ -63,8 +63,7 @@ public class LanguageLocalesService
 
 	public LanguageLocales find(String locale)
 	{
-		final List<LanguageLocales> languageLocales = repository.findByLocale(locale);
-		return ListExtensions.getFirst(languageLocales);
+		return repository.findDistinctByLocale(locale);
 	}
 
 	public LanguageLocales getOrCreateNewLanguageLocales(final Locale locale)

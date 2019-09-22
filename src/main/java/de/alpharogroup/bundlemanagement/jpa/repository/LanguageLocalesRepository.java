@@ -34,5 +34,5 @@ import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 @Repository
 public interface LanguageLocalesRepository extends JpaRepository<LanguageLocales, Integer>
 {
-	List<LanguageLocales> findByLocale(String locale);
+	LanguageLocales findDistinctByLocale(String locale);
 }

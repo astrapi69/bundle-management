@@ -79,7 +79,7 @@ public class MapperTest
 		LanguageLocales languageLocaleEntity = languageLocaleMapper.toEntity(languageLocale);
 		assertEquals(languageLocales, languageLocaleEntity);
 
-		Countries countries = Countries.builder().iso3166a2name("GR").build();
+		Countries countries = Countries.builder().name("Greece").iso3166a2name("GR").build();
 		Country country = countryMapper.toDto(countries);
 		assertNotNull(country);
 		Countries countryEntity = countryMapper.toEntity(country);
@@ -92,6 +92,7 @@ public class MapperTest
 		assertEquals(languages, languageEntity);
 
 		BundleApplications bundleApplications = BundleApplications.builder()
+			.name("test-bundle-app")
 			.defaultLocale(languageLocales).supportedLocales(SetFactory.newHashSet(languageLocales))
 			.build();
 

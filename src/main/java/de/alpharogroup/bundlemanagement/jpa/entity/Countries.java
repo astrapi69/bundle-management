@@ -1,8 +1,8 @@
 /**
  * The MIT License
- *
+ * <p>
  * Copyright (C) 2007 - 2015 Asterios Raptis
- *
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- *  *
+ * *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- *  *
+ * *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,10 +24,9 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import de.alpharogroup.db.entity.BaseEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -40,20 +39,20 @@ import lombok.Setter;
 /**
  * The entity class {@link Countries} is keeping the information for all countries in the world
  */
-@Entity
-@Table(name = "countries")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Getter
-@Setter
-@NoArgsConstructor
-public class Countries extends UniqueNameEntity<Integer> implements Cloneable
+@Entity @Table(name = Countries.TABLE_NAME) @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE) @Getter @Setter @NoArgsConstructor
+@SequenceGenerator(name =
+	BaseEntity.SEQUENCE_GENERATOR_PREFIX + Countries.TABLE_NAME, sequenceName =
+	BaseEntity.SEQUENCE_PREFIX
+		+ Countries.TABLE_NAME, allocationSize = 1)
+public class Countries
+	extends UniqueNameEntity<Integer> implements Cloneable
 {
 
+	public static final String TABLE_NAME = "countries";
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;
 	/** The iso3166 name with two characters. */
-	@Column(name = "iso3166_a2name", length = 2)
-	private String iso3166A2name;
+	@Column(name = "iso3166_a2name", length = 2) private String iso3166A2name;
 
 	/**
 	 * Instantiates a new countries.
@@ -63,8 +62,7 @@ public class Countries extends UniqueNameEntity<Integer> implements Cloneable
 	 * @param iso3166a2name
 	 *            the iso 3166 a 2 name
 	 */
-	@Builder
-	public Countries(String name, String iso3166a2name)
+	@Builder public Countries(String name, String iso3166a2name)
 	{
 		super(name);
 		iso3166A2name = iso3166a2name;

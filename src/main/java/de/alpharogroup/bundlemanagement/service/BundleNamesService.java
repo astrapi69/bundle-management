@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
+import lombok.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,67 +69,44 @@ public class BundleNamesService
 
 	BundleNamesRepository repository;
 
-	public List<BundleNames> find(BaseNames baseName)
+	public List<BundleNames> find(final @NonNull BaseNames baseName)
 	{
-		return find(null, baseName != null ? baseName.getName() : null, (String)null);
+		return repository.findByBaseName(baseName.getName());
 	}
 
-	public List<BundleNames> find(BundleApplications owner)
+	public List<BundleNames> find(final @NonNull BundleApplications owner)
 	{
 		return repository.findByOwner(owner);
 	}
 
-	public List<BundleNames> find(final BundleApplications owner, final BaseNames baseName)
+	public List<BundleNames> find(final @NonNull BundleApplications owner, final @NonNull BaseNames baseName)
 	{
-		if (baseName != null)
-		{
-			return find(owner, baseName.getName(), (String)null);
-		}
-		return null;
+		return repository.findByOwnerAndBaseName(owner.getName(), baseName.getName());
 	}
 
-	public BundleNames find(final BundleApplications owner, final BaseNames baseName,
-		final LanguageLocales languageLocales)
+	public BundleNames find(final @NonNull BundleApplications owner, final @NonNull BaseNames baseName,
+		final @NonNull LanguageLocales languageLocales)
 	{
-		String bn = null;
-		String ll = null;
-		if (baseName != null)
-		{
-			bn = baseName.getName();
-		}
-		if (languageLocales != null)
-		{
-			ll = languageLocales.getLocale();
-		}
-		if (bn != null && ll != null)
-		{
-			return ListExtensions.getFirst(find(owner, bn, ll));
-		}
-		return null;
+		return repository.findDistinctByOwnerAndBaseNameAndLocale(owner.getName(), baseName.getName(), languageLocales.getLocale());
 	}
 
-	public List<BundleNames> find(final BundleApplications owner, final String baseName)
+	public List<BundleNames> find(final @NonNull BundleApplications owner, final @NonNull String baseName)
 	{
-		if (baseName != null)
-		{
-			return find(owner, baseName, (String)null);
-		}
-		return null;
+		return repository.findByOwnerAndBaseName(owner.getName(), baseName);
 	}
 
 	public BundleNames find(final BundleApplications owner, final String baseName,
 		final Locale locale)
 	{
-		return ListExtensions
-			.getFirst(find(owner, baseName, LocaleExtensions.getLocaleFilenameSuffix(locale)));
+		return repository.findDistinctByOwnerAndBaseNameAndLocale(owner.getName(),
+			baseName, LocaleExtensions.getLocaleFilenameSuffix(locale));
 	}
 
-	public List<BundleNames> find(final BundleApplications owner, final String baseName,
+	public BundleNames find(final BundleApplications owner, final String baseName,
 		final String locale)
 	{
-		final List<BundleNames> bundleNames = repository.findByOwnerAndBaseNameAndLocale(owner.getName(),
+		return repository.findDistinctByOwnerAndBaseNameAndLocale(owner.getName(),
 			baseName, locale);
-		return bundleNames;
 	}
 
 	public LanguageLocales getDefaultLocale(final BundleApplications owner, final String baseName)

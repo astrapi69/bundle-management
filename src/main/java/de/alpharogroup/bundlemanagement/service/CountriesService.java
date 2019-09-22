@@ -50,7 +50,7 @@ public class CountriesService implements GenericService<Countries, Integer, Coun
 
 	public Countries findByName(String name)
 	{
-		return repository.findByName(name);
+		return repository.findDistinctByName(name);
 	}
 
 }

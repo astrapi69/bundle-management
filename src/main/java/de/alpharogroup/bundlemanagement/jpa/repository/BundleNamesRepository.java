@@ -44,7 +44,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 	@Transactional
 	@Query("select bn from BundleNames bn " + "where bn.owner.name=:owner "
-		+ "and bn.baseName.name=:basename " + "and bn.locale=:locale ")
-	List<BundleNames> findByOwnerAndBaseNameAndLocale(@Param("owner") String owner,
+		+ "and bn.baseName.name=:basename")
+	List<BundleNames> findByOwnerAndBaseName(@Param("owner") String owner,
+		@Param("basename") String basename);
+
+	@Transactional
+	@Query("select bn from BundleNames bn where bn.baseName.name=:basename")
+	List<BundleNames> findByBaseName(@Param("basename") String basename);
+
+	@Transactional
+	@Query("select bn from BundleNames bn " + "where bn.owner.name=:owner "
+		+ "and bn.baseName.name=:basename " + "and bn.locale.locale=:locale ")
+	BundleNames findDistinctByOwnerAndBaseNameAndLocale(@Param("owner") String owner,
 		@Param("basename") String basename, final @Param("locale") String locale);
 }

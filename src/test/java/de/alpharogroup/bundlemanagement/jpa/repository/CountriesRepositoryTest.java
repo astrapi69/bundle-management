@@ -1,27 +1,28 @@
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
 import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
+import de.alpharogroup.bundlemanagement.jpa.entity.Countries;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class BaseNamesRepositoryTest extends BaseJpaTest
+public class CountriesRepositoryTest extends BaseJpaTest
 {
 
 	@Autowired
-	private BaseNamesRepository repository;
+	private CountriesRepository repository;
 
 	@Test
-	public void whenFindByNameThenReturnBaseNames()
+	public void whenFindByNameThenReturnCountries()
 	{
-		BaseNames entity = BaseNames.builder().name("messages").build();
+		Countries entity = Countries.builder().name("Greece").iso3166a2name("GR").build();
 
 		entityManager.persist(entity);
 		entityManager.flush();
 
 		// when
-		BaseNames distinctByName = repository.findDistinctByName(entity.getName());
+		Countries distinctByName = repository.findDistinctByName(entity.getName());
 		// then
 		assertThat(distinctByName.getName()).isEqualTo(entity.getName());
 	}
