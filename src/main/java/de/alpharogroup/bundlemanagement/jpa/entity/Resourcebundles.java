@@ -24,13 +24,10 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.entity.DatabaseAttribute;
 import de.alpharogroup.db.entity.version.VersionableBaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,15 +41,21 @@ import lombok.ToString;
  * bundles.
  */
 @Entity
-@Table(name = "resourcebundles")
+@Table(name = Resourcebundles.TABLE_NAME)
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
+@SequenceGenerator(name =
+	BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, sequenceName =
+	DatabaseAttribute.SEQUENCE_PREFIX
+		+ Resourcebundles.TABLE_NAME, allocationSize = 1)
 public class Resourcebundles extends VersionableBaseEntity<Integer> implements Cloneable
 {
+
+	public static final String TABLE_NAME = "resourcebundles";
 	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;
 

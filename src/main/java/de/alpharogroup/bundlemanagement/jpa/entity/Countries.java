@@ -27,6 +27,8 @@ package de.alpharogroup.bundlemanagement.jpa.entity;
 import javax.persistence.*;
 
 import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.entity.DatabaseAttribute;
+import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -39,10 +41,13 @@ import lombok.Setter;
 /**
  * The entity class {@link Countries} is keeping the information for all countries in the world
  */
-@Entity @Table(name = Countries.TABLE_NAME) @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE) @Getter @Setter @NoArgsConstructor
+@Entity
+@Table(name = Countries.TABLE_NAME)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Getter @Setter @NoArgsConstructor
 @SequenceGenerator(name =
-	BaseEntity.SEQUENCE_GENERATOR_PREFIX + Countries.TABLE_NAME, sequenceName =
-	BaseEntity.SEQUENCE_PREFIX
+	BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, sequenceName =
+	DatabaseAttribute.SEQUENCE_PREFIX
 		+ Countries.TABLE_NAME, allocationSize = 1)
 public class Countries
 	extends UniqueNameEntity<Integer> implements Cloneable

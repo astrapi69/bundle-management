@@ -24,17 +24,10 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.entity.DatabaseAttribute;
 import de.alpharogroup.db.entity.version.VersionableBaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -52,7 +45,7 @@ import lombok.ToString;
  * locale.
  */
 @Entity
-@Table(name = "bundlenames")
+@Table(name = BundleNames.TABLE_NAME)
 @NamedQueries({
 		@NamedQuery(name = BundleNames.NQ_FIND_BY_OWNER, query = "select bn from BundleNames bn where bn.owner=:owner") })
 @Getter
@@ -61,9 +54,14 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
+@SequenceGenerator(name =
+	BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, sequenceName =
+	DatabaseAttribute.SEQUENCE_PREFIX
+		+ BundleNames.TABLE_NAME, allocationSize = 1)
 public class BundleNames extends VersionableBaseEntity<Integer> implements Cloneable
 {
 
+	public static final String TABLE_NAME = "bundlenames";
 	/** The Constant for the named query for find BundleNames by the owner. */
 	public static final String NQ_FIND_BY_OWNER = "BundleNames." + "findByOwner";
 

@@ -26,8 +26,11 @@ package de.alpharogroup.bundlemanagement.jpa.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.entity.DatabaseAttribute;
 import de.alpharogroup.db.entity.version.VersionableBaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,16 +43,21 @@ import lombok.ToString;
  * The entity class {@link LanguageLocales} holds the data for the locale as {@link String} object.
  */
 @Entity
-@Table(name = "language_locales")
+@Table(name = LanguageLocales.TABLE_NAME)
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
+@SequenceGenerator(name =
+	BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, sequenceName =
+	DatabaseAttribute.SEQUENCE_PREFIX
+		+ LanguageLocales.TABLE_NAME, allocationSize = 1)
 public class LanguageLocales extends VersionableBaseEntity<Integer> implements Cloneable
 {
 
+	public static final String TABLE_NAME = "language_locales";
 	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;
 

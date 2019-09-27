@@ -27,18 +27,10 @@ package de.alpharogroup.bundlemanagement.jpa.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.entity.DatabaseAttribute;
 import de.alpharogroup.db.entity.name.versionable.VersionableUniqueNameEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -63,14 +55,19 @@ import lombok.ToString;
 		@NamedQuery(name = BundleApplications.NQ_FIND_SUPPORTED_LANGUAGE_LOCALE, query = "select ba from BundleApplications ba where :languageLocale member of ba.supportedLocales"),
 		@NamedQuery(name = BundleApplications.NQ_FIND_JOIN_SUPPORTED_LANGUAGE_LOCALE, query = "select ba from BundleApplications ba inner join ba.supportedLocales sl where sl.id = :languageLocale") })
 
-@Table(name = "bundle_applications")
+@Table(name = BundleApplications.TABLE_NAME)
 @Getter
 @Setter
 @ToString(callSuper = true)
 @NoArgsConstructor
+@SequenceGenerator(name =
+	BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, sequenceName =
+	DatabaseAttribute.SEQUENCE_PREFIX
+		+ BundleApplications.TABLE_NAME, allocationSize = 1)
 public class BundleApplications extends VersionableUniqueNameEntity<Integer> implements Cloneable
 {
 
+	public static final String TABLE_NAME = "bundle_applications";
 	/** The Constant BASE_BUNDLE_APPLICATION is the base name of the initial bundle application. */
 	public static final String BASE_BUNDLE_APPLICATION = "base-bundle-application";
 

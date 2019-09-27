@@ -25,8 +25,11 @@
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.entity.DatabaseAttribute;
 import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,14 +42,19 @@ import lombok.ToString;
  * <br>
  */
 @Entity
-@Table(name = "properties_values")
+@Table(name = PropertiesValues.TABLE_NAME)
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
+@SequenceGenerator(name =
+	BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, sequenceName =
+	DatabaseAttribute.SEQUENCE_PREFIX
+		+ PropertiesValues.TABLE_NAME, allocationSize = 1)
 public class PropertiesValues extends VersionableNameEntity<Integer> implements Cloneable
 {
 
+	public static final String TABLE_NAME = "properties_values";
 	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;
 

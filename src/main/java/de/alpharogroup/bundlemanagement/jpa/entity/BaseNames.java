@@ -25,8 +25,11 @@
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import de.alpharogroup.db.entity.BaseEntity;
+import de.alpharogroup.db.entity.DatabaseAttribute;
 import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -37,11 +40,17 @@ import lombok.ToString;
  * it from the properties file view the name of the properties file without the locale suffix.
  */
 @Entity
-@Table(name = "basenames")
+@Table(name = BaseNames.TABLE_NAME)
 @ToString(callSuper = true)
 @NoArgsConstructor
+@SequenceGenerator(name =
+	BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, sequenceName =
+	DatabaseAttribute.SEQUENCE_PREFIX
+		+ BaseNames.TABLE_NAME, allocationSize = 1)
 public class BaseNames extends VersionableNameEntity<Integer> implements Cloneable
 {
+
+	public static final String TABLE_NAME = "basenames";
 
 	/**
 	 * Serial Version UID
