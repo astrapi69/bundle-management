@@ -24,7 +24,7 @@ spring:
           lob:
             non_contextual_creation: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
       show_sql: true
       use_sql_comments: true
       generate_statistics: false

@@ -20,6 +20,29 @@ public class ResourcebundlesRepositoryTest extends BaseJpaTest
 	@Autowired
 	private LanguageLocalesRepository languageLocalesRepository;
 
+
+	@Test
+	public void findResourceKey(){
+		String owner;
+		String baseName;
+		String locale;
+		String key;
+		owner = "base-bundle-application";
+		baseName = "base-resource-bundles";
+		locale = "de_DE";
+		key = "resource.bundles.test.label";
+
+
+		owner = "base-bundle-application";
+		baseName = "test";
+		locale = "de_DE";
+		key = "com.example.gui.prop.with.params.label";
+		Resourcebundles entity = repository
+			.findDistinctByOwnerAndBaseNameAndLocaleAndKeyAndValue(owner, baseName, locale, key);
+
+		assertNotNull(entity);
+	}
+
 	@Test
 	public void whenFindByNameThenReturnResourcebundles()
 	{

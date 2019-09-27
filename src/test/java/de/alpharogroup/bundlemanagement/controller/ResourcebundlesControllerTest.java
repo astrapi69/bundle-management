@@ -160,7 +160,6 @@ public class ResourcebundlesControllerTest
 
 
 	@Test
-	@Ignore
 	public void testUpdateProperties() throws JsonProcessingException
 	{
 		StringBuilder sb = new StringBuilder();
