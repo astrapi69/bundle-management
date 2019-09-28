@@ -30,13 +30,17 @@ import java.util.Set;
 import javax.persistence.*;
 
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.db.entity.DatabaseAttribute;
+import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import de.alpharogroup.db.entity.name.versionable.VersionableUniqueNameEntity;
+import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The entity class {@link BundleApplications} is the root of every bundle application. Every entity
@@ -55,17 +59,26 @@ import lombok.ToString;
 		@NamedQuery(name = BundleApplications.NQ_FIND_SUPPORTED_LANGUAGE_LOCALE, query = "select ba from BundleApplications ba where :languageLocale member of ba.supportedLocales"),
 		@NamedQuery(name = BundleApplications.NQ_FIND_JOIN_SUPPORTED_LANGUAGE_LOCALE, query = "select ba from BundleApplications ba inner join ba.supportedLocales sl where sl.id = :languageLocale") })
 
-@Table(name = BundleApplications.TABLE_NAME)
+@Table(name = BundleApplications.TABLE_NAME, indexes = {
+	@Index(name = DatabasePrefix.INDEX_PREFIX + BundleApplications.TABLE_NAME
+		+ BundleApplications.COLUMN_NAME_NAME, columnList = BundleApplications.COLUMN_NAME_NAME, unique = true)
+})
 @Getter
 @Setter
 @ToString(callSuper = true)
 @NoArgsConstructor
-@SequenceGenerator(name =
-	BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, sequenceName =
-	DatabaseAttribute.SEQUENCE_PREFIX
-		+ BundleApplications.TABLE_NAME, allocationSize = 1)
+@GenericGenerator(
+	name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME,
+	strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME,
+	parameters = @Parameter(
+		name = SequenceStyleGenerator.SEQUENCE_PARAM,
+		value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX + BundleApplications.TABLE_NAME
+	)
+)
 public class BundleApplications extends VersionableUniqueNameEntity<Integer> implements Cloneable
 {
+
+	public static final String COLUMN_NAME_NAME = "name";
 
 	public static final String TABLE_NAME = "bundle_applications";
 	/** The Constant BASE_BUNDLE_APPLICATION is the base name of the initial bundle application. */

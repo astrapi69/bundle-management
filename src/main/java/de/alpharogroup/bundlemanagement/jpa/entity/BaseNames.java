@@ -25,32 +25,47 @@
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.db.entity.DatabaseAttribute;
+import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
+import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+import org.hibernate.annotations.Parameter;
 
 /**
  * Entity class for saving in database base names of the resource bundles. The base name if you see
  * it from the properties file view the name of the properties file without the locale suffix.
  */
 @Entity
-@Table(name = BaseNames.TABLE_NAME)
+@Table(name = BaseNames.TABLE_NAME, indexes = {
+	@Index(name = DatabasePrefix.INDEX_PREFIX + BaseNames.TABLE_NAME
+		+ BaseNames.COLUMN_NAME_NAME, columnList = BaseNames.COLUMN_NAME_NAME)
+})
 @ToString(callSuper = true)
 @NoArgsConstructor
-@SequenceGenerator(name =
-	BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, sequenceName =
-	DatabaseAttribute.SEQUENCE_PREFIX
-		+ BaseNames.TABLE_NAME, allocationSize = 1)
+@GenericGenerator(
+	name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME,
+	strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME,
+	parameters = @Parameter(
+		name = SequenceStyleGenerator.SEQUENCE_PARAM,
+		value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX + BaseNames.TABLE_NAME
+	)
+)
 public class BaseNames extends VersionableNameEntity<Integer> implements Cloneable
 {
 
 	public static final String TABLE_NAME = "basenames";
+
+	public static final String COLUMN_NAME_NAME = "name";
 
 	/**
 	 * Serial Version UID

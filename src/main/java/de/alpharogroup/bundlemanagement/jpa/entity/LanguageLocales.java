@@ -30,14 +30,18 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.db.entity.DatabaseAttribute;
+import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import de.alpharogroup.db.entity.version.VersionableBaseEntity;
+import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The entity class {@link LanguageLocales} holds the data for the locale as {@link String} object.
@@ -50,10 +54,14 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-@SequenceGenerator(name =
-	BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, sequenceName =
-	DatabaseAttribute.SEQUENCE_PREFIX
-		+ LanguageLocales.TABLE_NAME, allocationSize = 1)
+@GenericGenerator(
+	name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME,
+	strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME,
+	parameters = @Parameter(
+		name = SequenceStyleGenerator.SEQUENCE_PARAM,
+		value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX + LanguageLocales.TABLE_NAME
+	)
+)
 public class LanguageLocales extends VersionableBaseEntity<Integer> implements Cloneable
 {
 

@@ -25,17 +25,22 @@
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.db.entity.DatabaseAttribute;
+import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
+import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The entity class {@link PropertiesKeys} holds the data only for the properties keys not the
@@ -44,18 +49,26 @@ import lombok.ToString;
  * Note: The values of the properties keys is in the entity class {@link PropertiesValues}.
  */
 @Entity
-@Table(name = PropertiesKeys.TABLE_NAME)
+@Table(name = PropertiesKeys.TABLE_NAME, indexes = {
+	@Index(name = DatabasePrefix.INDEX_PREFIX + PropertiesKeys.TABLE_NAME
+		+ PropertiesKeys.COLUMN_NAME_NAME, columnList = PropertiesKeys.COLUMN_NAME_NAME)
+})
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-@SequenceGenerator(name =
-	BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, sequenceName =
-	DatabaseAttribute.SEQUENCE_PREFIX
-		+ PropertiesKeys.TABLE_NAME, allocationSize = 1)
+@GenericGenerator(
+	name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME,
+	strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME,
+	parameters = @Parameter(
+		name = SequenceStyleGenerator.SEQUENCE_PARAM,
+		value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX + PropertiesKeys.TABLE_NAME
+	)
+)
 public class PropertiesKeys extends VersionableNameEntity<Integer> implements Cloneable
 {
 
+	public static final String COLUMN_NAME_NAME = "name";
 	public static final String TABLE_NAME = "properties_keys";
 	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;

@@ -25,34 +25,48 @@
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.db.entity.DatabaseAttribute;
+import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
+import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 /**
  * The entity class {@link PropertiesValues} holds the data only for the properties values. <br>
  * <br>
  */
 @Entity
-@Table(name = PropertiesValues.TABLE_NAME)
+@Table(name = PropertiesValues.TABLE_NAME, indexes = {
+	@Index(name = DatabasePrefix.INDEX_PREFIX + PropertiesValues.TABLE_NAME
+		+ PropertiesValues.COLUMN_NAME_NAME, columnList = PropertiesValues.COLUMN_NAME_NAME)
+})
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-@SequenceGenerator(name =
-	BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, sequenceName =
-	DatabaseAttribute.SEQUENCE_PREFIX
-		+ PropertiesValues.TABLE_NAME, allocationSize = 1)
+@GenericGenerator(
+	name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME,
+	strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME,
+	parameters = @Parameter(
+		name = SequenceStyleGenerator.SEQUENCE_PARAM,
+		value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX + PropertiesValues.TABLE_NAME
+	)
+)
 public class PropertiesValues extends VersionableNameEntity<Integer> implements Cloneable
 {
+
+	public static final String COLUMN_NAME_NAME = "name";
 
 	public static final String TABLE_NAME = "properties_values";
 	/** Serial Version UID */
