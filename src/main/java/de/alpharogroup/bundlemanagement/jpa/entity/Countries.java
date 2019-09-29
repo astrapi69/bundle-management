@@ -53,9 +53,9 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Table(name = Countries.TABLE_NAME, indexes = {
 		@Index(name = DatabasePrefix.INDEX_PREFIX + Countries.TABLE_NAME
-			+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME, unique = true),
+			+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME),
 		@Index(name = DatabasePrefix.INDEX_PREFIX + Countries.TABLE_NAME
-			+ Countries.COLUMN_NAME_ISO_3166_A2_NAME, columnList = Countries.COLUMN_NAME_ISO_3166_A2_NAME, unique = true) })
+			+ Countries.COLUMN_NAME_ISO_3166_A2_NAME, columnList = Countries.COLUMN_NAME_ISO_3166_A2_NAME) })
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Getter
 @Setter
@@ -71,7 +71,7 @@ public class Countries extends UniqueNameEntity<Integer> implements Cloneable
 	private static final long serialVersionUID = 1L;
 	public static final String TABLE_NAME = "countries";
 	/** The iso3166 name with two characters. */
-	@Column(name = "iso3166_a2name", length = 2)
+	@Column(name = "iso3166_a2name", length = 2, unique = true)
 	String iso3166A2name;
 
 	/**

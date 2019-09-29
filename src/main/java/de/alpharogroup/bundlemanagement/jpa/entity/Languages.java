@@ -52,9 +52,9 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Table(name = Languages.TABLE_NAME, indexes = {
 		@Index(name = DatabasePrefix.INDEX_PREFIX + Languages.TABLE_NAME
-			+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME, unique = true),
+			+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME),
 		@Index(name = DatabasePrefix.INDEX_PREFIX + Languages.TABLE_NAME
-			+ Languages.COLUMN_NAME_ISO_639_DASH1, columnList = Languages.COLUMN_NAME_ISO_639_DASH1, unique = true) })
+			+ Languages.COLUMN_NAME_ISO_639_DASH1, columnList = Languages.COLUMN_NAME_ISO_639_DASH1) })
 @Getter
 @Setter
 @ToString
