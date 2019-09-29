@@ -28,6 +28,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -38,7 +39,6 @@ import org.hibernate.id.enhanced.SequenceStyleGenerator;
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import de.alpharogroup.db.entity.name.NameEntity;
-import de.alpharogroup.db.entity.name.UniqueNameEntity;
 import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -51,11 +51,19 @@ import lombok.experimental.FieldDefaults;
  * The entity class {@link Countries} is keeping the information for all countries in the world
  */
 @Entity
-@Table(name = Countries.TABLE_NAME, indexes = {
-		@Index(name = DatabasePrefix.INDEX_PREFIX + Countries.TABLE_NAME
-			+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME),
-		@Index(name = DatabasePrefix.INDEX_PREFIX + Countries.TABLE_NAME
-			+ Countries.COLUMN_NAME_ISO_3166_A2_NAME, columnList = Countries.COLUMN_NAME_ISO_3166_A2_NAME) })
+@Table(name = Countries.TABLE_NAME, uniqueConstraints = {
+		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX + Countries.TABLE_NAME
+			+ DatabasePrefix.UNDERSCORE_PREFIX
+			+ NameEntity.COLUMN_NAME_NAME, columnNames = NameEntity.COLUMN_NAME_NAME),
+		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX + Countries.TABLE_NAME
+			+ DatabasePrefix.UNDERSCORE_PREFIX
+			+ Countries.COLUMN_NAME_ISO_3166_A2_NAME, columnNames = Countries.COLUMN_NAME_ISO_3166_A2_NAME) }, indexes = {
+					@Index(name = DatabasePrefix.INDEX_PREFIX + Countries.TABLE_NAME
+						+ DatabasePrefix.UNDERSCORE_PREFIX
+						+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME),
+					@Index(name = DatabasePrefix.INDEX_PREFIX + Countries.TABLE_NAME
+						+ DatabasePrefix.UNDERSCORE_PREFIX
+						+ Countries.COLUMN_NAME_ISO_3166_A2_NAME, columnList = Countries.COLUMN_NAME_ISO_3166_A2_NAME) })
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Getter
 @Setter
@@ -63,7 +71,7 @@ import lombok.experimental.FieldDefaults;
 @GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
 	+ Countries.TABLE_NAME))
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Countries extends UniqueNameEntity<Integer> implements Cloneable
+public class Countries extends NameEntity<Integer> implements Cloneable
 {
 
 	public static final String COLUMN_NAME_ISO_3166_A2_NAME = "iso3166_a2name";
@@ -71,7 +79,7 @@ public class Countries extends UniqueNameEntity<Integer> implements Cloneable
 	private static final long serialVersionUID = 1L;
 	public static final String TABLE_NAME = "countries";
 	/** The iso3166 name with two characters. */
-	@Column(name = "iso3166_a2name", length = 2, unique = true)
+	@Column(name = "iso3166_a2name", length = 2)
 	String iso3166A2name;
 
 	/**

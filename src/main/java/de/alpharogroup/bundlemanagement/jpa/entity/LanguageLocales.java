@@ -28,6 +28,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -50,9 +51,13 @@ import lombok.experimental.FieldDefaults;
  * The entity class {@link LanguageLocales} holds the data for the locale as {@link String} object.
  */
 @Entity
-@Table(name = LanguageLocales.TABLE_NAME, indexes = { @Index(name = DatabasePrefix.INDEX_PREFIX
-	+ LanguageLocales.TABLE_NAME
-	+ LanguageLocales.COLUMN_NAME_LOCALE, columnList = LanguageLocales.COLUMN_NAME_LOCALE) })
+@Table(name = LanguageLocales.TABLE_NAME, uniqueConstraints = {
+		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX
+			+ LanguageLocales.TABLE_NAME + DatabasePrefix.UNDERSCORE_PREFIX
+			+ LanguageLocales.COLUMN_NAME_LOCALE, columnNames = LanguageLocales.COLUMN_NAME_LOCALE) }, indexes = {
+					@Index(name = DatabasePrefix.INDEX_PREFIX + LanguageLocales.TABLE_NAME
+						+ DatabasePrefix.UNDERSCORE_PREFIX
+						+ LanguageLocales.COLUMN_NAME_LOCALE, columnList = LanguageLocales.COLUMN_NAME_LOCALE) })
 @Getter
 @Setter
 @ToString
@@ -72,7 +77,7 @@ public class LanguageLocales extends VersionableEntity<Integer> implements Clone
 	public static final String TABLE_NAME = "language_locales";
 
 	/** The locale of this entry. */
-	@Column(unique = true, length = 64)
+	@Column(length = 64)
 	String locale;
 
 }

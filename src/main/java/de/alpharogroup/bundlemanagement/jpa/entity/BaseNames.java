@@ -46,9 +46,9 @@ import lombok.ToString;
  * it from the properties file view the name of the properties file without the locale suffix.
  */
 @Entity
-@Table(name = BaseNames.TABLE_NAME, indexes = {
-		@Index(name = DatabasePrefix.INDEX_PREFIX + BaseNames.TABLE_NAME
-			+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME) })
+@Table(name = BaseNames.TABLE_NAME, indexes = { @Index(name = DatabasePrefix.INDEX_PREFIX
+	+ BaseNames.TABLE_NAME + DatabasePrefix.UNDERSCORE_PREFIX
+	+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME) })
 @ToString(callSuper = true)
 @NoArgsConstructor
 @GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX

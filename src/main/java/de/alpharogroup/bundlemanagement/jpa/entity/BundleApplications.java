@@ -39,6 +39,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -47,7 +48,7 @@ import org.hibernate.id.enhanced.SequenceStyleGenerator;
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import de.alpharogroup.db.entity.name.NameEntity;
-import de.alpharogroup.db.entity.name.versionable.VersionableUniqueNameEntity;
+import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
 import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -74,9 +75,13 @@ import lombok.experimental.FieldDefaults;
 		@NamedQuery(name = BundleApplications.NQ_FIND_SUPPORTED_LANGUAGE_LOCALE, query = "select ba from BundleApplications ba where :languageLocale member of ba.supportedLocales"),
 		@NamedQuery(name = BundleApplications.NQ_FIND_JOIN_SUPPORTED_LANGUAGE_LOCALE, query = "select ba from BundleApplications ba inner join ba.supportedLocales sl where sl.id = :languageLocale") })
 
-@Table(name = BundleApplications.TABLE_NAME, indexes = { @Index(name = DatabasePrefix.INDEX_PREFIX
-	+ BundleApplications.TABLE_NAME
-	+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME, unique = true) })
+@Table(name = BundleApplications.TABLE_NAME, uniqueConstraints = {
+		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX
+			+ BundleApplications.TABLE_NAME + DatabasePrefix.UNDERSCORE_PREFIX
+			+ NameEntity.COLUMN_NAME_NAME, columnNames = NameEntity.COLUMN_NAME_NAME) }, indexes = {
+					@Index(name = DatabasePrefix.INDEX_PREFIX + BundleApplications.TABLE_NAME
+						+ DatabasePrefix.UNDERSCORE_PREFIX
+						+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME, unique = true) })
 @Getter
 @Setter
 @ToString(callSuper = true)
@@ -84,7 +89,7 @@ import lombok.experimental.FieldDefaults;
 @GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
 	+ BundleApplications.TABLE_NAME))
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BundleApplications extends VersionableUniqueNameEntity<Integer> implements Cloneable
+public class BundleApplications extends VersionableNameEntity<Integer> implements Cloneable
 {
 
 	/** The Constant BASE_BUNDLE_APPLICATION is the base name of the initial bundle application. */

@@ -50,9 +50,9 @@ import lombok.ToString;
  * Note: The values of the properties keys is in the entity class {@link PropertiesValues}.
  */
 @Entity
-@Table(name = PropertiesKeys.TABLE_NAME, indexes = {
-		@Index(name = DatabasePrefix.INDEX_PREFIX + PropertiesKeys.TABLE_NAME
-			+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME) })
+@Table(name = PropertiesKeys.TABLE_NAME, indexes = { @Index(name = DatabasePrefix.INDEX_PREFIX
+	+ PropertiesKeys.TABLE_NAME + DatabasePrefix.UNDERSCORE_PREFIX
+	+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME) })
 @Getter
 @Setter
 @ToString

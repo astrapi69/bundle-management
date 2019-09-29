@@ -28,6 +28,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -36,7 +37,7 @@ import org.hibernate.id.enhanced.SequenceStyleGenerator;
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import de.alpharogroup.db.entity.name.NameEntity;
-import de.alpharogroup.db.entity.name.versionable.VersionableUniqueNameEntity;
+import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
 import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -50,11 +51,19 @@ import lombok.experimental.FieldDefaults;
  * The entity class {@link LanguageLocales} holds the data for the languages.
  */
 @Entity
-@Table(name = Languages.TABLE_NAME, indexes = {
-		@Index(name = DatabasePrefix.INDEX_PREFIX + Languages.TABLE_NAME
-			+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME),
-		@Index(name = DatabasePrefix.INDEX_PREFIX + Languages.TABLE_NAME
-			+ Languages.COLUMN_NAME_ISO_639_DASH1, columnList = Languages.COLUMN_NAME_ISO_639_DASH1) })
+@Table(name = Languages.TABLE_NAME, uniqueConstraints = {
+		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX + Languages.TABLE_NAME
+			+ DatabasePrefix.UNDERSCORE_PREFIX
+			+ NameEntity.COLUMN_NAME_NAME, columnNames = NameEntity.COLUMN_NAME_NAME),
+		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX + Languages.TABLE_NAME
+			+ DatabasePrefix.UNDERSCORE_PREFIX
+			+ Languages.COLUMN_NAME_ISO_639_DASH1, columnNames = Languages.COLUMN_NAME_ISO_639_DASH1) }, indexes = {
+					@Index(name = DatabasePrefix.INDEX_PREFIX + Languages.TABLE_NAME
+						+ DatabasePrefix.UNDERSCORE_PREFIX
+						+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME),
+					@Index(name = DatabasePrefix.INDEX_PREFIX + Languages.TABLE_NAME
+						+ DatabasePrefix.UNDERSCORE_PREFIX
+						+ Languages.COLUMN_NAME_ISO_639_DASH1, columnList = Languages.COLUMN_NAME_ISO_639_DASH1) })
 @Getter
 @Setter
 @ToString
@@ -62,7 +71,7 @@ import lombok.experimental.FieldDefaults;
 @GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
 	+ Languages.TABLE_NAME))
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Languages extends VersionableUniqueNameEntity<Integer> implements Cloneable
+public class Languages extends VersionableNameEntity<Integer> implements Cloneable
 {
 
 	public static final String COLUMN_NAME_ISO_639_DASH1 = "iso639_1";
@@ -72,7 +81,7 @@ public class Languages extends VersionableUniqueNameEntity<Integer> implements C
 	public static final String TABLE_NAME = "languages";
 
 	/** The iso639_1 code with two characters. */
-	@Column(unique = true, name = "iso639_1", length = 2)
+	@Column(name = "iso639_1", length = 2)
 	String iso639Dash1;
 
 	/**

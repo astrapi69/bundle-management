@@ -48,9 +48,9 @@ import lombok.ToString;
  * <br>
  */
 @Entity
-@Table(name = PropertiesValues.TABLE_NAME, indexes = {
-		@Index(name = DatabasePrefix.INDEX_PREFIX + PropertiesValues.TABLE_NAME
-			+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME) })
+@Table(name = PropertiesValues.TABLE_NAME, indexes = { @Index(name = DatabasePrefix.INDEX_PREFIX
+	+ PropertiesValues.TABLE_NAME + DatabasePrefix.UNDERSCORE_PREFIX
+	+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME) })
 @Getter
 @Setter
 @ToString

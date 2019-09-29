@@ -25,7 +25,7 @@ create table basenames
     version integer
 );
 
-create index idx_basenamesname
+create index idx_basenames_name
     on basenames (name);
 
 create table countries
@@ -34,17 +34,17 @@ create table countries
         constraint countries_pkey
             primary key,
     name           text
-        constraint uk_1pyiwrqimi3hnl3vtgsypj5r
+        constraint uc_countries_name
             unique,
     iso3166_a2name varchar(2)
-        constraint uk_9xthkqhg18dqjgwtaorxs9nss
+        constraint uc_countries_iso3166_a2name
             unique
 );
 
-create index idx_countriesname
+create index idx_countries_name
     on countries (name);
 
-create index idx_countriesiso3166_a2name
+create index idx_countries_iso3166_a2name
     on countries (iso3166_a2name);
 
 create table language_locales
@@ -54,7 +54,7 @@ create table language_locales
             primary key,
     version integer,
     locale  varchar(64)
-        constraint uk_o6y96fuy6rh296t7hio2yktul
+        constraint uc_language_locales_locale
             unique
 );
 
@@ -64,7 +64,7 @@ create table bundle_applications
         constraint bundle_applications_pkey
             primary key,
     name              text
-        constraint uk_q403edmj0haflkgh40khuy4v
+        constraint idx_bundle_applications_name
             unique,
     version           integer,
     default_locale_id integer
@@ -102,19 +102,19 @@ create table bundlenames
             references bundle_applications
 );
 
-create index idx_bundlenamesbase_name_id
+create index idx_bundlenames_base_name_id
     on bundlenames (base_name_id);
 
-create index idx_bundlenamesfilepath
+create index idx_bundlenames_filepath
     on bundlenames (filepath);
 
-create index idx_bundlenameslocale_id
+create index idx_bundlenames_locale_id
     on bundlenames (locale_id);
 
-create index idx_bundlenamesowner_id
+create index idx_bundlenames_owner_id
     on bundlenames (owner_id);
 
-create index idx_language_localeslocale
+create index idx_language_locales_locale
     on language_locales (locale);
 
 create table languages
@@ -123,18 +123,18 @@ create table languages
         constraint languages_pkey
             primary key,
     name     text
-        constraint uk_f6axmaokhmrbmm746866v0uyu
+        constraint uc_languages_name
             unique,
     version  integer,
     iso639_1 varchar(2)
-        constraint uk_c2kucnv72r38as03amypre8no
+        constraint uc_languages_iso639_1
             unique
 );
 
-create index idx_languagesname
+create index idx_languages_name
     on languages (name);
 
-create index idx_languagesiso639_1
+create index idx_languages_iso639_1
     on languages (iso639_1);
 
 create table properties_keys
@@ -146,7 +146,7 @@ create table properties_keys
     version integer
 );
 
-create index idx_properties_keysname
+create index idx_properties_keys_name
     on properties_keys (name);
 
 create table properties_values
@@ -158,7 +158,7 @@ create table properties_values
     version integer
 );
 
-create index idx_properties_valuesname
+create index idx_properties_values_name
     on properties_values (name);
 
 create table resourcebundles
@@ -178,12 +178,11 @@ create table resourcebundles
             references properties_values
 );
 
-create index idx_resourcebundlesbundlename_id
+create index idx_resourcebundles_bundlename_id
     on resourcebundles (bundlename_id);
 
-create index idx_resourcebundlesproperties_key_id
+create index idx_resourcebundles_properties_key_id
     on resourcebundles (properties_key_id);
 
-create index idx_resourcebundlesproperties_value_id
+create index idx_resourcebundles_properties_value_id
     on resourcebundles (properties_value_id);
-
