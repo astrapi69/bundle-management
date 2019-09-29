@@ -6,12 +6,17 @@ import java.util.Properties;
 
 import javax.validation.Valid;
 
-import de.alpharogroup.bundlemanagement.viewmodel.ImprortableBundleName;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
@@ -21,6 +26,7 @@ import de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository
 import de.alpharogroup.bundlemanagement.mapper.BundleNameMapper;
 import de.alpharogroup.bundlemanagement.mapper.ResourcebundleMapper;
 import de.alpharogroup.bundlemanagement.service.ResourcebundlesService;
+import de.alpharogroup.bundlemanagement.viewmodel.ImprortableBundleName;
 import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.db.resource.bundles.domain.BundleName;
 import de.alpharogroup.db.resource.bundles.domain.Resourcebundle;
@@ -155,42 +161,46 @@ public class ResourcebundlesController
 				resourcebundles != null ? HttpStatus.OK.value() : HttpStatus.BAD_REQUEST.value())
 			.body(ResourceBundleExtensions.format(resourcebundles.getValue().getName(), params));
 	}
-//
-//	@CrossOrigin(origins = "*")
-//	@RequestMapping(path = ResourcebundlesController.REST_PATH_UPDATE_BUNDLENAME,
-//		method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
-//		produces = MediaType.APPLICATION_JSON_VALUE)
-//	@ApiOperation(value = "updates the given bundlename")
-//	@ApiImplicitParams({
-//			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query"),
-//			@ApiImplicitParam(name = "basename", value = "the base name", dataType = "string", paramType = "query"),
-//			@ApiImplicitParam(name = "locale", value = "the locale", dataType = "string", paramType = "query"),
-//			@ApiImplicitParam(name = "filepath", value = "the filepath", dataType = "string", paramType = "query") })
-//	public ResponseEntity<BundleName> updateProperties(Properties properties,
-//		@RequestParam("bundleappname") String bundleappname,
-//		@RequestParam("basename") String basename,
-//		@RequestParam("locale") String locale,
-//		@RequestParam("filepath") String filepath)
-//	{
-//		final BundleApplications bundleApplication = this.service.find(bundleappname);
-//		BundleNames bundleName = this.service.updateProperties(bundleApplication, properties,
-//			basename, filepath, LocaleResolver.resolveLocaleCode(locale), true);
-//		BundleNameMapper bundleNameMapper = Mappers.getMapper(BundleNameMapper.class);
-//		return ResponseEntity.ok(bundleNameMapper.toDto(bundleName));
-//	}
-
+	//
+	// @CrossOrigin(origins = "*")
+	// @RequestMapping(path = ResourcebundlesController.REST_PATH_UPDATE_BUNDLENAME,
+	// method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
+	// produces = MediaType.APPLICATION_JSON_VALUE)
+	// @ApiOperation(value = "updates the given bundlename")
+	// @ApiImplicitParams({
+	// @ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application",
+	// dataType = "string", paramType = "query"),
+	// @ApiImplicitParam(name = "basename", value = "the base name", dataType = "string", paramType
+	// = "query"),
+	// @ApiImplicitParam(name = "locale", value = "the locale", dataType = "string", paramType =
+	// "query"),
+	// @ApiImplicitParam(name = "filepath", value = "the filepath", dataType = "string", paramType =
+	// "query") })
+	// public ResponseEntity<BundleName> updateProperties(Properties properties,
+	// @RequestParam("bundleappname") String bundleappname,
+	// @RequestParam("basename") String basename,
+	// @RequestParam("locale") String locale,
+	// @RequestParam("filepath") String filepath)
+	// {
+	// final BundleApplications bundleApplication = this.service.find(bundleappname);
+	// BundleNames bundleName = this.service.updateProperties(bundleApplication, properties,
+	// basename, filepath, LocaleResolver.resolveLocaleCode(locale), true);
+	// BundleNameMapper bundleNameMapper = Mappers.getMapper(BundleNameMapper.class);
+	// return ResponseEntity.ok(bundleNameMapper.toDto(bundleName));
+	// }
 
 
 	@CrossOrigin(origins = "*")
-	@RequestMapping(path = ResourcebundlesController.REST_PATH_UPDATE_BUNDLENAME,
-		method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
-		produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = ResourcebundlesController.REST_PATH_UPDATE_BUNDLENAME, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "updates the given bundlename")
-		public ResponseEntity<BundleName> updateProperties(@Valid @RequestBody ImprortableBundleName imprortableBundleName)
+	public ResponseEntity<BundleName> updateProperties(
+		@Valid @RequestBody ImprortableBundleName imprortableBundleName)
 	{
-		final BundleApplications bundleApplication = this.service.find(imprortableBundleName.getBundleappname());
-		BundleNames bundleName = this.service.updateProperties(bundleApplication, imprortableBundleName.getProperties(),
-			imprortableBundleName.getBaseName(), imprortableBundleName.getFilepath(), imprortableBundleName.getLocale(), true);
+		final BundleApplications bundleApplication = this.service
+			.find(imprortableBundleName.getBundleappname());
+		BundleNames bundleName = this.service.updateProperties(bundleApplication,
+			imprortableBundleName.getProperties(), imprortableBundleName.getBaseName(),
+			imprortableBundleName.getFilepath(), imprortableBundleName.getLocale(), true);
 		BundleNameMapper bundleNameMapper = Mappers.getMapper(BundleNameMapper.class);
 		return ResponseEntity.ok(bundleNameMapper.toDto(bundleName));
 	}

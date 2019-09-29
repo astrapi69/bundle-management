@@ -24,7 +24,6 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
-import java.util.List;
 import java.util.Locale;
 
 import org.springframework.stereotype.Service;
@@ -32,7 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 import de.alpharogroup.bundlemanagement.jpa.repository.LanguageLocalesRepository;
-import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
 import de.alpharogroup.resourcebundle.locale.LocaleResolver;
 import de.alpharogroup.spring.service.api.GenericService;

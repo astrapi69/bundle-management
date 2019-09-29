@@ -1,10 +1,11 @@
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
 
 public class BaseNamesRepositoryTest extends BaseJpaTest
 {

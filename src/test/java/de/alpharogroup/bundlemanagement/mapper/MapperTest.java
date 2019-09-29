@@ -91,8 +91,7 @@ public class MapperTest
 		Languages languageEntity = languageMapper.toEntity(language);
 		assertEquals(languages, languageEntity);
 
-		BundleApplications bundleApplications = BundleApplications.builder()
-			.name("test-bundle-app")
+		BundleApplications bundleApplications = BundleApplications.builder().name("test-bundle-app")
 			.defaultLocale(languageLocales).supportedLocales(SetFactory.newHashSet(languageLocales))
 			.build();
 

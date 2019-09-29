@@ -30,13 +30,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
-import org.springframework.transaction.annotation.Transactional;
 
-@Repository public interface BundleNamesRepository extends JpaRepository<BundleNames, Integer>
+@Repository
+public interface BundleNamesRepository extends JpaRepository<BundleNames, Integer>
 {
+
+	@Transactional
+	@Query("select bn from BundleNames bn where bn.baseName.name=:basename")
+	List<BundleNames> findByBaseName(@Param("basename") String basename);
 
 	@Transactional
 	@Query("select bn from BundleNames bn " + "where bn.owner=:owner ")
@@ -47,10 +52,6 @@ import org.springframework.transaction.annotation.Transactional;
 		+ "and bn.baseName.name=:basename")
 	List<BundleNames> findByOwnerAndBaseName(@Param("owner") String owner,
 		@Param("basename") String basename);
-
-	@Transactional
-	@Query("select bn from BundleNames bn where bn.baseName.name=:basename")
-	List<BundleNames> findByBaseName(@Param("basename") String basename);
 
 	@Transactional
 	@Query("select bn from BundleNames bn " + "where bn.owner.name=:owner "

@@ -9,12 +9,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import de.alpharogroup.bundlemanagement.viewmodel.ImprortableBundleName;
-import de.alpharogroup.resourcebundle.locale.LocaleResolver;
-import de.alpharogroup.xml.json.ObjectToJsonExtensions;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.core.ParameterizedTypeReference;
@@ -28,10 +23,15 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
+import de.alpharogroup.bundlemanagement.viewmodel.ImprortableBundleName;
 import de.alpharogroup.db.resource.bundles.domain.BundleName;
 import de.alpharogroup.db.resource.bundles.domain.Resourcebundle;
 import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
+import de.alpharogroup.resourcebundle.locale.LocaleResolver;
+import de.alpharogroup.xml.json.ObjectToJsonExtensions;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
@@ -165,8 +165,8 @@ public class ResourcebundlesControllerTest
 		StringBuilder sb = new StringBuilder();
 		sb.append(getBaseUrl(serverPort))
 			.append(ResourcebundlesController.REST_PATH_UPDATE_BUNDLENAME)
-//			.append(
-//				"?basename={basename}&bundleappname={bundleappname}&filepath={filepath}&locale={locale}")
+		// .append(
+		// "?basename={basename}&bundleappname={bundleappname}&filepath={filepath}&locale={locale}")
 		;
 
 		String restUrl = sb.toString();
@@ -188,12 +188,8 @@ public class ResourcebundlesControllerTest
 		String localeFilenameSuffix = LocaleExtensions.getLocaleFilenameSuffix(locale);
 
 		ImprortableBundleName imprortableBundleName = ImprortableBundleName.builder()
-			.properties(properties)
-			.bundleappname(ownerName)
-			.baseName(baseName)
-			.filepath(filepath)
-			.locale(locale)
-			.build();
+			.properties(properties).bundleappname(ownerName).baseName(baseName).filepath(filepath)
+			.locale(locale).build();
 
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("bundleappname", ownerName);

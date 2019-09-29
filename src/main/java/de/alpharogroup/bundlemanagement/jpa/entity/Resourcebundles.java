@@ -24,73 +24,76 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
-import de.alpharogroup.db.entity.version.VersionableBaseEntity;
+import de.alpharogroup.db.entity.version.VersionableEntity;
 import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
+import lombok.experimental.FieldDefaults;
 
 /**
  * The entity class {@link Resourcebundles} holds the all data of the values of the resource
  * bundles.
  */
 @Entity
-@Table(name = Resourcebundles.TABLE_NAME, indexes = {
-	@Index(name = DatabasePrefix.INDEX_PREFIX + Resourcebundles.TABLE_NAME
-		+ Resourcebundles.COLUMN_NAME_BUNDLE_NAME, columnList = Resourcebundles.COLUMN_NAME_BUNDLE_NAME),
-	@Index(name = DatabasePrefix.INDEX_PREFIX + Resourcebundles.TABLE_NAME
-		+ Resourcebundles.COLUMN_NAME_PROPRERTIES_KEY, columnList = Resourcebundles.COLUMN_NAME_PROPRERTIES_KEY),
-	@Index(name = DatabasePrefix.INDEX_PREFIX + Resourcebundles.TABLE_NAME
-		+ Resourcebundles.COLUMN_NAME_PROPRERTIES_VALUE, columnList = Resourcebundles.COLUMN_NAME_PROPRERTIES_VALUE)
-})
+@Table(name = Resourcebundles.TABLE_NAME, indexes = { @Index(name = DatabasePrefix.INDEX_PREFIX
+	+ Resourcebundles.TABLE_NAME
+	+ Resourcebundles.COLUMN_NAME_BUNDLE_NAME, columnList = Resourcebundles.COLUMN_NAME_BUNDLE_NAME),
+		@Index(name = DatabasePrefix.INDEX_PREFIX + Resourcebundles.TABLE_NAME
+			+ Resourcebundles.COLUMN_NAME_PROPRERTIES_KEY, columnList = Resourcebundles.COLUMN_NAME_PROPRERTIES_KEY),
+		@Index(name = DatabasePrefix.INDEX_PREFIX + Resourcebundles.TABLE_NAME
+			+ Resourcebundles.COLUMN_NAME_PROPRERTIES_VALUE, columnList = Resourcebundles.COLUMN_NAME_PROPRERTIES_VALUE) })
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-@GenericGenerator(
-	name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME,
-	strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME,
-	parameters = @Parameter(
-		name = SequenceStyleGenerator.SEQUENCE_PARAM,
-		value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX + Resourcebundles.TABLE_NAME
-	)
-)
-public class Resourcebundles extends VersionableBaseEntity<Integer> implements Cloneable
+@GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
+	+ Resourcebundles.TABLE_NAME))
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Resourcebundles extends VersionableEntity<Integer> implements Cloneable
 {
 
 	public static final String COLUMN_NAME_BUNDLE_NAME = "bundlename_id";
 	public static final String COLUMN_NAME_PROPRERTIES_KEY = "properties_key_id";
 	public static final String COLUMN_NAME_PROPRERTIES_VALUE = "properties_value_id";
 
-	public static final String TABLE_NAME = "resourcebundles";
 	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;
+	public static final String TABLE_NAME = "resourcebundles";
 
 	/** The bundleName from this {@link BundleNames} object. */
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "bundlename_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_resourcebundles_bundlename_id"))
-	private BundleNames bundleName;
+	BundleNames bundleName;
 
 	/** The properties key from this {@link BundleNames} object. */
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "properties_key_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_resourcebundles_properties_key_id"))
-	private PropertiesKeys key;
+	PropertiesKeys key;
 
 	/** The value for the properties key. */
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "properties_value_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_resourcebundles_properties_value_id"))
-	private PropertiesValues value;
+	PropertiesValues value;
 
 }

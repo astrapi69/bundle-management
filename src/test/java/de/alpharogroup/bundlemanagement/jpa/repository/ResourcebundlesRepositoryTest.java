@@ -1,28 +1,35 @@
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.*;
-import de.alpharogroup.collections.set.SetFactory;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
+import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
+import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
+import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
+import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
+import de.alpharogroup.collections.set.SetFactory;
 
 public class ResourcebundlesRepositoryTest extends BaseJpaTest
 {
 
 	@Autowired
-	private ResourcebundlesRepository repository;
+	private LanguageLocalesRepository languageLocalesRepository;
 
 	@Autowired
-	private LanguageLocalesRepository languageLocalesRepository;
+	private ResourcebundlesRepository repository;
 
 
 	@Test
-	public void findResourceKey(){
+	public void findResourceKey()
+	{
 		String owner;
 		String baseName;
 		String locale;
@@ -49,14 +56,14 @@ public class ResourcebundlesRepositoryTest extends BaseJpaTest
 
 		String locale = "de";
 		LanguageLocales languageLocales = languageLocalesRepository.findDistinctByLocale(locale);
-		if(languageLocales==null){
+		if (languageLocales == null)
+		{
 			languageLocales = LanguageLocales.builder().locale(locale).build();
 			entityManager.persist(languageLocales);
 			entityManager.flush();
 		}
 
-		BundleApplications bundleApplications = BundleApplications.builder()
-			.name("test-bundle-app")
+		BundleApplications bundleApplications = BundleApplications.builder().name("test-bundle-app")
 			.defaultLocale(languageLocales).supportedLocales(SetFactory.newHashSet(languageLocales))
 			.build();
 
@@ -86,9 +93,9 @@ public class ResourcebundlesRepositoryTest extends BaseJpaTest
 		entityManager.flush();
 
 		// when
-		List<Resourcebundles> byName = repository
-			.findByOwnerAndBaseNameAndLocaleAndKeyAndValue(bundleApplications.getName(),
-				baseNames.getName(), languageLocales.getLocale(), propertiesKeys.getName());
+		List<Resourcebundles> byName = repository.findByOwnerAndBaseNameAndLocaleAndKeyAndValue(
+			bundleApplications.getName(), baseNames.getName(), languageLocales.getLocale(),
+			propertiesKeys.getName());
 		// then
 		assertNotNull(byName);
 		assertTrue(byName.contains(entity));

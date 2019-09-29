@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-import lombok.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +45,7 @@ import de.alpharogroup.spring.service.api.GenericService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 
 /**
@@ -79,18 +79,21 @@ public class BundleNamesService
 		return repository.findByOwner(owner);
 	}
 
-	public List<BundleNames> find(final @NonNull BundleApplications owner, final @NonNull BaseNames baseName)
+	public List<BundleNames> find(final @NonNull BundleApplications owner,
+		final @NonNull BaseNames baseName)
 	{
 		return repository.findByOwnerAndBaseName(owner.getName(), baseName.getName());
 	}
 
-	public BundleNames find(final @NonNull BundleApplications owner, final @NonNull BaseNames baseName,
-		final @NonNull LanguageLocales languageLocales)
+	public BundleNames find(final @NonNull BundleApplications owner,
+		final @NonNull BaseNames baseName, final @NonNull LanguageLocales languageLocales)
 	{
-		return repository.findDistinctByOwnerAndBaseNameAndLocale(owner.getName(), baseName.getName(), languageLocales.getLocale());
+		return repository.findDistinctByOwnerAndBaseNameAndLocale(owner.getName(),
+			baseName.getName(), languageLocales.getLocale());
 	}
 
-	public List<BundleNames> find(final @NonNull BundleApplications owner, final @NonNull String baseName)
+	public List<BundleNames> find(final @NonNull BundleApplications owner,
+		final @NonNull String baseName)
 	{
 		return repository.findByOwnerAndBaseName(owner.getName(), baseName);
 	}
@@ -98,15 +101,15 @@ public class BundleNamesService
 	public BundleNames find(final BundleApplications owner, final String baseName,
 		final Locale locale)
 	{
-		return repository.findDistinctByOwnerAndBaseNameAndLocale(owner.getName(),
-			baseName, LocaleExtensions.getLocaleFilenameSuffix(locale));
+		return repository.findDistinctByOwnerAndBaseNameAndLocale(owner.getName(), baseName,
+			LocaleExtensions.getLocaleFilenameSuffix(locale));
 	}
 
 	public BundleNames find(final BundleApplications owner, final String baseName,
 		final String locale)
 	{
-		return repository.findDistinctByOwnerAndBaseNameAndLocale(owner.getName(),
-			baseName, locale);
+		return repository.findDistinctByOwnerAndBaseNameAndLocale(owner.getName(), baseName,
+			locale);
 	}
 
 	public LanguageLocales getDefaultLocale(final BundleApplications owner, final String baseName)

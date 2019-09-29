@@ -1,15 +1,14 @@
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.Languages;
-import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
 
 public class PropertiesKeysRepositoryTest extends BaseJpaTest
 {

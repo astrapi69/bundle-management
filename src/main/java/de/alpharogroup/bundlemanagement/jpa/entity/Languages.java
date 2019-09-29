@@ -26,49 +26,54 @@ package de.alpharogroup.bundlemanagement.jpa.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.Index;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
+import de.alpharogroup.db.entity.name.NameEntity;
 import de.alpharogroup.db.entity.name.versionable.VersionableUniqueNameEntity;
 import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
+import lombok.experimental.FieldDefaults;
 
 /**
  * The entity class {@link LanguageLocales} holds the data for the languages.
  */
 @Entity
-@Table(name = Languages.TABLE_NAME)
+@Table(name = Languages.TABLE_NAME, indexes = {
+		@Index(name = DatabasePrefix.INDEX_PREFIX + Languages.TABLE_NAME
+			+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME, unique = true),
+		@Index(name = DatabasePrefix.INDEX_PREFIX + Languages.TABLE_NAME
+			+ Languages.COLUMN_NAME_ISO_639_DASH1, columnList = Languages.COLUMN_NAME_ISO_639_DASH1, unique = true) })
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-@GenericGenerator(
-	name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME,
-	strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME,
-	parameters = @Parameter(
-		name = SequenceStyleGenerator.SEQUENCE_PARAM,
-		value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX + Languages.TABLE_NAME
-	)
-)
+@GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
+	+ Languages.TABLE_NAME))
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Languages extends VersionableUniqueNameEntity<Integer> implements Cloneable
 {
 
-	public static final String TABLE_NAME = "languages";
+	public static final String COLUMN_NAME_ISO_639_DASH1 = "iso639_1";
+
 	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;
+	public static final String TABLE_NAME = "languages";
 
 	/** The iso639_1 code with two characters. */
 	@Column(unique = true, name = "iso639_1", length = 2)
-	private String iso639Dash1;
+	String iso639Dash1;
 
 	/**
 	 * Instantiates a new {@link Languages} entity object.

@@ -27,20 +27,35 @@ package de.alpharogroup.bundlemanagement.jpa.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
+import de.alpharogroup.db.entity.name.NameEntity;
 import de.alpharogroup.db.entity.name.versionable.VersionableUniqueNameEntity;
 import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
+import lombok.experimental.FieldDefaults;
 
 /**
  * The entity class {@link BundleApplications} is the root of every bundle application. Every entity
@@ -59,46 +74,38 @@ import org.hibernate.id.enhanced.SequenceStyleGenerator;
 		@NamedQuery(name = BundleApplications.NQ_FIND_SUPPORTED_LANGUAGE_LOCALE, query = "select ba from BundleApplications ba where :languageLocale member of ba.supportedLocales"),
 		@NamedQuery(name = BundleApplications.NQ_FIND_JOIN_SUPPORTED_LANGUAGE_LOCALE, query = "select ba from BundleApplications ba inner join ba.supportedLocales sl where sl.id = :languageLocale") })
 
-@Table(name = BundleApplications.TABLE_NAME, indexes = {
-	@Index(name = DatabasePrefix.INDEX_PREFIX + BundleApplications.TABLE_NAME
-		+ BundleApplications.COLUMN_NAME_NAME, columnList = BundleApplications.COLUMN_NAME_NAME, unique = true)
-})
+@Table(name = BundleApplications.TABLE_NAME, indexes = { @Index(name = DatabasePrefix.INDEX_PREFIX
+	+ BundleApplications.TABLE_NAME
+	+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME, unique = true) })
 @Getter
 @Setter
 @ToString(callSuper = true)
 @NoArgsConstructor
-@GenericGenerator(
-	name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME,
-	strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME,
-	parameters = @Parameter(
-		name = SequenceStyleGenerator.SEQUENCE_PARAM,
-		value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX + BundleApplications.TABLE_NAME
-	)
-)
+@GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
+	+ BundleApplications.TABLE_NAME))
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class BundleApplications extends VersionableUniqueNameEntity<Integer> implements Cloneable
 {
 
-	public static final String COLUMN_NAME_NAME = "name";
-
-	public static final String TABLE_NAME = "bundle_applications";
 	/** The Constant BASE_BUNDLE_APPLICATION is the base name of the initial bundle application. */
 	public static final String BASE_BUNDLE_APPLICATION = "base-bundle-application";
-
 	public static final String NQ_FIND_JOIN_SUPPORTED_LANGUAGE_LOCALE = "BundleApplications."
 		+ "findWithJoinSupportedLanguageLocale";
+
 	public static final String NQ_FIND_SUPPORTED_LANGUAGE_LOCALE = "BundleApplications."
 		+ "findSupportedLanguageLocale";
-
-
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+
+
+	public static final String TABLE_NAME = "bundle_applications";
 
 	/**
 	 * The default locale of this bundle application.
 	 */
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "default_locale_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundle_applications_default_locale_id"))
-	private LanguageLocales defaultLocale;
+	LanguageLocales defaultLocale;
 
 	/**
 	 * The supported locale objects that are mandatory for this bundle application.
@@ -107,7 +114,7 @@ public class BundleApplications extends VersionableUniqueNameEntity<Integer> imp
 	@JoinTable(name = "bundle_application_language_locales", joinColumns = {
 			@JoinColumn(name = "application_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundle_application_id")) }, inverseJoinColumns = {
 					@JoinColumn(name = "language_locales_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundle_application_language_locales_id")) })
-	private Set<LanguageLocales> supportedLocales = new HashSet<>();
+	Set<LanguageLocales> supportedLocales = new HashSet<>();
 
 	/**
 	 * Instantiates a new {@link BundleApplications} entity object.
@@ -118,7 +125,7 @@ public class BundleApplications extends VersionableUniqueNameEntity<Integer> imp
 	 *            the default locale
 	 */
 	@Builder
-	BundleApplications(final String name, final LanguageLocales defaultLocale,
+	public BundleApplications(final String name, final LanguageLocales defaultLocale,
 		final Set<LanguageLocales> supportedLocales)
 	{
 		super(name);

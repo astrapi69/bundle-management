@@ -24,47 +24,55 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
-import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
+import de.alpharogroup.db.entity.name.NameEntity;
 import de.alpharogroup.db.entity.name.UniqueNameEntity;
+import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
+import lombok.experimental.FieldDefaults;
 
 /**
  * The entity class {@link Countries} is keeping the information for all countries in the world
  */
 @Entity
-@Table(name = Countries.TABLE_NAME)
+@Table(name = Countries.TABLE_NAME, indexes = {
+		@Index(name = DatabasePrefix.INDEX_PREFIX + Countries.TABLE_NAME
+			+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME, unique = true),
+		@Index(name = DatabasePrefix.INDEX_PREFIX + Countries.TABLE_NAME
+			+ Countries.COLUMN_NAME_ISO_3166_A2_NAME, columnList = Countries.COLUMN_NAME_ISO_3166_A2_NAME, unique = true) })
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Getter @Setter @NoArgsConstructor
-@GenericGenerator(
-	name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME,
-	strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME,
-	parameters = @Parameter(
-		name = SequenceStyleGenerator.SEQUENCE_PARAM,
-		value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX + Countries.TABLE_NAME
-	)
-)
-public class Countries
-	extends UniqueNameEntity<Integer> implements Cloneable
+@Getter
+@Setter
+@NoArgsConstructor
+@GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
+	+ Countries.TABLE_NAME))
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Countries extends UniqueNameEntity<Integer> implements Cloneable
 {
 
-	public static final String TABLE_NAME = "countries";
+	public static final String COLUMN_NAME_ISO_3166_A2_NAME = "iso3166_a2name";
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;
+	public static final String TABLE_NAME = "countries";
 	/** The iso3166 name with two characters. */
-	@Column(name = "iso3166_a2name", length = 2) private String iso3166A2name;
+	@Column(name = "iso3166_a2name", length = 2)
+	String iso3166A2name;
 
 	/**
 	 * Instantiates a new countries.
@@ -74,7 +82,8 @@ public class Countries
 	 * @param iso3166a2name
 	 *            the iso 3166 a 2 name
 	 */
-	@Builder public Countries(String name, String iso3166a2name)
+	@Builder
+	public Countries(String name, String iso3166a2name)
 	{
 		super(name);
 		iso3166A2name = iso3166a2name;

@@ -35,8 +35,8 @@ public interface CountriesRepository extends JpaRepository<Countries, Integer>
 {
 	Countries findByIso3166A2name(@Param("iso3166A2name") String iso3166A2name);
 
-	Countries findDistinctByName(@Param("name") String name);
-
 	Countries findByNameAndIso3166A2name(@Param("name") String name,
 		@Param("iso3166A2name") String iso3166A2name);
+
+	Countries findDistinctByName(@Param("name") String name);
 }
