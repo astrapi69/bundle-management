@@ -9,14 +9,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
-import de.alpharogroup.bundlemanagement.extensions.ParameterizedTypeReferenceFactory;
-import de.alpharogroup.bundlemanagement.extensions.UrlExtensions;
-import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.viewmodel.*;
-import de.alpharogroup.collections.array.ArrayExtensions;
 import de.alpharogroup.collections.set.SetFactory;
-import lombok.NonNull;
-import org.apache.commons.lang3.ArrayUtils;
+import de.alpharogroup.spring.generics.ParameterizedTypeReferenceFactory;
+import de.alpharogroup.spring.web.util.UrlExtensions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

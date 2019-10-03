@@ -55,7 +55,7 @@ dependencies {
 	compile 'de.alpharogroup:jobject-copy:3.1.2'
 	compile 'de.alpharogroup:xml-extensions:6.2.1'
 	compile 'de.alpharogroup:throw-able:1.1'
-	compile 'de.alpharogroup:spring-tool-extensions:1.3'
+	compile 'de.alpharogroup:spring-tool-extensions:1.4'
 	compile 'io.springfox:springfox-swagger2:2.9.2'
 	compile 'io.springfox:springfox-swagger-ui:2.9.2'
 	compile 'com.thoughtworks.xstream:xstream:1.4.9'

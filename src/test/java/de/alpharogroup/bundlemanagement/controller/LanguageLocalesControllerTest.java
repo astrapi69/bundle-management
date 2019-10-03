@@ -5,10 +5,9 @@ import static org.junit.Assert.assertNotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.alpharogroup.bundlemanagement.extensions.UrlExtensions;
-import de.alpharogroup.bundlemanagement.viewmodel.Country;
 import de.alpharogroup.bundlemanagement.viewmodel.LanguageLocale;
 import de.alpharogroup.collections.array.ArrayFactory;
+import de.alpharogroup.spring.web.util.UrlExtensions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

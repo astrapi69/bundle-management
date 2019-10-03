@@ -1,10 +1,9 @@
 package de.alpharogroup.bundlemanagement.controller;
 
 import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
-import de.alpharogroup.bundlemanagement.extensions.UrlExtensions;
 import de.alpharogroup.bundlemanagement.viewmodel.Language;
-import de.alpharogroup.bundlemanagement.viewmodel.LanguageLocale;
 import de.alpharogroup.collections.array.ArrayFactory;
+import de.alpharogroup.spring.web.util.UrlExtensions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

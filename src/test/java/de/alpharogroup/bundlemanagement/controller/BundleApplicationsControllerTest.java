@@ -2,13 +2,11 @@ package de.alpharogroup.bundlemanagement.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
-import de.alpharogroup.bundlemanagement.extensions.ParameterizedTypeReferenceFactory;
-import de.alpharogroup.bundlemanagement.extensions.UrlExtensions;
 import de.alpharogroup.bundlemanagement.viewmodel.BundleApplication;
 import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
 import de.alpharogroup.collections.array.ArrayFactory;
-import de.alpharogroup.collections.set.SetExtensions;
-import de.alpharogroup.xml.json.ObjectToJsonExtensions;
+import de.alpharogroup.spring.generics.ParameterizedTypeReferenceFactory;
+import de.alpharogroup.spring.web.util.UrlExtensions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,6 +42,20 @@ public class BundleApplicationsControllerTest
 	@Before
 	public void prepare()
 	{
+	}
+
+
+	@Test
+	public void testFindListAll(){
+		String restUrl;
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			"");
+		HttpHeaders headers = new HttpHeaders();
+		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+		ResponseEntity<Iterable<BundleApplication>> entities = this.restTemplate.exchange(restUrl, HttpMethod.GET,
+			requestEntity, ParameterizedTypeReferenceFactory
+				.newIterableParameterizedTypeReference(BundleApplication.class));
+		assertNotNull(entities);
 	}
 
 	@Test
