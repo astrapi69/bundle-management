@@ -26,6 +26,7 @@ package de.alpharogroup.bundlemanagement.viewmodel;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -36,10 +37,9 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)@JsonIgnoreProperties(ignoreUnknown=true)
 public class BundleApplication
 {
-
 	Integer id;
 	Integer version;
 	String name;

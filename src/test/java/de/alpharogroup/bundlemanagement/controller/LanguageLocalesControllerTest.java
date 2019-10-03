@@ -5,8 +5,10 @@ import static org.junit.Assert.assertNotNull;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.alpharogroup.bundlemanagement.extensions.UrlExtensions;
 import de.alpharogroup.bundlemanagement.viewmodel.Country;
 import de.alpharogroup.bundlemanagement.viewmodel.LanguageLocale;
+import de.alpharogroup.collections.array.ArrayFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,8 +37,9 @@ public class LanguageLocalesControllerTest
 
 	public String getBaseUrl(int serverPort)
 	{
-		return "http://localhost:" + serverPort + ApplicationConfiguration.REST_VERSION
-			+ LanguageLocalesController.REST_PATH;
+		return UrlExtensions.getBaseUrl("http", "localhost", serverPort,
+			ApplicationConfiguration.REST_VERSION,
+			LanguageLocalesController.REST_PATH);
 	}
 
 	@Before
@@ -47,8 +50,10 @@ public class LanguageLocalesControllerTest
 	@Test
 	public void testFind()
 	{
-		String restUrl = getBaseUrl(randomServerPort) + LanguageLocalesController.REST_PATH_FIND
-			+ "?locale={locale}";
+		String[] requestParams = ArrayFactory.newArray("locale");
+		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			LanguageLocalesController.REST_PATH_FIND, requestParams);
+
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		Map<String, String> map = new HashMap<String, String>();

@@ -1,8 +1,10 @@
 package de.alpharogroup.bundlemanagement.controller;
 
 import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
+import de.alpharogroup.bundlemanagement.extensions.UrlExtensions;
 import de.alpharogroup.bundlemanagement.viewmodel.Language;
 import de.alpharogroup.bundlemanagement.viewmodel.LanguageLocale;
+import de.alpharogroup.collections.array.ArrayFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,8 +36,9 @@ public class LanguagesControllerTest
 
 	public String getBaseUrl(int serverPort)
 	{
-		return "http://localhost:" + serverPort + ApplicationConfiguration.REST_VERSION
-			+ LanguagesController.REST_PATH;
+		return UrlExtensions.getBaseUrl("http", "localhost", serverPort,
+			ApplicationConfiguration.REST_VERSION,
+			LanguagesController.REST_PATH);
 	}
 
 	@Before
@@ -46,12 +49,30 @@ public class LanguagesControllerTest
 	@Test
 	public void testFind()
 	{
-		String restUrl = getBaseUrl(randomServerPort) + LanguagesController.REST_PATH_FIND
-			+ "?name={name}";
+		String[] requestParams = ArrayFactory.newArray("name");
+		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			LanguagesController.REST_PATH_FIND, requestParams);
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("name", "Armenian");
+
+		ResponseEntity<Language> entity = this.restTemplate.exchange(restUrl, HttpMethod.GET,
+			requestEntity, Language.class, map);
+		assertNotNull(entity);
+	}
+
+	@Test
+	public void testFindByCode()
+	{
+		String[] requestParams = ArrayFactory.newArray("code");
+		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			LanguagesController.REST_PATH_FIND_BY_CODE, requestParams);
+
+		HttpHeaders headers = new HttpHeaders();
+		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("code", "el");
 
 		ResponseEntity<Language> entity = this.restTemplate.exchange(restUrl, HttpMethod.GET,
 			requestEntity, Language.class, map);

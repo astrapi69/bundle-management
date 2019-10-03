@@ -161,34 +161,6 @@ public class ResourcebundlesController
 				resourcebundles != null ? HttpStatus.OK.value() : HttpStatus.BAD_REQUEST.value())
 			.body(ResourceBundleExtensions.format(resourcebundles.getValue().getName(), params));
 	}
-	//
-	// @CrossOrigin(origins = "*")
-	// @RequestMapping(path = ResourcebundlesController.REST_PATH_UPDATE_BUNDLENAME,
-	// method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
-	// produces = MediaType.APPLICATION_JSON_VALUE)
-	// @ApiOperation(value = "updates the given bundlename")
-	// @ApiImplicitParams({
-	// @ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application",
-	// dataType = "string", paramType = "query"),
-	// @ApiImplicitParam(name = "basename", value = "the base name", dataType = "string", paramType
-	// = "query"),
-	// @ApiImplicitParam(name = "locale", value = "the locale", dataType = "string", paramType =
-	// "query"),
-	// @ApiImplicitParam(name = "filepath", value = "the filepath", dataType = "string", paramType =
-	// "query") })
-	// public ResponseEntity<BundleName> updateProperties(Properties properties,
-	// @RequestParam("bundleappname") String bundleappname,
-	// @RequestParam("basename") String basename,
-	// @RequestParam("locale") String locale,
-	// @RequestParam("filepath") String filepath)
-	// {
-	// final BundleApplications bundleApplication = this.service.find(bundleappname);
-	// BundleNames bundleName = this.service.updateProperties(bundleApplication, properties,
-	// basename, filepath, LocaleResolver.resolveLocaleCode(locale), true);
-	// BundleNameMapper bundleNameMapper = Mappers.getMapper(BundleNameMapper.class);
-	// return ResponseEntity.ok(bundleNameMapper.toDto(bundleName));
-	// }
-
 
 	@CrossOrigin(origins = "*")
 	@RequestMapping(path = ResourcebundlesController.REST_PATH_UPDATE_BUNDLENAME, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

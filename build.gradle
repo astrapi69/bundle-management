@@ -59,6 +59,7 @@ dependencies {
 	compile 'io.springfox:springfox-swagger2:2.9.2'
 	compile 'io.springfox:springfox-swagger-ui:2.9.2'
 	compile 'com.thoughtworks.xstream:xstream:1.4.9'
+	compile 'org.apache.commons:commons-lang3:3.9'
 	implementation 'org.postgresql:postgresql'
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'org.springframework:spring-oxm'

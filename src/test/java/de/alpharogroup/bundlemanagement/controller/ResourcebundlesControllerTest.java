@@ -1,5 +1,6 @@
 package de.alpharogroup.bundlemanagement.controller;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
@@ -8,8 +9,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
-import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
-import de.alpharogroup.bundlemanagement.viewmodel.Resourcebundle;
+import de.alpharogroup.bundlemanagement.extensions.ParameterizedTypeReferenceFactory;
+import de.alpharogroup.bundlemanagement.extensions.UrlExtensions;
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
+import de.alpharogroup.bundlemanagement.viewmodel.*;
+import de.alpharogroup.collections.array.ArrayExtensions;
+import de.alpharogroup.collections.set.SetFactory;
+import lombok.NonNull;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +36,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
-import de.alpharogroup.bundlemanagement.viewmodel.ImprortableBundleName;
 import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
 import de.alpharogroup.resourcebundle.locale.LocaleResolver;
 import de.alpharogroup.xml.json.ObjectToJsonExtensions;
@@ -46,8 +52,9 @@ public class ResourcebundlesControllerTest
 
 	public String getBaseUrl(int serverPort)
 	{
-		return "http://localhost:" + serverPort + ApplicationConfiguration.REST_VERSION
-			+ ResourcebundlesController.REST_PATH;
+		return UrlExtensions.getBaseUrl("http", "localhost", serverPort,
+			ApplicationConfiguration.REST_VERSION,
+			ResourcebundlesController.REST_PATH);
 	}
 
 	@Before
@@ -58,8 +65,11 @@ public class ResourcebundlesControllerTest
 	@Test
 	public void testFind()
 	{
-		String restUrl = getBaseUrl(randomServerPort) + ResourcebundlesController.REST_PATH_FIND
-			+ "?basename={basename}&bundleappname={bundleappname}&key={key}&locale={locale}";
+		Resourcebundle actual;
+		Resourcebundle expected;
+		String[] requestParams = {"basename", "bundleappname", "key", "locale"};
+		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			ResourcebundlesController.REST_PATH_FIND, requestParams);
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		Map<String, String> map = new HashMap<String, String>();
@@ -71,13 +81,38 @@ public class ResourcebundlesControllerTest
 		ResponseEntity<Resourcebundle> entity = this.restTemplate.exchange(restUrl, HttpMethod.GET,
 			requestEntity, Resourcebundle.class, map);
 		assertNotNull(entity);
+		actual = entity.getBody();
+		expected = Resourcebundle.builder()
+			.id(1)
+			.version(1)
+			.key(PropertiesKey.builder().id(1).version(1).name("resource.bundles.test.label").build())
+			.value(PropertiesValue.builder().id(1).version(1).name("Erstes label").build())
+			.bundleName(BundleName.builder()
+				.id(1)
+				.version(1)
+				.filepath("/src/test/resources/messages")
+				.baseName(BaseName.builder().id(1).version(1).name("test-resource-bundles").build())
+				.locale(LanguageLocale.builder().id(29).version(1).locale("de").build())
+				.owner(BundleApplication.builder().id(1).version(1)
+					.name("test-bundle-application")
+					.defaultLocale(LanguageLocale.builder().id(38).version(1).locale("en").build())
+					.supportedLocales(SetFactory.newHashSet(LanguageLocale.builder().id(29).version(1).locale("de").build(),
+						LanguageLocale.builder().id(38).version(1).locale("en").build(),
+						LanguageLocale.builder().id(41).version(1).locale("en_GB").build(),
+						LanguageLocale.builder().id(32).version(1).locale("de_DE").build(),
+						LanguageLocale.builder().id(48).version(1).locale("en_US").build()))
+					.build())
+				.build())
+			.build();
+		assertEquals(actual, expected);
 	}
 
 	@Test
 	public void testFindResourceBundles()
 	{
-		String restUrl = getBaseUrl(randomServerPort) + ResourcebundlesController.REST_PATH_RESOURCES
-			+ "?basename={basename}&bundleappname={bundleappname}&locale={locale}";
+		String[] requestParams = {"basename", "bundleappname", "locale"};
+		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			ResourcebundlesController.REST_PATH_RESOURCES, requestParams);
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		Map<String, String> map = new HashMap<String, String>();
@@ -95,8 +130,9 @@ public class ResourcebundlesControllerTest
 	@Test
 	public void testGetProperties()
 	{
-		String restUrl = getBaseUrl(randomServerPort) + ResourcebundlesController.REST_PATH_VALUE
-			+ "?basename={basename}&bundleappname={bundleappname}&locale={locale}";
+		String[] requestParams = {"basename", "bundleappname", "locale"};
+		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			ResourcebundlesController.REST_PATH_VALUE, requestParams);
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		Map<String, String> map = new HashMap<String, String>();
@@ -112,8 +148,10 @@ public class ResourcebundlesControllerTest
 	@Test
 	public void testGetString()
 	{
-		String restUrl = getBaseUrl(randomServerPort) + ResourcebundlesController.REST_PATH_VALUE
-			+ "?basename={basename}&bundleappname={bundleappname}&key={key}&locale={locale}";
+
+		String[] requestParams = {"basename", "bundleappname", "key", "locale"};
+		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			ResourcebundlesController.REST_PATH_VALUE, requestParams);
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		Map<String, String> map = new HashMap<String, String>();
@@ -131,15 +169,10 @@ public class ResourcebundlesControllerTest
 	public void testGetStringWithParameters()
 	{
 		final String[] paramsGerman = { "Fritz", "Berlin" };
-		StringBuilder sb = new StringBuilder();
-		sb.append(getBaseUrl(randomServerPort))
-			.append(ResourcebundlesController.REST_PATH_VALUE_WITH_PARAMS)
-			.append("?basename={basename}&bundleappname={bundleappname}&key={key}&locale={locale}");
-		for (String param : paramsGerman)
-		{
-			sb.append("&params=").append(param);
-		}
-		String restUrl = sb.toString();
+		String[] requestParams = {"basename", "bundleappname", "key", "locale"};
+		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			ResourcebundlesController.REST_PATH_VALUE_WITH_PARAMS, requestParams, "params",
+			paramsGerman);
 
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
@@ -158,14 +191,8 @@ public class ResourcebundlesControllerTest
 	@Test
 	public void testUpdateProperties() throws JsonProcessingException
 	{
-		StringBuilder sb = new StringBuilder();
-		sb.append(getBaseUrl(randomServerPort))
-			.append(ResourcebundlesController.REST_PATH_UPDATE_BUNDLENAME)
-		// .append(
-		// "?basename={basename}&bundleappname={bundleappname}&filepath={filepath}&locale={locale}")
-		;
-
-		String restUrl = sb.toString();
+		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			ResourcebundlesController.REST_PATH_UPDATE_BUNDLENAME);
 
 		Properties properties;
 		String ownerName;
@@ -204,8 +231,10 @@ public class ResourcebundlesControllerTest
 		// .exchange(restUrl, HttpMethod.POST, requestEntity, BundleName.class);
 		assertNotNull(entity);
 
-		restUrl = getBaseUrl(randomServerPort) + ResourcebundlesController.REST_PATH_RESOURCES
-			+ "?basename={basename}&bundleappname={bundleappname}&locale={locale}";
+		String[] requestParams = {"basename", "bundleappname", "locale"};
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			ResourcebundlesController.REST_PATH_RESOURCES, requestParams);
+
 		headers = new HttpHeaders();
 		requestEntity = new HttpEntity<>(headers);
 		map = new HashMap<String, String>();
@@ -215,9 +244,7 @@ public class ResourcebundlesControllerTest
 		// http://localhost:5000/v1/resourcebundle/resourcebundles?basename=test-resource-bundles&bundleappname=test-bundle-application&locale=de
 
 		ResponseEntity<List<Resourcebundle>> newentity = this.restTemplate.exchange(restUrl,
-			HttpMethod.GET, requestEntity, new ParameterizedTypeReference<List<Resourcebundle>>()
-			{
-			}, map);
+			HttpMethod.GET, requestEntity, ParameterizedTypeReferenceFactory.newListParameterizedTypeReference(Resourcebundle.class), map);
 		assertNotNull(newentity);
 
 	}

@@ -10,12 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
@@ -31,6 +26,8 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(ApplicationConfiguration.REST_VERSION + BundleApplicationsController.REST_PATH)
@@ -60,7 +57,7 @@ public class BundleApplicationsController
 
 	/**
 	 * Call this link <a href=
-	 * "http://localhost:5000/v1/bundle/applications/find?bundleappname=test-bundle-application"></a>
+	 * "http://localhost:5000/v1/bundle/applications/find/all/bundlenames?bundleappname=test-bundle-application"></a>
 	 * and adapt to your parameters.
 	 */
 	@CrossOrigin(origins = "*")
@@ -83,9 +80,9 @@ public class BundleApplicationsController
 	 * and adapt to your parameters.
 	 */
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = BundleApplicationsController.REST_PATH_BY_BUNDLENAME, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = BundleApplicationsController.REST_PATH_BY_BUNDLENAME, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the BundleApplication object from the given BundleName object")
-	public ResponseEntity<BundleApplication> findByBundleName(@RequestBody BundleName bundlename)
+	public ResponseEntity<BundleApplication> findByBundleName(@Valid @RequestBody BundleName bundlename)
 	{
 		final BundleApplications bundleApplication = this.service
 			.find(bundlename.getOwner().getName());

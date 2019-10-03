@@ -5,7 +5,9 @@ import static org.junit.Assert.assertNotNull;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.alpharogroup.bundlemanagement.extensions.UrlExtensions;
 import de.alpharogroup.bundlemanagement.viewmodel.Country;
+import de.alpharogroup.collections.array.ArrayFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,8 +36,9 @@ public class CountriesControllerTest
 
 	public String getBaseUrl(int serverPort)
 	{
-		return "http://localhost:" + serverPort + ApplicationConfiguration.REST_VERSION
-			+ CountriesController.REST_PATH;
+		return UrlExtensions.getBaseUrl("http", "localhost", serverPort,
+			ApplicationConfiguration.REST_VERSION,
+			CountriesController.REST_PATH);
 	}
 
 	@Before
@@ -46,8 +49,10 @@ public class CountriesControllerTest
 	@Test
 	public void testFind()
 	{
-		String restUrl = getBaseUrl(randomServerPort) + ResourcebundlesController.REST_PATH_FIND
-			+ "?name={name}";
+		String[] requestParams = ArrayFactory.newArray("name");
+		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			CountriesController.REST_PATH_FIND, requestParams);
+
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		Map<String, String> map = new HashMap<String, String>();
