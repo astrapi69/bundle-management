@@ -34,13 +34,8 @@ public class ResourcebundlesRepositoryTest extends BaseJpaTest
 		String baseName;
 		String locale;
 		String key;
-		owner = "base-bundle-application";
-		baseName = "base-resource-bundles";
-		locale = "de_DE";
-		key = "resource.bundles.test.label";
-
-
-		owner = "base-bundle-application";
+		// new scenario...
+		owner = "test-bundle-application";
 		baseName = "test";
 		locale = "de_DE";
 		key = "com.example.gui.prop.with.params.label";

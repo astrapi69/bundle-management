@@ -26,6 +26,7 @@ package de.alpharogroup.bundlemanagement.jpa.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
@@ -84,17 +85,17 @@ public class Resourcebundles extends VersionableEntity<Integer> implements Clone
 	public static final String TABLE_NAME = "resourcebundles";
 
 	/** The bundleName from this {@link BundleNames} object. */
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
 	@JoinColumn(name = "bundlename_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_resourcebundles_bundlename_id"))
 	BundleNames bundleName;
 
 	/** The properties key from this {@link BundleNames} object. */
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
 	@JoinColumn(name = "properties_key_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_resourcebundles_properties_key_id"))
 	PropertiesKeys key;
 
 	/** The value for the properties key. */
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
 	@JoinColumn(name = "properties_value_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_resourcebundles_properties_value_id"))
 	PropertiesValues value;
 

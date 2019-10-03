@@ -1,5 +1,6 @@
 package de.alpharogroup.bundlemanagement.controller;
 
+import de.alpharogroup.bundlemanagement.viewmodel.Country;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,7 +14,6 @@ import de.alpharogroup.bundlemanagement.jpa.entity.Countries;
 import de.alpharogroup.bundlemanagement.jpa.repository.CountriesRepository;
 import de.alpharogroup.bundlemanagement.mapper.CountryMapper;
 import de.alpharogroup.bundlemanagement.service.CountriesService;
-import de.alpharogroup.db.resource.bundles.domain.Country;
 import de.alpharogroup.spring.controller.AbstractRestController;
 import io.swagger.annotations.ApiOperation;
 import lombok.AccessLevel;
@@ -28,6 +28,7 @@ public class CountriesController
 {
 
 	public static final String REST_PATH = "/country";
+	public static final String REST_PATH_FIND = "/find";
 
 	CountryMapper mapper;
 
@@ -45,11 +46,12 @@ public class CountriesController
 	 * your parameters.
 	 */
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = CountriesController.REST_PATH_FIND, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the Country object from the given name")
 	public ResponseEntity<Country> findByName(@RequestParam("name") String name)
 	{
 		Countries countries = this.service.findByName(name);
-		return ResponseEntity.ok(mapper.toDto(countries));
+		Country country = mapper.toDto(countries);
+		return ResponseEntity.ok(country);
 	}
 }

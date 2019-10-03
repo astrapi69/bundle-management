@@ -3,6 +3,7 @@ package de.alpharogroup.bundlemanagement.mapper;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import de.alpharogroup.bundlemanagement.viewmodel.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +20,6 @@ import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
 import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
 import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
 import de.alpharogroup.collections.set.SetFactory;
-import de.alpharogroup.db.resource.bundles.domain.BaseName;
-import de.alpharogroup.db.resource.bundles.domain.BundleApplication;
-import de.alpharogroup.db.resource.bundles.domain.BundleName;
-import de.alpharogroup.db.resource.bundles.domain.Country;
-import de.alpharogroup.db.resource.bundles.domain.Language;
-import de.alpharogroup.db.resource.bundles.domain.LanguageLocale;
-import de.alpharogroup.db.resource.bundles.domain.PropertiesKey;
-import de.alpharogroup.db.resource.bundles.domain.PropertiesValue;
-import de.alpharogroup.db.resource.bundles.domain.Resourcebundle;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

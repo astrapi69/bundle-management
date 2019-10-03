@@ -282,24 +282,26 @@ public class ResourcebundlesService
 	{
 		PropertiesKeys key;
 		PropertiesValues value;
-		Optional<Resourcebundles> byId = repository.findById(resourcebundles.getId());
-		if (byId.isPresent())
-		{
-			Resourcebundles dbEntity = byId.get();
-			key = dbEntity.getKey();
-			value = dbEntity.getValue();
-			if (!key.equals(resourcebundles.getKey()) && 1 < find(key).size())
+		if (resourcebundles.getId() != null){
+			Optional<Resourcebundles> byId = repository.findById(resourcebundles.getId());
+			if (byId.isPresent())
 			{
-				key = PropertiesKeys.builder().name(resourcebundles.getKey().getName()).build();
-				PropertiesKeys merged = propertiesKeysService.merge(key);
-				resourcebundles.setKey(merged);
-			}
-			if (!value.equals(resourcebundles.getValue()) && 1 < find(value).size())
-			{
-				value = PropertiesValues.builder().name(resourcebundles.getValue().getName())
-					.build();
-				PropertiesValues merged = propertiesValuesService.merge(value);
-				resourcebundles.setValue(merged);
+				Resourcebundles dbEntity = byId.get();
+				key = dbEntity.getKey();
+				value = dbEntity.getValue();
+				if (!key.equals(resourcebundles.getKey()) && 1 < find(key).size())
+				{
+					key = PropertiesKeys.builder().name(resourcebundles.getKey().getName()).build();
+					PropertiesKeys merged = propertiesKeysService.merge(key);
+					resourcebundles.setKey(merged);
+				}
+				if (!value.equals(resourcebundles.getValue()) && 1 < find(value).size())
+				{
+					value = PropertiesValues.builder().name(resourcebundles.getValue().getName())
+						.build();
+					PropertiesValues merged = propertiesValuesService.merge(value);
+					resourcebundles.setValue(merged);
+				}
 			}
 		}
 		try

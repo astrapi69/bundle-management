@@ -101,7 +101,7 @@ public class BundleNames extends VersionableEntity<Integer> implements Cloneable
 	public static final String TABLE_NAME = "bundlenames";
 
 	/** The base name of this bundle. */
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
 	@JoinColumn(name = "base_name_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundlenames_base_name_id"))
 	BaseNames baseName;
 
@@ -110,12 +110,12 @@ public class BundleNames extends VersionableEntity<Integer> implements Cloneable
 	String filepath;
 
 	/** The locale of this bundle. */
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
 	@JoinColumn(name = "locale_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundlenames_locale_id"))
 	LanguageLocales locale;
 
 	/** The {@link BundleApplications} that owns this {@link BundleNames} object. */
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
 	@JoinColumn(name = "owner_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundlenames_owner_id"))
 	BundleApplications owner;
 

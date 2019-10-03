@@ -1,7 +1,7 @@
 /**
  * The MIT License
  *
- * Copyright (C) 2007 - 2015 Asterios Raptis
+ * Copyright (C) 2019 Asterios Raptis
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -10,10 +10,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- *  *
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- *  *
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -22,21 +22,27 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package de.alpharogroup.bundlemanagement.jpa.repository;
+package de.alpharogroup.bundlemanagement.viewmodel;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.Countries;
-
-@Repository
-public interface CountriesRepository extends JpaRepository<Countries, Integer>
+/**
+ * The domain class {@link Country} is keeping the information for all countries in the world
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Country
 {
-	Countries findByIso3166a2name(@Param("iso3166a2name") String iso3166a2name);
 
-	Countries findByNameAndIso3166a2name(@Param("name") String name,
-		@Param("iso3166a2name") String iso3166a2name);
+	Integer id;
+	Integer version;
+	String name;
 
-	Countries findDistinctByName(@Param("name") String name);
+	/** The iso3166 name with two characters. */
+	 String iso3166a2name;
+
 }

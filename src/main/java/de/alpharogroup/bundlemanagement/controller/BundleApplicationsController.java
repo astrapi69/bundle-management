@@ -3,6 +3,8 @@ package de.alpharogroup.bundlemanagement.controller;
 import java.util.List;
 import java.util.Set;
 
+import de.alpharogroup.bundlemanagement.viewmodel.BundleApplication;
+import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,8 +25,6 @@ import de.alpharogroup.bundlemanagement.mapper.BundleApplicationMapper;
 import de.alpharogroup.bundlemanagement.mapper.BundleNameMapper;
 import de.alpharogroup.bundlemanagement.service.BundleApplicationsService;
 import de.alpharogroup.collections.set.SetExtensions;
-import de.alpharogroup.db.resource.bundles.domain.BundleApplication;
-import de.alpharogroup.db.resource.bundles.domain.BundleName;
 import de.alpharogroup.spring.controller.AbstractRestController;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -41,6 +41,9 @@ public class BundleApplicationsController
 {
 
 	public static final String REST_PATH = "/bundle/applications";
+	public static final String REST_PATH_FIND = "/find";
+	public static final String REST_PATH_FIND_ALL_BUNDLENAMES = "/find/all/bundlenames";
+	public static final String REST_PATH_BY_BUNDLENAME = "/find/by/bundlename";
 
 	@Autowired
 	BundleApplicationMapper mapper;
@@ -57,11 +60,11 @@ public class BundleApplicationsController
 
 	/**
 	 * Call this link <a href=
-	 * "http://localhost:5000/v1/bundle/applications/find?bundleappname=base-bundle-application"></a>
+	 * "http://localhost:5000/v1/bundle/applications/find?bundleappname=test-bundle-application"></a>
 	 * and adapt to your parameters.
 	 */
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "/find/all/bundlenames", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = BundleApplicationsController.REST_PATH_FIND_ALL_BUNDLENAMES, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find all BundleName objects from the given name of the owner")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query") })
@@ -80,7 +83,7 @@ public class BundleApplicationsController
 	 * and adapt to your parameters.
 	 */
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "/find/by/bundlename", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = BundleApplicationsController.REST_PATH_BY_BUNDLENAME, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the BundleApplication object from the given BundleName object")
 	public ResponseEntity<BundleApplication> findByBundleName(@RequestBody BundleName bundlename)
 	{
@@ -94,11 +97,11 @@ public class BundleApplicationsController
 
 	/**
 	 * Call this link <a href=
-	 * "http://localhost:5000/v1/bundle/applications/find?bundleappname=base-bundle-application"></a>
+	 * "http://localhost:5000/v1/bundle/applications/find?bundleappname=test-bundle-application"></a>
 	 * and adapt to your parameters.
 	 */
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = BundleApplicationsController.REST_PATH_FIND, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the Resourcebundle from the given arguments.")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query") })

@@ -36,6 +36,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import de.alpharogroup.db.entity.name.NameEntity;
@@ -71,6 +73,7 @@ import lombok.experimental.FieldDefaults;
 @GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
 	+ Countries.TABLE_NAME))
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Countries extends NameEntity<Integer> implements Cloneable
 {
 
@@ -80,7 +83,7 @@ public class Countries extends NameEntity<Integer> implements Cloneable
 	public static final String TABLE_NAME = "countries";
 	/** The iso3166 name with two characters. */
 	@Column(name = "iso3166_a2name", length = 2)
-	String iso3166A2name;
+	String iso3166a2name;
 
 	/**
 	 * Instantiates a new countries.
@@ -94,7 +97,7 @@ public class Countries extends NameEntity<Integer> implements Cloneable
 	public Countries(String name, String iso3166a2name)
 	{
 		super(name);
-		iso3166A2name = iso3166a2name;
+		this.iso3166a2name = iso3166a2name;
 	}
 
 }

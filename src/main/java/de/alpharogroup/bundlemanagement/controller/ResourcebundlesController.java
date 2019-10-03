@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import javax.validation.Valid;
 
+import de.alpharogroup.bundlemanagement.viewmodel.Resourcebundle;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,10 +27,9 @@ import de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository
 import de.alpharogroup.bundlemanagement.mapper.BundleNameMapper;
 import de.alpharogroup.bundlemanagement.mapper.ResourcebundleMapper;
 import de.alpharogroup.bundlemanagement.service.ResourcebundlesService;
+import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
 import de.alpharogroup.bundlemanagement.viewmodel.ImprortableBundleName;
 import de.alpharogroup.collections.list.ListExtensions;
-import de.alpharogroup.db.resource.bundles.domain.BundleName;
-import de.alpharogroup.db.resource.bundles.domain.Resourcebundle;
 import de.alpharogroup.resourcebundle.locale.LocaleResolver;
 import de.alpharogroup.resourcebundle.locale.ResourceBundleExtensions;
 import de.alpharogroup.spring.controller.AbstractRestController;

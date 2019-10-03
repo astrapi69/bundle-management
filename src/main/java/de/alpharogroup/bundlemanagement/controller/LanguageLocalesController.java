@@ -1,5 +1,6 @@
 package de.alpharogroup.bundlemanagement.controller;
 
+import de.alpharogroup.bundlemanagement.viewmodel.LanguageLocale;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,7 +14,6 @@ import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 import de.alpharogroup.bundlemanagement.jpa.repository.LanguageLocalesRepository;
 import de.alpharogroup.bundlemanagement.mapper.LanguageLocaleMapper;
 import de.alpharogroup.bundlemanagement.service.LanguageLocalesService;
-import de.alpharogroup.db.resource.bundles.domain.LanguageLocale;
 import de.alpharogroup.spring.controller.AbstractRestController;
 import io.swagger.annotations.ApiOperation;
 import lombok.AccessLevel;
@@ -28,6 +28,7 @@ public class LanguageLocalesController
 {
 
 	public static final String REST_PATH = "/locale";
+	public static final String REST_PATH_FIND = "/find";
 
 	LanguageLocaleMapper mapper;
 
@@ -41,11 +42,11 @@ public class LanguageLocalesController
 	}
 
 	/**
-	 * Call this link <a href="http://localhost:5000/v1/locale/find?name=German"></a> and adapt to
+	 * Call this link <a href="http://localhost:5000/v1/locale/find?locale=de_DE"></a> and adapt to
 	 * your parameters.
 	 */
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = LanguageLocalesController.REST_PATH_FIND, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the LanguageLocale object from the given locale name")
 	public ResponseEntity<LanguageLocale> findByName(@RequestParam("locale") String locale)
 	{

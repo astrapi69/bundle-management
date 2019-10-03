@@ -52,7 +52,6 @@ dependencies {
 	compile 'de.alpharogroup:ent-core:1.6'
 	compile 'de.alpharogroup:silly-collections:5.2.1'
 	compile 'de.alpharogroup:resourcebundle-inspector:3.0.1'
-	compile 'de.alpharogroup:resource-bundles-view-model:1'
 	compile 'de.alpharogroup:jobject-copy:3.1.2'
 	compile 'de.alpharogroup:xml-extensions:6.2.1'
 	compile 'de.alpharogroup:throw-able:1.1'
