@@ -41,6 +41,7 @@ public class BundleApplicationsController
 	public static final String REST_PATH_FIND = "/find";
 	public static final String REST_PATH_FIND_ALL_BUNDLENAMES = "/find/all/bundlenames";
 	public static final String REST_PATH_BY_BUNDLENAME = "/find/by/bundlename";
+	public static final String REST_PATH_PERSIST = "/persist";
 
 	@Autowired
 	BundleApplicationMapper mapper;
@@ -53,6 +54,15 @@ public class BundleApplicationsController
 		super(mapper, service);
 		this.mapper = mapper;
 		this.service = service;
+	}
+	@CrossOrigin(origins = "*")
+	@RequestMapping(path = BundleApplicationsController.REST_PATH_PERSIST, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "Persist the given BundleApplication object")
+	public ResponseEntity<BundleApplication> persist(@Valid @RequestBody BundleApplication bundleApplication){
+		BundleApplications bundleApplications = mapper.toEntity(bundleApplication);
+		BundleApplications savedEntity = this.service.save(bundleApplications);
+		ResponseEntity<BundleApplication> saved = super.save(bundleApplication);
+		return ResponseEntity.ok(mapper.toDto(savedEntity));
 	}
 
 	/**

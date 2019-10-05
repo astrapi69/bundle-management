@@ -5,6 +5,7 @@ import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
 import de.alpharogroup.bundlemanagement.viewmodel.BundleApplication;
 import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
 import de.alpharogroup.collections.array.ArrayFactory;
+import de.alpharogroup.collections.list.ListFactory;
 import de.alpharogroup.spring.generics.ParameterizedTypeReferenceFactory;
 import de.alpharogroup.spring.web.util.UrlExtensions;
 import org.junit.Before;
@@ -17,8 +18,12 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -36,7 +41,8 @@ public class BundleApplicationsControllerTest
 
 	public String getBaseUrl(int serverPort)
 	{
-		return UrlExtensions.getBaseUrl("http", "localhost", serverPort, ApplicationConfiguration.REST_VERSION, BundleApplicationsController.REST_PATH);
+		return UrlExtensions.getBaseUrl("http", "localhost", serverPort,
+			ApplicationConfiguration.REST_VERSION, BundleApplicationsController.REST_PATH);
 	}
 
 	@Before
@@ -59,6 +65,29 @@ public class BundleApplicationsControllerTest
 	}
 
 	@Test
+	public void testSave()
+	{
+
+		String restUrl;
+		HttpHeaders headers;
+		HttpEntity<String> requestEntity;
+
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			BundleApplicationsController.REST_PATH_PERSIST);
+		List<MediaType> acceptableMediaTypes = ListFactory.newArrayList();
+		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+		String json = "{\"id\":null,\"version\":null,\"name\":\"test-foo-del-app\",\"defaultLocale\":null,\"supportedLocales\":null}";
+		headers = new HttpHeaders();
+		headers.setAccept(acceptableMediaTypes);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		requestEntity = new HttpEntity<>(json, headers);
+		ResponseEntity<BundleApplication> entity = this.restTemplate.postForEntity(restUrl, requestEntity,
+			BundleApplication.class);
+		assertNotNull(entity);
+		BundleApplication bundleApplication = entity.getBody();
+		assertNotNull(bundleApplication);
+	}
+	@Test
 	public void testFind()
 	{
 		String restUrl;
@@ -68,10 +97,10 @@ public class BundleApplicationsControllerTest
 			BundleApplicationsController.REST_PATH_FIND, requestParams);
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("bundleappname", "test-bundle-application");
+		Map<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("bundleappname", "test-bundle-application");
 		ResponseEntity<BundleApplication> entity = this.restTemplate.exchange(restUrl, HttpMethod.GET,
-			requestEntity, BundleApplication.class, map);
+			requestEntity, BundleApplication.class, urlParams);
 		assertNotNull(entity);
 	}
 
