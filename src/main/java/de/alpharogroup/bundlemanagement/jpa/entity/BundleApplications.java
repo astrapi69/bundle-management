@@ -108,7 +108,7 @@ public class BundleApplications extends VersionableNameEntity<Integer> implement
 	/**
 	 * The default locale of this bundle application.
 	 */
-	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
+	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.MERGE, CascadeType.REFRESH	})
 	@JoinColumn(name = "default_locale_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundle_applications_default_locale_id"))
 	LanguageLocales defaultLocale;
 

@@ -16,8 +16,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -38,6 +40,7 @@ public class BundleApplicationsControllerTest
 	@Autowired private TestRestTemplate restTemplate;
 
 	@LocalServerPort int randomServerPort;
+	RestTemplate decoratedRestTemplate;
 
 	public String getBaseUrl(int serverPort)
 	{
@@ -48,6 +51,12 @@ public class BundleApplicationsControllerTest
 	@Before
 	public void prepare()
 	{
+		decoratedRestTemplate = this.restTemplate.getRestTemplate();
+		List<HttpMessageConverter<?>> converters =
+			decoratedRestTemplate.getMessageConverters();
+		for (HttpMessageConverter converter : converters) {
+			System.out.println(converter.toString());
+		}
 	}
 
 
@@ -65,9 +74,8 @@ public class BundleApplicationsControllerTest
 	}
 
 	@Test
-	public void testSave()
+	public void testPersist()
 	{
-
 		String restUrl;
 		HttpHeaders headers;
 		HttpEntity<String> requestEntity;
@@ -76,7 +84,7 @@ public class BundleApplicationsControllerTest
 			BundleApplicationsController.REST_PATH_PERSIST);
 		List<MediaType> acceptableMediaTypes = ListFactory.newArrayList();
 		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
-		String json = "{\"id\":null,\"version\":null,\"name\":\"test-foo-del-app\",\"defaultLocale\":null,\"supportedLocales\":null}";
+		String json = "{\"id\":null,\"version\":null,\"name\":\"test-foo-del-app\",\"defaultLocale\":{\"id\":35,\"version\":1,\"locale\":\"el\"},\"supportedLocales\":[{\"id\":35,\"version\":1,\"locale\":\"el\"}]}";
 		headers = new HttpHeaders();
 		headers.setAccept(acceptableMediaTypes);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -87,6 +95,7 @@ public class BundleApplicationsControllerTest
 		BundleApplication bundleApplication = entity.getBody();
 		assertNotNull(bundleApplication);
 	}
+
 	@Test
 	public void testFind()
 	{

@@ -79,6 +79,25 @@ public class BundleApplicationsService
 		repository.delete(merged);
 	}
 
+	@Override public BundleApplications save(BundleApplications entity)
+	{
+		if(entity.getDefaultLocale()!=null && entity.getDefaultLocale().getLocale()!=null){
+			LanguageLocales languageLocales = languageLocalesService
+				.getOrCreateNewLanguageLocales(entity.getDefaultLocale().getLocale());
+			entity.setDefaultLocale(languageLocales);
+		}
+		if(entity.getSupportedLocales() != null && !entity.getSupportedLocales().isEmpty()){
+			Set<LanguageLocales> supportedLocales = SetFactory.newHashSet();
+			for (LanguageLocales ll : entity.getSupportedLocales()){
+				LanguageLocales languageLocales = languageLocalesService
+					.getOrCreateNewLanguageLocales(ll.getLocale());
+				supportedLocales.add(languageLocales);
+			}
+			entity.setSupportedLocales(supportedLocales);
+		}
+		return repository.save(entity);
+	}
+
 	public Set<BundleNames> find(final BundleApplications owner)
 	{
 		return SetFactory.newHashSet(bundleNamesService.find(owner));

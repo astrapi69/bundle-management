@@ -1,6 +1,7 @@
 package de.alpharogroup.bundlemanagement.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import de.alpharogroup.bundlemanagement.viewmodel.BundleApplication;
@@ -42,6 +43,7 @@ public class BundleApplicationsController
 	public static final String REST_PATH_FIND_ALL_BUNDLENAMES = "/find/all/bundlenames";
 	public static final String REST_PATH_BY_BUNDLENAME = "/find/by/bundlename";
 	public static final String REST_PATH_PERSIST = "/persist";
+	public static final String REST_PATH_DELETE = "/delete";
 
 	@Autowired
 	BundleApplicationMapper mapper;
@@ -56,20 +58,24 @@ public class BundleApplicationsController
 		this.service = service;
 	}
 	@CrossOrigin(origins = "*")
-	@RequestMapping(path = BundleApplicationsController.REST_PATH_PERSIST, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = BundleApplicationsController.REST_PATH_PERSIST, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Persist the given BundleApplication object")
+	@ResponseBody
 	public ResponseEntity<BundleApplication> persist(@Valid @RequestBody BundleApplication bundleApplication){
 		BundleApplications bundleApplications = mapper.toEntity(bundleApplication);
 		BundleApplications savedEntity = this.service.save(bundleApplications);
-		ResponseEntity<BundleApplication> saved = super.save(bundleApplication);
 		return ResponseEntity.ok(mapper.toDto(savedEntity));
 	}
 
-	/**
-	 * Call this link <a href=
-	 * "http://localhost:5000/v1/bundle/applications/find/all/bundlenames?bundleappname=test-bundle-application"></a>
-	 * and adapt to your parameters.
-	 */
+	@RequestMapping(value = BundleApplicationsController.REST_PATH_DELETE, method = RequestMethod.DELETE)
+	@ApiOperation(value = "Delete the given bundle application")
+	public void delete(@Valid @RequestBody BundleApplication bundleApplication)
+	{
+		final BundleApplications bundleApplications = this.service
+			.find(bundleApplication.getName());
+		this.service.delete(bundleApplications);
+	}
+
 	@CrossOrigin(origins = "*")
 	@GetMapping(path = BundleApplicationsController.REST_PATH_FIND_ALL_BUNDLENAMES, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find all BundleName objects from the given name of the owner")
@@ -85,10 +91,6 @@ public class BundleApplicationsController
 		return ResponseEntity.ok(SetExtensions.toSet(bundleNameList));
 	}
 
-	/**
-	 * Call this link <a href="http://localhost:5000/v1/bundle/applications/find/by/bundlename"></a>
-	 * and adapt to your parameters.
-	 */
 	@CrossOrigin(origins = "*")
 	@RequestMapping(path = BundleApplicationsController.REST_PATH_BY_BUNDLENAME, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the BundleApplication object from the given BundleName object")
@@ -102,11 +104,6 @@ public class BundleApplicationsController
 			.body(mapper.toDto(bundleApplication));
 	}
 
-	/**
-	 * Call this link <a href=
-	 * "http://localhost:5000/v1/bundle/applications/find?bundleappname=test-bundle-application"></a>
-	 * and adapt to your parameters.
-	 */
 	@CrossOrigin(origins = "*")
 	@GetMapping(path = BundleApplicationsController.REST_PATH_FIND, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the Resourcebundle from the given arguments.")
