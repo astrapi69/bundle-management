@@ -25,6 +25,7 @@
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -32,7 +33,7 @@ import org.springframework.stereotype.Repository;
 import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
 
 @Repository
-public interface PropertiesKeysRepository extends JpaRepository<PropertiesKeys, Integer>
+public interface PropertiesKeysRepository extends JpaRepository<PropertiesKeys, UUID>, UUIDEntityRepository<PropertiesKeys>
 {
 	List<PropertiesKeys> findByName(String name);
 }

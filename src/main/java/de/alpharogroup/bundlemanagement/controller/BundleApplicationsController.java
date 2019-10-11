@@ -3,6 +3,7 @@ package de.alpharogroup.bundlemanagement.controller;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import de.alpharogroup.bundlemanagement.viewmodel.BundleApplication;
 import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
@@ -35,7 +36,7 @@ import javax.validation.Valid;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BundleApplicationsController
 	extends
-		AbstractRestController<BundleApplications, Integer, BundleApplicationsRepository, BundleApplication>
+		AbstractRestController<BundleApplications, UUID, BundleApplicationsRepository, BundleApplication>
 {
 
 	public static final String REST_PATH = "/bundle/applications";

@@ -19,12 +19,14 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(ApplicationConfiguration.REST_VERSION + LanguagesController.REST_PATH)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class LanguagesController
 	extends
-		AbstractRestController<Languages, Integer, LanguagesRepository, Language>
+		AbstractRestController<Languages, UUID, LanguagesRepository, Language>
 {
 
 	public static final String REST_PATH = "/language";

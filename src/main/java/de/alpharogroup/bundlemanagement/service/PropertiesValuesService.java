@@ -25,6 +25,7 @@
 package de.alpharogroup.bundlemanagement.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -49,8 +50,8 @@ import lombok.experimental.FieldDefaults;
 @Getter
 public class PropertiesValuesService
 	implements
-		NameEntityService<PropertiesValues, Integer>,
-		GenericService<PropertiesValues, Integer, PropertiesValuesRepository>
+		NameEntityService<PropertiesValues>,
+		GenericService<PropertiesValues, UUID, PropertiesValuesRepository>
 
 {
 

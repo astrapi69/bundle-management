@@ -19,12 +19,14 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(ApplicationConfiguration.REST_VERSION + CountriesController.REST_PATH)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CountriesController
 	extends
-		AbstractRestController<Countries, Integer, CountriesRepository, Country>
+		AbstractRestController<Countries, UUID, CountriesRepository, Country>
 {
 
 	public static final String REST_PATH = "/country";

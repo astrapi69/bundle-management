@@ -3,6 +3,7 @@ package de.alpharogroup.bundlemanagement.controller;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -44,7 +45,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ResourcebundlesController
 	extends
-		AbstractRestController<Resourcebundles, Integer, ResourcebundlesRepository, Resourcebundle>
+		AbstractRestController<Resourcebundles, UUID, ResourcebundlesRepository, Resourcebundle>
 {
 
 	public static final String REST_PATH = "/resourcebundle";

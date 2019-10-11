@@ -25,6 +25,7 @@
 package de.alpharogroup.bundlemanagement.service;
 
 import java.util.Locale;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +50,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 public class LanguageLocalesService
 	implements
-		GenericService<LanguageLocales, Integer, LanguageLocalesRepository>
+		GenericService<LanguageLocales, UUID, LanguageLocalesRepository>
 {
 
 	LanguageLocalesRepository repository;

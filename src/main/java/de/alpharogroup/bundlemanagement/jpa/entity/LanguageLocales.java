@@ -30,6 +30,7 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import de.alpharogroup.db.entity.version.VersionableUUIDEntity;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.id.enhanced.SequenceStyleGenerator;
@@ -67,7 +68,7 @@ import lombok.experimental.FieldDefaults;
 @GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
 	+ LanguageLocales.TABLE_NAME))
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class LanguageLocales extends VersionableEntity<Integer> implements Cloneable
+public class LanguageLocales extends VersionableUUIDEntity implements Cloneable
 {
 
 	public static final String COLUMN_NAME_LOCALE = "locale";

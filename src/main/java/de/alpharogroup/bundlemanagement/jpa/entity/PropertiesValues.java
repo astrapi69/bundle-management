@@ -28,6 +28,8 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
+import de.alpharogroup.db.entity.name.versionable.VersionableNameUUIDEntity;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.id.enhanced.SequenceStyleGenerator;
@@ -57,25 +59,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
 	+ PropertiesValues.TABLE_NAME))
-public class PropertiesValues extends VersionableNameEntity<Integer> implements Cloneable
+@SuperBuilder
+public class PropertiesValues extends VersionableNameUUIDEntity implements Cloneable
 {
-
-	public static final String COLUMN_NAME_NAME = "name";
 
 	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;
 	public static final String TABLE_NAME = "properties_values";
-
-	/**
-	 * Instantiates a new {@link PropertiesValues} entity object.
-	 *
-	 * @param name
-	 *            the name
-	 */
-	@Builder
-	PropertiesValues(String name)
-	{
-		super(name);
-	}
 
 }

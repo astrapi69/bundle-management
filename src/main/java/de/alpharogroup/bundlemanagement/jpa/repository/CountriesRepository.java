@@ -30,8 +30,10 @@ import org.springframework.stereotype.Repository;
 
 import de.alpharogroup.bundlemanagement.jpa.entity.Countries;
 
+import java.util.UUID;
+
 @Repository
-public interface CountriesRepository extends JpaRepository<Countries, Integer>
+public interface CountriesRepository extends JpaRepository<Countries, UUID>, UUIDEntityRepository<Countries>
 {
 	Countries findByIso3166a2name(@Param("iso3166a2name") String iso3166a2name);
 

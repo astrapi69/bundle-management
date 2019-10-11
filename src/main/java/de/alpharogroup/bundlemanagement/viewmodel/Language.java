@@ -31,6 +31,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.UUID;
+
 /**
  * The class {@link Language}.
  */
@@ -42,7 +44,7 @@ import lombok.experimental.FieldDefaults;
 public class Language
 {
 
-	Integer id;
+	UUID uuid;
 	Integer version;
 	String name;
 

@@ -25,6 +25,8 @@
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -32,7 +34,7 @@ import org.springframework.stereotype.Repository;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 
 @Repository
-public interface BundleApplicationsRepository extends JpaRepository<BundleApplications, Integer>
+public interface BundleApplicationsRepository extends JpaRepository<BundleApplications, UUID>, UUIDEntityRepository<BundleApplications>
 {
 	List<BundleApplications> findByName(String name);
 

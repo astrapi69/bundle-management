@@ -26,11 +26,7 @@ package de.alpharogroup.bundlemanagement.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Properties;
+import java.util.*;
 import java.util.logging.Level;
 
 import org.springframework.stereotype.Service;
@@ -70,7 +66,7 @@ import lombok.extern.java.Log;
 @Getter
 public class ResourcebundlesService
 	implements
-		GenericService<Resourcebundles, Integer, ResourcebundlesRepository>
+		GenericService<Resourcebundles, UUID, ResourcebundlesRepository>
 {
 
 	BaseNamesService baseNamesService;
@@ -282,8 +278,8 @@ public class ResourcebundlesService
 	{
 		PropertiesKeys key;
 		PropertiesValues value;
-		if (resourcebundles.getId() != null){
-			Optional<Resourcebundles> byId = repository.findById(resourcebundles.getId());
+		if (resourcebundles.getUuid() != null){
+			Optional<Resourcebundles> byId = repository.findByUuid(resourcebundles.getUuid());
 			if (byId.isPresent())
 			{
 				Resourcebundles dbEntity = byId.get();

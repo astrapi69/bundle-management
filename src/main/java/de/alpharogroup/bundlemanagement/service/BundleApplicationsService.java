@@ -26,6 +26,7 @@ package de.alpharogroup.bundlemanagement.service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,7 +54,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 public class BundleApplicationsService
 	implements
-		GenericService<BundleApplications, Integer, BundleApplicationsRepository>
+		GenericService<BundleApplications, UUID, BundleApplicationsRepository>
 {
 
 	/** The Constant serialVersionUID. */

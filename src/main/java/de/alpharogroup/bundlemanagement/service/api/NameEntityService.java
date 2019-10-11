@@ -18,12 +18,13 @@ package de.alpharogroup.bundlemanagement.service.api;
 import java.io.Serializable;
 import java.util.List;
 
+import de.alpharogroup.db.entity.name.NameUUIDEntity;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.db.entity.name.NameEntity;
 
-public interface NameEntityService<T extends NameEntity<PK>, PK extends Serializable>
+public interface NameEntityService<T extends NameUUIDEntity>
 {
 
 	/**

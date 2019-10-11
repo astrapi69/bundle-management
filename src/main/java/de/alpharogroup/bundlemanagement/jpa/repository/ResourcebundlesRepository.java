@@ -25,6 +25,7 @@
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -35,7 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
 
 @Repository
-public interface ResourcebundlesRepository extends JpaRepository<Resourcebundles, Integer>
+public interface ResourcebundlesRepository extends JpaRepository<Resourcebundles, UUID>, UUIDEntityRepository<Resourcebundles>
 {
 	@Transactional
 	@Query("select rb from Resourcebundles rb " + "where rb.bundleName.owner.name=:owner "

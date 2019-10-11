@@ -25,6 +25,7 @@
 package de.alpharogroup.bundlemanagement.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,8 +49,8 @@ import lombok.experimental.FieldDefaults;
 @Getter
 public class BaseNamesService
 	implements
-		NameEntityService<BaseNames, Integer>,
-		GenericService<BaseNames, Integer, BaseNamesRepository>
+		NameEntityService<BaseNames>,
+		GenericService<BaseNames, UUID, BaseNamesRepository>
 {
 
 	BaseNamesRepository repository;

@@ -27,6 +27,8 @@ package de.alpharogroup.bundlemanagement.viewmodel;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.UUID;
+
 /**
  * The domain class {@link Country} is keeping the information for all countries in the world
  */
@@ -38,7 +40,7 @@ import lombok.experimental.FieldDefaults;
 public class Country
 {
 
-	Integer id;
+	UUID uuid;
 	Integer version;
 	String name;
 

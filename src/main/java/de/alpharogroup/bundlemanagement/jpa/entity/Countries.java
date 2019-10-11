@@ -30,6 +30,8 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import de.alpharogroup.db.entity.name.NameUUIDEntity;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -74,7 +76,8 @@ import lombok.experimental.FieldDefaults;
 	+ Countries.TABLE_NAME))
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Countries extends NameEntity<Integer> implements Cloneable
+@SuperBuilder
+public class Countries extends NameUUIDEntity implements Cloneable
 {
 
 	public static final String COLUMN_NAME_ISO_3166_A2_NAME = "iso3166_a2name";
@@ -84,20 +87,5 @@ public class Countries extends NameEntity<Integer> implements Cloneable
 	/** The iso3166 name with two characters. */
 	@Column(name = "iso3166_a2name", length = 2)
 	String iso3166a2name;
-
-	/**
-	 * Instantiates a new countries.
-	 *
-	 * @param name
-	 *            the name
-	 * @param iso3166a2name
-	 *            the iso 3166 a 2 name
-	 */
-	@Builder
-	public Countries(String name, String iso3166a2name)
-	{
-		super(name);
-		this.iso3166a2name = iso3166a2name;
-	}
 
 }

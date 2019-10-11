@@ -41,6 +41,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import de.alpharogroup.db.entity.name.versionable.VersionableNameUUIDEntity;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.id.enhanced.SequenceStyleGenerator;
@@ -89,7 +91,8 @@ import lombok.experimental.FieldDefaults;
 @GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
 	+ BundleApplications.TABLE_NAME))
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BundleApplications extends VersionableNameEntity<Integer> implements Cloneable
+@SuperBuilder
+public class BundleApplications extends VersionableNameUUIDEntity implements Cloneable
 {
 
 	/** The Constant BASE_BUNDLE_APPLICATION is the base name of the initial bundle application. */
@@ -109,7 +112,7 @@ public class BundleApplications extends VersionableNameEntity<Integer> implement
 	 * The default locale of this bundle application.
 	 */
 	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.MERGE, CascadeType.REFRESH	})
-	@JoinColumn(name = "default_locale_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundle_applications_default_locale_id"))
+	@JoinColumn(name = "default_locale_id", nullable = true, referencedColumnName = "uuid", foreignKey = @ForeignKey(name = "fk_bundle_applications_default_locale_id"))
 	LanguageLocales defaultLocale;
 
 	/**
@@ -117,26 +120,9 @@ public class BundleApplications extends VersionableNameEntity<Integer> implement
 	 */
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL	})
 	@JoinTable(name = "bundle_application_language_locales", joinColumns = {
-			@JoinColumn(name = "application_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundle_application_id")) }, inverseJoinColumns = {
-					@JoinColumn(name = "language_locales_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundle_application_language_locales_id")) })
+			@JoinColumn(name = "application_id", referencedColumnName = "uuid", foreignKey = @ForeignKey(name = "fk_bundle_application_id")) }, inverseJoinColumns = {
+					@JoinColumn(name = "language_locales_id", referencedColumnName = "uuid", foreignKey = @ForeignKey(name = "fk_bundle_application_language_locales_id")) })
 	Set<LanguageLocales> supportedLocales = new HashSet<>();
-
-	/**
-	 * Instantiates a new {@link BundleApplications} entity object.
-	 *
-	 * @param name
-	 *            the name
-	 * @param defaultLocale
-	 *            the default locale
-	 */
-	@Builder
-	public BundleApplications(final String name, final LanguageLocales defaultLocale,
-		final Set<LanguageLocales> supportedLocales)
-	{
-		super(name);
-		this.defaultLocale = defaultLocale;
-		this.supportedLocales = supportedLocales;
-	}
 
 	/**
 	 * Adds the given {@link LanguageLocales} to the supported language locales.

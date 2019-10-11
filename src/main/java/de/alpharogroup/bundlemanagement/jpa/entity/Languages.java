@@ -30,6 +30,8 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import de.alpharogroup.db.entity.name.versionable.VersionableNameUUIDEntity;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.id.enhanced.SequenceStyleGenerator;
@@ -71,7 +73,8 @@ import lombok.experimental.FieldDefaults;
 @GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
 	+ Languages.TABLE_NAME))
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Languages extends VersionableNameEntity<Integer> implements Cloneable
+@SuperBuilder
+public class Languages extends VersionableNameUUIDEntity implements Cloneable
 {
 
 	public static final String COLUMN_NAME_ISO_639_DASH1 = "iso639_1";
@@ -83,20 +86,5 @@ public class Languages extends VersionableNameEntity<Integer> implements Cloneab
 	/** The iso639_1 code with two characters. */
 	@Column(name = "iso639_1", length = 2)
 	String iso639Dash1;
-
-	/**
-	 * Instantiates a new {@link Languages} entity object.
-	 *
-	 * @param name
-	 *            the name
-	 * @param iso639Dash1
-	 *            the iso 639 dash 1
-	 */
-	@Builder
-	Languages(String name, String iso639Dash1)
-	{
-		super(name);
-		this.iso639Dash1 = iso639Dash1;
-	}
 
 }

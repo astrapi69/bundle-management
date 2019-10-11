@@ -1,27 +1,9 @@
-create sequence seq_gen_basenames;
-
-create sequence seq_gen_bundle_applications;
-
-create sequence seq_gen_bundlenames;
-
-create sequence seq_gen_countries;
-
-create sequence seq_gen_language_locales;
-
-create sequence seq_gen_languages;
-
-create sequence seq_gen_properties_keys;
-
-create sequence seq_gen_properties_values;
-
-create sequence seq_gen_resourcebundles;
-
 create table basenames
 (
-    id      integer not null
+    uuid    uuid not null
         constraint basenames_pkey
             primary key,
-    name    text,
+    name    varchar(255),
     version integer
 );
 
@@ -30,10 +12,10 @@ create index idx_basenames_name
 
 create table countries
 (
-    id             integer not null
+    uuid           uuid not null
         constraint countries_pkey
             primary key,
-    name           text
+    name           varchar(255)
         constraint uc_countries_name
             unique,
     iso3166_a2name varchar(2)
@@ -49,7 +31,7 @@ create index idx_countries_iso3166_a2name
 
 create table language_locales
 (
-    id      integer not null
+    uuid    uuid not null
         constraint language_locales_pkey
             primary key,
     version integer,
@@ -60,24 +42,24 @@ create table language_locales
 
 create table bundle_applications
 (
-    id                integer not null
+    uuid              uuid not null
         constraint bundle_applications_pkey
             primary key,
-    name              text
+    name              varchar(255)
         constraint idx_bundle_applications_name
             unique,
     version           integer,
-    default_locale_id integer
+    default_locale_id uuid
         constraint fk_bundle_applications_default_locale_id
             references language_locales
 );
 
 create table bundle_application_language_locales
 (
-    application_id      integer not null
+    application_id      uuid not null
         constraint fk_bundle_application_id
             references bundle_applications,
-    language_locales_id integer not null
+    language_locales_id uuid not null
         constraint fk_bundle_application_language_locales_id
             references language_locales,
     constraint bundle_application_language_locales_pkey
@@ -86,18 +68,18 @@ create table bundle_application_language_locales
 
 create table bundlenames
 (
-    id           integer not null
+    uuid         uuid not null
         constraint bundlenames_pkey
             primary key,
     version      integer,
     filepath     varchar(4096),
-    base_name_id integer
+    base_name_id uuid
         constraint fk_bundlenames_base_name_id
             references basenames,
-    locale_id    integer
+    locale_id    uuid
         constraint fk_bundlenames_locale_id
             references language_locales,
-    owner_id     integer
+    owner_id     uuid
         constraint fk_bundlenames_owner_id
             references bundle_applications
 );
@@ -119,10 +101,10 @@ create index idx_language_locales_locale
 
 create table languages
 (
-    id       integer not null
+    uuid     uuid not null
         constraint languages_pkey
             primary key,
-    name     text
+    name     varchar(255)
         constraint uc_languages_name
             unique,
     version  integer,
@@ -139,10 +121,10 @@ create index idx_languages_iso639_1
 
 create table properties_keys
 (
-    id      integer not null
+    uuid    uuid not null
         constraint properties_keys_pkey
             primary key,
-    name    text,
+    name    varchar(255),
     version integer
 );
 
@@ -151,10 +133,10 @@ create index idx_properties_keys_name
 
 create table properties_values
 (
-    id      integer not null
+    uuid    uuid not null
         constraint properties_values_pkey
             primary key,
-    name    text,
+    name    varchar(255),
     version integer
 );
 
@@ -163,17 +145,17 @@ create index idx_properties_values_name
 
 create table resourcebundles
 (
-    id                  integer not null
+    uuid                uuid not null
         constraint resourcebundles_pkey
             primary key,
     version             integer,
-    bundlename_id       integer
+    bundlename_id       uuid
         constraint fk_resourcebundles_bundlename_id
             references bundlenames,
-    properties_key_id   integer
+    properties_key_id   uuid
         constraint fk_resourcebundles_properties_key_id
             references properties_keys,
-    properties_value_id integer
+    properties_value_id uuid
         constraint fk_resourcebundles_properties_value_id
             references properties_values
 );

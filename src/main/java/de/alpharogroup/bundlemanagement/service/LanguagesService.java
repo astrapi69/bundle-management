@@ -35,6 +35,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
+import java.util.UUID;
+
 /**
  * The class {@link LanguagesService}
  */
@@ -43,7 +45,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Getter
-public class LanguagesService implements GenericService<Languages, Integer, LanguagesRepository>
+public class LanguagesService implements GenericService<Languages, UUID, LanguagesRepository>
 {
 
 	LanguagesRepository repository;
