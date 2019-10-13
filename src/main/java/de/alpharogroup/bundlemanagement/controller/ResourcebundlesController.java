@@ -7,8 +7,8 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import de.alpharogroup.bundlemanagement.mapper.ResourcebundlesMapper;
 import de.alpharogroup.bundlemanagement.viewmodel.Resourcebundle;
-import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +25,6 @@ import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
 import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
 import de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository;
-import de.alpharogroup.bundlemanagement.mapper.BundleNameMapper;
-import de.alpharogroup.bundlemanagement.mapper.ResourcebundleMapper;
 import de.alpharogroup.bundlemanagement.service.ResourcebundlesService;
 import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
 import de.alpharogroup.bundlemanagement.viewmodel.ImprortableBundleName;
@@ -56,11 +54,11 @@ public class ResourcebundlesController
 	public static final String REST_PATH_VALUE = "/value";
 	public static final String REST_PATH_VALUE_WITH_PARAMS = REST_PATH_VALUE + "/withparams";
 
-	ResourcebundleMapper mapper;
+	ResourcebundlesMapper mapper;
 
 	ResourcebundlesService service;
 
-	public ResourcebundlesController(ResourcebundleMapper mapper, ResourcebundlesService service)
+	public ResourcebundlesController(ResourcebundlesMapper mapper, ResourcebundlesService service)
 	{
 		super(mapper, service);
 		this.mapper = mapper;
@@ -174,7 +172,6 @@ public class ResourcebundlesController
 		BundleNames bundleName = this.service.updateProperties(bundleApplication,
 			imprortableBundleName.getProperties(), imprortableBundleName.getBaseName(),
 			imprortableBundleName.getFilepath(), imprortableBundleName.getLocale(), true);
-		BundleNameMapper bundleNameMapper = Mappers.getMapper(BundleNameMapper.class);
-		return ResponseEntity.ok(bundleNameMapper.toDto(bundleName));
+		return ResponseEntity.ok(mapper.map(bundleName, BundleName.class));
 	}
 }

@@ -1,5 +1,6 @@
 package de.alpharogroup.bundlemanagement.controller;
 
+import de.alpharogroup.bundlemanagement.mapper.CountriesMapper;
 import de.alpharogroup.bundlemanagement.viewmodel.Country;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
 import de.alpharogroup.bundlemanagement.jpa.entity.Countries;
 import de.alpharogroup.bundlemanagement.jpa.repository.CountriesRepository;
-import de.alpharogroup.bundlemanagement.mapper.CountryMapper;
 import de.alpharogroup.bundlemanagement.service.CountriesService;
 import de.alpharogroup.spring.controller.AbstractRestController;
 import io.swagger.annotations.ApiOperation;
@@ -32,11 +32,11 @@ public class CountriesController
 	public static final String REST_PATH = "/country";
 	public static final String REST_PATH_FIND = "/find";
 
-	CountryMapper mapper;
+	CountriesMapper mapper;
 
 	CountriesService service;
 
-	public CountriesController(CountryMapper mapper, CountriesService service)
+	public CountriesController(CountriesMapper mapper, CountriesService service)
 	{
 		super(mapper, service);
 		this.mapper = mapper;

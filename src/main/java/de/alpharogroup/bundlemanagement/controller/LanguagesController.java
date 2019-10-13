@@ -1,5 +1,6 @@
 package de.alpharogroup.bundlemanagement.controller;
 
+import de.alpharogroup.bundlemanagement.mapper.LanguagesMapper;
 import de.alpharogroup.bundlemanagement.viewmodel.Language;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
 import de.alpharogroup.bundlemanagement.jpa.entity.Languages;
 import de.alpharogroup.bundlemanagement.jpa.repository.LanguagesRepository;
-import de.alpharogroup.bundlemanagement.mapper.LanguageMapper;
 import de.alpharogroup.bundlemanagement.service.LanguagesService;
 import de.alpharogroup.spring.controller.AbstractRestController;
 import io.swagger.annotations.ApiOperation;
@@ -33,11 +33,11 @@ public class LanguagesController
 	public static final String REST_PATH_FIND = "/find";
 	public static final String REST_PATH_FIND_BY_CODE = "/find/by/code";
 
-	LanguageMapper mapper;
+	LanguagesMapper mapper;
 
 	LanguagesService service;
 
-	public LanguagesController(LanguageMapper mapper, LanguagesService service)
+	public LanguagesController(LanguagesMapper mapper, LanguagesService service)
 	{
 		super(mapper, service);
 		this.mapper = mapper;

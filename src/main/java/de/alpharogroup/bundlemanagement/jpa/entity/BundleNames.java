@@ -44,11 +44,9 @@ import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
-import de.alpharogroup.db.entity.version.VersionableEntity;
 import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
