@@ -18,6 +18,8 @@ public class ApplicationProperties
 	String dbName;
 	int dbPort;
 	String dbUrlPrefix;
+	String dbUsername;
+	String dbPassword;
 	String dir;
 	String name;
 

@@ -9,6 +9,8 @@ app:
   db-host: localhost
   db-port: 5432
   db-url-prefix: jdbc:postgresql://
+  db-username: postgres
+  db-password: postgres
 
 spring:  
   datasource:

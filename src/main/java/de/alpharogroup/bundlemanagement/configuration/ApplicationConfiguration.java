@@ -1,7 +1,10 @@
 package de.alpharogroup.bundlemanagement.configuration;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import de.alpharogroup.jdbc.ConnectionsExtensions;
+import lombok.extern.java.Log;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +32,8 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 
+import javax.annotation.PostConstruct;
+
 @Configuration
 @ComponentScan(basePackages = {"de.alpharogroup.bundlemanagement",
 								"de.alpharogroup.bundlemanagement.mapper",
@@ -38,11 +43,14 @@ import lombok.experimental.FieldDefaults;
 @EnableTransactionManagement
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Log
 public class ApplicationConfiguration implements WebMvcConfigurer
 {
 
 	public static final String VERSION_API_1 = "v1";
 	public static final String REST_VERSION = "/" + VERSION_API_1;
+
+	ApplicationProperties applicationProperties;
 
 	public static ObjectMapper initialize(final @NonNull ObjectMapper objectMapper)
 	{
@@ -111,5 +119,17 @@ public class ApplicationConfiguration implements WebMvcConfigurer
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper = initialize(objectMapper);
 		return objectMapper;
+	}
+
+	@PostConstruct
+	private void init() throws SQLException, ClassNotFoundException
+	{
+		log.info("=========================================");
+		log.info("AppInitializator initialization logic ...");
+		log.info(applicationProperties.getDbHost());
+		log.info("=========================================");
+		ConnectionsExtensions.newPostgreSQLDatabase(applicationProperties.getDbHost(),
+			applicationProperties.getDbName(),
+			applicationProperties.getDbUsername(), applicationProperties.getDbPassword(), "UTF8", "");
 	}
 }

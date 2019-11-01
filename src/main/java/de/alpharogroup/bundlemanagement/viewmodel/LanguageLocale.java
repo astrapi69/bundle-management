@@ -31,6 +31,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.UUID;
+
 /**
  * The class {@link LanguageLocale}.
  */
@@ -42,6 +44,7 @@ import lombok.experimental.FieldDefaults;
 public class LanguageLocale
 {
 
+	UUID uuid;
 	Integer id;
 	Integer version;
 	/** The locale of this entry. */
