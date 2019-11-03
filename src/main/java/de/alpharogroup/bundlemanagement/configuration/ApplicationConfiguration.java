@@ -79,18 +79,23 @@ public class ApplicationConfiguration implements WebMvcConfigurer
 			.allowedOrigins("*");
 	}
 
+	@Override
+	public void configureMessageConverters(List<HttpMessageConverter<?>> converters)
+	{
+		converters.add(createXmlHttpMessageConverter());
+		converters.add(newMappingJackson2HttpMessageConverter());
+	}
+
 	// @Override
 	// public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 	// MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
 	// converter.setObjectMapper(objectMapper());
 	// converters.add(converter);
 	// }
-	@Override
-	public void configureMessageConverters(List<HttpMessageConverter<?>> converters)
+	private MappingJackson2HttpMessageConverter newMappingJackson2HttpMessageConverter()
 	{
-
-		converters.add(createXmlHttpMessageConverter());
-		converters.add(new MappingJackson2HttpMessageConverter());
+		MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
+		return mappingJackson2HttpMessageConverter;
 	}
 
 	private HttpMessageConverter<Object> createXmlHttpMessageConverter()
