@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import de.alpharogroup.jdbc.ConnectionsExtensions;
+import de.alpharogroup.jdbc.PostgreSQLConnectionsExtensions;
 import lombok.extern.java.Log;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.MessageSource;
@@ -133,7 +134,7 @@ public class ApplicationConfiguration implements WebMvcConfigurer
 		log.info("AppInitializator initialization logic ...");
 		log.info(applicationProperties.getDbHost());
 		log.info("=========================================");
-		ConnectionsExtensions.newPostgreSQLDatabase(applicationProperties.getDbHost(),
+		PostgreSQLConnectionsExtensions.newDatabase(applicationProperties.getDbHost(),
 			applicationProperties.getDbName(),
 			applicationProperties.getDbUsername(), applicationProperties.getDbPassword(), "UTF8", "");
 	}
