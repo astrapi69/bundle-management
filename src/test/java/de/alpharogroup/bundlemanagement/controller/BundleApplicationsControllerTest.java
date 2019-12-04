@@ -81,7 +81,7 @@ public class BundleApplicationsControllerTest
 			BundleApplicationsController.REST_PATH_PERSIST);
 		List<MediaType> acceptableMediaTypes = ListFactory.newArrayList();
 		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
-		String json = "{\"id\":null,\"version\":null,\"name\":\"test-foo-del-app\",\"defaultLocale\":{\"id\":35,\"version\":1,\"locale\":\"el\"},\"supportedLocales\":[{\"id\":35,\"version\":1,\"locale\":\"el\"}]}";
+		String json = "{\"id\":null,\"version\":null,\"name\":\"test-foo-del-app\",\"defaultLocale\":{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"},\"supportedLocales\":[{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"}]}";
 		headers = new HttpHeaders();
 		headers.setAccept(acceptableMediaTypes);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -137,7 +137,7 @@ public class BundleApplicationsControllerTest
 		HttpEntity<String> requestEntity;
 		Map<String, String> map;
 
-		String json = "{\"id\":4,\"version\":1,\"baseName\":{\"id\":2,\"version\":1,\"name\":\"test\"},\"filepath\":\"/src/test/resources/errors\",\"locale\":{\"id\":48,\"version\":1,\"locale\":\"en_US\"},\"owner\":{\"id\":1,\"version\":1,\"name\":\"test-bundle-application\",\"defaultLocale\":{\"id\":38,\"version\":1,\"locale\":\"en\"},\"supportedLocales\":[{\"id\":29,\"version\":1,\"locale\":\"de\"},{\"id\":38,\"version\":1,\"locale\":\"en\"},{\"id\":41,\"version\":1,\"locale\":\"en_GB\"},{\"id\":32,\"version\":1,\"locale\":\"de_DE\"},{\"id\":48,\"version\":1,\"locale\":\"en_US\"}]}}";
+		String json = "{\"id\":\"8024acb3-362b-4cbd-a3b9-1cd4cfd88974\",\"version\":1,\"baseName\":{\"id\":\"711af8a1-466a-4393-9b4a-e83bff605330\",\"version\":1,\"name\":\"test\"},\"filepath\":\"/src/test/resources/errors\",\"locale\":{\"id\":\"286dbfda-9035-4eda-a6b7-76b0dbe7697b\",\"version\":1,\"locale\":\"en_US\"},\"owner\":{\"id\":\"0084d910-d153-4bd4-86bf-f5e5a8492c7e\",\"version\":1,\"name\":\"test-bundle-application\",\"defaultLocale\":{\"id\":\"f910d316-add9-463f-8bc7-e4281c5c44f1\",\"version\":1,\"locale\":\"en\"},\"supportedLocales\":[{\"id\":\"6afa59eb-1c2b-4767-9ce8-166b405369a4\",\"version\":1,\"locale\":\"de\"},{\"id\":\"f910d316-add9-463f-8bc7-e4281c5c44f1\",\"version\":1,\"locale\":\"en\"},{\"id\":\"c513ed08-e65f-4352-b789-a8bbc5d2f1db\",\"version\":1,\"locale\":\"en_GB\"},{\"id\":\"0f178aab-52f9-4459-83a9-c3078ca9d4d9\",\"version\":1,\"locale\":\"de_DE\"},{\"id\":\"286dbfda-9035-4eda-a6b7-76b0dbe7697b\",\"version\":1,\"locale\":\"en_US\"}]}}";
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
 			BundleApplicationsController.REST_PATH_BY_BUNDLENAME);
 		headers = new HttpHeaders();

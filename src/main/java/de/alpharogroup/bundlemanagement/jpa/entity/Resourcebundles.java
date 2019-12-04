@@ -65,17 +65,17 @@ public class Resourcebundles extends VersionableUUIDEntity implements Cloneable
 	public static final String TABLE_NAME = "resourcebundles";
 
 	/** The bundleName from this {@link BundleNames} object. */
-	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "bundlename_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_resourcebundles_bundlename_id"))
 	BundleNames bundleName;
 
 	/** The properties key from this {@link BundleNames} object. */
-	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "properties_key_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_resourcebundles_properties_key_id"))
 	PropertiesKeys key;
 
 	/** The value for the properties key. */
-	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "properties_value_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_resourcebundles_properties_value_id"))
 	PropertiesValues value;
 
