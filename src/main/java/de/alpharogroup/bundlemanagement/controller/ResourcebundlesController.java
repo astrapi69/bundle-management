@@ -7,6 +7,7 @@ import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
 import de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository;
 import de.alpharogroup.bundlemanagement.mapper.ResourcebundlesMapper;
 import de.alpharogroup.bundlemanagement.service.ResourcebundlesService;
+import de.alpharogroup.bundlemanagement.viewmodel.BundleApplication;
 import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
 import de.alpharogroup.bundlemanagement.viewmodel.ImprortableBundleName;
 import de.alpharogroup.bundlemanagement.viewmodel.Resourcebundle;
@@ -45,6 +46,7 @@ public class ResourcebundlesController
 	public static final String REST_PATH_UPDATE_BUNDLENAME = "/update/bundlename";
 	public static final String REST_PATH_VALUE = "/value";
 	public static final String REST_PATH_VALUE_WITH_PARAMS = REST_PATH_VALUE + "/withparams";
+	public static final String REST_PATH_PERSIST = "/persist";
 
 	ResourcebundlesMapper mapper;
 
@@ -55,6 +57,15 @@ public class ResourcebundlesController
 		super(mapper, service);
 		this.mapper = mapper;
 		this.service = service;
+	}
+
+	@CrossOrigin(origins = "*")
+	@RequestMapping(path = ResourcebundlesController.REST_PATH_PERSIST, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "Persist the given resourcebundle object")
+	@ResponseBody
+	public ResponseEntity<Resourcebundle> persist(@Valid @RequestBody Resourcebundle resourcebundle){
+		Resourcebundles savedEntity = this.service.saveOrUpdate(resourcebundle);
+		return ResponseEntity.ok(mapper.toDto(savedEntity));
 	}
 
 	@CrossOrigin(origins = "*")

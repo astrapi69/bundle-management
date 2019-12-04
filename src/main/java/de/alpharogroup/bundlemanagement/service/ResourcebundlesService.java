@@ -27,6 +27,8 @@ package de.alpharogroup.bundlemanagement.service;
 import de.alpharogroup.bundlemanagement.jpa.entity.*;
 import de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsRepository;
 import de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository;
+import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
+import de.alpharogroup.bundlemanagement.viewmodel.Resourcebundle;
 import de.alpharogroup.collections.list.ListFactory;
 import de.alpharogroup.collections.pairs.KeyValuePair;
 import de.alpharogroup.collections.properties.PropertiesExtensions;
@@ -303,6 +305,18 @@ public class ResourcebundlesService
 			initialize(resourcebundles);
 			return repository.save(resourcebundles);
 		}
+	}
+
+	public Resourcebundles saveOrUpdate(Resourcebundle resourcebundle){
+		BundleName bundleName = resourcebundle.getBundleName();
+		String baseName = bundleName.getBaseName().getName();
+		String localeString = bundleName.getLocale().getLocale();
+		Locale locale = LocaleResolver.resolveLocale(localeString);
+		BundleApplications bundleApplications = bundleApplicationsRepository
+			.findDistinctByName(bundleName.getOwner().getName());
+		BundleNames bundleNames = bundleNamesService
+			.find(bundleApplications, baseName,	localeString);
+		return saveOrUpdateEntry(bundleNames, baseName, locale, resourcebundle.getKey().getName(), resourcebundle.getValue().getName(), true);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
