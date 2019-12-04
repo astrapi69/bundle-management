@@ -24,11 +24,7 @@
  */
 package de.alpharogroup.bundlemanagement.viewmodel;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.UUID;
@@ -43,7 +39,7 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BaseName
 {
-	UUID uuid;
+	UUID id;
 	Integer version;
 	String name;
 }

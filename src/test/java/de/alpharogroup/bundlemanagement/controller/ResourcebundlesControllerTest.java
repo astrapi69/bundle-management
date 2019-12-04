@@ -1,18 +1,15 @@
 package de.alpharogroup.bundlemanagement.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Properties;
-
-import de.alpharogroup.bundlemanagement.viewmodel.*;
-import de.alpharogroup.collections.set.SetFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
+import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
+import de.alpharogroup.bundlemanagement.viewmodel.ImprortableBundleName;
+import de.alpharogroup.bundlemanagement.viewmodel.Resourcebundle;
+import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
+import de.alpharogroup.resourcebundle.locale.LocaleResolver;
 import de.alpharogroup.spring.generics.ParameterizedTypeReferenceFactory;
 import de.alpharogroup.spring.web.util.UrlExtensions;
+import de.alpharogroup.xml.json.ObjectToJsonExtensions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,20 +18,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
 
-import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
-import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
-import de.alpharogroup.resourcebundle.locale.LocaleResolver;
-import de.alpharogroup.xml.json.ObjectToJsonExtensions;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")

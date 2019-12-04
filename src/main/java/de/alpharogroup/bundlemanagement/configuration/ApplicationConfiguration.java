@@ -1,10 +1,14 @@
 package de.alpharogroup.bundlemanagement.configuration;
 
-import java.sql.SQLException;
-import java.util.List;
-
-import de.alpharogroup.jdbc.ConnectionsExtensions;
-import de.alpharogroup.jdbc.PostgreSQLConnectionsExtensions;
+import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.MessageSource;
@@ -22,18 +26,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NonNull;
-import lombok.experimental.FieldDefaults;
-
-import javax.annotation.PostConstruct;
+import java.util.List;
 
 @Configuration
 @ComponentScan(basePackages = {"de.alpharogroup.bundlemanagement",
@@ -127,15 +120,4 @@ public class ApplicationConfiguration implements WebMvcConfigurer
 		return objectMapper;
 	}
 
-	@PostConstruct
-	private void init() throws SQLException, ClassNotFoundException
-	{
-		log.info("=========================================");
-		log.info("AppInitializator initialization logic ...");
-		log.info(applicationProperties.getDbHost());
-		log.info("=========================================");
-		PostgreSQLConnectionsExtensions.newDatabase(applicationProperties.getDbHost(),
-			applicationProperties.getDbName(),
-			applicationProperties.getDbUsername(), applicationProperties.getDbPassword(), "UTF8", "");
-	}
 }

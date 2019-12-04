@@ -24,34 +24,13 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
-import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-
-import de.alpharogroup.db.entity.version.VersionableUUIDEntity;
-import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
-
-import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
-import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import de.alpharogroup.db.entity.version.VersionableUUIDEntity;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
+
+import javax.persistence.*;
 
 /**
  * The entity class {@link BundleNames} holds the data from the {@link BaseNames} and the
@@ -82,8 +61,6 @@ import lombok.experimental.FieldDefaults;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
-	+ BundleNames.TABLE_NAME))
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @SuperBuilder
 public class BundleNames extends VersionableUUIDEntity implements Cloneable
@@ -102,7 +79,7 @@ public class BundleNames extends VersionableUUIDEntity implements Cloneable
 
 	/** The base name of this bundle. */
 	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
-	@JoinColumn(name = "base_name_id", nullable = true, referencedColumnName = "uuid", foreignKey = @ForeignKey(name = "fk_bundlenames_base_name_id"))
+	@JoinColumn(name = "base_name_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundlenames_base_name_id"))
 	BaseNames baseName;
 
 	/** The optional filepath from this resource bunlde. */
@@ -111,12 +88,12 @@ public class BundleNames extends VersionableUUIDEntity implements Cloneable
 
 	/** The locale of this bundle. */
 	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
-	@JoinColumn(name = "locale_id", nullable = true, referencedColumnName = "uuid", foreignKey = @ForeignKey(name = "fk_bundlenames_locale_id"))
+	@JoinColumn(name = "locale_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundlenames_locale_id"))
 	LanguageLocales locale;
 
 	/** The {@link BundleApplications} that owns this {@link BundleNames} object. */
 	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
-	@JoinColumn(name = "owner_id", nullable = true, referencedColumnName = "uuid", foreignKey = @ForeignKey(name = "fk_bundlenames_owner_id"))
+	@JoinColumn(name = "owner_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundlenames_owner_id"))
 	BundleApplications owner;
 
 }

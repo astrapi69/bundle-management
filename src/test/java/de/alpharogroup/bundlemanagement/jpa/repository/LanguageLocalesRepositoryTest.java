@@ -1,11 +1,10 @@
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
+import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class LanguageLocalesRepositoryTest extends BaseJpaTest
 {

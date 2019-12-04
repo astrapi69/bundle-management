@@ -24,15 +24,6 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.UUID;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
@@ -48,6 +39,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * The class {@link BundleNamesService}
@@ -126,7 +125,7 @@ public class BundleNamesService
 	public LanguageLocales getDefaultLocale(final BundleNames bundleNames)
 	{
 		Optional<BundleApplications> byId = bundleApplicationsRepository
-			.findByUuid(bundleNames.getUuid());
+			.findById(bundleNames.getId());
 		if (byId.isPresent())
 		{
 			return byId.get().getDefaultLocale();
@@ -151,7 +150,7 @@ public class BundleNamesService
 			if (!owner.isSupported(dbLocale))
 			{
 				Optional<BundleApplications> byId = bundleApplicationsRepository
-					.findByUuid(owner.getUuid());
+					.findById(owner.getId());
 				if (byId.isPresent())
 				{
 					owner = byId.get();
@@ -165,7 +164,7 @@ public class BundleNamesService
 
 	public BundleNames merge(BundleNames object)
 	{
-		Optional<BundleNames> byId = repository.findByUuid(object.getUuid());
+		Optional<BundleNames> byId = repository.findById(object.getId());
 		if (!byId.isPresent())
 		{
 			BundleNames dbBundleNames = byId.get();

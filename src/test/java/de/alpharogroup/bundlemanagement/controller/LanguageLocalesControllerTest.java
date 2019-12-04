@@ -1,10 +1,6 @@
 package de.alpharogroup.bundlemanagement.controller;
 
-import static org.junit.Assert.assertNotNull;
-
-import java.util.HashMap;
-import java.util.Map;
-
+import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
 import de.alpharogroup.bundlemanagement.viewmodel.LanguageLocale;
 import de.alpharogroup.collections.array.ArrayFactory;
 import de.alpharogroup.spring.web.util.UrlExtensions;
@@ -22,7 +18,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")

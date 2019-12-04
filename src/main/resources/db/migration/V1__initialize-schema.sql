@@ -1,6 +1,6 @@
 create table basenames
 (
-    uuid    uuid not null
+    id      uuid not null
         constraint basenames_pkey
             primary key,
     name    varchar(255),
@@ -12,7 +12,7 @@ create index idx_basenames_name
 
 create table countries
 (
-    uuid           uuid not null
+    id             uuid not null
         constraint countries_pkey
             primary key,
     name           varchar(255)
@@ -31,7 +31,7 @@ create index idx_countries_iso3166_a2name
 
 create table language_locales
 (
-    uuid    uuid not null
+    id      uuid not null
         constraint language_locales_pkey
             primary key,
     version integer,
@@ -42,7 +42,7 @@ create table language_locales
 
 create table bundle_applications
 (
-    uuid              uuid not null
+    id                uuid not null
         constraint bundle_applications_pkey
             primary key,
     name              varchar(255)
@@ -68,7 +68,7 @@ create table bundle_application_language_locales
 
 create table bundlenames
 (
-    uuid         uuid not null
+    id           uuid not null
         constraint bundlenames_pkey
             primary key,
     version      integer,
@@ -101,7 +101,7 @@ create index idx_language_locales_locale
 
 create table languages
 (
-    uuid     uuid not null
+    id       uuid not null
         constraint languages_pkey
             primary key,
     name     varchar(255)
@@ -121,7 +121,7 @@ create index idx_languages_iso639_1
 
 create table properties_keys
 (
-    uuid    uuid not null
+    id      uuid not null
         constraint properties_keys_pkey
             primary key,
     name    varchar(255),
@@ -133,7 +133,7 @@ create index idx_properties_keys_name
 
 create table properties_values
 (
-    uuid    uuid not null
+    id      uuid not null
         constraint properties_values_pkey
             primary key,
     name    varchar(255),
@@ -145,7 +145,7 @@ create index idx_properties_values_name
 
 create table resourcebundles
 (
-    uuid                uuid not null
+    id                  uuid not null
         constraint resourcebundles_pkey
             primary key,
     version             integer,

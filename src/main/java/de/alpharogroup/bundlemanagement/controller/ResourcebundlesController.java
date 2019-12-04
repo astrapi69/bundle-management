@@ -1,33 +1,15 @@
 package de.alpharogroup.bundlemanagement.controller;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Properties;
-import java.util.UUID;
-
-import javax.validation.Valid;
-
-import de.alpharogroup.bundlemanagement.mapper.ResourcebundlesMapper;
-import de.alpharogroup.bundlemanagement.viewmodel.Resourcebundle;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
 import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
 import de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository;
+import de.alpharogroup.bundlemanagement.mapper.ResourcebundlesMapper;
 import de.alpharogroup.bundlemanagement.service.ResourcebundlesService;
 import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
 import de.alpharogroup.bundlemanagement.viewmodel.ImprortableBundleName;
+import de.alpharogroup.bundlemanagement.viewmodel.Resourcebundle;
 import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.resourcebundle.locale.LocaleResolver;
 import de.alpharogroup.resourcebundle.locale.ResourceBundleExtensions;
@@ -37,6 +19,16 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Locale;
+import java.util.Properties;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(ApplicationConfiguration.REST_VERSION + ResourcebundlesController.REST_PATH)

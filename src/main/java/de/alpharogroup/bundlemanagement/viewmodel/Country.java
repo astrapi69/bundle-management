@@ -40,7 +40,7 @@ import java.util.UUID;
 public class Country
 {
 
-	UUID uuid;
+	UUID id;
 	Integer version;
 	String name;
 

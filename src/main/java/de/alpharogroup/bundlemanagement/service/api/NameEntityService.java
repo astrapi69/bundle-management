@@ -15,14 +15,11 @@
  */
 package de.alpharogroup.bundlemanagement.service.api;
 
-import java.io.Serializable;
-import java.util.List;
-
+import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.db.entity.name.NameUUIDEntity;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.alpharogroup.collections.list.ListExtensions;
-import de.alpharogroup.db.entity.name.NameEntity;
+import java.util.List;
 
 public interface NameEntityService<T extends NameUUIDEntity>
 {

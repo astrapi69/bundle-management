@@ -24,11 +24,7 @@
  */
 package de.alpharogroup.bundlemanagement.viewmodel;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.UUID;
@@ -44,8 +40,7 @@ import java.util.UUID;
 public class LanguageLocale
 {
 
-	UUID uuid;
-	Integer id;
+	UUID id;
 	Integer version;
 	/** The locale of this entry. */
 	 String locale;

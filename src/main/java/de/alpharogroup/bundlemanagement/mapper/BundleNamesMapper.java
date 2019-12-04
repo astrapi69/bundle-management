@@ -24,11 +24,10 @@
  */
 package de.alpharogroup.bundlemanagement.mapper;
 
+import de.alpharogroup.bean.mapper.AbstractGenericMapper;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
 import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
 import org.springframework.stereotype.Component;
-
-import de.alpharogroup.bean.mapper.AbstractGenericMapper;
 
 /**
  * The class {@link BundleNamesMapper}.

@@ -1,23 +1,13 @@
 package de.alpharogroup.bundlemanagement.controller;
 
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-
-import de.alpharogroup.bundlemanagement.mapper.BundleApplicationsMapper;
-import de.alpharogroup.bundlemanagement.viewmodel.BundleApplication;
-import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
 import de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsRepository;
+import de.alpharogroup.bundlemanagement.mapper.BundleApplicationsMapper;
 import de.alpharogroup.bundlemanagement.service.BundleApplicationsService;
+import de.alpharogroup.bundlemanagement.viewmodel.BundleApplication;
+import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
 import de.alpharogroup.collections.set.SetExtensions;
 import de.alpharogroup.spring.controller.AbstractRestController;
 import io.swagger.annotations.ApiImplicitParam;
@@ -25,8 +15,16 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(ApplicationConfiguration.REST_VERSION + BundleApplicationsController.REST_PATH)

@@ -24,22 +24,7 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
-import java.util.logging.Level;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
-import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
-import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
-import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
-import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
-import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
-import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
+import de.alpharogroup.bundlemanagement.jpa.entity.*;
 import de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsRepository;
 import de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository;
 import de.alpharogroup.collections.list.ListFactory;
@@ -54,6 +39,14 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+import java.util.logging.Level;
 
 /**
  * The class {@link ResourcebundlesService}
@@ -278,8 +271,8 @@ public class ResourcebundlesService
 	{
 		PropertiesKeys key;
 		PropertiesValues value;
-		if (resourcebundles.getUuid() != null){
-			Optional<Resourcebundles> byId = repository.findByUuid(resourcebundles.getUuid());
+		if (resourcebundles.getId() != null){
+			Optional<Resourcebundles> byId = repository.findById(resourcebundles.getId());
 			if (byId.isPresent())
 			{
 				Resourcebundles dbEntity = byId.get();

@@ -24,11 +24,10 @@
  */
 package de.alpharogroup.bundlemanagement.mapper;
 
+import de.alpharogroup.bean.mapper.AbstractGenericMapper;
 import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 import de.alpharogroup.bundlemanagement.viewmodel.LanguageLocale;
 import org.springframework.stereotype.Component;
-
-import de.alpharogroup.bean.mapper.AbstractGenericMapper;
 
 /**
  * The class {@link LanguageLocalesMapper}.
