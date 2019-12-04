@@ -1,34 +1,15 @@
 package de.alpharogroup.bundlemanagement.controller;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Properties;
-
-import javax.validation.Valid;
-
-import de.alpharogroup.bundlemanagement.viewmodel.Resourcebundle;
-import org.mapstruct.factory.Mappers;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
 import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
 import de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository;
-import de.alpharogroup.bundlemanagement.mapper.BundleNameMapper;
-import de.alpharogroup.bundlemanagement.mapper.ResourcebundleMapper;
+import de.alpharogroup.bundlemanagement.mapper.ResourcebundlesMapper;
 import de.alpharogroup.bundlemanagement.service.ResourcebundlesService;
 import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
 import de.alpharogroup.bundlemanagement.viewmodel.ImprortableBundleName;
+import de.alpharogroup.bundlemanagement.viewmodel.Resourcebundle;
 import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.resourcebundle.locale.LocaleResolver;
 import de.alpharogroup.resourcebundle.locale.ResourceBundleExtensions;
@@ -38,13 +19,23 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Locale;
+import java.util.Properties;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(ApplicationConfiguration.REST_VERSION + ResourcebundlesController.REST_PATH)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ResourcebundlesController
 	extends
-		AbstractRestController<Resourcebundles, Integer, ResourcebundlesRepository, Resourcebundle>
+		AbstractRestController<Resourcebundles, UUID, ResourcebundlesRepository, Resourcebundle>
 {
 
 	public static final String REST_PATH = "/resourcebundle";
@@ -55,11 +46,11 @@ public class ResourcebundlesController
 	public static final String REST_PATH_VALUE = "/value";
 	public static final String REST_PATH_VALUE_WITH_PARAMS = REST_PATH_VALUE + "/withparams";
 
-	ResourcebundleMapper mapper;
+	ResourcebundlesMapper mapper;
 
 	ResourcebundlesService service;
 
-	public ResourcebundlesController(ResourcebundleMapper mapper, ResourcebundlesService service)
+	public ResourcebundlesController(ResourcebundlesMapper mapper, ResourcebundlesService service)
 	{
 		super(mapper, service);
 		this.mapper = mapper;
@@ -173,7 +164,6 @@ public class ResourcebundlesController
 		BundleNames bundleName = this.service.updateProperties(bundleApplication,
 			imprortableBundleName.getProperties(), imprortableBundleName.getBaseName(),
 			imprortableBundleName.getFilepath(), imprortableBundleName.getLocale(), true);
-		BundleNameMapper bundleNameMapper = Mappers.getMapper(BundleNameMapper.class);
-		return ResponseEntity.ok(bundleNameMapper.toDto(bundleName));
+		return ResponseEntity.ok(mapper.map(bundleName, BundleName.class));
 	}
 }

@@ -24,24 +24,18 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
-
-import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import de.alpharogroup.db.entity.name.NameEntity;
-import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
-import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
-import lombok.Builder;
+import de.alpharogroup.db.entity.name.versionable.VersionableNameUUIDEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
 
 /**
  * The entity class {@link PropertiesValues} holds the data only for the properties values. <br>
@@ -55,27 +49,12 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-@GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
-	+ PropertiesValues.TABLE_NAME))
-public class PropertiesValues extends VersionableNameEntity<Integer> implements Cloneable
+@SuperBuilder
+public class PropertiesValues extends VersionableNameUUIDEntity implements Cloneable
 {
-
-	public static final String COLUMN_NAME_NAME = "name";
 
 	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;
 	public static final String TABLE_NAME = "properties_values";
-
-	/**
-	 * Instantiates a new {@link PropertiesValues} entity object.
-	 *
-	 * @param name
-	 *            the name
-	 */
-	@Builder
-	PropertiesValues(String name)
-	{
-		super(name);
-	}
 
 }

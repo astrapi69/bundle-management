@@ -24,15 +24,15 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import java.util.List;
-
+import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
+import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface PropertiesValuesRepository extends JpaRepository<PropertiesValues, Integer>
+public interface PropertiesValuesRepository extends JpaRepository<PropertiesValues, UUID>
 {
 	List<PropertiesValues> findByName(String name);
 }

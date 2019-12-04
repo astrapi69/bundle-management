@@ -1,13 +1,7 @@
 package de.alpharogroup.bundlemanagement.exceptionhandling;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
-
-import java.util.Collections;
-import java.util.NoSuchElementException;
-
-import javax.servlet.http.HttpServletRequest;
-
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,8 +16,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.context.request.ServletWebRequest;
 
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
+import java.util.NoSuchElementException;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = { ControllerExceptionHandler.class })

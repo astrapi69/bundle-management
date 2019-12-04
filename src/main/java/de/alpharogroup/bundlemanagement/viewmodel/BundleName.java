@@ -27,6 +27,8 @@ package de.alpharogroup.bundlemanagement.viewmodel;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.UUID;
+
 /**
  * The class {@link BundleName}
  */
@@ -37,7 +39,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BundleName
 {
-	Integer id;
+	UUID id;
 	Integer version;
 	/** The bundle name. */
 	BaseName baseName;

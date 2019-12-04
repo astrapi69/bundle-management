@@ -24,13 +24,14 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
+import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
+import java.util.UUID;
 
 @Repository
-public interface LanguageLocalesRepository extends JpaRepository<LanguageLocales, Integer>
+public interface LanguageLocalesRepository extends JpaRepository<LanguageLocales, UUID>
 {
 	LanguageLocales findDistinctByLocale(String locale);
 }

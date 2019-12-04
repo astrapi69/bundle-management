@@ -24,39 +24,16 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
-import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
-
-import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import de.alpharogroup.db.entity.name.NameEntity;
-import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
-import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import de.alpharogroup.db.entity.name.versionable.VersionableNameUUIDEntity;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The entity class {@link BundleApplications} is the root of every bundle application. Every entity
@@ -86,10 +63,9 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @ToString(callSuper = true)
 @NoArgsConstructor
-@GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
-	+ BundleApplications.TABLE_NAME))
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BundleApplications extends VersionableNameEntity<Integer> implements Cloneable
+@SuperBuilder
+public class BundleApplications extends VersionableNameUUIDEntity implements Cloneable
 {
 
 	/** The Constant BASE_BUNDLE_APPLICATION is the base name of the initial bundle application. */
@@ -115,28 +91,12 @@ public class BundleApplications extends VersionableNameEntity<Integer> implement
 	/**
 	 * The supported locale objects that are mandatory for this bundle application.
 	 */
+	@Builder.Default
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL	})
 	@JoinTable(name = "bundle_application_language_locales", joinColumns = {
 			@JoinColumn(name = "application_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundle_application_id")) }, inverseJoinColumns = {
 					@JoinColumn(name = "language_locales_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundle_application_language_locales_id")) })
 	Set<LanguageLocales> supportedLocales = new HashSet<>();
-
-	/**
-	 * Instantiates a new {@link BundleApplications} entity object.
-	 *
-	 * @param name
-	 *            the name
-	 * @param defaultLocale
-	 *            the default locale
-	 */
-	@Builder
-	public BundleApplications(final String name, final LanguageLocales defaultLocale,
-		final Set<LanguageLocales> supportedLocales)
-	{
-		super(name);
-		this.defaultLocale = defaultLocale;
-		this.supportedLocales = supportedLocales;
-	}
 
 	/**
 	 * Adds the given {@link LanguageLocales} to the supported language locales.

@@ -1,25 +1,13 @@
 package de.alpharogroup.bundlemanagement.controller;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import de.alpharogroup.bundlemanagement.viewmodel.BundleApplication;
-import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
-import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
 import de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsRepository;
-import de.alpharogroup.bundlemanagement.mapper.BundleApplicationMapper;
-import de.alpharogroup.bundlemanagement.mapper.BundleNameMapper;
+import de.alpharogroup.bundlemanagement.mapper.BundleApplicationsMapper;
 import de.alpharogroup.bundlemanagement.service.BundleApplicationsService;
+import de.alpharogroup.bundlemanagement.viewmodel.BundleApplication;
+import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
 import de.alpharogroup.collections.set.SetExtensions;
 import de.alpharogroup.spring.controller.AbstractRestController;
 import io.swagger.annotations.ApiImplicitParam;
@@ -27,15 +15,23 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(ApplicationConfiguration.REST_VERSION + BundleApplicationsController.REST_PATH)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BundleApplicationsController
 	extends
-		AbstractRestController<BundleApplications, Integer, BundleApplicationsRepository, BundleApplication>
+		AbstractRestController<BundleApplications, UUID, BundleApplicationsRepository, BundleApplication>
 {
 
 	public static final String REST_PATH = "/bundle/applications";
@@ -46,11 +42,11 @@ public class BundleApplicationsController
 	public static final String REST_PATH_DELETE = "/delete";
 
 	@Autowired
-	BundleApplicationMapper mapper;
+	BundleApplicationsMapper mapper;
 	@Autowired
 	BundleApplicationsService service;
 
-	public BundleApplicationsController(BundleApplicationMapper mapper,
+	public BundleApplicationsController(BundleApplicationsMapper mapper,
 		BundleApplicationsService service)
 	{
 		super(mapper, service);
@@ -86,8 +82,7 @@ public class BundleApplicationsController
 	{
 		final BundleApplications bundleApplication = this.service.find(bundleappname);
 		Set<BundleNames> bundleNames = this.service.find(bundleApplication);
-		BundleNameMapper bundleNameMapper = Mappers.getMapper(BundleNameMapper.class);
-		List<BundleName> bundleNameList = bundleNameMapper.toDtos(bundleNames);
+		List<BundleName> bundleNameList = mapper.map(bundleNames, BundleName.class);
 		return ResponseEntity.ok(SetExtensions.toSet(bundleNameList));
 	}
 

@@ -24,13 +24,14 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
+import de.alpharogroup.bundlemanagement.jpa.entity.Languages;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.Languages;
+import java.util.UUID;
 
 @Repository
-public interface LanguagesRepository extends JpaRepository<Languages, Integer>
+public interface LanguagesRepository extends JpaRepository<Languages, UUID>
 {
 	Languages findDistinctByIso639Dash1(String iso639Dash1);
 

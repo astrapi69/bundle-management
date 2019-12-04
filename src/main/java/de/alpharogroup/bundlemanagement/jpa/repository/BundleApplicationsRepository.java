@@ -24,15 +24,15 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import java.util.List;
-
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
+import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface BundleApplicationsRepository extends JpaRepository<BundleApplications, Integer>
+public interface BundleApplicationsRepository extends JpaRepository<BundleApplications, UUID>
 {
 	List<BundleApplications> findByName(String name);
 

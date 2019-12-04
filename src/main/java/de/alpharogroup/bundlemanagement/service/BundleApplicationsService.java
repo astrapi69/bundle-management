@@ -24,12 +24,6 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
-import java.util.List;
-import java.util.Set;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
 import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
@@ -42,6 +36,12 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * The class {@link BundleApplicationsService}
@@ -53,7 +53,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 public class BundleApplicationsService
 	implements
-		GenericService<BundleApplications, Integer, BundleApplicationsRepository>
+		GenericService<BundleApplications, UUID, BundleApplicationsRepository>
 {
 
 	/** The Constant serialVersionUID. */

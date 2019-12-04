@@ -22,57 +22,17 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package de.alpharogroup.bundlemanagement.service;
+package de.alpharogroup.bundlemanagement.mapper;
 
+import de.alpharogroup.bean.mapper.AbstractGenericMapper;
 import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
-import de.alpharogroup.bundlemanagement.jpa.repository.BaseNamesRepository;
-import de.alpharogroup.bundlemanagement.service.api.NameEntityService;
-import de.alpharogroup.spring.service.api.GenericService;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.experimental.FieldDefaults;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.UUID;
+import de.alpharogroup.bundlemanagement.viewmodel.BaseName;
+import org.springframework.stereotype.Component;
 
 /**
- * The class {@link BaseNamesService}.
+ * The class {@link BaseNamesMapper}.
  */
-@Transactional
-@Service
-@AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@Getter
-public class BaseNamesService
-	implements
-		NameEntityService<BaseNames>,
-		GenericService<BaseNames, UUID, BaseNamesRepository>
+@Component
+public class BaseNamesMapper extends AbstractGenericMapper<BaseNames, BaseName>
 {
-
-	BaseNamesRepository repository;
-
-	@Override
-	public List<BaseNames> findEntities(final String nameValue)
-	{
-		return repository.findByName(nameValue);
-	}
-
-	@Override
-	public BaseNames merge(BaseNames object)
-	{
-		return repository.save(object);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public BaseNames newNameEntity(String value)
-	{
-		return BaseNames.builder().name(value).build();
-	}
-
 }

@@ -24,34 +24,13 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
-import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
-
-import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
-import de.alpharogroup.db.entity.version.VersionableEntity;
-import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import de.alpharogroup.db.entity.version.VersionableUUIDEntity;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
+
+import javax.persistence.*;
 
 /**
  * The entity class {@link BundleNames} holds the data from the {@link BaseNames} and the
@@ -82,11 +61,9 @@ import lombok.experimental.FieldDefaults;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(toBuilder = true)
-@GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
-	+ BundleNames.TABLE_NAME))
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BundleNames extends VersionableEntity<Integer> implements Cloneable
+@SuperBuilder
+public class BundleNames extends VersionableUUIDEntity implements Cloneable
 {
 
 	public static final String COLUMN_NAME_BASE_NAME = "base_name_id";

@@ -24,15 +24,15 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import java.util.List;
-
+import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
+import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface BaseNamesRepository extends JpaRepository<BaseNames, Integer>
+public interface BaseNamesRepository extends JpaRepository<BaseNames, UUID>
 {
 	List<BaseNames> findByName(String name);
 

@@ -24,12 +24,12 @@
  */
 package de.alpharogroup.bundlemanagement.viewmodel;
 
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * The class {@link BundleApplication}.
@@ -42,7 +42,7 @@ import lombok.experimental.FieldDefaults;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class BundleApplication
 {
-	Integer id;
+	UUID id;
 	Integer version;
 	String name;
 	LanguageLocale defaultLocale;

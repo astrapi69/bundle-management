@@ -24,22 +24,16 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
+import de.alpharogroup.db.entity.enums.DatabasePrefix;
+import de.alpharogroup.db.entity.name.NameEntity;
+import de.alpharogroup.db.entity.name.versionable.VersionableNameUUIDEntity;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
-
-import de.alpharogroup.db.entity.BaseEntity;
-import de.alpharogroup.db.entity.enums.DatabasePrefix;
-import de.alpharogroup.db.entity.name.NameEntity;
-import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
-import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 /**
  * Entity class for saving in database base names of the resource bundles. The base name if you see
@@ -51,9 +45,8 @@ import lombok.ToString;
 	+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME) })
 @ToString(callSuper = true)
 @NoArgsConstructor
-@GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
-	+ BaseNames.TABLE_NAME))
-public class BaseNames extends VersionableNameEntity<Integer> implements Cloneable
+@SuperBuilder
+public class BaseNames extends VersionableNameUUIDEntity implements Cloneable
 {
 
 	/**
@@ -62,16 +55,4 @@ public class BaseNames extends VersionableNameEntity<Integer> implements Cloneab
 	private static final long serialVersionUID = 1L;
 
 	public static final String TABLE_NAME = "basenames";
-
-	/**
-	 * Instantiates a new {@link BaseNames} entity object.
-	 *
-	 * @param name
-	 *            the name
-	 */
-	@Builder
-	BaseNames(String name)
-	{
-		super(name);
-	}
 }

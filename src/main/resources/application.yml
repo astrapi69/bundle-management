@@ -9,6 +9,8 @@ app:
   db-host: localhost
   db-port: 5432
   db-url-prefix: jdbc:postgresql://
+  db-username: postgres
+  db-password: postgres
 
 spring:  
   datasource:
@@ -25,7 +27,7 @@ spring:
           lob:
             non_contextual_creation: true
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
       show_sql: true
       use_sql_comments: true
       generate_statistics: false

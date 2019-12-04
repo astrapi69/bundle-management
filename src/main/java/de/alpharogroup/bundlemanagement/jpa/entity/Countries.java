@@ -24,30 +24,20 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import de.alpharogroup.db.entity.name.NameEntity;
-import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
+import de.alpharogroup.db.entity.name.NameUUIDEntity;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
 
 /**
  * The entity class {@link Countries} is keeping the information for all countries in the world
@@ -70,11 +60,10 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 @NoArgsConstructor
-@GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
-	+ Countries.TABLE_NAME))
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Countries extends NameEntity<Integer> implements Cloneable
+@SuperBuilder
+public class Countries extends NameUUIDEntity implements Cloneable
 {
 
 	public static final String COLUMN_NAME_ISO_3166_A2_NAME = "iso3166_a2name";
@@ -84,20 +73,5 @@ public class Countries extends NameEntity<Integer> implements Cloneable
 	/** The iso3166 name with two characters. */
 	@Column(name = "iso3166_a2name", length = 2)
 	String iso3166a2name;
-
-	/**
-	 * Instantiates a new countries.
-	 *
-	 * @param name
-	 *            the name
-	 * @param iso3166a2name
-	 *            the iso 3166 a 2 name
-	 */
-	@Builder
-	public Countries(String name, String iso3166a2name)
-	{
-		super(name);
-		this.iso3166a2name = iso3166a2name;
-	}
 
 }

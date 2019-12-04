@@ -24,28 +24,14 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
-
-import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import de.alpharogroup.db.entity.name.NameEntity;
-import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
-import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import de.alpharogroup.db.entity.name.versionable.VersionableNameUUIDEntity;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
+
+import javax.persistence.*;
 
 /**
  * The entity class {@link LanguageLocales} holds the data for the languages.
@@ -68,10 +54,9 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @ToString
 @NoArgsConstructor
-@GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
-	+ Languages.TABLE_NAME))
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Languages extends VersionableNameEntity<Integer> implements Cloneable
+@SuperBuilder
+public class Languages extends VersionableNameUUIDEntity implements Cloneable
 {
 
 	public static final String COLUMN_NAME_ISO_639_DASH1 = "iso639_1";
@@ -83,20 +68,5 @@ public class Languages extends VersionableNameEntity<Integer> implements Cloneab
 	/** The iso639_1 code with two characters. */
 	@Column(name = "iso639_1", length = 2)
 	String iso639Dash1;
-
-	/**
-	 * Instantiates a new {@link Languages} entity object.
-	 *
-	 * @param name
-	 *            the name
-	 * @param iso639Dash1
-	 *            the iso 639 dash 1
-	 */
-	@Builder
-	Languages(String name, String iso639Dash1)
-	{
-		super(name);
-		this.iso639Dash1 = iso639Dash1;
-	}
 
 }

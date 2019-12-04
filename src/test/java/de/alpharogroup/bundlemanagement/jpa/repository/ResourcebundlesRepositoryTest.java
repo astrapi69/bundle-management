@@ -1,21 +1,14 @@
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
+import de.alpharogroup.bundlemanagement.jpa.entity.*;
+import de.alpharogroup.collections.set.SetFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
-import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
-import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
-import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
-import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
-import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
-import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
-import de.alpharogroup.collections.set.SetFactory;
+import java.util.List;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class ResourcebundlesRepositoryTest extends BaseJpaTest
 {

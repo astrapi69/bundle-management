@@ -24,14 +24,15 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
+import de.alpharogroup.bundlemanagement.jpa.entity.Countries;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.Countries;
+import java.util.UUID;
 
 @Repository
-public interface CountriesRepository extends JpaRepository<Countries, Integer>
+public interface CountriesRepository extends JpaRepository<Countries, UUID>
 {
 	Countries findByIso3166a2name(@Param("iso3166a2name") String iso3166a2name);
 

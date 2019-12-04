@@ -1,7 +1,7 @@
 /**
  * The MIT License
  *
- * Copyright (C) 2019 Asterios Raptis
+ * Copyright (C) 2007 - 2015 Asterios Raptis
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -10,10 +10,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- *
+ *  *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- *
+ *  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -22,25 +22,19 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package de.alpharogroup.bundlemanagement.viewmodel;
+package de.alpharogroup.bundlemanagement.mapper;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-
-import java.util.UUID;
+import de.alpharogroup.bean.mapper.AbstractGenericMapper;
+import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
+import de.alpharogroup.bundlemanagement.viewmodel.PropertiesValue;
+import org.springframework.stereotype.Component;
 
 /**
- * The class {@link PropertiesValue}.
+ * The class {@link PropertiesValuesMapper}.
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder(toBuilder = true)
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class PropertiesValue
+@Component
+public class PropertiesValuesMapper
+	extends
+	AbstractGenericMapper<PropertiesValues, PropertiesValue>
 {
-
-	UUID id;
-	Integer version;
-	String name;
 }

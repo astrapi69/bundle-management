@@ -24,24 +24,18 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.SequenceStyleGenerator;
-
-import de.alpharogroup.db.entity.BaseEntity;
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import de.alpharogroup.db.entity.name.NameEntity;
-import de.alpharogroup.db.entity.name.versionable.VersionableNameEntity;
-import de.alpharogroup.hibernate.generator.IdentifiableSequenceStyleGenerator;
-import lombok.Builder;
+import de.alpharogroup.db.entity.name.versionable.VersionableNameUUIDEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
 
 /**
  * The entity class {@link PropertiesKeys} holds the data only for the properties keys not the
@@ -57,25 +51,12 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-@GenericGenerator(name = BaseEntity.SEQUENCE_GENERIC_GENERATOR_NAME, strategy = IdentifiableSequenceStyleGenerator.STRATEGY_CLASS_NAME, parameters = @Parameter(name = SequenceStyleGenerator.SEQUENCE_PARAM, value = DatabasePrefix.SEQUENCE_GENERATOR_PREFIX
-	+ PropertiesKeys.TABLE_NAME))
-public class PropertiesKeys extends VersionableNameEntity<Integer> implements Cloneable
+@SuperBuilder
+public class PropertiesKeys extends VersionableNameUUIDEntity implements Cloneable
 {
 
 	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;
 	public static final String TABLE_NAME = "properties_keys";
-
-	/**
-	 * Instantiates a new {@link PropertiesKeys} entity object.
-	 *
-	 * @param name
-	 *            the name
-	 */
-	@Builder
-	PropertiesKeys(String name)
-	{
-		super(name);
-	}
 
 }

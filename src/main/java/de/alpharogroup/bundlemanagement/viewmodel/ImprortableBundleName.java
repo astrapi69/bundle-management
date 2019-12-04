@@ -1,14 +1,10 @@
 package de.alpharogroup.bundlemanagement.viewmodel;
 
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
 import java.util.Locale;
 import java.util.Properties;
-
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.FieldDefaults;
 
 @Data
 @NoArgsConstructor

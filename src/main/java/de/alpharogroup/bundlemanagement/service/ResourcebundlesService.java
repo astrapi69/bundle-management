@@ -24,26 +24,7 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.logging.Level;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
-import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
-import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
-import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
-import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
-import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
-import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
+import de.alpharogroup.bundlemanagement.jpa.entity.*;
 import de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsRepository;
 import de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository;
 import de.alpharogroup.collections.list.ListFactory;
@@ -58,6 +39,14 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+import java.util.logging.Level;
 
 /**
  * The class {@link ResourcebundlesService}
@@ -70,7 +59,7 @@ import lombok.extern.java.Log;
 @Getter
 public class ResourcebundlesService
 	implements
-		GenericService<Resourcebundles, Integer, ResourcebundlesRepository>
+		GenericService<Resourcebundles, UUID, ResourcebundlesRepository>
 {
 
 	BaseNamesService baseNamesService;

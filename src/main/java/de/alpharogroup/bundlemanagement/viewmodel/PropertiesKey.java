@@ -24,12 +24,10 @@
  */
 package de.alpharogroup.bundlemanagement.viewmodel;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.UUID;
 
 /**
  * The class {@link PropertiesKey}.
@@ -42,7 +40,7 @@ import lombok.experimental.FieldDefaults;
 public class PropertiesKey
 {
 
-	Integer id;
+	UUID id;
 	Integer version;
 	String name;
 }

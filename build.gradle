@@ -1,23 +1,25 @@
+
 plugins {
-	id 'io.franzbecker.gradle-lombok' version '3.1.0'
-	id 'org.springframework.boot' version '2.1.9.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
-	id 'java'
-	id 'idea'
-	id 'net.ltgt.apt' version '0.20'
-	id 'net.ltgt.apt-idea' version '0.17'
+	id "io.franzbecker.gradle-lombok" version "3.2.0"
+	id "org.springframework.boot" version "2.2.1.RELEASE"
+	id "io.spring.dependency-management" version "1.0.8.RELEASE"
+	id "java"
+	id "idea"
+	id "net.ltgt.apt" version "0.21"
+	id "net.ltgt.apt-idea" version "0.21"
+	id "com.github.ben-manes.versions" version "0.27.0"
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'net.ltgt.apt-idea'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
+apply plugin: "java"
+apply plugin: "eclipse"
+apply plugin: "idea"
+apply plugin: "net.ltgt.apt-idea"
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
 
-group = 'de.alpharogroup'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+group = "de.alpharogroup"
+version = "0.0.1-SNAPSHOT"
+sourceCompatibility = "1.8"
 
 configurations {
 	developmentOnly
@@ -30,10 +32,26 @@ configurations {
 }
 
 ext {
-	lombokVersion = '1.18.10'
-	entApiVersion = '1.4.1'
-	entCoreVersion = '1.6'
-	mapstructVersion = "1.3.0.Final"
+	lombokVersion = "1.18.10"
+	entApiVersion = "1.5"
+	entCoreVersion = "1.8.1"
+	mapstructVersion = "1.3.1.Final"
+	springToolExtensionsVersion = "1.4"
+	jobjCoreVersion = "3.2.1"
+	genericMapperVersion = "2.2"
+	sillyJdbcVersion = "5.7"
+	sillyCollectionsVersion = "5.6"
+	fileWorkerVersion = "5.3"
+	yamlToPropToYamlVersion = "1.1"
+	resourcebundleCoreVersion = "3.2"
+	jobjCopyVersion = "3.2"
+	springBootExtensionsVersion = "1.2"
+	xmlExtensionsVersion = "6.2.1"
+	throwAbleVersion = "1.1"
+	springToolExtensionsVersion = "1.5"
+	springfoxSwaggerVersion = "2.9.2"
+	xstreamVersion = "1.4.9"
+	commonsLang3Version = "3.9"
 }
 
 repositories {
@@ -43,40 +61,34 @@ repositories {
 }
 
 dependencies {
-	compile 'org.mapstruct:mapstruct:1.3.0.Final'
-	compileOnly 'org.mapstruct:mapstruct-processor:1.3.0.Final'
-	compileOnly 'org.projectlombok:lombok:${lombokVersion}'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.3.0.Final'
-	annotationProcessor 'org.projectlombok:lombok:${lombokVersion}'
-	compile 'de.alpharogroup:ent-api:1.4.1'
-	compile 'de.alpharogroup:ent-core:1.6'
-	compile 'de.alpharogroup:silly-collections:5.2.1'
-	compile 'de.alpharogroup:resourcebundle-inspector:3.0.1'
-	compile 'de.alpharogroup:jobject-copy:3.1.2'
-	compile 'de.alpharogroup:xml-extensions:6.2.1'
-	compile 'de.alpharogroup:throw-able:1.1'
-	compile 'de.alpharogroup:spring-tool-extensions:1.5-SNAPSHOT'
-	compile 'io.springfox:springfox-swagger2:2.9.2'
-	compile 'io.springfox:springfox-swagger-ui:2.9.2'
-	compile 'com.thoughtworks.xstream:xstream:1.4.9'
-	compile 'org.apache.commons:commons-lang3:3.9'
-	implementation 'org.postgresql:postgresql'
-	implementation 'org.flywaydb:flyway-core'
-	implementation 'org.springframework:spring-oxm'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-aop'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
-}
-
-compileJava {
-	options.compilerArgs += "-Amapstruct.suppressGeneratorTimestamp=true"
-	options.compilerArgs += "-Amapstruct.defaultComponentModel=spring"
-	options.compilerArgs += "-Amapstruct.suppressGeneratorVersionInfoComment=true"
+	compileOnly "org.projectlombok:lombok:${lombokVersion}"
+	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+	compile "de.alpharogroup:generic-mapper:$genericMapperVersion"
+	compile "de.alpharogroup:ent-api:$entApiVersion"
+	compile "de.alpharogroup:ent-core:$entCoreVersion"
+	compile "de.alpharogroup:silly-jdbc:${sillyJdbcVersion}"
+	compile "de.alpharogroup:silly-collections:${sillyCollectionsVersion}"
+	compile "de.alpharogroup:resourcebundle-core:${resourcebundleCoreVersion}"
+	compile "de.alpharogroup:jobj-copy:${jobjCopyVersion}"
+	compile("de.alpharogroup:spring-tool-extensions:$springToolExtensionsVersion")
+	compile "de.alpharogroup:xml-extensions:${xmlExtensionsVersion}"
+	compile "de.alpharogroup:throw-able:${throwAbleVersion}"
+	compile "de.alpharogroup:spring-tool-extensions:$springToolExtensionsVersion"
+	compile "de.alpharogroup:spring-boot-extensions:${springBootExtensionsVersion}"
+	compile "io.springfox:springfox-swagger2:${springfoxSwaggerVersion}"
+	compile "io.springfox:springfox-swagger-ui:${springfoxSwaggerVersion}"
+	compile "com.thoughtworks.xstream:xstream:${xstreamVersion}"
+	compile "org.apache.commons:commons-lang3:${commonsLang3Version}"
+	implementation "org.postgresql:postgresql"
+	implementation "org.flywaydb:flyway-core"
+	implementation "org.springframework:spring-oxm"
+	implementation "org.springframework.boot:spring-boot-starter-web"
+	implementation "org.springframework.boot:spring-boot-starter-actuator"
+	implementation "org.springframework.boot:spring-boot-starter-aop"
+	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+	developmentOnly "org.springframework.boot:spring-boot-devtools"
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+	testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
 test {

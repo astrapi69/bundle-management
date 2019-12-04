@@ -24,19 +24,19 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import java.util.List;
-
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
-import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
+import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface BundleNamesRepository extends JpaRepository<BundleNames, Integer>
+public interface BundleNamesRepository extends JpaRepository<BundleNames, UUID>
 {
 
 	@Transactional

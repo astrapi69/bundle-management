@@ -1,41 +1,38 @@
 package de.alpharogroup.bundlemanagement.controller;
 
-import de.alpharogroup.bundlemanagement.viewmodel.Language;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
 import de.alpharogroup.bundlemanagement.jpa.entity.Languages;
 import de.alpharogroup.bundlemanagement.jpa.repository.LanguagesRepository;
-import de.alpharogroup.bundlemanagement.mapper.LanguageMapper;
+import de.alpharogroup.bundlemanagement.mapper.LanguagesMapper;
 import de.alpharogroup.bundlemanagement.service.LanguagesService;
+import de.alpharogroup.bundlemanagement.viewmodel.Language;
 import de.alpharogroup.spring.controller.AbstractRestController;
 import io.swagger.annotations.ApiOperation;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping(ApplicationConfiguration.REST_VERSION + LanguagesController.REST_PATH)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class LanguagesController
 	extends
-		AbstractRestController<Languages, Integer, LanguagesRepository, Language>
+		AbstractRestController<Languages, UUID, LanguagesRepository, Language>
 {
 
 	public static final String REST_PATH = "/language";
 	public static final String REST_PATH_FIND = "/find";
 	public static final String REST_PATH_FIND_BY_CODE = "/find/by/code";
 
-	LanguageMapper mapper;
+	LanguagesMapper mapper;
 
 	LanguagesService service;
 
-	public LanguagesController(LanguageMapper mapper, LanguagesService service)
+	public LanguagesController(LanguagesMapper mapper, LanguagesService service)
 	{
 		super(mapper, service);
 		this.mapper = mapper;

@@ -1,7 +1,15 @@
 package de.alpharogroup.bundlemanagement.configuration;
 
-import java.util.List;
-
+import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.java.Log;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -18,16 +26,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NonNull;
-import lombok.experimental.FieldDefaults;
+import java.util.List;
 
 @Configuration
 @ComponentScan(basePackages = {"de.alpharogroup.bundlemanagement",
@@ -38,11 +37,14 @@ import lombok.experimental.FieldDefaults;
 @EnableTransactionManagement
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Log
 public class ApplicationConfiguration implements WebMvcConfigurer
 {
 
 	public static final String VERSION_API_1 = "v1";
 	public static final String REST_VERSION = "/" + VERSION_API_1;
+
+	ApplicationProperties applicationProperties;
 
 	public static ObjectMapper initialize(final @NonNull ObjectMapper objectMapper)
 	{
@@ -71,18 +73,23 @@ public class ApplicationConfiguration implements WebMvcConfigurer
 			.allowedOrigins("*");
 	}
 
+	@Override
+	public void configureMessageConverters(List<HttpMessageConverter<?>> converters)
+	{
+		converters.add(createXmlHttpMessageConverter());
+		converters.add(newMappingJackson2HttpMessageConverter());
+	}
+
 	// @Override
 	// public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 	// MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
 	// converter.setObjectMapper(objectMapper());
 	// converters.add(converter);
 	// }
-	@Override
-	public void configureMessageConverters(List<HttpMessageConverter<?>> converters)
+	private MappingJackson2HttpMessageConverter newMappingJackson2HttpMessageConverter()
 	{
-
-		converters.add(createXmlHttpMessageConverter());
-		converters.add(new MappingJackson2HttpMessageConverter());
+		MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
+		return mappingJackson2HttpMessageConverter;
 	}
 
 	private HttpMessageConverter<Object> createXmlHttpMessageConverter()
@@ -112,4 +119,5 @@ public class ApplicationConfiguration implements WebMvcConfigurer
 		objectMapper = initialize(objectMapper);
 		return objectMapper;
 	}
+
 }
