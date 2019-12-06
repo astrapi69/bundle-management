@@ -105,8 +105,7 @@ public class BundleApplicationsService
 
 	public BundleApplications find(final String name)
 	{
-		final List<BundleApplications> applications = repository.findByName(name);
-		return ListExtensions.getFirst(applications);
+		return repository.findDistinctByName(name);
 	}
 
 	public BundleApplications get(final BundleNames bundleName)

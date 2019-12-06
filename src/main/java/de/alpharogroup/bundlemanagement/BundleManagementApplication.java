@@ -25,9 +25,9 @@ public class BundleManagementApplication extends SpringBootServletInitializer
 	public static void main(String[] args)
 	{
 		SpringApplication application = new SpringApplication(BundleManagementApplication.class);
-//		ApplicationHooks instance = ApplicationHooks.INSTANCE;
-//		instance.addDatabaseIfNotExists(application, PathFinder.getSrcMainResourcesDir(),
-//			"application.yml");
+		ApplicationHooks instance = ApplicationHooks.INSTANCE;
+		instance.addDatabaseIfNotExists(application, PathFinder.getSrcMainResourcesDir(),
+			"application.yml");
 		application.run(args);
 	}
 

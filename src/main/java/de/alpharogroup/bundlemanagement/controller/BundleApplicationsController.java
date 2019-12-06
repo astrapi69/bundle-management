@@ -30,15 +30,13 @@ import java.util.UUID;
 @RequestMapping(ApplicationConfiguration.REST_VERSION + BundleApplicationsController.REST_PATH)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BundleApplicationsController
-	extends
-		AbstractRestController<BundleApplications, UUID, BundleApplicationsRepository, BundleApplication>
+	extends AbstractRestController<BundleApplications, UUID, BundleApplicationsRepository, BundleApplication>
 {
 
 	public static final String REST_PATH = "/bundle/applications";
 	public static final String REST_PATH_FIND = "/find";
 	public static final String REST_PATH_FIND_ALL_BUNDLENAMES = "/find/all/bundlenames";
 	public static final String REST_PATH_BY_BUNDLENAME = "/find/by/bundlename";
-	public static final String REST_PATH_PERSIST = "/persist";
 	public static final String REST_PATH_DELETE = "/delete";
 
 	@Autowired
@@ -52,15 +50,6 @@ public class BundleApplicationsController
 		super(mapper, service);
 		this.mapper = mapper;
 		this.service = service;
-	}
-	@CrossOrigin(origins = "*")
-	@RequestMapping(path = BundleApplicationsController.REST_PATH_PERSIST, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(value = "Persist the given BundleApplication object")
-	@ResponseBody
-	public ResponseEntity<BundleApplication> persist(@Valid @RequestBody BundleApplication bundleApplication){
-		BundleApplications bundleApplications = mapper.toEntity(bundleApplication);
-		BundleApplications savedEntity = this.service.save(bundleApplications);
-		return ResponseEntity.ok(mapper.toDto(savedEntity));
 	}
 
 	@RequestMapping(value = BundleApplicationsController.REST_PATH_DELETE, method = RequestMethod.DELETE)
@@ -111,6 +100,6 @@ public class BundleApplicationsController
 		return ResponseEntity
 			.status(
 				bundleApplication != null ? HttpStatus.OK.value() : HttpStatus.BAD_REQUEST.value())
-			.body(mapper.toDto(bundleApplication));
+			.body(bundleApplication != null ?mapper.toDto(bundleApplication): null);
 	}
 }

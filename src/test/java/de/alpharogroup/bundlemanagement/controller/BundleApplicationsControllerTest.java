@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
@@ -77,8 +78,7 @@ public class BundleApplicationsControllerTest
 		HttpHeaders headers;
 		HttpEntity<String> requestEntity;
 
-		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			BundleApplicationsController.REST_PATH_PERSIST);
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), "");
 		List<MediaType> acceptableMediaTypes = ListFactory.newArrayList();
 		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
 		String json = "{\"id\":null,\"version\":null,\"name\":\"test-foo-del-app\",\"defaultLocale\":{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"},\"supportedLocales\":[{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"}]}";
@@ -97,17 +97,34 @@ public class BundleApplicationsControllerTest
 	public void testFind()
 	{
 		String restUrl;
+		String[] requestParams;
+		HttpHeaders headers;
+		HttpEntity<String> requestEntity;
+		Map<String, String> urlParams;
+		ResponseEntity<BundleApplication> entity;
 
-		String[] requestParams = ArrayFactory.newArray("bundleappname");
+		requestParams = ArrayFactory.newArray("bundleappname");
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
 			BundleApplicationsController.REST_PATH_FIND, requestParams);
-		HttpHeaders headers = new HttpHeaders();
-		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-		Map<String, String> urlParams = new HashMap<String, String>();
+		headers = new HttpHeaders();
+		requestEntity = new HttpEntity<>(headers);
+		urlParams = new HashMap<String, String>();
 		urlParams.put("bundleappname", "test-bundle-application");
-		ResponseEntity<BundleApplication> entity = this.restTemplate.exchange(restUrl, HttpMethod.GET,
+		entity = this.restTemplate.exchange(restUrl, HttpMethod.GET,
 			requestEntity, BundleApplication.class, urlParams);
 		assertNotNull(entity);
+		// bundle app not exists case...
+		requestParams = ArrayFactory.newArray("bundleappname");
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			BundleApplicationsController.REST_PATH_FIND, requestParams);
+		headers = new HttpHeaders();
+		requestEntity = new HttpEntity<>(headers);
+		urlParams = new HashMap<String, String>();
+		urlParams.put("bundleappname", "not-existent-app");
+		entity = this.restTemplate.exchange(restUrl, HttpMethod.GET,
+			requestEntity, BundleApplication.class, urlParams);
+		assertNotNull(entity);
+		assertNull(entity.getBody());
 	}
 
 	@Test
