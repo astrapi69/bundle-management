@@ -43,16 +43,16 @@ import javax.persistence.*;
 @Entity
 @Table(name = BundleNames.TABLE_NAME, indexes = {
 		@Index(name = DatabasePrefix.INDEX_PREFIX + BundleNames.TABLE_NAME
-			+ DatabasePrefix.UNDERSCORE_PREFIX
+			+ DatabasePrefix.UNDERSCORE
 			+ BundleNames.COLUMN_NAME_BASE_NAME, columnList = BundleNames.COLUMN_NAME_BASE_NAME),
 		@Index(name = DatabasePrefix.INDEX_PREFIX + BundleNames.TABLE_NAME
-			+ DatabasePrefix.UNDERSCORE_PREFIX
+			+ DatabasePrefix.UNDERSCORE
 			+ BundleNames.COLUMN_NAME_FILEPATH, columnList = BundleNames.COLUMN_NAME_FILEPATH),
 		@Index(name = DatabasePrefix.INDEX_PREFIX + BundleNames.TABLE_NAME
-			+ DatabasePrefix.UNDERSCORE_PREFIX
+			+ DatabasePrefix.UNDERSCORE
 			+ BundleNames.COLUMN_NAME_LOCALE, columnList = BundleNames.COLUMN_NAME_LOCALE),
 		@Index(name = DatabasePrefix.INDEX_PREFIX + BundleNames.TABLE_NAME
-			+ DatabasePrefix.UNDERSCORE_PREFIX
+			+ DatabasePrefix.UNDERSCORE
 			+ BundleNames.COLUMN_NAME_OWNER, columnList = BundleNames.COLUMN_NAME_OWNER) })
 @NamedQueries({
 		@NamedQuery(name = BundleNames.NQ_FIND_BY_OWNER, query = "select bn from BundleNames bn where bn.owner=:owner") })

@@ -37,10 +37,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = LanguageLocales.TABLE_NAME, uniqueConstraints = {
 		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX
-			+ LanguageLocales.TABLE_NAME + DatabasePrefix.UNDERSCORE_PREFIX
+			+ LanguageLocales.TABLE_NAME + DatabasePrefix.UNDERSCORE
 			+ LanguageLocales.COLUMN_NAME_LOCALE, columnNames = LanguageLocales.COLUMN_NAME_LOCALE) }, indexes = {
 					@Index(name = DatabasePrefix.INDEX_PREFIX + LanguageLocales.TABLE_NAME
-						+ DatabasePrefix.UNDERSCORE_PREFIX
+						+ DatabasePrefix.UNDERSCORE
 						+ LanguageLocales.COLUMN_NAME_LOCALE, columnList = LanguageLocales.COLUMN_NAME_LOCALE) })
 @Getter
 @Setter

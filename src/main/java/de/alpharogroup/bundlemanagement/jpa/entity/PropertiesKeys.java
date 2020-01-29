@@ -45,7 +45,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = PropertiesKeys.TABLE_NAME, indexes = { @Index(name = DatabasePrefix.INDEX_PREFIX
-	+ PropertiesKeys.TABLE_NAME + DatabasePrefix.UNDERSCORE_PREFIX
+	+ PropertiesKeys.TABLE_NAME + DatabasePrefix.UNDERSCORE
 	+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME) })
 @Getter
 @Setter

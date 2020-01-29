@@ -38,13 +38,13 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = Resourcebundles.TABLE_NAME, indexes = { @Index(name = DatabasePrefix.INDEX_PREFIX
-	+ Resourcebundles.TABLE_NAME + DatabasePrefix.UNDERSCORE_PREFIX
+	+ Resourcebundles.TABLE_NAME + DatabasePrefix.UNDERSCORE
 	+ Resourcebundles.COLUMN_NAME_BUNDLE_NAME, columnList = Resourcebundles.COLUMN_NAME_BUNDLE_NAME),
 		@Index(name = DatabasePrefix.INDEX_PREFIX + Resourcebundles.TABLE_NAME
-			+ DatabasePrefix.UNDERSCORE_PREFIX
+			+ DatabasePrefix.UNDERSCORE
 			+ Resourcebundles.COLUMN_NAME_PROPRERTIES_KEY, columnList = Resourcebundles.COLUMN_NAME_PROPRERTIES_KEY),
 		@Index(name = DatabasePrefix.INDEX_PREFIX + Resourcebundles.TABLE_NAME
-			+ DatabasePrefix.UNDERSCORE_PREFIX
+			+ DatabasePrefix.UNDERSCORE
 			+ Resourcebundles.COLUMN_NAME_PROPRERTIES_VALUE, columnList = Resourcebundles.COLUMN_NAME_PROPRERTIES_VALUE) })
 @Getter
 @Setter

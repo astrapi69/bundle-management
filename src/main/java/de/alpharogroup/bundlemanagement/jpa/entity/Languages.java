@@ -39,16 +39,16 @@ import javax.persistence.*;
 @Entity
 @Table(name = Languages.TABLE_NAME, uniqueConstraints = {
 		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX + Languages.TABLE_NAME
-			+ DatabasePrefix.UNDERSCORE_PREFIX
+			+ DatabasePrefix.UNDERSCORE
 			+ NameEntity.COLUMN_NAME_NAME, columnNames = NameEntity.COLUMN_NAME_NAME),
 		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX + Languages.TABLE_NAME
-			+ DatabasePrefix.UNDERSCORE_PREFIX
+			+ DatabasePrefix.UNDERSCORE
 			+ Languages.COLUMN_NAME_ISO_639_DASH1, columnNames = Languages.COLUMN_NAME_ISO_639_DASH1) }, indexes = {
 					@Index(name = DatabasePrefix.INDEX_PREFIX + Languages.TABLE_NAME
-						+ DatabasePrefix.UNDERSCORE_PREFIX
+						+ DatabasePrefix.UNDERSCORE
 						+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME),
 					@Index(name = DatabasePrefix.INDEX_PREFIX + Languages.TABLE_NAME
-						+ DatabasePrefix.UNDERSCORE_PREFIX
+						+ DatabasePrefix.UNDERSCORE
 						+ Languages.COLUMN_NAME_ISO_639_DASH1, columnList = Languages.COLUMN_NAME_ISO_639_DASH1) })
 @Getter
 @Setter

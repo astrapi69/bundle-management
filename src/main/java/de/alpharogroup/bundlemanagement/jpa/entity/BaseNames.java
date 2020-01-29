@@ -41,7 +41,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = BaseNames.TABLE_NAME, indexes = { @Index(name = DatabasePrefix.INDEX_PREFIX
-	+ BaseNames.TABLE_NAME + DatabasePrefix.UNDERSCORE_PREFIX
+	+ BaseNames.TABLE_NAME + DatabasePrefix.UNDERSCORE
 	+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME) })
 @ToString(callSuper = true)
 @NoArgsConstructor

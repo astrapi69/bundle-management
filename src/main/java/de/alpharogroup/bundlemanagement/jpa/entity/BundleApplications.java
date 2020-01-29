@@ -54,10 +54,10 @@ import java.util.Set;
 
 @Table(name = BundleApplications.TABLE_NAME, uniqueConstraints = {
 		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX
-			+ BundleApplications.TABLE_NAME + DatabasePrefix.UNDERSCORE_PREFIX
+			+ BundleApplications.TABLE_NAME + DatabasePrefix.UNDERSCORE
 			+ NameEntity.COLUMN_NAME_NAME, columnNames = NameEntity.COLUMN_NAME_NAME) }, indexes = {
 					@Index(name = DatabasePrefix.INDEX_PREFIX + BundleApplications.TABLE_NAME
-						+ DatabasePrefix.UNDERSCORE_PREFIX
+						+ DatabasePrefix.UNDERSCORE
 						+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME, unique = true) })
 @Getter
 @Setter

@@ -30,7 +30,7 @@ import de.alpharogroup.bundlemanagement.viewmodel.BaseName;
 import org.springframework.stereotype.Component;
 
 /**
- * The class {@link BaseNamesMapper}.
+ * The class {@link BaseNamesMapper}
  */
 @Component
 public class BaseNamesMapper extends AbstractGenericMapper<BaseNames, BaseName>
