@@ -1,8 +1,8 @@
 
 plugins {
 	id "io.franzbecker.gradle-lombok" version "3.2.0"
-	id "org.springframework.boot" version "2.2.2.RELEASE"
-	id "io.spring.dependency-management" version "1.0.8.RELEASE"
+	id "org.springframework.boot" version "2.2.4.RELEASE"
+	id "io.spring.dependency-management" version "1.0.9.RELEASE"
 	id "java"
 	id "idea"
 	id "net.ltgt.apt" version "0.21"
@@ -31,29 +31,6 @@ configurations {
 	}
 }
 
-ext {
-	lombokVersion = "1.18.10"
-	entApiVersion = "1.6"
-	entCoreVersion = "1.9"
-	mapstructVersion = "1.3.1.Final"
-	springToolExtensionsVersion = "1.4"
-	jobjCoreVersion = "3.2.1"
-	genericMapperVersion = "2.2"
-	sillyJdbcVersion = "5.7"
-	sillyCollectionsVersion = "5.6"
-	fileWorkerVersion = "5.3"
-	yamlToPropToYamlVersion = "1.1"
-	resourcebundleCoreVersion = "3.2"
-	jobjCopyVersion = "3.2"
-	xmlExtensionsVersion = "6.2.1"
-	throwAbleVersion = "1.1"
-	springBootExtensionsVersion = "1.2.1"
-	springToolExtensionsVersion = "1.6-SNAPSHOT"
-	springfoxSwaggerVersion = "2.9.2"
-	xstreamVersion = "1.4.9"
-	commonsLang3Version = "3.9"
-}
-
 repositories {
 	jcenter()
 	mavenLocal()
@@ -61,33 +38,37 @@ repositories {
 }
 
 dependencies {
-	compileOnly "org.projectlombok:lombok:${lombokVersion}"
-	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-	compile "de.alpharogroup:generic-mapper:$genericMapperVersion"
-	compile "de.alpharogroup:ent-api:$entApiVersion"
-	compile "de.alpharogroup:ent-core:$entCoreVersion"
-	compile "de.alpharogroup:silly-jdbc:${sillyJdbcVersion}"
-	compile "de.alpharogroup:silly-collections:${sillyCollectionsVersion}"
-	compile "de.alpharogroup:resourcebundle-core:${resourcebundleCoreVersion}"
-	compile "de.alpharogroup:jobj-copy:${jobjCopyVersion}"
-	compile("de.alpharogroup:spring-tool-extensions:$springToolExtensionsVersion")
-	compile "de.alpharogroup:xml-extensions:${xmlExtensionsVersion}"
-	compile "de.alpharogroup:throw-able:${throwAbleVersion}"
-	compile "de.alpharogroup:spring-tool-extensions:$springToolExtensionsVersion"
-	compile "de.alpharogroup:spring-boot-extensions:${springBootExtensionsVersion}"
-	compile "io.springfox:springfox-swagger2:${springfoxSwaggerVersion}"
-	compile "io.springfox:springfox-swagger-ui:${springfoxSwaggerVersion}"
-	compile "com.thoughtworks.xstream:xstream:${xstreamVersion}"
-	compile "org.apache.commons:commons-lang3:${commonsLang3Version}"
-	implementation "org.postgresql:postgresql"
-	implementation "org.flywaydb:flyway-core"
-	implementation "org.springframework:spring-oxm"
-	implementation "org.springframework.boot:spring-boot-starter-web"
-	implementation "org.springframework.boot:spring-boot-starter-actuator"
-	implementation "org.springframework.boot:spring-boot-starter-aop"
-	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
-	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-	testImplementation "org.springframework.boot:spring-boot-starter-test"
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+	implementation("de.alpharogroup:generic-mapper:$genericMapperVersion")
+	implementation("de.alpharogroup:ent-api:$entApiVersion")
+	implementation("de.alpharogroup:ent-core:$entCoreVersion")
+	implementation("de.alpharogroup:silly-jdbc:$sillyJdbcVersion")
+	implementation("de.alpharogroup:silly-collections:$sillyCollectionsVersion")
+	implementation("de.alpharogroup:resourcebundle-core:$resourcebundleCoreVersion")
+	implementation("de.alpharogroup:jobj-copy:$jobjCopyVersion")
+	implementation("de.alpharogroup:spring-tool-extensions:$springToolExtensionsVersion")
+	implementation("de.alpharogroup:xml-extensions:$xmlExtensionsVersion")
+	implementation("de.alpharogroup:throw-able:$throwAbleVersion")
+	implementation("de.alpharogroup:spring-tool-extensions:$springToolExtensionsVersion")
+	implementation("de.alpharogroup:spring-boot-extensions:$springBootExtensionsVersion")
+	implementation("io.springfox:springfox-swagger2:$springfoxSwaggerVersion")
+	implementation("io.springfox:springfox-swagger-ui:$springfoxSwaggerVersion")
+	implementation("com.thoughtworks.xstream:xstream:$xstreamVersion")
+	implementation("org.apache.commons:commons-lang3:$commonsLang3Version")
+	implementation("org.postgresql:postgresql")
+	implementation("org.flywaydb:flyway-core")
+	implementation("org.springframework:spring-oxm")
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
+	implementation("org.springframework.boot:spring-boot-starter-aop")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+compileJava {
+	options.encoding = 'UTF-8'
+	options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 }
 
 test {

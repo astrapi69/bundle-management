@@ -26,7 +26,7 @@ package de.alpharogroup.bundlemanagement.service;
 
 import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
 import de.alpharogroup.bundlemanagement.jpa.repository.BaseNamesRepository;
-import de.alpharogroup.bundlemanagement.service.api.NameEntityService;
+import de.alpharogroup.spring.service.api.NameEntityService;
 import de.alpharogroup.spring.service.api.GenericService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

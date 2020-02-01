@@ -26,7 +26,7 @@ package de.alpharogroup.bundlemanagement.service;
 
 import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
 import de.alpharogroup.bundlemanagement.jpa.repository.PropertiesKeysRepository;
-import de.alpharogroup.bundlemanagement.service.api.NameEntityService;
+import de.alpharogroup.spring.service.api.NameEntityService;
 import de.alpharogroup.spring.service.api.GenericService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
