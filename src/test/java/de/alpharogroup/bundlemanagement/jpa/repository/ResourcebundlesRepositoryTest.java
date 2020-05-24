@@ -23,6 +23,7 @@ public class ResourcebundlesRepositoryTest extends BaseJpaTest
 	@Test
 	public void findResourceKey()
 	{
+		Resourcebundles entity;
 		String owner;
 		String baseName;
 		String locale;
@@ -32,7 +33,7 @@ public class ResourcebundlesRepositoryTest extends BaseJpaTest
 		baseName = "test";
 		locale = "de_DE";
 		key = "com.example.gui.prop.with.params.label";
-		Resourcebundles entity = repository
+		entity = repository
 			.findDistinctByOwnerAndBaseNameAndLocaleAndKeyAndValue(owner, baseName, locale, key);
 
 		assertNotNull(entity);
@@ -41,9 +42,18 @@ public class ResourcebundlesRepositoryTest extends BaseJpaTest
 	@Test
 	public void whenFindByNameThenReturnResourcebundles()
 	{
+		String locale;
+		LanguageLocales languageLocales;
+		BundleApplications bundleApplications;
+		BaseNames baseNames;
+		BundleNames bundleNames;
+		PropertiesKeys propertiesKeys;
+		PropertiesValues propertiesValues;
+		Resourcebundles entity;
+		List<Resourcebundles> byName;
 
-		String locale = "de";
-		LanguageLocales languageLocales = languageLocalesRepository.findDistinctByLocale(locale);
+		locale = "de";
+		languageLocales = languageLocalesRepository.findDistinctByLocale(locale);
 		if (languageLocales == null)
 		{
 			languageLocales = LanguageLocales.builder().locale(locale).build();
@@ -51,37 +61,43 @@ public class ResourcebundlesRepositoryTest extends BaseJpaTest
 			entityManager.flush();
 		}
 
-		BundleApplications bundleApplications = BundleApplications.builder().name("test-bundle-app")
+		bundleApplications = BundleApplications.builder().name("test-bundle-app")
 			.defaultLocale(languageLocales).supportedLocales(SetFactory.newHashSet(languageLocales))
 			.build();
 
 		entityManager.persist(bundleApplications);
 		entityManager.flush();
 
-		BaseNames baseNames = BaseNames.builder().name("messages").build();
+		baseNames = BaseNames.builder().name("messages").build();
 
 		entityManager.persist(baseNames);
 		entityManager.flush();
 
-		BundleNames bundleNames = BundleNames.builder().baseName(baseNames)
-			.filepath("/opt/i18n/foo.yml").owner(bundleApplications).locale(languageLocales)
+		bundleNames = BundleNames.builder().baseName(baseNames)
+			.filepath("/opt/i18n").owner(bundleApplications).locale(languageLocales)
 			.build();
 
 		entityManager.persist(bundleNames);
 		entityManager.flush();
 
-		PropertiesKeys propertiesKeys = PropertiesKeys.builder().name("foo.key").build();
+		propertiesKeys = PropertiesKeys.builder().name("foo.key").build();
 
-		PropertiesValues propertiesValues = PropertiesValues.builder().name("bar value").build();
+		entityManager.persist(propertiesKeys);
+		entityManager.flush();
 
-		Resourcebundles entity = Resourcebundles.builder().bundleName(bundleNames)
+		propertiesValues = PropertiesValues.builder().name("bar value").build();
+
+		entityManager.persist(propertiesValues);
+		entityManager.flush();
+
+		entity = Resourcebundles.builder().bundleName(bundleNames)
 			.key(propertiesKeys).value(propertiesValues).build();
 
 		entityManager.persist(entity);
 		entityManager.flush();
 
 		// when
-		List<Resourcebundles> byName = repository.findByOwnerAndBaseNameAndLocaleAndKeyAndValue(
+		byName = repository.findByOwnerAndBaseNameAndLocaleAndKeyAndValue(
 			bundleApplications.getName(), baseNames.getName(), languageLocales.getLocale(),
 			propertiesKeys.getName());
 		// then

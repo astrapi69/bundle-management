@@ -15,15 +15,25 @@ public class LanguageLocalesRepositoryTest extends BaseJpaTest
 	@Test
 	public void whenFindByNameThenReturnLanguageLocales()
 	{
-		LanguageLocales entity = LanguageLocales.builder().locale("el").build();
+		LanguageLocales distinctByName;
+		LanguageLocales entity;
+		String locale;
+
+		locale = "xy";
+		entity = LanguageLocales.builder().locale(locale).build();
 
 		entityManager.persist(entity);
 		entityManager.flush();
 
 		// when
-		LanguageLocales distinctByName = repository.findDistinctByLocale(entity.getLocale());
+		distinctByName = repository.findDistinctByLocale(entity.getLocale());
 		// then
 		assertThat(distinctByName.getLocale()).isEqualTo(entity.getLocale());
+		// cleanup
+		repository.delete(entity);
+		// when
+		distinctByName = repository.findDistinctByLocale(locale);
+		assertThat(distinctByName).isNull();
 	}
 
 }

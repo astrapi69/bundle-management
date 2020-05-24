@@ -15,15 +15,28 @@ public class LanguagesRepositoryTest extends BaseJpaTest
 	@Test
 	public void whenFindByNameThenReturnLanguages()
 	{
-		Languages entity = Languages.builder().iso639Dash1("el").build();
+		Languages distinctByName;
+		Languages entity;
+		String iso639Dash1;
+		String name;
+
+		iso639Dash1 = "xy";
+		name = "alienish";
+
+		entity = Languages.builder().iso639Dash1(iso639Dash1).name(name).build();
 
 		entityManager.persist(entity);
 		entityManager.flush();
 
 		// when
-		Languages distinctByName = repository.findDistinctByName(entity.getName());
+		distinctByName = repository.findDistinctByName(entity.getName());
 		// then
 		assertThat(distinctByName.getName()).isEqualTo(entity.getName());
+		// cleanup
+		repository.delete(entity);
+		// when
+		distinctByName = repository.findDistinctByName(name);
+		assertThat(distinctByName).isNull();
 	}
 
 }

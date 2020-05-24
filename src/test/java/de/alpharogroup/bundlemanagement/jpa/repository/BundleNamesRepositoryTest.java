@@ -22,9 +22,15 @@ public class BundleNamesRepositoryTest extends BaseJpaTest
 	@Test
 	public void whenFindByNameThenReturnBundleNames()
 	{
+		BundleApplications bundleApplications;
+		BaseNames baseNames;
+		BundleNames entity;
+		LanguageLocales languageLocales;
+		BundleNames distinctByName;
+		String locale;
 
-		String locale = "de";
-		LanguageLocales languageLocales = languageLocalesRepository.findDistinctByLocale(locale);
+		locale = "xy";
+		languageLocales = languageLocalesRepository.findDistinctByLocale(locale);
 		if (languageLocales == null)
 		{
 			languageLocales = LanguageLocales.builder().locale(locale).build();
@@ -32,29 +38,34 @@ public class BundleNamesRepositoryTest extends BaseJpaTest
 			entityManager.flush();
 		}
 
-		BundleApplications bundleApplications = BundleApplications.builder().name("test-bundle-app")
+		bundleApplications = BundleApplications.builder().name("test-bundle-app")
 			.defaultLocale(languageLocales).supportedLocales(SetFactory.newHashSet(languageLocales))
 			.build();
 
 		entityManager.persist(bundleApplications);
 		entityManager.flush();
 
-		BaseNames baseNames = BaseNames.builder().name("messages").build();
+		baseNames = BaseNames.builder().name("messages").build();
 
 		entityManager.persist(baseNames);
 		entityManager.flush();
 
-		BundleNames entity = BundleNames.builder().baseName(baseNames).filepath("/opt/i18n/foo.yml")
+		entity = BundleNames.builder().baseName(baseNames).filepath("/opt/i18n")
 			.owner(bundleApplications).locale(languageLocales).build();
 
 		entityManager.persist(entity);
 		entityManager.flush();
 
 		// when
-		BundleNames distinctByName = repository.findDistinctByOwnerAndBaseNameAndLocale(
+		distinctByName = repository.findDistinctByOwnerAndBaseNameAndLocale(
 			bundleApplications.getName(), baseNames.getName(), locale);
 		// then
 		assertThat(distinctByName.getFilepath()).isEqualTo(entity.getFilepath());
+		// cleanup
+		repository.delete(entity);
+		// when
+		distinctByName = repository.findDistinctByOwnerAndBaseNameAndLocale(bundleApplications.getName(), baseNames.getName(), locale);
+		assertThat(distinctByName).isNull();
 	}
 
 }

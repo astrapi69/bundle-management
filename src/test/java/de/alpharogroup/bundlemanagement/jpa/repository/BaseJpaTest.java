@@ -1,5 +1,7 @@
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
+import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -13,9 +15,11 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
+@Ignore
 public class BaseJpaTest
 {
 
 	@PersistenceContext
 	EntityManager entityManager;
+
 }

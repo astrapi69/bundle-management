@@ -65,15 +65,6 @@ public class ControllerExceptionHandlerTest
 	}
 
 	@Test
-	public void testHandleBindException()
-	{
-		when(fieldError.getDefaultMessage()).thenReturn("An error");
-		assertEquals(HttpStatus.BAD_REQUEST, controllerExceptionHandler
-			.handleBindException(bindException, HttpHeaders.EMPTY, HttpStatus.OK, servletWebRequest)
-			.getStatusCode());
-	}
-
-	@Test
 	public void testHandleException()
 	{
 		when(fieldError.getDefaultMessage()).thenReturn("An error");
