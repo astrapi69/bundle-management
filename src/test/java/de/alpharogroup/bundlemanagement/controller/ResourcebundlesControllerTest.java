@@ -5,6 +5,7 @@ import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
 import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
 import de.alpharogroup.bundlemanagement.viewmodel.ImprortableBundleName;
 import de.alpharogroup.bundlemanagement.viewmodel.Resourcebundle;
+import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
 import de.alpharogroup.resourcebundle.locale.LocaleResolver;
 import de.alpharogroup.spring.generics.ParameterizedTypeReferenceFactory;
@@ -24,6 +25,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.*;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
@@ -68,34 +70,13 @@ public class ResourcebundlesControllerTest
 			requestEntity, Resourcebundle.class, map);
 		assertNotNull(entity);
 		actual = entity.getBody();
-//		expected = Resourcebundle.builder()
-//			.id(1)
-//			.version(1)
-//			.key(PropertiesKey.builder().id(1).version(1).name("resource.bundles.test.label").build())
-//			.value(PropertiesValue.builder().id(1).version(1).name("Erstes label").build())
-//			.bundleName(BundleName.builder()
-//				.id(1)
-//				.version(1)
-//				.filepath("/src/test/resources/messages")
-//				.baseName(BaseName.builder().id(1).version(1).name("test-resource-bundles").build())
-//				.locale(LanguageLocale.builder().id(29).version(1).locale("de").build())
-//				.owner(BundleApplication.builder().id(1).version(1)
-//					.name("test-bundle-application")
-//					.defaultLocale(LanguageLocale.builder().id(38).version(1).locale("en").build())
-//					.supportedLocales(SetFactory.newHashSet(LanguageLocale.builder().id(29).version(1).locale("de").build(),
-//						LanguageLocale.builder().id(38).version(1).locale("en").build(),
-//						LanguageLocale.builder().id(41).version(1).locale("en_GB").build(),
-//						LanguageLocale.builder().id(32).version(1).locale("de_DE").build(),
-//						LanguageLocale.builder().id(48).version(1).locale("en_US").build()))
-//					.build())
-//				.build())
-//			.build();
-//		assertEquals(actual, expected);
+		assertEquals(actual.getValue().getName(), "Erstes label");
 	}
 
 	@Test
 	public void testFindResourceBundles()
 	{
+		List<Resourcebundle> actual;
 		String[] requestParams = {"basename", "bundleappname", "locale"};
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
 			ResourcebundlesController.REST_PATH_RESOURCES, requestParams);
@@ -111,6 +92,10 @@ public class ResourcebundlesControllerTest
 			{
 			}, map);
 		assertNotNull(entity);
+		actual = entity.getBody();
+		assertEquals(actual.size(), 1);
+		Resourcebundle first = ListExtensions.getFirst(actual);
+		assertEquals(first.getValue().getName(), "Erstes label");
 	}
 
 	@Test
@@ -149,6 +134,9 @@ public class ResourcebundlesControllerTest
 		ResponseEntity<String> entity = this.restTemplate.exchange(restUrl, HttpMethod.GET,
 			requestEntity, String.class, map);
 		assertNotNull(entity);
+		String entityBody = entity.getBody();
+		assertEquals(entityBody, "Erstes label");
+
 	}
 
 	@Test
@@ -180,6 +168,7 @@ public class ResourcebundlesControllerTest
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
 			ResourcebundlesController.REST_PATH_UPDATE_BUNDLENAME);
 
+		List<Resourcebundle> actual;
 		Properties properties;
 		String ownerName;
 		String baseName;
@@ -232,6 +221,11 @@ public class ResourcebundlesControllerTest
 		ResponseEntity<List<Resourcebundle>> newentity = this.restTemplate.exchange(restUrl,
 			HttpMethod.GET, requestEntity, ParameterizedTypeReferenceFactory.newListParameterizedTypeReference(Resourcebundle.class), map);
 		assertNotNull(newentity);
+
+		actual = newentity.getBody();
+		assertEquals(actual.size(), 7);
+		Resourcebundle first = ListExtensions.getFirst(actual);
+		assertEquals(first.getValue().getName(), "Speichern");
 
 	}
 
