@@ -17,20 +17,10 @@ apply plugin: "net.ltgt.apt-idea"
 apply plugin: "org.springframework.boot"
 apply plugin: "io.spring.dependency-management"
 
-group = "de.alpharogroup"
+group = "$groupPackage"
 version = "$projectVersion"
 description = "$rootProject.name"
-sourceCompatibility = "1.8"
-
-configurations {
-	developmentOnly
-	runtimeClasspath {
-		extendsFrom developmentOnly
-	}
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
+sourceCompatibility = "$projectSourceCompatibility"
 
 repositories {
 	jcenter()

@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.UUID;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -31,11 +33,13 @@ public class MapperTest
 	@Autowired
 	ResourcebundlesMapper resourcebundlesMapper;
 
-	@Ignore
+//	@Ignore
 	@Test
 	public void testToDto()
 	{
-		PropertiesKeys propertiesKeys = PropertiesKeys.builder().name("foo.key").build();
+		PropertiesKeys propertiesKeys = PropertiesKeys.builder()
+			.id(UUID.randomUUID())
+			.name("foo.key").build();
 		PropertiesKey propertiesKey = propertiesKeysMapper.toDto(propertiesKeys);
 		assertNotNull(propertiesKey);
 		PropertiesKeys propertiesKeyEntity = propertiesKeysMapper.toEntity(propertiesKey);
