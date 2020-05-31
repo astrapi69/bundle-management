@@ -1,13 +1,40 @@
+/**
+ * The MIT License
+ *
+ * Copyright (C) 2015 Asterios Raptis
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package de.alpharogroup.bundlemanagement.mapper;
 
 import de.alpharogroup.bundlemanagement.jpa.entity.*;
+import de.alpharogroup.bundlemanagement.viewmodel.*;
 import de.alpharogroup.collections.set.SetFactory;
-import de.alpharogroup.db.resource.bundles.domain.*;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -16,85 +43,85 @@ import static org.junit.Assert.assertNotNull;
 @SpringBootTest
 public class MapperTest
 {
+	@Autowired BaseNamesMapper baseNamesMapper;
+	@Autowired BundleApplicationsMapper bundleApplicationsMapper;
+	@Autowired BundleNamesMapper bundleNamesMapper;
+	@Autowired CountriesMapper countriesMapper;
+	@Autowired LanguageLocalesMapper languageLocalesMapper;
 	@Autowired
-	BaseNameMapper baseNameMapper;
+	LanguagesMapper languagesMapper;
 	@Autowired
-	BundleApplicationMapper bundleApplicationMapper;
+	PropertiesKeysMapper propertiesKeysMapper;
 	@Autowired
-	BundleNameMapper bundleNameMapper;
+	PropertiesValuesMapper propertiesValuesMapper;
 	@Autowired
-	LanguageLocaleMapper languageLocaleMapper;
-	@Autowired
-	PropertiesKeyMapper propertiesKeyMapper;
-	@Autowired
-	PropertiesValueMapper propertiesValueMapper;
-	@Autowired
-	ResourcebundleMapper resourcebundleMapper;
+	ResourcebundlesMapper resourcebundlesMapper;
 
+//	@Ignore
 	@Test
 	public void testToDto()
 	{
 		PropertiesKeys propertiesKeys = PropertiesKeys.builder()
-			.name("foo.key")
-			.build();
-		PropertiesKey propertiesKey = propertiesKeyMapper.toDto(propertiesKeys);
+			.id(UUID.randomUUID())
+			.name("foo.key").build();
+		PropertiesKey propertiesKey = propertiesKeysMapper.toDto(propertiesKeys);
 		assertNotNull(propertiesKey);
-		PropertiesKeys propertiesKeyEntity = propertiesKeyMapper.toEntity(propertiesKey);
+		PropertiesKeys propertiesKeyEntity = propertiesKeysMapper.toEntity(propertiesKey);
 		assertEquals(propertiesKeys, propertiesKeyEntity);
 
-		PropertiesValues propertiesValues = PropertiesValues.builder()
-			.name("bar value")
-			.build();
-		PropertiesValue propertiesValue = propertiesValueMapper.toDto(propertiesValues);
+		PropertiesValues propertiesValues = PropertiesValues.builder().name("bar value").build();
+		PropertiesValue propertiesValue = propertiesValuesMapper.toDto(propertiesValues);
 		assertNotNull(propertiesValue);
-		PropertiesValues propertiesValueEntity = propertiesValueMapper.toEntity(propertiesValue);
+		PropertiesValues propertiesValueEntity = propertiesValuesMapper.toEntity(propertiesValue);
 		assertEquals(propertiesValues, propertiesValueEntity);
 
-		BaseNames baseNames = BaseNames.builder()
-			.name("foo")
-			.build();
-		BaseName baseName = baseNameMapper.toDto(baseNames);
+		BaseNames baseNames = BaseNames.builder().name("foo").build();
+		BaseName baseName = baseNamesMapper.toDto(baseNames);
 		assertNotNull(baseName);
-		BaseNames baseNameEntity = baseNameMapper.toEntity(baseName);
+		BaseNames baseNameEntity = baseNamesMapper.toEntity(baseName);
 		assertEquals(baseNames, baseNameEntity);
 
-		LanguageLocales languageLocales = LanguageLocales.builder()
-			.locale("el")
-			.build();
-		LanguageLocale languageLocale = languageLocaleMapper.toDto(languageLocales);
+		LanguageLocales languageLocales = LanguageLocales.builder().locale("el").build();
+		LanguageLocale languageLocale = languageLocalesMapper.toDto(languageLocales);
 		assertNotNull(languageLocale);
-		LanguageLocales languageLocaleEntity = languageLocaleMapper.toEntity(languageLocale);
+		LanguageLocales languageLocaleEntity = languageLocalesMapper.toEntity(languageLocale);
 		assertEquals(languageLocales, languageLocaleEntity);
 
-		BundleApplications bundleApplications = BundleApplications.builder()
-			.defaultLocale(languageLocales)
-			.supportedLocales(SetFactory.newHashSet(languageLocales))
+		Countries countries = Countries.builder().name("Greece").iso3166a2name("GR").build();
+		Country country = countriesMapper.toDto(countries);
+		assertNotNull(country);
+		Countries countryEntity = countriesMapper.toEntity(country);
+		assertEquals(countries, countryEntity);
+
+		Languages languages = Languages.builder().iso639Dash1("el").build();
+		Language language = languagesMapper.toDto(languages);
+		assertNotNull(language);
+		Languages languageEntity = languagesMapper.toEntity(language);
+		assertEquals(languages, languageEntity);
+
+		BundleApplications bundleApplications = BundleApplications.builder().name("test-bundle-app")
+			.defaultLocale(languageLocales).supportedLocales(SetFactory.newHashSet(languageLocales))
 			.build();
 
-		BundleApplication bundleApplication = bundleApplicationMapper.toDto(bundleApplications);
+		BundleApplication bundleApplication = bundleApplicationsMapper.toDto(bundleApplications);
 		assertNotNull(bundleApplication);
-		BundleApplications bundleApplicationEntity = bundleApplicationMapper.toEntity(bundleApplication);
+		BundleApplications bundleApplicationEntity = bundleApplicationsMapper
+			.toEntity(bundleApplication);
 		assertEquals(bundleApplications, bundleApplicationEntity);
 
-		BundleNames bundleNames = BundleNames.builder()
-			.baseName(baseNames)
-			.filepath("/opt/i18n/foo.yml")
-			.owner(bundleApplications)
-			.locale(languageLocales)
+		BundleNames bundleNames = BundleNames.builder().baseName(baseNames)
+			.filepath("/opt/i18n/foo.yml").owner(bundleApplications).locale(languageLocales)
 			.build();
-		BundleName bundleName = bundleNameMapper.toDto(bundleNames);
+		BundleName bundleName = bundleNamesMapper.toDto(bundleNames);
 		assertNotNull(bundleName);
-		BundleNames bundleNameEntity = bundleNameMapper.toEntity(bundleName);
+		BundleNames bundleNameEntity = bundleNamesMapper.toEntity(bundleName);
 		assertEquals(bundleNames, bundleNameEntity);
 
-		Resourcebundles resourcebundles = Resourcebundles.builder()
-			.bundleName(bundleNames)
-			.key(propertiesKeys)
-			.value(propertiesValues)
-			.build();
-		Resourcebundle resourcebundle = resourcebundleMapper.toDto(resourcebundles);
+		Resourcebundles resourcebundles = Resourcebundles.builder().bundleName(bundleNames)
+			.key(propertiesKeys).value(propertiesValues).build();
+		Resourcebundle resourcebundle = resourcebundlesMapper.toDto(resourcebundles);
 		assertNotNull(resourcebundle);
-		Resourcebundles resourcebundleEntity = resourcebundleMapper.toEntity(resourcebundle);
+		Resourcebundles resourcebundleEntity = resourcebundlesMapper.toEntity(resourcebundle);
 		assertEquals(resourcebundles, resourcebundleEntity);
 
 	}

@@ -1,7 +1,7 @@
 /**
  * The MIT License
  *
- * Copyright (C) 2007 - 2015 Asterios Raptis
+ * Copyright (C) 2015 Asterios Raptis
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -10,10 +10,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- *  *
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- *  *
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,24 +24,13 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import de.alpharogroup.db.entity.enums.DatabasePrefix;
+import de.alpharogroup.db.entity.version.VersionableUUIDEntity;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 
-import de.alpharogroup.db.entity.version.VersionableBaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import javax.persistence.*;
 
 /**
  * The entity class {@link BundleNames} holds the data from the {@link BaseNames} and the
@@ -52,7 +41,19 @@ import lombok.ToString;
  * locale.
  */
 @Entity
-@Table(name = "bundlenames")
+@Table(name = BundleNames.TABLE_NAME, indexes = {
+		@Index(name = DatabasePrefix.INDEX_PREFIX + BundleNames.TABLE_NAME
+			+ DatabasePrefix.UNDERSCORE
+			+ BundleNames.COLUMN_NAME_BASE_NAME, columnList = BundleNames.COLUMN_NAME_BASE_NAME),
+		@Index(name = DatabasePrefix.INDEX_PREFIX + BundleNames.TABLE_NAME
+			+ DatabasePrefix.UNDERSCORE
+			+ BundleNames.COLUMN_NAME_FILEPATH, columnList = BundleNames.COLUMN_NAME_FILEPATH),
+		@Index(name = DatabasePrefix.INDEX_PREFIX + BundleNames.TABLE_NAME
+			+ DatabasePrefix.UNDERSCORE
+			+ BundleNames.COLUMN_NAME_LOCALE, columnList = BundleNames.COLUMN_NAME_LOCALE),
+		@Index(name = DatabasePrefix.INDEX_PREFIX + BundleNames.TABLE_NAME
+			+ DatabasePrefix.UNDERSCORE
+			+ BundleNames.COLUMN_NAME_OWNER, columnList = BundleNames.COLUMN_NAME_OWNER) })
 @NamedQueries({
 		@NamedQuery(name = BundleNames.NQ_FIND_BY_OWNER, query = "select bn from BundleNames bn where bn.owner=:owner") })
 @Getter
@@ -60,33 +61,39 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(toBuilder = true)
-public class BundleNames extends VersionableBaseEntity<Integer> implements Cloneable
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@SuperBuilder
+public class BundleNames extends VersionableUUIDEntity implements Cloneable
 {
 
+	public static final String COLUMN_NAME_BASE_NAME = "base_name_id";
+	public static final String COLUMN_NAME_FILEPATH = "filepath";
+	public static final String COLUMN_NAME_LOCALE = "locale_id";
+	public static final String COLUMN_NAME_OWNER = "owner_id";
 	/** The Constant for the named query for find BundleNames by the owner. */
 	public static final String NQ_FIND_BY_OWNER = "BundleNames." + "findByOwner";
-
 	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;
 
+	public static final String TABLE_NAME = "bundlenames";
+
 	/** The base name of this bundle. */
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
 	@JoinColumn(name = "base_name_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundlenames_base_name_id"))
-	private BaseNames baseName;
+	BaseNames baseName;
 
 	/** The optional filepath from this resource bunlde. */
 	@Column(name = "filepath", length = 4096)
-	private String filepath;
+	String filepath;
 
 	/** The locale of this bundle. */
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
 	@JoinColumn(name = "locale_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundlenames_locale_id"))
-	private LanguageLocales locale;
+	LanguageLocales locale;
 
 	/** The {@link BundleApplications} that owns this {@link BundleNames} object. */
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
 	@JoinColumn(name = "owner_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundlenames_owner_id"))
-	private BundleApplications owner;
+	BundleApplications owner;
 
 }

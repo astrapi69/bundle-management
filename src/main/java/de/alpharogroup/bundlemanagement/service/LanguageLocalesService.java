@@ -1,7 +1,7 @@
 /**
  * The MIT License
  *
- * Copyright (C) 2007 - 2015 Asterios Raptis
+ * Copyright (C) 2015 Asterios Raptis
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -10,10 +10,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- *  *
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- *  *
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,28 +24,35 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
-import java.util.List;
-import java.util.Locale;
-
 import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 import de.alpharogroup.bundlemanagement.jpa.repository.LanguageLocalesRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
+import de.alpharogroup.resourcebundle.locale.LocaleResolver;
+import de.alpharogroup.spring.service.api.GenericService;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.alpharogroup.collections.list.ListExtensions;
-import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
-import de.alpharogroup.resourcebundle.locale.LocaleResolver;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * The class {@link LanguageLocalesService}
  */
 @Transactional
 @Service
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Getter
 public class LanguageLocalesService
+	implements
+		GenericService<LanguageLocales, UUID, LanguageLocalesRepository>
 {
-	@Autowired
-	LanguageLocalesRepository languageLocalesRepository;
+
+	LanguageLocalesRepository repository;
 
 	public LanguageLocales find(Locale locale)
 	{
@@ -54,8 +61,7 @@ public class LanguageLocalesService
 
 	public LanguageLocales find(String locale)
 	{
-		final List<LanguageLocales> languageLocales = languageLocalesRepository.findByLocale(locale);
-		return ListExtensions.getFirst(languageLocales);
+		return repository.findDistinctByLocale(locale);
 	}
 
 	public LanguageLocales getOrCreateNewLanguageLocales(final Locale locale)
@@ -65,7 +71,7 @@ public class LanguageLocalesService
 		{
 			expected = LanguageLocales.builder()
 				.locale(LocaleExtensions.getLocaleFilenameSuffix(locale)).build();
-			expected = languageLocalesRepository.save(expected);
+			expected = repository.save(expected);
 		}
 		return expected;
 	}
@@ -75,9 +81,8 @@ public class LanguageLocalesService
 		LanguageLocales expected = find(locale);
 		if (expected == null)
 		{
-			expected = LanguageLocales.builder()
-				.locale(locale).build();
-			expected = languageLocalesRepository.save(expected);
+			expected = LanguageLocales.builder().locale(locale).build();
+			expected = repository.save(expected);
 		}
 		return expected;
 	}

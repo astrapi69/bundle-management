@@ -1,4 +1,6 @@
 # default properties
+server:
+  port: 5000
 
 app:
   name: bundle-management
@@ -7,6 +9,8 @@ app:
   db-host: localhost
   db-port: 5432
   db-url-prefix: jdbc:postgresql://
+  db-username: postgres
+  db-password: postgres
 
 spring:  
   datasource:
@@ -15,6 +19,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     type: com.zaxxer.hikari.HikariDataSource
     url: ${app.db-url-prefix}${app.db-host}:${app.db-port}/${app.db-name}
+    initialization-mode: never
   jpa:
     properties:
       hibernate:
@@ -22,7 +27,11 @@ spring:
           lob:
             non_contextual_creation: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
       show_sql: true
       use_sql_comments: true
       generate_statistics: false
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true

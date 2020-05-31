@@ -1,7 +1,7 @@
 /**
  * The MIT License
  *
- * Copyright (C) 2007 - 2015 Asterios Raptis
+ * Copyright (C) 2015 Asterios Raptis
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -10,10 +10,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- *  *
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- *  *
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,25 +24,43 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
 import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
 import de.alpharogroup.bundlemanagement.jpa.repository.PropertiesKeysRepository;
 import de.alpharogroup.bundlemanagement.service.api.NameEntityService;
-import org.springframework.beans.factory.annotation.Autowired;
+import de.alpharogroup.spring.service.api.GenericService;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.UUID;
 
 /**
  * The class {@link PropertiesKeysService}.
  */
 @Transactional
 @Service
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Getter
 public class PropertiesKeysService
-	implements NameEntityService<PropertiesKeys, Integer>
+	implements
+		NameEntityService<PropertiesKeys>,
+		GenericService<PropertiesKeys, UUID, PropertiesKeysRepository>
 {
-	@Autowired
-	PropertiesKeysRepository propertiesKeysRepository;
+
+	PropertiesKeysRepository repository;
+
+	@Override
+	public List<PropertiesKeys> findEntities(final String nameValue)
+	{
+		return repository.findByName(nameValue);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -53,9 +71,10 @@ public class PropertiesKeysService
 		return NameEntityService.super.getOrCreateNewNameEntity(value);
 	}
 
-	@Override public PropertiesKeys merge(PropertiesKeys object)
+	@Override
+	public PropertiesKeys merge(PropertiesKeys object)
 	{
-		return propertiesKeysRepository.save(object);
+		return repository.save(object);
 	}
 
 	/**

@@ -1,8 +1,8 @@
 /**
  * The MIT License
- * <p>
- * Copyright (C) 2007 - 2015 Asterios Raptis
- * <p>
+ *
+ * Copyright (C) 2015 Asterios Raptis
+ *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- * *
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * *
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,48 +24,59 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
+import de.alpharogroup.bundlemanagement.jpa.entity.*;
+import de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsRepository;
+import de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository;
+import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
+import de.alpharogroup.bundlemanagement.viewmodel.Resourcebundle;
+import de.alpharogroup.collections.list.ListFactory;
+import de.alpharogroup.collections.pairs.KeyValuePair;
+import de.alpharogroup.collections.properties.PropertiesExtensions;
+import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
+import de.alpharogroup.resourcebundle.locale.LocaleResolver;
+import de.alpharogroup.spring.service.api.GenericService;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.java.Log;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 
-import javax.persistence.Query;
-
-import de.alpharogroup.bundlemanagement.jpa.entity.*;
-import de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsRepository;
-import de.alpharogroup.bundlemanagement.jpa.repository.PropertiesKeysRepository;
-import de.alpharogroup.bundlemanagement.jpa.repository.PropertiesValuesRepository;
-import de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import de.alpharogroup.collections.list.ListExtensions;
-import de.alpharogroup.collections.pairs.KeyValuePair;
-import de.alpharogroup.collections.properties.PropertiesExtensions;
-import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
-import de.alpharogroup.resourcebundle.locale.LocaleResolver;
-import lombok.NonNull;
-import lombok.extern.java.Log;
-
 /**
- * The class {@link ResourcebundlesService}.
+ * The class {@link ResourcebundlesService}
  */
-@Log @Transactional @Service @AllArgsConstructor @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true) public class ResourcebundlesService
+@Log
+@Transactional
+@Service
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Getter
+public class ResourcebundlesService
+	implements
+		GenericService<Resourcebundles, UUID, ResourcebundlesRepository>
 {
-	ResourcebundlesRepository resourcebundlesRepository;
-	PropertiesKeysRepository propertiesKeysRepository;
-	PropertiesValuesRepository propertiesValuesRepository;
+
+	BaseNamesService baseNamesService;
+
 	BundleApplicationsRepository bundleApplicationsRepository;
-	BundleApplicationsService bundleApplicationsService;
+
 	BundleNamesService bundleNamesService;
+
 	LanguageLocalesService languageLocalesService;
+
 	PropertiesKeysService propertiesKeysService;
+
 	PropertiesValuesService propertiesValuesService;
+
+	ResourcebundlesRepository repository;
 
 	public Resourcebundles contains(BundleApplications owner, String baseName, Locale locale,
 		String key)
@@ -73,11 +84,20 @@ import lombok.extern.java.Log;
 		return getResourcebundle(owner, baseName, locale, key);
 	}
 
-	public void delete(BundleNames bundleName)
+	public void delete(BundleNames bundleNames)
 	{
-		final List<Resourcebundles> list = find(bundleName);
+		List<Resourcebundles> list = find(bundleNames);
 		delete(list);
-		bundleNamesService.delete(bundleName);
+		BaseNames baseName = bundleNames.getBaseName();
+		bundleNames.setBaseName(null);
+		bundleNames.setLocale(null);
+		bundleNames.setOwner(null);
+		final BundleNames merged = bundleNamesService.save(bundleNames);
+		bundleNamesService.delete(merged);
+		if (0 == bundleNamesService.find(baseName).size())
+		{
+			baseNamesService.delete(baseName);
+		}
 	}
 
 	public void delete(final List<Resourcebundles> resourcebundles)
@@ -88,6 +108,7 @@ import lombok.extern.java.Log;
 		}
 	}
 
+	@Override
 	public void delete(Resourcebundles resourcebundles)
 	{
 		PropertiesKeys key = resourcebundles.getKey();
@@ -95,24 +116,32 @@ import lombok.extern.java.Log;
 		resourcebundles.setBundleName(null);
 		resourcebundles.setKey(null);
 		resourcebundles.setValue(null);
-		resourcebundles = resourcebundlesRepository.save(resourcebundles);
-		resourcebundlesRepository.delete(resourcebundles);
+		resourcebundles = repository.save(resourcebundles);
+		repository.delete(resourcebundles);
 		if (0 == find(key).size())
 		{
-			propertiesKeysRepository.delete(key);
+			propertiesKeysService.delete(key);
 		}
 		if (0 == find(value).size())
 		{
-			propertiesValuesRepository.delete(value);
+			propertiesValuesService.delete(value);
 		}
 	}
 
-	public List<Resourcebundles> find(BundleApplications owner,
-		String baseName, String locale, String key)
+	public List<Resourcebundles> find(BundleApplications owner, String baseName, String locale,
+		String key)
 	{
-		final List<Resourcebundles> resourcebundles = resourcebundlesRepository
-			.findByOwnerAndBaseNameAndLocaleAndKeyAndValue(owner, baseName, locale, key);
-
+		List<Resourcebundles> resourcebundles;
+		if (key != null)
+		{
+			resourcebundles = repository.findByOwnerAndBaseNameAndLocaleAndKeyAndValue(
+				owner.getName(), baseName, locale, key);
+		}
+		else
+		{
+			resourcebundles = repository.findByOwnerAndBaseNameAndLocale(owner.getName(), baseName,
+				locale);
+		}
 		return resourcebundles;
 	}
 
@@ -131,18 +160,21 @@ import lombok.extern.java.Log;
 	{
 		// TODO fixme
 		return find(null, null, null, null
-			//			, value.getName()
+		// , value.getName()
 		);
 	}
 
 	public BundleApplications find(String name)
 	{
-		return bundleApplicationsService.find(name);
+		return bundleApplicationsRepository.findDistinctByName(name);
 	}
 
 	public List<BundleApplications> findAllBundleApplications()
 	{
-		return bundleApplicationsRepository.findAll();
+		Iterable<BundleApplications> all = bundleApplicationsRepository.findAll();
+		List<BundleApplications> target = ListFactory.newArrayList();
+		all.forEach(target::add);
+		return target;
 	}
 
 	public List<Resourcebundles> findResourceBundles(BundleApplications owner, String baseName,
@@ -197,7 +229,8 @@ import lombok.extern.java.Log;
 	public Resourcebundles getResourcebundle(BundleApplications owner, String baseName,
 		Locale locale, String key)
 	{
-		return ListExtensions.getFirst(findResourceBundles(owner, baseName, locale, key));
+		return repository.findDistinctByOwnerAndBaseNameAndLocaleAndKeyAndValue(owner.getName(),
+			baseName, LocaleExtensions.getLocaleFilenameSuffix(locale), key);
 	}
 
 	public List<BundleNames> importProperties(BundleApplications bundleApplication,
@@ -223,10 +256,10 @@ import lombok.extern.java.Log;
 		LanguageLocales languageLocales = languageLocalesService
 			.getOrCreateNewLanguageLocales(resourcebundles.getBundleName().getLocale().getLocale());
 
-		BundleNames bundleNames = bundleNamesService
-			.getOrCreateNewBundleNames(resourcebundles.getBundleName().getOwner(),
-				resourcebundles.getBundleName().getBaseName().getName(),
-				languageLocalesService.resolveLocale(languageLocales));
+		BundleNames bundleNames = bundleNamesService.getOrCreateNewBundleNames(
+			resourcebundles.getBundleName().getOwner(),
+			resourcebundles.getBundleName().getBaseName().getName(),
+			languageLocalesService.resolveLocale(languageLocales));
 
 		PropertiesKeys propertiesKeys = propertiesKeysService
 			.getOrCreateNewNameEntity(resourcebundles.getKey().getName());
@@ -235,46 +268,60 @@ import lombok.extern.java.Log;
 		resourcebundles.setKey(propertiesKeys);
 	}
 
-	@Transactional public Resourcebundles merge(final Resourcebundles resourcebundles)
+	@Transactional
+	public Resourcebundles merge(final Resourcebundles resourcebundles)
 	{
 		PropertiesKeys key;
 		PropertiesValues value;
-		Optional<Resourcebundles> byId = resourcebundlesRepository
-			.findById(resourcebundles.getId());
-		if (byId.isPresent())
-		{
-			Resourcebundles dbEntity = byId.get();
-			key = dbEntity.getKey();
-			value = dbEntity.getValue();
-			if (!key.equals(resourcebundles.getKey()) && 1 < find(key).size())
+		if (resourcebundles.getId() != null){
+			Optional<Resourcebundles> byId = repository.findById(resourcebundles.getId());
+			if (byId.isPresent())
 			{
-				key = PropertiesKeys.builder().name(resourcebundles.getKey().getName()).build();
-				PropertiesKeys merged = propertiesKeysService.merge(key);
-				resourcebundles.setKey(merged);
-			}
-			if (!value.equals(resourcebundles.getValue()) && 1 < find(value).size())
-			{
-				value = PropertiesValues.builder().name(resourcebundles.getValue().getName())
-					.build();
-				PropertiesValues merged = propertiesValuesService.merge(value);
-				resourcebundles.setValue(merged);
+				Resourcebundles dbEntity = byId.get();
+				key = dbEntity.getKey();
+				value = dbEntity.getValue();
+				if (!key.equals(resourcebundles.getKey()) && 1 < find(key).size())
+				{
+					key = PropertiesKeys.builder().name(resourcebundles.getKey().getName()).build();
+					PropertiesKeys merged = propertiesKeysService.merge(key);
+					resourcebundles.setKey(merged);
+				}
+				if (!value.equals(resourcebundles.getValue()) && 1 < find(value).size())
+				{
+					value = PropertiesValues.builder().name(resourcebundles.getValue().getName())
+						.build();
+					PropertiesValues merged = propertiesValuesService.merge(value);
+					resourcebundles.setValue(merged);
+				}
 			}
 		}
 		try
 		{
-			return resourcebundlesRepository.save(resourcebundles);
+			return repository.save(resourcebundles);
 		}
 		catch (final Exception e)
 		{
 			log.log(Level.SEVERE, "merge fail with super.merge(resourcebundles)", e);
 			initialize(resourcebundles);
-			return resourcebundlesRepository.save(resourcebundles);
+			return repository.save(resourcebundles);
 		}
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW) public Resourcebundles saveOrUpdateEntry(
-		final BundleNames bundleName, final String baseName, final Locale locale, final String key,
-		final String value, final boolean update)
+	public Resourcebundles saveOrUpdate(Resourcebundle resourcebundle){
+		BundleName bundleName = resourcebundle.getBundleName();
+		String baseName = bundleName.getBaseName().getName();
+		String localeString = bundleName.getLocale().getLocale();
+		Locale locale = LocaleResolver.resolveLocale(localeString);
+		BundleApplications bundleApplications = bundleApplicationsRepository
+			.findDistinctByName(bundleName.getOwner().getName());
+		BundleNames bundleNames = bundleNamesService
+			.find(bundleApplications, baseName,	localeString);
+		return saveOrUpdateEntry(bundleNames, baseName, locale, resourcebundle.getKey().getName(), resourcebundle.getValue().getName(), true);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public Resourcebundles saveOrUpdateEntry(final BundleNames bundleName, final String baseName,
+		final Locale locale, final String key, final String value, final boolean update)
 	{
 		Resourcebundles resourcebundle = getResourcebundle(bundleName.getOwner(), baseName, locale,
 			key);
@@ -303,12 +350,24 @@ import lombok.extern.java.Log;
 		return updateProperties(owner, properties, baseName, locale, true);
 	}
 
-	@Transactional public BundleNames updateProperties(final @NonNull BundleApplications owner,
+	public BundleNames updateProperties(final @NonNull BundleApplications owner,
 		final @NonNull Properties properties, final @NonNull String baseName,
 		final @NonNull Locale locale, final boolean update)
 	{
-		final BundleNames bundleName = bundleNamesService
-			.getOrCreateNewBundleNames(owner, baseName, locale);
+		return updateProperties(owner, properties, baseName, null, locale, update);
+	}
+
+	@Transactional
+	public BundleNames updateProperties(final @NonNull BundleApplications owner,
+		final @NonNull Properties properties, final @NonNull String baseName, final String filepath,
+		final @NonNull Locale locale, final boolean update)
+	{
+		final BundleNames bundleName = bundleNamesService.getOrCreateNewBundleNames(owner, baseName,
+			locale);
+		if (filepath != null)
+		{
+			bundleName.setFilepath(filepath);
+		}
 		final Properties dbProperties = getProperties(bundleName);
 
 		properties.entrySet().parallelStream().forEach(element -> {
@@ -331,7 +390,8 @@ import lombok.extern.java.Log;
 		final @NonNull String owner, final @NonNull String baseName,
 		final @NonNull String localeCode)
 	{
-		BundleApplications bundleApplications = bundleApplicationsService.find(owner);
+		BundleApplications bundleApplications = bundleApplicationsRepository
+			.findDistinctByName(owner);
 		Locale locale = LocaleResolver.resolveLocale(localeCode, false);
 		return updateProperties(bundleApplications, properties, baseName, locale);
 	}

@@ -1,7 +1,7 @@
 /**
  * The MIT License
  *
- * Copyright (C) 2007 - 2015 Asterios Raptis
+ * Copyright (C) 2015 Asterios Raptis
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -10,10 +10,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- *  *
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- *  *
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,48 +24,48 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
 import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 import de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import de.alpharogroup.collections.list.ListExtensions;
+import de.alpharogroup.collections.set.SetFactory;
+import de.alpharogroup.spring.service.api.GenericService;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.alpharogroup.collections.list.ListExtensions;
-import de.alpharogroup.collections.set.SetFactory;
-import lombok.NonNull;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * The class {@link BundleApplicationsService}
  */
 @Transactional
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Getter
 public class BundleApplicationsService
+	implements
+		GenericService<BundleApplications, UUID, BundleApplicationsRepository>
 {
 
-	@PersistenceContext
-	private EntityManager em;
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	@Autowired
-	BundleApplicationsRepository bundleApplicationsRepository;
-	/** The Bundle names service. */
-	@Autowired
-	private BundleNamesService bundleNamesService;
 
-	/** The language locales service. */
-	@Autowired
-	private LanguageLocalesService languageLocalesService;
+	BundleNamesService bundleNamesService;
 
+	LanguageLocalesService languageLocalesService;
+
+	BundleApplicationsRepository repository;
+
+	@Override
 	public void delete(BundleApplications bundleApplications)
 	{
 		List<BundleNames> bundleNames = bundleNamesService.find(bundleApplications);
@@ -75,24 +75,37 @@ public class BundleApplicationsService
 		}
 		bundleApplications.setDefaultLocale(null);
 		bundleApplications.getSupportedLocales().clear();
-		BundleApplications merged = bundleApplicationsRepository.save(bundleApplications);
-		bundleApplicationsRepository.delete(merged);
+		BundleApplications merged = repository.save(bundleApplications);
+		repository.delete(merged);
+	}
+
+	@Override public BundleApplications save(BundleApplications entity)
+	{
+		if(entity.getDefaultLocale()!=null && entity.getDefaultLocale().getLocale()!=null){
+			LanguageLocales languageLocales = languageLocalesService
+				.getOrCreateNewLanguageLocales(entity.getDefaultLocale().getLocale());
+			entity.setDefaultLocale(languageLocales);
+		}
+		if(entity.getSupportedLocales() != null && !entity.getSupportedLocales().isEmpty()){
+			Set<LanguageLocales> supportedLocales = SetFactory.newHashSet();
+			for (LanguageLocales ll : entity.getSupportedLocales()){
+				LanguageLocales languageLocales = languageLocalesService
+					.getOrCreateNewLanguageLocales(ll.getLocale());
+				supportedLocales.add(languageLocales);
+			}
+			entity.setSupportedLocales(supportedLocales);
+		}
+		return repository.save(entity);
 	}
 
 	public Set<BundleNames> find(final BundleApplications owner)
 	{
-		final TypedQuery<BundleNames> typedQuery = em
-			.createNamedQuery(BundleNames.NQ_FIND_BY_OWNER, BundleNames.class)
-			.setParameter("owner", owner);
-
-		final List<BundleNames> bundleNames = typedQuery.getResultList();
-		return SetFactory.newHashSet(bundleNames);
+		return SetFactory.newHashSet(bundleNamesService.find(owner));
 	}
 
 	public BundleApplications find(final String name)
 	{
-		final List<BundleApplications> applications = bundleApplicationsRepository.findByName(name);
-		return ListExtensions.getFirst(applications);
+		return repository.findDistinctByName(name);
 	}
 
 	public BundleApplications get(final BundleNames bundleName)
@@ -115,7 +128,7 @@ public class BundleApplicationsService
 			baseBundleApplication = BundleApplications.builder().name(name)
 				.defaultLocale(defaultLocale).supportedLocales(supportedLocales).build();
 
-			baseBundleApplication = bundleApplicationsRepository.save(baseBundleApplication);
+			baseBundleApplication = repository.save(baseBundleApplication);
 		}
 		return baseBundleApplication;
 	}

@@ -1,7 +1,7 @@
 /**
  * The MIT License
  *
- * Copyright (C) 2007 - 2015 Asterios Raptis
+ * Copyright (C) 2015 Asterios Raptis
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -10,10 +10,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- *  *
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- *  *
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,37 +24,42 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import de.alpharogroup.db.entity.enums.DatabasePrefix;
+import de.alpharogroup.db.entity.version.VersionableUUIDEntity;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-import de.alpharogroup.db.entity.version.VersionableBaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import javax.persistence.*;
 
 /**
  * The entity class {@link LanguageLocales} holds the data for the locale as {@link String} object.
  */
 @Entity
-@Table(name = "language_locales")
+@Table(name = LanguageLocales.TABLE_NAME, uniqueConstraints = {
+		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX
+			+ LanguageLocales.TABLE_NAME + DatabasePrefix.UNDERSCORE
+			+ LanguageLocales.COLUMN_NAME_LOCALE, columnNames = LanguageLocales.COLUMN_NAME_LOCALE) }, indexes = {
+					@Index(name = DatabasePrefix.INDEX_PREFIX + LanguageLocales.TABLE_NAME
+						+ DatabasePrefix.UNDERSCORE
+						+ LanguageLocales.COLUMN_NAME_LOCALE, columnList = LanguageLocales.COLUMN_NAME_LOCALE) })
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class LanguageLocales extends VersionableBaseEntity<Integer> implements Cloneable
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class LanguageLocales extends VersionableUUIDEntity implements Cloneable
 {
+
+	public static final String COLUMN_NAME_LOCALE = "locale";
 
 	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;
+	public static final String TABLE_NAME = "language_locales";
 
 	/** The locale of this entry. */
-	@Column(unique = true, length = 64)
-	private String locale;
+	@Column(length = 64)
+	String locale;
 
 }

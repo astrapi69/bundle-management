@@ -1,7 +1,7 @@
 /**
  * The MIT License
  *
- * Copyright (C) 2007 - 2015 Asterios Raptis
+ * Copyright (C) 2015 Asterios Raptis
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -10,10 +10,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- *  *
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- *  *
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,134 +24,92 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-
-import javax.persistence.Query;
-
-import de.alpharogroup.bundlemanagement.jpa.entity.*;
-import de.alpharogroup.bundlemanagement.jpa.repository.BaseNamesRepository;
+import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
+import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 import de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsRepository;
 import de.alpharogroup.bundlemanagement.jpa.repository.BundleNamesRepository;
-import de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import de.alpharogroup.collections.CollectionExtensions;
+import de.alpharogroup.collections.list.ListExtensions;
+import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
+import de.alpharogroup.spring.service.api.GenericService;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.alpharogroup.collections.CollectionExtensions;
-import de.alpharogroup.collections.list.ListExtensions;
-import de.alpharogroup.resourcebundle.locale.LocaleExtensions;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * The class {@link BundleNamesService}
  */
 @Transactional
 @Service
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Getter
 public class BundleNamesService
+	implements
+		GenericService<BundleNames, UUID, BundleNamesRepository>
 {
 
-	@Autowired
-	BaseNamesRepository baseNamesRepository;
-	@Autowired
-	BundleNamesRepository bundleNamesRepository;
-	@Autowired
-	ResourcebundlesRepository resourcebundlesRepository;
+	BaseNamesService baseNamesService;
 
-	@Autowired BundleApplicationsRepository bundleApplicationsRepository;
+	BundleApplicationsRepository bundleApplicationsRepository;
 
-	/** The base names service. */
-	@Autowired
-	private BaseNamesService baseNamesService;
+	LanguageLocalesService languageLocalesService;
 
-	@Autowired
-	private BundleApplicationsService bundleApplicationsService;
+	BundleNamesRepository repository;
 
-	/** The language locales service. */
-	@Autowired
-	private LanguageLocalesService languageLocalesService;
-
-	@Autowired
-	private ResourcebundlesService resourcebundlesService;
-
-	public void delete(BundleNames bundleNames)
+	public List<BundleNames> find(final @NonNull BaseNames baseName)
 	{
-		List<Resourcebundles> list = resourcebundlesService.find(bundleNames);
-		resourcebundlesService.delete(list);
-		BaseNames baseName = bundleNames.getBaseName();
-		bundleNames.setBaseName(null);
-		bundleNames.setLocale(null);
-		bundleNames.setOwner(null);
-		final BundleNames merged = bundleNamesRepository.save(bundleNames);
-		bundleNamesRepository.delete(merged);
-		if (0 == find(baseName).size())
-		{
-			baseNamesRepository.delete(baseName);
-		}
+		return repository.findByBaseName(baseName.getName());
 	}
 
-	public List<BundleNames> find(BaseNames baseName)
+	public List<BundleNames> find(final @NonNull BundleApplications owner)
 	{
-		return find(null, baseName != null ? baseName.getName() : null, (String)null);
+		return repository.findByOwner(owner);
 	}
 
-	public List<BundleNames> find(BundleApplications owner)
+	public List<BundleNames> find(final @NonNull BundleApplications owner,
+		final @NonNull BaseNames baseName)
 	{
-		return find(owner, null, (String)null);
+		return repository.findByOwnerAndBaseName(owner.getName(), baseName.getName());
 	}
 
-	public List<BundleNames> find(final BundleApplications owner, final BaseNames baseName)
+	public BundleNames find(final @NonNull BundleApplications owner,
+		final @NonNull BaseNames baseName, final @NonNull LanguageLocales languageLocales)
 	{
-		if (baseName != null)
-		{
-			return find(owner, baseName.getName(), (String)null);
-		}
-		return null;
+		return repository.findDistinctByOwnerAndBaseNameAndLocale(owner.getName(),
+			baseName.getName(), languageLocales.getLocale());
 	}
 
-	public BundleNames find(final BundleApplications owner, final BaseNames baseName,
-		final LanguageLocales languageLocales)
+	public List<BundleNames> find(final @NonNull BundleApplications owner,
+		final @NonNull String baseName)
 	{
-		String bn = null;
-		String ll = null;
-		if (baseName != null)
-		{
-			bn = baseName.getName();
-		}
-		if (languageLocales != null)
-		{
-			ll = languageLocales.getLocale();
-		}
-		if (bn != null && ll != null)
-		{
-			return ListExtensions.getFirst(find(owner, bn, ll));
-		}
-		return null;
-	}
-
-	public List<BundleNames> find(final BundleApplications owner, final String baseName)
-	{
-		if (baseName != null)
-		{
-			return find(owner, baseName, (String)null);
-		}
-		return null;
+		return repository.findByOwnerAndBaseName(owner.getName(), baseName);
 	}
 
 	public BundleNames find(final BundleApplications owner, final String baseName,
 		final Locale locale)
 	{
-		return ListExtensions
-			.getFirst(find(owner, baseName, LocaleExtensions.getLocaleFilenameSuffix(locale)));
+		return repository.findDistinctByOwnerAndBaseNameAndLocale(owner.getName(), baseName,
+			LocaleExtensions.getLocaleFilenameSuffix(locale));
 	}
 
-	public List<BundleNames> find(final BundleApplications owner, final String baseName,
+	public BundleNames find(final BundleApplications owner, final String baseName,
 		final String locale)
 	{
-		final List<BundleNames> bundleNames = bundleNamesRepository.findByOwnerAndBaseNameAndLocale(owner,
-			baseName, locale);
-		return bundleNames;
+		return repository.findDistinctByOwnerAndBaseNameAndLocale(owner.getName(), baseName,
+			locale);
 	}
 
 	public LanguageLocales getDefaultLocale(final BundleApplications owner, final String baseName)
@@ -166,10 +124,11 @@ public class BundleNamesService
 
 	public LanguageLocales getDefaultLocale(final BundleNames bundleNames)
 	{
-		final BundleApplications bundleApplications = bundleApplicationsService.get(bundleNames);
-		if (bundleApplications != null)
+		Optional<BundleApplications> byId = bundleApplicationsRepository
+			.findById(bundleNames.getId());
+		if (byId.isPresent())
 		{
-			return bundleApplications.getDefaultLocale();
+			return byId.get().getDefaultLocale();
 		}
 		return null;
 	}
@@ -192,7 +151,8 @@ public class BundleNamesService
 			{
 				Optional<BundleApplications> byId = bundleApplicationsRepository
 					.findById(owner.getId());
-				if(byId.isPresent()){
+				if (byId.isPresent())
+				{
 					owner = byId.get();
 					owner.addSupportedLanguageLocale(dbLocale);
 					bundleApplicationsRepository.save(owner);
@@ -204,8 +164,8 @@ public class BundleNamesService
 
 	public BundleNames merge(BundleNames object)
 	{
-		Optional<BundleNames> byId = bundleNamesRepository.findById(object.getId());
-		if(!byId.isPresent())
+		Optional<BundleNames> byId = repository.findById(object.getId());
+		if (!byId.isPresent())
 		{
 			BundleNames dbBundleNames = byId.get();
 			BaseNames dbBaseName;
@@ -226,12 +186,12 @@ public class BundleNamesService
 					bn.setBaseName(newBaseName);
 					if (!bn.equals(object))
 					{
-						bundleNamesRepository.save(bn);
+						repository.save(bn);
 					}
 				}
 			}
 		}
-		return bundleNamesRepository.save(object);
+		return repository.save(object);
 	}
 
 }
