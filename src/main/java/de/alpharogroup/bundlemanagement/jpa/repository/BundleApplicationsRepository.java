@@ -25,6 +25,7 @@
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
+import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -37,4 +38,19 @@ public interface BundleApplicationsRepository extends JpaRepository<BundleApplic
 	List<BundleApplications> findByName(String name);
 
 	BundleApplications findDistinctByName(String name);
+
+	/**
+	 * Named query from entity class that finds all applications with the given locale
+	 * @param languageLocale
+	 * @return all applications with the given locale
+	 */
+	List<BundleApplications> findAllByLanguageLocale(LanguageLocales languageLocale);
+
+	/**
+	 * Named query from entity class that finds all applications with the given locale with an inner
+	 * join
+	 * @param languageLocaleId
+	 * @return all applications with the given locale
+	 */
+	List<BundleApplications> findAllByLanguageLocaleWithInnerJoin(UUID languageLocaleId);
 }

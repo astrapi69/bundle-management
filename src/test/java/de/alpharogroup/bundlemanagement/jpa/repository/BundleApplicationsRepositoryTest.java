@@ -6,6 +6,8 @@ import de.alpharogroup.collections.set.SetFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class BundleApplicationsRepositoryTest extends BaseJpaTest
@@ -42,4 +44,25 @@ public class BundleApplicationsRepositoryTest extends BaseJpaTest
 		assertThat(distinctByName.getName()).isEqualTo(entity.getName());
 	}
 
+	@Test
+	public void testFindByLanguageLocale(){
+		List<BundleApplications> bundleApplications;
+
+		String locale = "de";
+		LanguageLocales languageLocales = languageLocalesRepository.findDistinctByLocale(locale);
+		bundleApplications = repository.findAllByLanguageLocale(languageLocales);
+		// then
+		assertThat(bundleApplications.size()).isEqualTo(2);
+	}
+
+	@Test
+	public void testFindAllByLanguageLocaleWithInnerJoin(){
+		List<BundleApplications> bundleApplications;
+
+		String locale = "de_DE";
+		LanguageLocales languageLocales = languageLocalesRepository.findDistinctByLocale(locale);
+		bundleApplications = repository.findAllByLanguageLocaleWithInnerJoin(languageLocales.getId());
+		// then
+		assertThat(bundleApplications.size()).isEqualTo(1);
+	}
 }

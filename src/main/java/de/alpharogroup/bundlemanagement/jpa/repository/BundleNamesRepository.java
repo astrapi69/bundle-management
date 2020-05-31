@@ -44,8 +44,7 @@ public interface BundleNamesRepository extends JpaRepository<BundleNames, UUID>
 	List<BundleNames> findByBaseName(@Param("basename") String basename);
 
 	@Transactional
-	@Query("select bn from BundleNames bn " + "where bn.owner=:owner ")
-	List<BundleNames> findByOwner(@Param("owner") final BundleApplications owner);
+	List<BundleNames> findByOwner(final BundleApplications owner);
 
 	@Transactional
 	@Query("select bn from BundleNames bn " + "where bn.owner.name=:owner "

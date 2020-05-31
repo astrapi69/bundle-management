@@ -38,7 +38,6 @@ dependencies {
 	implementation("de.alpharogroup:silly-collections:$sillyCollectionsVersion")
 	implementation("de.alpharogroup:resourcebundle-core:$resourcebundleCoreVersion")
 	implementation("de.alpharogroup:jobj-copy:$jobjCopyVersion")
-	implementation("de.alpharogroup:spring-tool-extensions:$springToolExtensionsVersion")
 	implementation("de.alpharogroup:xml-extensions:$xmlExtensionsVersion")
 	implementation("de.alpharogroup:throw-able:$throwAbleVersion")
 	implementation("de.alpharogroup:spring-tool-extensions:$springToolExtensionsVersion")

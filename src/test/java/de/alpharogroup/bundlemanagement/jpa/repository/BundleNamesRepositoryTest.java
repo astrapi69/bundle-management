@@ -8,6 +8,8 @@ import de.alpharogroup.collections.set.SetFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class BundleNamesRepositoryTest extends BaseJpaTest
@@ -18,6 +20,9 @@ public class BundleNamesRepositoryTest extends BaseJpaTest
 
 	@Autowired
 	private BundleNamesRepository repository;
+
+	@Autowired
+	private BundleApplicationsRepository bundleApplicationsRepository;
 
 	@Test
 	public void whenFindByNameThenReturnBundleNames()
@@ -67,5 +72,15 @@ public class BundleNamesRepositoryTest extends BaseJpaTest
 		distinctByName = repository.findDistinctByOwnerAndBaseNameAndLocale(bundleApplications.getName(), baseNames.getName(), locale);
 		assertThat(distinctByName).isNull();
 	}
+
+	@Test
+	public void testFindByOwner() {
+		BundleApplications distinctByName = bundleApplicationsRepository
+			.findDistinctByName("foo-bar.com");
+		List<BundleNames> byOwner = repository.findByOwner(distinctByName);
+
+		assertThat(byOwner.size()).isEqualTo(2);
+	}
+
 
 }

@@ -49,8 +49,10 @@ import java.util.Set;
  */
 @Entity
 @NamedQueries({
-		@NamedQuery(name = BundleApplications.NQ_FIND_SUPPORTED_LANGUAGE_LOCALE, query = "select ba from BundleApplications ba where :languageLocale member of ba.supportedLocales"),
-		@NamedQuery(name = BundleApplications.NQ_FIND_JOIN_SUPPORTED_LANGUAGE_LOCALE, query = "select ba from BundleApplications ba inner join ba.supportedLocales sl where sl.id = :languageLocale") })
+		@NamedQuery(name = BundleApplications.NQ_FIND_ALL_BY_LANGUAGE_LOCALE,
+			query = "select ba from BundleApplications ba where :languageLocale member of ba.supportedLocales"),
+		@NamedQuery(name = BundleApplications.NQ_FIND_ALL_BY_LANGUAGE_LOCALE_WITH_INNER_JOIN,
+			query = "select ba from BundleApplications ba inner join ba.supportedLocales sl where sl.id = :languageLocaleId") })
 
 @Table(name = BundleApplications.TABLE_NAME, uniqueConstraints = {
 		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX
@@ -70,11 +72,11 @@ public class BundleApplications extends VersionableNameUUIDEntity implements Clo
 
 	/** The Constant BASE_BUNDLE_APPLICATION is the base name of the initial bundle application. */
 	public static final String BASE_BUNDLE_APPLICATION = "base-bundle-application";
-	public static final String NQ_FIND_JOIN_SUPPORTED_LANGUAGE_LOCALE = "BundleApplications."
-		+ "findWithJoinSupportedLanguageLocale";
+	public static final String NQ_FIND_ALL_BY_LANGUAGE_LOCALE_WITH_INNER_JOIN = "BundleApplications."
+		+ "findAllByLanguageLocaleWithInnerJoin";
 
-	public static final String NQ_FIND_SUPPORTED_LANGUAGE_LOCALE = "BundleApplications."
-		+ "findSupportedLanguageLocale";
+	public static final String NQ_FIND_ALL_BY_LANGUAGE_LOCALE = "BundleApplications."
+		+ "findAllByLanguageLocale";
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
