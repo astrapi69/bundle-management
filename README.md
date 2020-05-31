@@ -5,7 +5,7 @@ This spring-boot project provides Java resource bundles(i18n) that can be saved 
  
 # ERD-Diagramm
  
-The erd-diagramm for this database looks as follows: ![erd-diagramm](https://github.com/astrapi69/bundle-management/blob/develop/src/main/resources/erd/erd-diagramm-resourcesbundles.png)
+The erd-diagramm for this database looks as follows: ![erd-diagramm](https://github.com/astrapi69/bundle-management/blob/master/src/main/resources/erd/erd-diagram-resourcesbundles.png)
  
 This erd-diagramm was created with [intellij](https://www.jetbrains.com/)
 
