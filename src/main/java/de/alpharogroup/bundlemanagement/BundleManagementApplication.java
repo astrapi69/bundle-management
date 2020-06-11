@@ -24,21 +24,15 @@
  */
 package de.alpharogroup.bundlemanagement;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import de.alpharogroup.bundlemanagement.configuration.ApplicationProperties;
 import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.spring.boot.application.ApplicationHooks;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.event.ApplicationStartingEvent;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.ApplicationListener;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Properties;
 
 @SpringBootApplication
 @EnableTransactionManagement

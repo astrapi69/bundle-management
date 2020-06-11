@@ -24,12 +24,22 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import de.alpharogroup.db.entity.version.VersionableUUIDEntity;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
-
-import javax.persistence.*;
 
 /**
  * The entity class {@link LanguageLocales} holds the data for the locale as {@link String} object.

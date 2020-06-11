@@ -24,17 +24,16 @@
  */
 package de.alpharogroup.bundlemanagement.mapper;
 
+import org.springframework.stereotype.Component;
+
 import de.alpharogroup.bean.mapper.AbstractGenericMapper;
 import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
 import de.alpharogroup.bundlemanagement.viewmodel.PropertiesValue;
-import org.springframework.stereotype.Component;
 
 /**
  * The class {@link PropertiesValuesMapper}.
  */
 @Component
-public class PropertiesValuesMapper
-	extends
-	AbstractGenericMapper<PropertiesValues, PropertiesValue>
+public class PropertiesValuesMapper extends AbstractGenericMapper<PropertiesValues, PropertiesValue>
 {
 }

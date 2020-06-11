@@ -24,13 +24,28 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import de.alpharogroup.db.entity.version.VersionableUUIDEntity;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-
-import javax.persistence.*;
 
 /**
  * The entity class {@link BundleNames} holds the data from the {@link BaseNames} and the
@@ -78,7 +93,7 @@ public class BundleNames extends VersionableUUIDEntity implements Cloneable
 	public static final String TABLE_NAME = "bundlenames";
 
 	/** The base name of this bundle. */
-	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
+	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinColumn(name = "base_name_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundlenames_base_name_id"))
 	BaseNames baseName;
 
@@ -87,12 +102,12 @@ public class BundleNames extends VersionableUUIDEntity implements Cloneable
 	String filepath;
 
 	/** The locale of this bundle. */
-	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
+	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinColumn(name = "locale_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundlenames_locale_id"))
 	LanguageLocales locale;
 
 	/** The {@link BundleApplications} that owns this {@link BundleNames} object. */
-	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.ALL	})
+	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinColumn(name = "owner_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundlenames_owner_id"))
 	BundleApplications owner;
 

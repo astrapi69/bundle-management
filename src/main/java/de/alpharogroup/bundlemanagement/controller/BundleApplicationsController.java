@@ -24,6 +24,24 @@
  */
 package de.alpharogroup.bundlemanagement.controller;
 
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
@@ -39,22 +57,13 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(ApplicationConfiguration.REST_VERSION + BundleApplicationsController.REST_PATH)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BundleApplicationsController
-	extends AbstractRestController<BundleApplications, UUID, BundleApplicationsRepository, BundleApplication>
+	extends
+		AbstractRestController<BundleApplications, UUID, BundleApplicationsRepository, BundleApplication>
 {
 
 	public static final String REST_PATH = "/bundle/applications";
@@ -102,7 +111,8 @@ public class BundleApplicationsController
 	@CrossOrigin(origins = "*")
 	@RequestMapping(path = BundleApplicationsController.REST_PATH_BY_BUNDLENAME, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the BundleApplication object from the given BundleName object")
-	public ResponseEntity<BundleApplication> findByBundleName(@Valid @RequestBody BundleName bundlename)
+	public ResponseEntity<BundleApplication> findByBundleName(
+		@Valid @RequestBody BundleName bundlename)
 	{
 		final BundleApplications bundleApplication = this.service
 			.find(bundlename.getOwner().getName());
@@ -124,6 +134,6 @@ public class BundleApplicationsController
 		return ResponseEntity
 			.status(
 				bundleApplication != null ? HttpStatus.OK.value() : HttpStatus.BAD_REQUEST.value())
-			.body(bundleApplication != null ?mapper.toDto(bundleApplication): null);
+			.body(bundleApplication != null ? mapper.toDto(bundleApplication) : null);
 	}
 }

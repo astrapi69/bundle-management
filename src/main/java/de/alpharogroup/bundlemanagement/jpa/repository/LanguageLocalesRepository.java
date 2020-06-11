@@ -24,11 +24,12 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
+import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
+import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 
 @Repository
 public interface LanguageLocalesRepository extends JpaRepository<LanguageLocales, UUID>

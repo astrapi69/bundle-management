@@ -24,14 +24,15 @@
  */
 package de.alpharogroup.bundlemanagement.mapper;
 
-import org.junit.Test;
-
 import java.util.UUID;
+
+import org.junit.Test;
 
 public class UUIDTest
 {
 	@Test
-	public void testGenerateUUID(){
+	public void testGenerateUUID()
+	{
 		UUID uuid = UUID.randomUUID();
 		System.out.println(uuid);
 	}

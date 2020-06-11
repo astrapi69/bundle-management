@@ -24,10 +24,14 @@
  */
 package de.alpharogroup.bundlemanagement.viewmodel;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-
 import java.util.UUID;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 /**
  * The class {@link Resourcebundle}.
@@ -44,11 +48,11 @@ public class Resourcebundle
 	Integer version;
 
 	/** The bundleName. */
-	 BundleName bundleName;
+	BundleName bundleName;
 
 	/** The properties key. */
-	 PropertiesKey key;
+	PropertiesKey key;
 
 	/** The value for the properties key. */
-	 PropertiesValue value;
+	PropertiesValue value;
 }

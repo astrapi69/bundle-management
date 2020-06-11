@@ -24,10 +24,11 @@
  */
 package de.alpharogroup.bundlemanagement.mapper;
 
+import org.springframework.stereotype.Component;
+
 import de.alpharogroup.bean.mapper.AbstractGenericMapper;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.viewmodel.BundleApplication;
-import org.springframework.stereotype.Component;
 
 /**
  * The class {@link BundleApplicationsMapper}.
@@ -35,6 +36,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class BundleApplicationsMapper
 	extends
-	AbstractGenericMapper<BundleApplications, BundleApplication>
+		AbstractGenericMapper<BundleApplications, BundleApplication>
 {
 }

@@ -24,13 +24,14 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
-import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.UUID;
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
+import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 
 @Repository
 public interface BundleApplicationsRepository extends JpaRepository<BundleApplications, UUID>
@@ -41,6 +42,7 @@ public interface BundleApplicationsRepository extends JpaRepository<BundleApplic
 
 	/**
 	 * Named query from entity class that finds all applications with the given locale
+	 * 
 	 * @param languageLocale
 	 * @return all applications with the given locale
 	 */
@@ -49,6 +51,7 @@ public interface BundleApplicationsRepository extends JpaRepository<BundleApplic
 	/**
 	 * Named query from entity class that finds all applications with the given locale with an inner
 	 * join
+	 * 
 	 * @param languageLocaleId
 	 * @return all applications with the given locale
 	 */

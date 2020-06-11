@@ -24,7 +24,33 @@
  */
 package de.alpharogroup.bundlemanagement.controller;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Properties;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
+
 import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
 import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
 import de.alpharogroup.bundlemanagement.viewmodel.ImprortableBundleName;
@@ -35,22 +61,6 @@ import de.alpharogroup.resourcebundle.locale.LocaleResolver;
 import de.alpharogroup.spring.generics.ParameterizedTypeReferenceFactory;
 import de.alpharogroup.spring.web.util.UrlExtensions;
 import de.alpharogroup.xml.json.ObjectToJsonExtensions;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.*;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
@@ -58,15 +68,16 @@ import static org.junit.Assert.assertNotNull;
 public class ResourcebundlesControllerTest
 {
 
-	@Autowired private TestRestTemplate restTemplate;
+	@Autowired
+	private TestRestTemplate restTemplate;
 
-	@LocalServerPort int randomServerPort;
+	@LocalServerPort
+	int randomServerPort;
 
 	public String getBaseUrl(int serverPort)
 	{
 		return UrlExtensions.getBaseUrl("http", "localhost", serverPort,
-			ApplicationConfiguration.REST_VERSION,
-			ResourcebundlesController.REST_PATH);
+			ApplicationConfiguration.REST_VERSION, ResourcebundlesController.REST_PATH);
 	}
 
 	@Before
@@ -79,7 +90,7 @@ public class ResourcebundlesControllerTest
 	{
 		Resourcebundle actual;
 		Resourcebundle expected;
-		String[] requestParams = {"basename", "bundleappname", "key", "locale"};
+		String[] requestParams = { "basename", "bundleappname", "key", "locale" };
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
 			ResourcebundlesController.REST_PATH_FIND, requestParams);
 		HttpHeaders headers = new HttpHeaders();
@@ -101,7 +112,7 @@ public class ResourcebundlesControllerTest
 	public void testFindResourceBundles()
 	{
 		List<Resourcebundle> actual;
-		String[] requestParams = {"basename", "bundleappname", "locale"};
+		String[] requestParams = { "basename", "bundleappname", "locale" };
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
 			ResourcebundlesController.REST_PATH_RESOURCES, requestParams);
 		HttpHeaders headers = new HttpHeaders();
@@ -125,7 +136,7 @@ public class ResourcebundlesControllerTest
 	@Test
 	public void testGetProperties()
 	{
-		String[] requestParams = {"basename", "bundleappname", "locale"};
+		String[] requestParams = { "basename", "bundleappname", "locale" };
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
 			ResourcebundlesController.REST_PATH_VALUE, requestParams);
 		HttpHeaders headers = new HttpHeaders();
@@ -144,7 +155,7 @@ public class ResourcebundlesControllerTest
 	public void testGetString()
 	{
 
-		String[] requestParams = {"basename", "bundleappname", "key", "locale"};
+		String[] requestParams = { "basename", "bundleappname", "key", "locale" };
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
 			ResourcebundlesController.REST_PATH_VALUE, requestParams);
 		HttpHeaders headers = new HttpHeaders();
@@ -167,7 +178,7 @@ public class ResourcebundlesControllerTest
 	public void testGetStringWithParameters()
 	{
 		final String[] paramsGerman = { "Fritz", "Berlin" };
-		String[] requestParams = {"basename", "bundleappname", "key", "locale"};
+		String[] requestParams = { "basename", "bundleappname", "key", "locale" };
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
 			ResourcebundlesController.REST_PATH_VALUE_WITH_PARAMS, requestParams, "params",
 			paramsGerman);
@@ -230,7 +241,7 @@ public class ResourcebundlesControllerTest
 		// .exchange(restUrl, HttpMethod.POST, requestEntity, BundleName.class);
 		assertNotNull(entity);
 
-		String[] requestParams = {"basename", "bundleappname", "locale"};
+		String[] requestParams = { "basename", "bundleappname", "locale" };
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
 			ResourcebundlesController.REST_PATH_RESOURCES, requestParams);
 
@@ -243,7 +254,9 @@ public class ResourcebundlesControllerTest
 		// http://localhost:5000/v1/resourcebundle/resourcebundles?basename=test-resource-bundles&bundleappname=test-bundle-application&locale=de
 
 		ResponseEntity<List<Resourcebundle>> newentity = this.restTemplate.exchange(restUrl,
-			HttpMethod.GET, requestEntity, ParameterizedTypeReferenceFactory.newListParameterizedTypeReference(Resourcebundle.class), map);
+			HttpMethod.GET, requestEntity, ParameterizedTypeReferenceFactory
+				.newListParameterizedTypeReference(Resourcebundle.class),
+			map);
 		assertNotNull(newentity);
 
 		actual = newentity.getBody();

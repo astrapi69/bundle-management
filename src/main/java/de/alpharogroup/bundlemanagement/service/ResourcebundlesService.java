@@ -24,7 +24,27 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.Properties;
+import java.util.UUID;
+import java.util.logging.Level;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
+import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
+import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
+import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
+import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
 import de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsRepository;
 import de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository;
 import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
@@ -41,14 +61,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
-import java.util.logging.Level;
 
 /**
  * The class {@link ResourcebundlesService}
@@ -273,7 +285,8 @@ public class ResourcebundlesService
 	{
 		PropertiesKeys key;
 		PropertiesValues value;
-		if (resourcebundles.getId() != null){
+		if (resourcebundles.getId() != null)
+		{
 			Optional<Resourcebundles> byId = repository.findById(resourcebundles.getId());
 			if (byId.isPresent())
 			{
@@ -307,16 +320,18 @@ public class ResourcebundlesService
 		}
 	}
 
-	public Resourcebundles saveOrUpdate(Resourcebundle resourcebundle){
+	public Resourcebundles saveOrUpdate(Resourcebundle resourcebundle)
+	{
 		BundleName bundleName = resourcebundle.getBundleName();
 		String baseName = bundleName.getBaseName().getName();
 		String localeString = bundleName.getLocale().getLocale();
 		Locale locale = LocaleResolver.resolveLocale(localeString);
 		BundleApplications bundleApplications = bundleApplicationsRepository
 			.findDistinctByName(bundleName.getOwner().getName());
-		BundleNames bundleNames = bundleNamesService
-			.find(bundleApplications, baseName,	localeString);
-		return saveOrUpdateEntry(bundleNames, baseName, locale, resourcebundle.getKey().getName(), resourcebundle.getValue().getName(), true);
+		BundleNames bundleNames = bundleNamesService.find(bundleApplications, baseName,
+			localeString);
+		return saveOrUpdateEntry(bundleNames, baseName, locale, resourcebundle.getKey().getName(),
+			resourcebundle.getValue().getName(), true);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)

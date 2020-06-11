@@ -24,11 +24,12 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.Languages;
+import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
+import de.alpharogroup.bundlemanagement.jpa.entity.Languages;
 
 @Repository
 public interface LanguagesRepository extends JpaRepository<Languages, UUID>

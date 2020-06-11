@@ -24,20 +24,21 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
-import de.alpharogroup.bundlemanagement.jpa.repository.PropertiesKeysRepository;
-import de.alpharogroup.spring.service.api.NameEntityService;
-import de.alpharogroup.spring.service.api.GenericService;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.experimental.FieldDefaults;
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.UUID;
+import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
+import de.alpharogroup.bundlemanagement.jpa.repository.PropertiesKeysRepository;
+import de.alpharogroup.spring.service.api.GenericService;
+import de.alpharogroup.spring.service.api.NameEntityService;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
 /**
  * The class {@link PropertiesKeysService}.

@@ -24,15 +24,16 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
-import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
-import de.alpharogroup.collections.set.SetFactory;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
+import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
+import de.alpharogroup.collections.set.SetFactory;
 
 public class BundleApplicationsRepositoryTest extends BaseJpaTest
 {
@@ -69,7 +70,8 @@ public class BundleApplicationsRepositoryTest extends BaseJpaTest
 	}
 
 	@Test
-	public void testFindByLanguageLocale(){
+	public void testFindByLanguageLocale()
+	{
 		List<BundleApplications> bundleApplications;
 
 		String locale = "de";
@@ -80,12 +82,14 @@ public class BundleApplicationsRepositoryTest extends BaseJpaTest
 	}
 
 	@Test
-	public void testFindAllByLanguageLocaleWithInnerJoin(){
+	public void testFindAllByLanguageLocaleWithInnerJoin()
+	{
 		List<BundleApplications> bundleApplications;
 
 		String locale = "de_DE";
 		LanguageLocales languageLocales = languageLocalesRepository.findDistinctByLocale(locale);
-		bundleApplications = repository.findAllByLanguageLocaleWithInnerJoin(languageLocales.getId());
+		bundleApplications = repository
+			.findAllByLanguageLocaleWithInnerJoin(languageLocales.getId());
 		// then
 		assertThat(bundleApplications.size()).isEqualTo(1);
 	}

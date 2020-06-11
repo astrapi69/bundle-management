@@ -24,11 +24,17 @@
  */
 package de.alpharogroup.bundlemanagement.service;
 
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
 import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 import de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsRepository;
-import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.collections.set.SetFactory;
 import de.alpharogroup.spring.service.api.GenericService;
 import lombok.AccessLevel;
@@ -36,28 +42,19 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 
 /**
  * The class {@link BundleApplicationsService}
  */
+@Getter
 @Transactional
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@Getter
 public class BundleApplicationsService
 	implements
 		GenericService<BundleApplications, UUID, BundleApplicationsRepository>
 {
-
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = 1L;
 
 	BundleNamesService bundleNamesService;
 
@@ -79,16 +76,20 @@ public class BundleApplicationsService
 		repository.delete(merged);
 	}
 
-	@Override public BundleApplications save(BundleApplications entity)
+	@Override
+	public BundleApplications save(BundleApplications entity)
 	{
-		if(entity.getDefaultLocale()!=null && entity.getDefaultLocale().getLocale()!=null){
+		if (entity.getDefaultLocale() != null && entity.getDefaultLocale().getLocale() != null)
+		{
 			LanguageLocales languageLocales = languageLocalesService
 				.getOrCreateNewLanguageLocales(entity.getDefaultLocale().getLocale());
 			entity.setDefaultLocale(languageLocales);
 		}
-		if(entity.getSupportedLocales() != null && !entity.getSupportedLocales().isEmpty()){
+		if (entity.getSupportedLocales() != null && !entity.getSupportedLocales().isEmpty())
+		{
 			Set<LanguageLocales> supportedLocales = SetFactory.newHashSet();
-			for (LanguageLocales ll : entity.getSupportedLocales()){
+			for (LanguageLocales ll : entity.getSupportedLocales())
+			{
 				LanguageLocales languageLocales = languageLocalesService
 					.getOrCreateNewLanguageLocales(ll.getLocale());
 				supportedLocales.add(languageLocales);

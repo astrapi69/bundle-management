@@ -24,14 +24,14 @@
  */
 package de.alpharogroup.bundlemanagement.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
-import de.alpharogroup.bundlemanagement.viewmodel.BundleApplication;
-import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
-import de.alpharogroup.collections.array.ArrayFactory;
-import de.alpharogroup.collections.list.ListFactory;
-import de.alpharogroup.spring.generics.ParameterizedTypeReferenceFactory;
-import de.alpharogroup.spring.web.util.UrlExtensions;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,19 +39,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
+import de.alpharogroup.bundlemanagement.viewmodel.BundleApplication;
+import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
+import de.alpharogroup.collections.array.ArrayFactory;
+import de.alpharogroup.collections.list.ListFactory;
+import de.alpharogroup.spring.generics.ParameterizedTypeReferenceFactory;
+import de.alpharogroup.spring.web.util.UrlExtensions;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
@@ -59,9 +65,11 @@ import static org.junit.Assert.assertNull;
 public class BundleApplicationsControllerTest
 {
 
-	@Autowired private TestRestTemplate restTemplate;
+	@Autowired
+	private TestRestTemplate restTemplate;
 
-	@LocalServerPort int randomServerPort;
+	@LocalServerPort
+	int randomServerPort;
 	RestTemplate decoratedRestTemplate;
 
 	public String getBaseUrl(int serverPort)
@@ -74,23 +82,23 @@ public class BundleApplicationsControllerTest
 	public void prepare()
 	{
 		decoratedRestTemplate = this.restTemplate.getRestTemplate();
-		List<HttpMessageConverter<?>> converters =
-			decoratedRestTemplate.getMessageConverters();
-		for (HttpMessageConverter converter : converters) {
+		List<HttpMessageConverter<?>> converters = decoratedRestTemplate.getMessageConverters();
+		for (HttpMessageConverter converter : converters)
+		{
 			System.out.println(converter.toString());
 		}
 	}
 
 
 	@Test
-	public void testFindListAll(){
+	public void testFindListAll()
+	{
 		String restUrl;
-		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			"");
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), "");
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-		ResponseEntity<Iterable<BundleApplication>> entities = this.restTemplate.exchange(restUrl, HttpMethod.GET,
-			requestEntity, ParameterizedTypeReferenceFactory
+		ResponseEntity<Iterable<BundleApplication>> entities = this.restTemplate.exchange(restUrl,
+			HttpMethod.GET, requestEntity, ParameterizedTypeReferenceFactory
 				.newIterableParameterizedTypeReference(BundleApplication.class));
 		assertNotNull(entities);
 	}
@@ -110,8 +118,8 @@ public class BundleApplicationsControllerTest
 		headers.setAccept(acceptableMediaTypes);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		requestEntity = new HttpEntity<>(json, headers);
-		ResponseEntity<BundleApplication> entity = this.restTemplate.postForEntity(restUrl, requestEntity,
-			BundleApplication.class);
+		ResponseEntity<BundleApplication> entity = this.restTemplate.postForEntity(restUrl,
+			requestEntity, BundleApplication.class);
 		assertNotNull(entity);
 		BundleApplication bundleApplication = entity.getBody();
 		assertNotNull(bundleApplication);
@@ -134,8 +142,8 @@ public class BundleApplicationsControllerTest
 		requestEntity = new HttpEntity<>(headers);
 		urlParams = new HashMap<String, String>();
 		urlParams.put("bundleappname", "test-bundle-application");
-		entity = this.restTemplate.exchange(restUrl, HttpMethod.GET,
-			requestEntity, BundleApplication.class, urlParams);
+		entity = this.restTemplate.exchange(restUrl, HttpMethod.GET, requestEntity,
+			BundleApplication.class, urlParams);
 		assertNotNull(entity);
 		// bundle app not exists case...
 		requestParams = ArrayFactory.newArray("bundleappname");
@@ -145,8 +153,8 @@ public class BundleApplicationsControllerTest
 		requestEntity = new HttpEntity<>(headers);
 		urlParams = new HashMap<String, String>();
 		urlParams.put("bundleappname", "not-existent-app");
-		entity = this.restTemplate.exchange(restUrl, HttpMethod.GET,
-			requestEntity, BundleApplication.class, urlParams);
+		entity = this.restTemplate.exchange(restUrl, HttpMethod.GET, requestEntity,
+			BundleApplication.class, urlParams);
 		assertNotNull(entity);
 		assertNull(entity.getBody());
 	}
@@ -164,8 +172,10 @@ public class BundleApplicationsControllerTest
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("bundleappname", "test-bundle-application");
-		ResponseEntity<Set<BundleName>> entity = this.restTemplate.exchange(restUrl,
-			HttpMethod.GET, requestEntity, ParameterizedTypeReferenceFactory.newSetParameterizedTypeReference(BundleName.class), map);
+		ResponseEntity<Set<BundleName>> entity = this.restTemplate.exchange(restUrl, HttpMethod.GET,
+			requestEntity,
+			ParameterizedTypeReferenceFactory.newSetParameterizedTypeReference(BundleName.class),
+			map);
 		assertNotNull(entity);
 		Set<BundleName> bundleNames = entity.getBody();
 	}
@@ -184,8 +194,8 @@ public class BundleApplicationsControllerTest
 		headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		requestEntity = new HttpEntity<>(json, headers);
-		ResponseEntity<BundleApplication> entity = this.restTemplate.postForEntity(restUrl, requestEntity,
-			BundleApplication.class);
+		ResponseEntity<BundleApplication> entity = this.restTemplate.postForEntity(restUrl,
+			requestEntity, BundleApplication.class);
 		assertNotNull(entity);
 	}
 

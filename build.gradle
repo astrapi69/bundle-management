@@ -1,45 +1,30 @@
 
 buildscript {
 	repositories {
+		mavenCentral()
+		google()
+		jcenter()
 		maven {
 			url "https://plugins.gradle.org/m2/"
 		}
 	}
 	dependencies {
+		classpath "com.github.ben-manes:gradle-versions-plugin:0.27.0"
+		classpath "gradle.plugin.com.hierynomus.gradle.plugins:license-gradle-plugin:0.15.0"
+		classpath "io.franzbecker:gradle-lombok:4.0.0"
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:2.3.0.RELEASE"
+		classpath "io.spring.gradle:dependency-management-plugin:1.0.9.RELEASE"
+		classpath "net.ltgt.gradle:gradle-apt-plugin:0.21"
 	}
 }
 
-plugins {
-	id "io.franzbecker.gradle-lombok" version "4.0.0"
-	id "org.springframework.boot" version "2.3.0.RELEASE"
-	id "io.spring.dependency-management" version "1.0.9.RELEASE"
-	id "java"
-	id "maven-publish"
-	id "signing"
-	id "idea"
-	id "net.ltgt.apt" version "0.21"
-	id "net.ltgt.apt-idea" version "0.21"
-	id "com.github.ben-manes.versions" version "0.28.0"
-	id "com.github.hierynomus.license" version "0.15.0"
-}
-
-apply plugin: "java"
-apply plugin: "jacoco"
-apply plugin: "eclipse"
-apply plugin: "idea"
-apply plugin: "net.ltgt.apt-idea"
-apply plugin: "org.springframework.boot"
 apply plugin: "io.spring.dependency-management"
+apply plugin: "org.springframework.boot"
+apply plugin: "application"
 
-group = "$groupPackage"
-version = "$projectVersion"
-description = "$rootProject.name"
-sourceCompatibility = "$projectSourceCompatibility"
-
-repositories {
-	jcenter()
-	mavenLocal()
-	mavenCentral()
+allprojects {
+	group = "$groupPackage"
+	version = "$projectVersion"
 }
 
 dependencies {
@@ -71,136 +56,55 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-license {
-	ext.year="2015"
-	ext.owner="Asterios Raptis"
-	header rootProject.file('src/main/resources/LICENSE.txt')
-	excludes(["**/README",
-			  "**/README.md",
-			  "**/LICENSE",
-			  "**/NOTICE",
-			  "**/*.xml",
-			  "**/*.xsl",
-			  "**/*.xsd",
-			  "**/*.dtd",
-			  "**/*.html",
-			  "**/*.jsp",
-			  "**/*.jpa",
-			  "**/*.sql",
-			  "**/*.properties",
-			  "**/*.bat",
-			  "**/*.gradle",
-			  "**/*.MF",
-			  "**/*.txt",
-			  "**/*.vm",
-			  "**/*.log",
-			  "**/*.map",
-			  "**/*.js.map",
-			  "**/*.tmpl",
-			  "**/*.js.tmpl",
-			  "**/*.editorconfig",
-			  "src/test/resources/**",
-			  "src/main/resources/**",
-			  "out/**",
-			  "build/**"])
-}
 
-// workhack for license issue #76
-gradle.startParameter.excludedTaskNames += "licenseMain"
-gradle.startParameter.excludedTaskNames += "licenseTest"
 
-task sourcesJar(type: Jar) {
-	archiveClassifier.set("sources")
-	from(sourceSets.main.allJava)
-}
+subprojects {
+	apply plugin: "signing"
+	apply plugin: "java"
+	apply plugin: "jacoco"
+	apply plugin: "maven-publish"
+	apply plugin: "com.github.ben-manes.versions"
+	apply plugin: "com.github.hierynomus.license"
+	apply plugin: "eclipse"
+	apply plugin: "idea"
+	apply plugin: "net.ltgt.apt-idea"
+	apply plugin: "io.spring.dependency-management"
+	apply plugin: "io.franzbecker.gradle-lombok"
 
-task javadocJar(type: Jar) {
-	from javadoc
-	archiveClassifier.set("javadoc")
-	javadoc.properties.failOnError = true
-}
-
-def releaseVersion = !version.endsWith("SNAPSHOT")
-
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			artifactId = "$rootProject.name"
-			from components.java
-			artifact sourcesJar
-			artifact javadocJar
-			pom {
-				name = "$rootProject.name"
-				description = "$projectDescription"
-				url = "$projectScmProviderUrl"+"$projectHolderUsername"+"/"+"$rootProject.name"
-				organization {
-					name = "$projectOrganizationName"
-					url = "$projectOrganizationUrl"
-				}
-				issueManagement {
-					system = "$projectIssueManagementSystem"
-					url = "$projectScmProviderUrl"+"$projectHolderUsername"+"/"+"$rootProject.name"+"/issues"
-				}
-				licenses {
-					license {
-						name = "$projectLicenseName"
-						url = "$projectLicenseUrl"
-						distribution = "$projectLicenseDistribution"
-					}
-				}
-				developers {
-					developer {
-						id = "$projectHolderUsername"
-						name = "Asterios Raptis"
-					}
-				}
-				scm {
-					connection = "scm:git:git:@" + "$projectScmProviderDomain" + ":" + "$projectHolderUsername" + "/" + "$rootProject.name" + ".git"
-					developerConnection = "scm:git:git:@" + "$projectScmProviderDomain" + ":" + "$projectHolderUsername" + "/" + "$rootProject.name" + ".git"
-					url = "scm:git:git:@" + "$projectScmProviderDomain" + ":" + "$projectHolderUsername" + "/" + "$rootProject.name" + ".git"
-				}
-			}
-		}
-	}
 	repositories {
-		maven {
-			credentials {
-				username System.getenv("ossrhUsername") ?: project.property("ossrhUsername")
-				password System.getenv("ossrhPassword") ?: project.property("ossrhPassword")
-			}
-			def releasesRepoUrl = "$projectRepositoriesReleasesRepoUrl"
-			def snapshotsRepoUrl = "$projectRepositoriesSnapshotsRepoUrl"
-			url = releaseVersion ? releasesRepoUrl : snapshotsRepoUrl
+		jcenter()
+		mavenLocal()
+		mavenCentral()
+	}
+
+	// workhack for license issue #76
+	gradle.startParameter.excludedTaskNames += "licenseMain"
+	gradle.startParameter.excludedTaskNames += "licenseTest"
+
+	description = "$rootProject.name"
+	sourceCompatibility = "$projectSourceCompatibility"
+
+	javadoc {
+		if(JavaVersion.current().isJava9Compatible()) {
+			options.addBooleanOption("html5", true)
 		}
 	}
-}
 
-signing {
-	if (releaseVersion) {
-		sign publishing.publications.mavenJava
+	tasks.withType(JavaCompile) {
+		options.encoding = "UTF-8"
 	}
-}
 
-javadoc {
-	if(JavaVersion.current().isJava9Compatible()) {
-		options.addBooleanOption("html5", true)
+	test {
+		useJUnitPlatform()
 	}
-}
 
-tasks.withType(JavaCompile) {
-	options.encoding = "UTF-8"
-}
-
-
-test {
-	useJUnitPlatform()
-}
-
-jacocoTestReport {
-	reports {
-		xml.enabled true
-		html.enabled false
+	jacocoTestReport {
+		reports {
+			xml.enabled true
+			html.enabled false
+		}
 	}
-}
 
-check.dependsOn jacocoTestReport
+	check.dependsOn jacocoTestReport
+
+}

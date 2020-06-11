@@ -1,1 +1,3 @@
 rootProject.name = 'bundle-management'
+include('bundle-entities')
+

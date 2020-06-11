@@ -24,12 +24,13 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.UUID;
+import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
 
 @Repository
 public interface PropertiesKeysRepository extends JpaRepository<PropertiesKeys, UUID>

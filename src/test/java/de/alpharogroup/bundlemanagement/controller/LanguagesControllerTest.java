@@ -24,10 +24,11 @@
  */
 package de.alpharogroup.bundlemanagement.controller;
 
-import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
-import de.alpharogroup.bundlemanagement.viewmodel.Language;
-import de.alpharogroup.collections.array.ArrayFactory;
-import de.alpharogroup.spring.web.util.UrlExtensions;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,10 +43,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.Assert.assertNotNull;
+import de.alpharogroup.bundlemanagement.configuration.ApplicationConfiguration;
+import de.alpharogroup.bundlemanagement.viewmodel.Language;
+import de.alpharogroup.collections.array.ArrayFactory;
+import de.alpharogroup.spring.web.util.UrlExtensions;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
@@ -53,15 +54,16 @@ import static org.junit.Assert.assertNotNull;
 public class LanguagesControllerTest
 {
 
-	@Autowired private TestRestTemplate restTemplate;
+	@Autowired
+	private TestRestTemplate restTemplate;
 
-	@LocalServerPort int randomServerPort;
+	@LocalServerPort
+	int randomServerPort;
 
 	public String getBaseUrl(int serverPort)
 	{
 		return UrlExtensions.getBaseUrl("http", "localhost", serverPort,
-			ApplicationConfiguration.REST_VERSION,
-			LanguagesController.REST_PATH);
+			ApplicationConfiguration.REST_VERSION, LanguagesController.REST_PATH);
 	}
 
 	@Before

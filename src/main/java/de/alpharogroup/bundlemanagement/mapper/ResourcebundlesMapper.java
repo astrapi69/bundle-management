@@ -24,10 +24,11 @@
  */
 package de.alpharogroup.bundlemanagement.mapper;
 
+import org.springframework.stereotype.Component;
+
 import de.alpharogroup.bean.mapper.AbstractGenericMapper;
 import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
 import de.alpharogroup.bundlemanagement.viewmodel.Resourcebundle;
-import org.springframework.stereotype.Component;
 
 /**
  * The class {@link ResourcebundlesMapper}.

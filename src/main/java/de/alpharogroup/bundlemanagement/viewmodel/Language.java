@@ -24,10 +24,14 @@
  */
 package de.alpharogroup.bundlemanagement.viewmodel;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-
 import java.util.UUID;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 /**
  * The class {@link Language}.
@@ -45,6 +49,6 @@ public class Language
 	String name;
 
 	/** The iso639_1 code with two characters. */
-	 String iso639Dash1;
+	String iso639Dash1;
 
 }

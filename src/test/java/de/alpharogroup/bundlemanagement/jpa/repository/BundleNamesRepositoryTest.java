@@ -24,17 +24,18 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+import java.util.List;
+
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
 import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
 import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 import de.alpharogroup.collections.set.SetFactory;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class BundleNamesRepositoryTest extends BaseJpaTest
 {
@@ -93,12 +94,14 @@ public class BundleNamesRepositoryTest extends BaseJpaTest
 		// cleanup
 		repository.delete(entity);
 		// when
-		distinctByName = repository.findDistinctByOwnerAndBaseNameAndLocale(bundleApplications.getName(), baseNames.getName(), locale);
+		distinctByName = repository.findDistinctByOwnerAndBaseNameAndLocale(
+			bundleApplications.getName(), baseNames.getName(), locale);
 		assertThat(distinctByName).isNull();
 	}
 
 	@Test
-	public void testFindByOwner() {
+	public void testFindByOwner()
+	{
 		BundleApplications distinctByName = bundleApplicationsRepository
 			.findDistinctByName("foo-bar.com");
 		List<BundleNames> byOwner = repository.findByOwner(distinctByName);

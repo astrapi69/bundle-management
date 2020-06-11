@@ -24,16 +24,34 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import de.alpharogroup.db.entity.name.NameEntity;
 import de.alpharogroup.db.entity.name.versionable.VersionableNameUUIDEntity;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * The entity class {@link BundleApplications} is the root of every bundle application. Every entity
@@ -49,10 +67,8 @@ import java.util.Set;
  */
 @Entity
 @NamedQueries({
-		@NamedQuery(name = BundleApplications.NQ_FIND_ALL_BY_LANGUAGE_LOCALE,
-			query = "select ba from BundleApplications ba where :languageLocale member of ba.supportedLocales"),
-		@NamedQuery(name = BundleApplications.NQ_FIND_ALL_BY_LANGUAGE_LOCALE_WITH_INNER_JOIN,
-			query = "select ba from BundleApplications ba inner join ba.supportedLocales sl where sl.id = :languageLocaleId") })
+		@NamedQuery(name = BundleApplications.NQ_FIND_ALL_BY_LANGUAGE_LOCALE, query = "select ba from BundleApplications ba where :languageLocale member of ba.supportedLocales"),
+		@NamedQuery(name = BundleApplications.NQ_FIND_ALL_BY_LANGUAGE_LOCALE_WITH_INNER_JOIN, query = "select ba from BundleApplications ba inner join ba.supportedLocales sl where sl.id = :languageLocaleId") })
 
 @Table(name = BundleApplications.TABLE_NAME, uniqueConstraints = {
 		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX
@@ -86,7 +102,7 @@ public class BundleApplications extends VersionableNameUUIDEntity implements Clo
 	/**
 	 * The default locale of this bundle application.
 	 */
-	@ManyToOne(fetch = FetchType.EAGER,	cascade = { CascadeType.MERGE, CascadeType.REFRESH	})
+	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.REFRESH })
 	@JoinColumn(name = "default_locale_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundle_applications_default_locale_id"))
 	LanguageLocales defaultLocale;
 
@@ -94,7 +110,7 @@ public class BundleApplications extends VersionableNameUUIDEntity implements Clo
 	 * The supported locale objects that are mandatory for this bundle application.
 	 */
 	@Builder.Default
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL	})
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinTable(name = "bundle_application_language_locales", joinColumns = {
 			@JoinColumn(name = "application_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundle_application_id")) }, inverseJoinColumns = {
 					@JoinColumn(name = "language_locales_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundle_application_language_locales_id")) })

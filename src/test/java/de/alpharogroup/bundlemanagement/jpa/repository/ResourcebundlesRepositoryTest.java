@@ -24,15 +24,22 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.*;
-import de.alpharogroup.collections.set.SetFactory;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
+import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
+import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
+import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
+import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
+import de.alpharogroup.collections.set.SetFactory;
 
 public class ResourcebundlesRepositoryTest extends BaseJpaTest
 {
@@ -57,8 +64,8 @@ public class ResourcebundlesRepositoryTest extends BaseJpaTest
 		baseName = "test";
 		locale = "de_DE";
 		key = "com.example.gui.prop.with.params.label";
-		entity = repository
-			.findDistinctByOwnerAndBaseNameAndLocaleAndKeyAndValue(owner, baseName, locale, key);
+		entity = repository.findDistinctByOwnerAndBaseNameAndLocaleAndKeyAndValue(owner, baseName,
+			locale, key);
 
 		assertNotNull(entity);
 	}
@@ -97,9 +104,8 @@ public class ResourcebundlesRepositoryTest extends BaseJpaTest
 		entityManager.persist(baseNames);
 		entityManager.flush();
 
-		bundleNames = BundleNames.builder().baseName(baseNames)
-			.filepath("/opt/i18n").owner(bundleApplications).locale(languageLocales)
-			.build();
+		bundleNames = BundleNames.builder().baseName(baseNames).filepath("/opt/i18n")
+			.owner(bundleApplications).locale(languageLocales).build();
 
 		entityManager.persist(bundleNames);
 		entityManager.flush();
@@ -114,8 +120,8 @@ public class ResourcebundlesRepositoryTest extends BaseJpaTest
 		entityManager.persist(propertiesValues);
 		entityManager.flush();
 
-		entity = Resourcebundles.builder().bundleName(bundleNames)
-			.key(propertiesKeys).value(propertiesValues).build();
+		entity = Resourcebundles.builder().bundleName(bundleNames).key(propertiesKeys)
+			.value(propertiesValues).build();
 
 		entityManager.persist(entity);
 		entityManager.flush();

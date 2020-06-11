@@ -24,30 +24,51 @@
  */
 package de.alpharogroup.bundlemanagement.mapper;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.*;
-import de.alpharogroup.bundlemanagement.viewmodel.*;
-import de.alpharogroup.collections.set.SetFactory;
-import org.junit.Ignore;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.UUID;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.UUID;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications;
+import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
+import de.alpharogroup.bundlemanagement.jpa.entity.Countries;
+import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
+import de.alpharogroup.bundlemanagement.jpa.entity.Languages;
+import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
+import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
+import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
+import de.alpharogroup.bundlemanagement.viewmodel.BaseName;
+import de.alpharogroup.bundlemanagement.viewmodel.BundleApplication;
+import de.alpharogroup.bundlemanagement.viewmodel.BundleName;
+import de.alpharogroup.bundlemanagement.viewmodel.Country;
+import de.alpharogroup.bundlemanagement.viewmodel.Language;
+import de.alpharogroup.bundlemanagement.viewmodel.LanguageLocale;
+import de.alpharogroup.bundlemanagement.viewmodel.PropertiesKey;
+import de.alpharogroup.bundlemanagement.viewmodel.PropertiesValue;
+import de.alpharogroup.bundlemanagement.viewmodel.Resourcebundle;
+import de.alpharogroup.collections.set.SetFactory;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MapperTest
 {
-	@Autowired BaseNamesMapper baseNamesMapper;
-	@Autowired BundleApplicationsMapper bundleApplicationsMapper;
-	@Autowired BundleNamesMapper bundleNamesMapper;
-	@Autowired CountriesMapper countriesMapper;
-	@Autowired LanguageLocalesMapper languageLocalesMapper;
+	@Autowired
+	BaseNamesMapper baseNamesMapper;
+	@Autowired
+	BundleApplicationsMapper bundleApplicationsMapper;
+	@Autowired
+	BundleNamesMapper bundleNamesMapper;
+	@Autowired
+	CountriesMapper countriesMapper;
+	@Autowired
+	LanguageLocalesMapper languageLocalesMapper;
 	@Autowired
 	LanguagesMapper languagesMapper;
 	@Autowired
@@ -57,12 +78,11 @@ public class MapperTest
 	@Autowired
 	ResourcebundlesMapper resourcebundlesMapper;
 
-//	@Ignore
+	// @Ignore
 	@Test
 	public void testToDto()
 	{
-		PropertiesKeys propertiesKeys = PropertiesKeys.builder()
-			.id(UUID.randomUUID())
+		PropertiesKeys propertiesKeys = PropertiesKeys.builder().id(UUID.randomUUID())
 			.name("foo.key").build();
 		PropertiesKey propertiesKey = propertiesKeysMapper.toDto(propertiesKeys);
 		assertNotNull(propertiesKey);

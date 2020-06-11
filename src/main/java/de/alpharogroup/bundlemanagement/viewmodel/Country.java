@@ -24,10 +24,14 @@
  */
 package de.alpharogroup.bundlemanagement.viewmodel;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-
 import java.util.UUID;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 /**
  * The domain class {@link Country} is keeping the information for all countries in the world
@@ -45,6 +49,6 @@ public class Country
 	String name;
 
 	/** The iso3166 name with two characters. */
-	 String iso3166a2name;
+	String iso3166a2name;
 
 }
