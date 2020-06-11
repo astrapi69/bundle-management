@@ -1,0 +1,8 @@
+
+dependencies {
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+    implementation("de.alpharogroup:ent-api:$entApiVersion")
+    implementation("de.alpharogroup:ent-core:$entCoreVersion")
+}
+
