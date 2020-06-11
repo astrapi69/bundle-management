@@ -1,15 +1,15 @@
 
 apply plugin: "org.springframework.boot"
 
-
 dependencies {
-    compileOnly("org.projectlombok:lombok:$lombokVersion")
-    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
-
     implementation project(":bundle-entities")
     implementation project(":bundle-mappers")
     implementation project(":bundle-services")
     implementation project(":bundle-viewmodels")
+
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+
     implementation("de.alpharogroup:generic-mapper:$genericMapperVersion")
     implementation("de.alpharogroup:ent-api:$entApiVersion")
     implementation("de.alpharogroup:ent-core:$entCoreVersion")

@@ -1,0 +1,18 @@
+de/alpharogroup/bundlemanagement/mapper/LanguagesMapper.java
+ de.alpharogroup.bundlemanagement.mapper.LanguagesMapper
+de/alpharogroup/bundlemanagement/mapper/LanguageLocalesMapper.java
+ de.alpharogroup.bundlemanagement.mapper.LanguageLocalesMapper
+de/alpharogroup/bundlemanagement/mapper/BundleApplicationsMapper.java
+ de.alpharogroup.bundlemanagement.mapper.BundleApplicationsMapper
+de/alpharogroup/bundlemanagement/mapper/PropertiesValuesMapper.java
+ de.alpharogroup.bundlemanagement.mapper.PropertiesValuesMapper
+de/alpharogroup/bundlemanagement/mapper/CountriesMapper.java
+ de.alpharogroup.bundlemanagement.mapper.CountriesMapper
+de/alpharogroup/bundlemanagement/mapper/BundleNamesMapper.java
+ de.alpharogroup.bundlemanagement.mapper.BundleNamesMapper
+de/alpharogroup/bundlemanagement/mapper/BaseNamesMapper.java
+ de.alpharogroup.bundlemanagement.mapper.BaseNamesMapper
+de/alpharogroup/bundlemanagement/mapper/ResourcebundlesMapper.java
+ de.alpharogroup.bundlemanagement.mapper.ResourcebundlesMapper
+de/alpharogroup/bundlemanagement/mapper/PropertiesKeysMapper.java
+ de.alpharogroup.bundlemanagement.mapper.PropertiesKeysMapper

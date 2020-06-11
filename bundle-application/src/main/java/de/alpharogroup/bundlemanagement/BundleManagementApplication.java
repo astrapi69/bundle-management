@@ -24,15 +24,12 @@
  */
 package de.alpharogroup.bundlemanagement;
 
+import de.alpharogroup.bundlemanagement.configuration.ApplicationProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import de.alpharogroup.bundlemanagement.configuration.ApplicationProperties;
-import de.alpharogroup.file.search.PathFinder;
-import de.alpharogroup.spring.boot.application.ApplicationHooks;
 
 @SpringBootApplication
 @EnableTransactionManagement
@@ -43,9 +40,6 @@ public class BundleManagementApplication extends SpringBootServletInitializer
 	public static void main(String[] args)
 	{
 		SpringApplication application = new SpringApplication(BundleManagementApplication.class);
-		ApplicationHooks instance = ApplicationHooks.INSTANCE;
-		instance.addDatabaseIfNotExists(application, PathFinder.getSrcMainResourcesDir(),
-			"application.yml");
 		application.run(args);
 	}
 
