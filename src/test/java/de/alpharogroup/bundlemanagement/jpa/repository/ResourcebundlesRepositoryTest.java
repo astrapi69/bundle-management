@@ -1,3 +1,27 @@
+/**
+ * The MIT License
+ *
+ * Copyright (C) 2015 Asterios Raptis
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
 import de.alpharogroup.bundlemanagement.jpa.entity.*;
@@ -23,6 +47,7 @@ public class ResourcebundlesRepositoryTest extends BaseJpaTest
 	@Test
 	public void findResourceKey()
 	{
+		Resourcebundles entity;
 		String owner;
 		String baseName;
 		String locale;
@@ -32,7 +57,7 @@ public class ResourcebundlesRepositoryTest extends BaseJpaTest
 		baseName = "test";
 		locale = "de_DE";
 		key = "com.example.gui.prop.with.params.label";
-		Resourcebundles entity = repository
+		entity = repository
 			.findDistinctByOwnerAndBaseNameAndLocaleAndKeyAndValue(owner, baseName, locale, key);
 
 		assertNotNull(entity);
@@ -41,9 +66,18 @@ public class ResourcebundlesRepositoryTest extends BaseJpaTest
 	@Test
 	public void whenFindByNameThenReturnResourcebundles()
 	{
+		String locale;
+		LanguageLocales languageLocales;
+		BundleApplications bundleApplications;
+		BaseNames baseNames;
+		BundleNames bundleNames;
+		PropertiesKeys propertiesKeys;
+		PropertiesValues propertiesValues;
+		Resourcebundles entity;
+		List<Resourcebundles> byName;
 
-		String locale = "de";
-		LanguageLocales languageLocales = languageLocalesRepository.findDistinctByLocale(locale);
+		locale = "de";
+		languageLocales = languageLocalesRepository.findDistinctByLocale(locale);
 		if (languageLocales == null)
 		{
 			languageLocales = LanguageLocales.builder().locale(locale).build();
@@ -51,37 +85,43 @@ public class ResourcebundlesRepositoryTest extends BaseJpaTest
 			entityManager.flush();
 		}
 
-		BundleApplications bundleApplications = BundleApplications.builder().name("test-bundle-app")
+		bundleApplications = BundleApplications.builder().name("test-bundle-app")
 			.defaultLocale(languageLocales).supportedLocales(SetFactory.newHashSet(languageLocales))
 			.build();
 
 		entityManager.persist(bundleApplications);
 		entityManager.flush();
 
-		BaseNames baseNames = BaseNames.builder().name("messages").build();
+		baseNames = BaseNames.builder().name("messages").build();
 
 		entityManager.persist(baseNames);
 		entityManager.flush();
 
-		BundleNames bundleNames = BundleNames.builder().baseName(baseNames)
-			.filepath("/opt/i18n/foo.yml").owner(bundleApplications).locale(languageLocales)
+		bundleNames = BundleNames.builder().baseName(baseNames)
+			.filepath("/opt/i18n").owner(bundleApplications).locale(languageLocales)
 			.build();
 
 		entityManager.persist(bundleNames);
 		entityManager.flush();
 
-		PropertiesKeys propertiesKeys = PropertiesKeys.builder().name("foo.key").build();
+		propertiesKeys = PropertiesKeys.builder().name("foo.key").build();
 
-		PropertiesValues propertiesValues = PropertiesValues.builder().name("bar value").build();
+		entityManager.persist(propertiesKeys);
+		entityManager.flush();
 
-		Resourcebundles entity = Resourcebundles.builder().bundleName(bundleNames)
+		propertiesValues = PropertiesValues.builder().name("bar value").build();
+
+		entityManager.persist(propertiesValues);
+		entityManager.flush();
+
+		entity = Resourcebundles.builder().bundleName(bundleNames)
 			.key(propertiesKeys).value(propertiesValues).build();
 
 		entityManager.persist(entity);
 		entityManager.flush();
 
 		// when
-		List<Resourcebundles> byName = repository.findByOwnerAndBaseNameAndLocaleAndKeyAndValue(
+		byName = repository.findByOwnerAndBaseNameAndLocaleAndKeyAndValue(
 			bundleApplications.getName(), baseNames.getName(), languageLocales.getLocale(),
 			propertiesKeys.getName());
 		// then

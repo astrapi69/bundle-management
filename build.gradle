@@ -1,35 +1,40 @@
 
+buildscript {
+	repositories {
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+	dependencies {
+	}
+}
+
 plugins {
-	id "io.franzbecker.gradle-lombok" version "3.2.0"
-	id "org.springframework.boot" version "2.2.4.RELEASE"
+	id "io.franzbecker.gradle-lombok" version "4.0.0"
+	id "org.springframework.boot" version "2.3.0.RELEASE"
 	id "io.spring.dependency-management" version "1.0.9.RELEASE"
 	id "java"
+	id "maven-publish"
+	id "signing"
 	id "idea"
 	id "net.ltgt.apt" version "0.21"
 	id "net.ltgt.apt-idea" version "0.21"
-	id "com.github.ben-manes.versions" version "0.27.0"
+	id "com.github.ben-manes.versions" version "0.28.0"
+	id "com.github.hierynomus.license" version "0.15.0"
 }
 
 apply plugin: "java"
+apply plugin: "jacoco"
 apply plugin: "eclipse"
 apply plugin: "idea"
 apply plugin: "net.ltgt.apt-idea"
 apply plugin: "org.springframework.boot"
 apply plugin: "io.spring.dependency-management"
 
-group = "de.alpharogroup"
-version = "0.0.1-SNAPSHOT"
-sourceCompatibility = "1.8"
-
-configurations {
-	developmentOnly
-	runtimeClasspath {
-		extendsFrom developmentOnly
-	}
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
+group = "$groupPackage"
+version = "$projectVersion"
+description = "$rootProject.name"
+sourceCompatibility = "$projectSourceCompatibility"
 
 repositories {
 	jcenter()
@@ -38,8 +43,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.projectlombok:lombok:$lombokVersion")
-    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+	compileOnly("org.projectlombok:lombok:$lombokVersion")
+	annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 	implementation("de.alpharogroup:generic-mapper:$genericMapperVersion")
 	implementation("de.alpharogroup:ent-api:$entApiVersion")
 	implementation("de.alpharogroup:ent-core:$entCoreVersion")
@@ -47,7 +52,6 @@ dependencies {
 	implementation("de.alpharogroup:silly-collections:$sillyCollectionsVersion")
 	implementation("de.alpharogroup:resourcebundle-core:$resourcebundleCoreVersion")
 	implementation("de.alpharogroup:jobj-copy:$jobjCopyVersion")
-	implementation("de.alpharogroup:spring-tool-extensions:$springToolExtensionsVersion")
 	implementation("de.alpharogroup:xml-extensions:$xmlExtensionsVersion")
 	implementation("de.alpharogroup:throw-able:$throwAbleVersion")
 	implementation("de.alpharogroup:spring-tool-extensions:$springToolExtensionsVersion")
@@ -66,11 +70,148 @@ dependencies {
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
-compileJava {
-	options.encoding = 'UTF-8'
-	options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+
+license {
+	ext.year="2015"
+	ext.owner="Asterios Raptis"
+	header rootProject.file('src/main/resources/LICENSE.txt')
+	excludes(["**/README",
+			  "**/README.md",
+			  "**/LICENSE",
+			  "**/NOTICE",
+			  "**/*.xml",
+			  "**/*.xsl",
+			  "**/*.xsd",
+			  "**/*.dtd",
+			  "**/*.html",
+			  "**/*.jsp",
+			  "**/*.jpa",
+			  "**/*.sql",
+			  "**/*.properties",
+			  "**/*.bat",
+			  "**/*.gradle",
+			  "**/*.MF",
+			  "**/*.txt",
+			  "**/*.vm",
+			  "**/*.log",
+			  "**/*.map",
+			  "**/*.js.map",
+			  "**/*.tmpl",
+			  "**/*.js.tmpl",
+			  "**/*.editorconfig",
+			  "src/test/resources/**",
+			  "src/main/resources/**",
+			  "out/**",
+			  "build/**"])
 }
+
+// workhack for license issue #76
+gradle.startParameter.excludedTaskNames += "licenseMain"
+gradle.startParameter.excludedTaskNames += "licenseTest"
+
+task sourcesJar(type: Jar) {
+	archiveClassifier.set("sources")
+	from(sourceSets.main.allJava)
+}
+
+task javadocJar(type: Jar) {
+	from javadoc
+	archiveClassifier.set("javadoc")
+	javadoc.properties.failOnError = true
+}
+
+def releaseVersion = !version.endsWith("SNAPSHOT")
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			artifactId = "$rootProject.name"
+			from components.java
+			artifact sourcesJar
+			artifact javadocJar
+			pom {
+				name = "$rootProject.name"
+				description = "$projectDescription"
+				url = "$projectScmProviderUrl"+"$projectHolderUsername"+"/"+"$rootProject.name"
+				organization {
+					name = "$projectOrganizationName"
+					url = "$projectOrganizationUrl"
+				}
+				issueManagement {
+					system = "$projectIssueManagementSystem"
+					url = "$projectScmProviderUrl"+"$projectHolderUsername"+"/"+"$rootProject.name"+"/issues"
+				}
+				licenses {
+					license {
+						name = "$projectLicenseName"
+						url = "$projectLicenseUrl"
+						distribution = "$projectLicenseDistribution"
+					}
+				}
+				developers {
+					developer {
+						id = "$projectHolderUsername"
+						name = "Asterios Raptis"
+					}
+				}
+				scm {
+					connection = "scm:git:git:@" + "$projectScmProviderDomain" + ":" + "$projectHolderUsername" + "/" + "$rootProject.name" + ".git"
+					developerConnection = "scm:git:git:@" + "$projectScmProviderDomain" + ":" + "$projectHolderUsername" + "/" + "$rootProject.name" + ".git"
+					url = "scm:git:git:@" + "$projectScmProviderDomain" + ":" + "$projectHolderUsername" + "/" + "$rootProject.name" + ".git"
+				}
+			}
+		}
+	}
+	repositories {
+		maven {
+			credentials {
+				username System.getenv("ossrhUsername") ?: project.property("ossrhUsername")
+				password System.getenv("ossrhPassword") ?: project.property("ossrhPassword")
+			}
+			def releasesRepoUrl = "$projectRepositoriesReleasesRepoUrl"
+			def snapshotsRepoUrl = "$projectRepositoriesSnapshotsRepoUrl"
+			url = releaseVersion ? releasesRepoUrl : snapshotsRepoUrl
+		}
+	}
+}
+
+signing {
+	if (releaseVersion) {
+		sign publishing.publications.mavenJava
+	}
+}
+
+javadoc {
+	if(JavaVersion.current().isJava9Compatible()) {
+		options.addBooleanOption("html5", true)
+	}
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = "UTF-8"
+}
+
 
 test {
 	useJUnitPlatform()
 }
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+		html.enabled false
+	}
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it,
+					exclude: ["de/alpharogroup/file/exceptions/**/*.class",
+							  "de/alpharogroup/file/compare/api/**/*.class",
+							  "de/alpharogroup/file/modify/api/**/*.class",
+							  "de/alpharogroup/file/FileConst.class",
+							  "de/alpharogroup/file/zip/ZipState.class",
+							  "de/alpharogroup/file/zip/ZipModel.class"])
+		}))
+	}
+}
+
+check.dependsOn jacocoTestReport

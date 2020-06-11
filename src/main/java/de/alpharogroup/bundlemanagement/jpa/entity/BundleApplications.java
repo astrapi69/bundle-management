@@ -1,7 +1,7 @@
 /**
  * The MIT License
  *
- * Copyright (C) 2007 - 2015 Asterios Raptis
+ * Copyright (C) 2015 Asterios Raptis
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -10,10 +10,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- *  *
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- *  *
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -49,8 +49,10 @@ import java.util.Set;
  */
 @Entity
 @NamedQueries({
-		@NamedQuery(name = BundleApplications.NQ_FIND_SUPPORTED_LANGUAGE_LOCALE, query = "select ba from BundleApplications ba where :languageLocale member of ba.supportedLocales"),
-		@NamedQuery(name = BundleApplications.NQ_FIND_JOIN_SUPPORTED_LANGUAGE_LOCALE, query = "select ba from BundleApplications ba inner join ba.supportedLocales sl where sl.id = :languageLocale") })
+		@NamedQuery(name = BundleApplications.NQ_FIND_ALL_BY_LANGUAGE_LOCALE,
+			query = "select ba from BundleApplications ba where :languageLocale member of ba.supportedLocales"),
+		@NamedQuery(name = BundleApplications.NQ_FIND_ALL_BY_LANGUAGE_LOCALE_WITH_INNER_JOIN,
+			query = "select ba from BundleApplications ba inner join ba.supportedLocales sl where sl.id = :languageLocaleId") })
 
 @Table(name = BundleApplications.TABLE_NAME, uniqueConstraints = {
 		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX
@@ -70,11 +72,11 @@ public class BundleApplications extends VersionableNameUUIDEntity implements Clo
 
 	/** The Constant BASE_BUNDLE_APPLICATION is the base name of the initial bundle application. */
 	public static final String BASE_BUNDLE_APPLICATION = "base-bundle-application";
-	public static final String NQ_FIND_JOIN_SUPPORTED_LANGUAGE_LOCALE = "BundleApplications."
-		+ "findWithJoinSupportedLanguageLocale";
+	public static final String NQ_FIND_ALL_BY_LANGUAGE_LOCALE_WITH_INNER_JOIN = "BundleApplications."
+		+ "findAllByLanguageLocaleWithInnerJoin";
 
-	public static final String NQ_FIND_SUPPORTED_LANGUAGE_LOCALE = "BundleApplications."
-		+ "findSupportedLanguageLocale";
+	public static final String NQ_FIND_ALL_BY_LANGUAGE_LOCALE = "BundleApplications."
+		+ "findAllByLanguageLocale";
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
