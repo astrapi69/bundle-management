@@ -1,0 +1,10 @@
+
+------------------------------------------------------------
+:bundle-viewmodels Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - org.projectlombok:lombok:1.18.12
+
+Gradle release-candidate updates:
+ - Gradle: [6.5: UP-TO-DATE]

@@ -1,0 +1,61 @@
+de/alpharogroup/bundlemanagement/jpa/entity/Languages.java
+ de.alpharogroup.bundlemanagement.jpa.entity.Languages
+ de.alpharogroup.bundlemanagement.jpa.entity.Languages$1
+ de.alpharogroup.bundlemanagement.jpa.entity.Languages$LanguagesBuilder
+ de.alpharogroup.bundlemanagement.jpa.entity.Languages$LanguagesBuilderImpl
+de/alpharogroup/bundlemanagement/jpa/entity/Resourcebundles.java
+ de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles
+ de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles$1
+ de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles$ResourcebundlesBuilder
+ de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles$ResourcebundlesBuilderImpl
+de/alpharogroup/bundlemanagement/jpa/repository/LanguagesRepository.java
+ de.alpharogroup.bundlemanagement.jpa.repository.LanguagesRepository
+de/alpharogroup/bundlemanagement/jpa/repository/PropertiesKeysRepository.java
+ de.alpharogroup.bundlemanagement.jpa.repository.PropertiesKeysRepository
+de/alpharogroup/bundlemanagement/jpa/entity/PropertiesValues.java
+ de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues
+ de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues$1
+ de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues$PropertiesValuesBuilder
+ de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues$PropertiesValuesBuilderImpl
+de/alpharogroup/bundlemanagement/jpa/repository/PropertiesValuesRepository.java
+ de.alpharogroup.bundlemanagement.jpa.repository.PropertiesValuesRepository
+de/alpharogroup/bundlemanagement/jpa/entity/PropertiesKeys.java
+ de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys
+ de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys$1
+ de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys$PropertiesKeysBuilder
+ de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys$PropertiesKeysBuilderImpl
+de/alpharogroup/bundlemanagement/jpa/repository/CountriesRepository.java
+ de.alpharogroup.bundlemanagement.jpa.repository.CountriesRepository
+de/alpharogroup/bundlemanagement/jpa/entity/BundleApplications.java
+ de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications
+ de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications$1
+ de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications$BundleApplicationsBuilder
+ de.alpharogroup.bundlemanagement.jpa.entity.BundleApplications$BundleApplicationsBuilderImpl
+de/alpharogroup/bundlemanagement/jpa/repository/LanguageLocalesRepository.java
+ de.alpharogroup.bundlemanagement.jpa.repository.LanguageLocalesRepository
+de/alpharogroup/bundlemanagement/jpa/entity/LanguageLocales.java
+ de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales
+ de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales$LanguageLocalesBuilder
+de/alpharogroup/bundlemanagement/jpa/repository/BundleNamesRepository.java
+ de.alpharogroup.bundlemanagement.jpa.repository.BundleNamesRepository
+de/alpharogroup/bundlemanagement/jpa/repository/BaseNamesRepository.java
+ de.alpharogroup.bundlemanagement.jpa.repository.BaseNamesRepository
+de/alpharogroup/bundlemanagement/jpa/repository/BundleApplicationsRepository.java
+ de.alpharogroup.bundlemanagement.jpa.repository.BundleApplicationsRepository
+de/alpharogroup/bundlemanagement/jpa/entity/BundleNames.java
+ de.alpharogroup.bundlemanagement.jpa.entity.BundleNames
+ de.alpharogroup.bundlemanagement.jpa.entity.BundleNames$1
+ de.alpharogroup.bundlemanagement.jpa.entity.BundleNames$BundleNamesBuilder
+ de.alpharogroup.bundlemanagement.jpa.entity.BundleNames$BundleNamesBuilderImpl
+de/alpharogroup/bundlemanagement/jpa/entity/BaseNames.java
+ de.alpharogroup.bundlemanagement.jpa.entity.BaseNames
+ de.alpharogroup.bundlemanagement.jpa.entity.BaseNames$1
+ de.alpharogroup.bundlemanagement.jpa.entity.BaseNames$BaseNamesBuilder
+ de.alpharogroup.bundlemanagement.jpa.entity.BaseNames$BaseNamesBuilderImpl
+de/alpharogroup/bundlemanagement/jpa/entity/Countries.java
+ de.alpharogroup.bundlemanagement.jpa.entity.Countries
+ de.alpharogroup.bundlemanagement.jpa.entity.Countries$1
+ de.alpharogroup.bundlemanagement.jpa.entity.Countries$CountriesBuilder
+ de.alpharogroup.bundlemanagement.jpa.entity.Countries$CountriesBuilderImpl
+de/alpharogroup/bundlemanagement/jpa/repository/ResourcebundlesRepository.java
+ de.alpharogroup.bundlemanagement.jpa.repository.ResourcebundlesRepository

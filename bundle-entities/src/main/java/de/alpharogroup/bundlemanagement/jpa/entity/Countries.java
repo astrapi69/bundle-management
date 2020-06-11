@@ -33,8 +33,6 @@ import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
 import de.alpharogroup.db.entity.name.NameEntity;
 import de.alpharogroup.db.entity.name.NameUUIDEntity;
@@ -67,7 +65,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonIgnoreProperties(ignoreUnknown = true)
 @SuperBuilder
 public class Countries extends NameUUIDEntity implements Cloneable
 {

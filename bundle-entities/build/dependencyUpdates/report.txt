@@ -1,0 +1,14 @@
+
+------------------------------------------------------------
+:bundle-entities Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - de.alpharogroup:ent-api:1.6
+ - de.alpharogroup:ent-core:1.10
+ - org.projectlombok:lombok:1.18.12
+ - org.springframework.boot:spring-boot-starter-data-jpa:2.3.0.RELEASE
+ - org.springframework.boot:spring-boot-starter-validation:2.3.0.RELEASE
+
+Gradle release-candidate updates:
+ - Gradle: [6.5: UP-TO-DATE]

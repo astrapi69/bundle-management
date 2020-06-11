@@ -1,0 +1,37 @@
+
+apply plugin: "org.springframework.boot"
+
+
+dependencies {
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+
+    implementation project(":bundle-entities")
+    implementation project(":bundle-mappers")
+    implementation project(":bundle-services")
+    implementation project(":bundle-viewmodels")
+    implementation("de.alpharogroup:generic-mapper:$genericMapperVersion")
+    implementation("de.alpharogroup:ent-api:$entApiVersion")
+    implementation("de.alpharogroup:ent-core:$entCoreVersion")
+    implementation("de.alpharogroup:silly-jdbc:$sillyJdbcVersion")
+    implementation("de.alpharogroup:silly-collections:$sillyCollectionsVersion")
+    implementation("de.alpharogroup:resourcebundle-core:$resourcebundleCoreVersion")
+    implementation("de.alpharogroup:jobj-copy:$jobjCopyVersion")
+    implementation("de.alpharogroup:xml-extensions:$xmlExtensionsVersion")
+    implementation("de.alpharogroup:throw-able:$throwAbleVersion")
+    implementation("de.alpharogroup:spring-tool-extensions:$springToolExtensionsVersion")
+    implementation("de.alpharogroup:spring-boot-extensions:$springBootExtensionsVersion")
+    implementation("io.springfox:springfox-swagger2:$springfoxSwaggerVersion")
+    implementation("io.springfox:springfox-swagger-ui:$springfoxSwaggerVersion")
+    implementation("com.thoughtworks.xstream:xstream:$xstreamVersion")
+    implementation("org.apache.commons:commons-lang3:$commonsLang3Version")
+    implementation("org.postgresql:postgresql")
+    implementation("org.flywaydb:flyway-core")
+    implementation("org.springframework:spring-oxm")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-aop")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
