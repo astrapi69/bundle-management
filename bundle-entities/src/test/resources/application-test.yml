@@ -1,0 +1,52 @@
+# default properties
+server:
+  port: 5050
+
+app:
+  name: bundle-management
+  dir: ${user.home}/.${app.name}
+  db-name: bundles
+  db-host: localhost
+  db-port: 5432
+  db-url-prefix: jdbc:postgresql://
+  db-username: postgres
+  db-password: postgres
+
+spring:
+  autoconfigure:
+    exclude:
+    - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  datasource:
+    hikari:
+      connection-timeout: 60000
+      maximum-pool-size: 200
+      minimum-idle: 30
+      idle-timeout: 3000
+      pool-name: HikariCP
+      jdbc-url: ${spring.datasource.url}
+      username: ${app.db-username}
+      password: ${app.db-password}
+      driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    url: ${app.db-url-prefix}${app.db-host}:${app.db-port}/${app.db-name}
+    initialization-mode: never
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    hibernate:
+      ddl-auto: validate
+      show_sql: true
+      use_sql_comments: true
+      generate_statistics: false
+  flyway:
+    baseline-on-migrate: true
+    url: ${spring.datasource.url}
+    user: ${app.db-username}
+    password: ${app.db-password}
+    enabled: false

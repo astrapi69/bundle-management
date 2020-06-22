@@ -1,1 +1,3 @@
 rootProject.name = 'bundle-management'
+include 'bundle-application', 'bundle-services', 'bundle-entities', 'bundle-viewmodels', 'bundle-mappers'
+

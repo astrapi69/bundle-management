@@ -1,0 +1,30 @@
+de/alpharogroup/bundlemanagement/viewmodel/ImprortableBundleName.java
+ de.alpharogroup.bundlemanagement.viewmodel.ImprortableBundleName
+ de.alpharogroup.bundlemanagement.viewmodel.ImprortableBundleName$ImprortableBundleNameBuilder
+de/alpharogroup/bundlemanagement/viewmodel/BaseName.java
+ de.alpharogroup.bundlemanagement.viewmodel.BaseName
+ de.alpharogroup.bundlemanagement.viewmodel.BaseName$BaseNameBuilder
+de/alpharogroup/bundlemanagement/viewmodel/PropertiesKey.java
+ de.alpharogroup.bundlemanagement.viewmodel.PropertiesKey
+ de.alpharogroup.bundlemanagement.viewmodel.PropertiesKey$PropertiesKeyBuilder
+de/alpharogroup/bundlemanagement/viewmodel/LanguageLocale.java
+ de.alpharogroup.bundlemanagement.viewmodel.LanguageLocale
+ de.alpharogroup.bundlemanagement.viewmodel.LanguageLocale$LanguageLocaleBuilder
+de/alpharogroup/bundlemanagement/viewmodel/Language.java
+ de.alpharogroup.bundlemanagement.viewmodel.Language
+ de.alpharogroup.bundlemanagement.viewmodel.Language$LanguageBuilder
+de/alpharogroup/bundlemanagement/viewmodel/BundleApplication.java
+ de.alpharogroup.bundlemanagement.viewmodel.BundleApplication
+ de.alpharogroup.bundlemanagement.viewmodel.BundleApplication$BundleApplicationBuilder
+de/alpharogroup/bundlemanagement/viewmodel/PropertiesValue.java
+ de.alpharogroup.bundlemanagement.viewmodel.PropertiesValue
+ de.alpharogroup.bundlemanagement.viewmodel.PropertiesValue$PropertiesValueBuilder
+de/alpharogroup/bundlemanagement/viewmodel/BundleName.java
+ de.alpharogroup.bundlemanagement.viewmodel.BundleName
+ de.alpharogroup.bundlemanagement.viewmodel.BundleName$BundleNameBuilder
+de/alpharogroup/bundlemanagement/viewmodel/Resourcebundle.java
+ de.alpharogroup.bundlemanagement.viewmodel.Resourcebundle
+ de.alpharogroup.bundlemanagement.viewmodel.Resourcebundle$ResourcebundleBuilder
+de/alpharogroup/bundlemanagement/viewmodel/Country.java
+ de.alpharogroup.bundlemanagement.viewmodel.Country
+ de.alpharogroup.bundlemanagement.viewmodel.Country$CountryBuilder
