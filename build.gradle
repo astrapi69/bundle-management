@@ -53,7 +53,6 @@ subprojects {
 	dependencyManagement {
 		imports {
 			mavenBom("org.springframework.boot:spring-boot-dependencies:$springBootGradlePluginVersion")
-			mavenBom("org.springframework.boot:spring-boot-starter-parent:$springBootGradlePluginVersion")
 		}
 	}
 
@@ -63,7 +62,11 @@ subprojects {
 	}
 
 	compileJava {
-		sourceCompatibility = 1.8
-		targetCompatibility = 1.8
+		sourceCompatibility = "$projectSourceCompatibility"
+		targetCompatibility = "$projectTargetCompatibility"
+	}
+
+	test {
+		useJUnitPlatform()
 	}
 }

@@ -1,7 +1,5 @@
 
 dependencies {
-    compileOnly("org.projectlombok:lombok:$lombokVersion")
-    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
     implementation("de.alpharogroup:ent-api:$entApiVersion")
     implementation("de.alpharogroup:ent-core:$entCoreVersion")
     implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -14,7 +12,4 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-test {
-    useJUnitPlatform()
-}
 
