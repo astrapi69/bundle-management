@@ -29,21 +29,37 @@ buildscript {
 allprojects {
 	group = "$groupPackage"
 	version = "$projectVersion"
+
+	repositories {
+		jcenter()
+		mavenCentral()
+	}
 }
 
 subprojects {
 
 	apply plugin: 'java'
+	apply plugin: 'org.springframework.boot'
 	apply plugin: 'io.spring.dependency-management'
-	apply plugin: 'java-library'
-	repositories {
-		jcenter()
+
+	bootJar {
+		enabled = false
+	}
+
+	jar {
+		enabled = true
 	}
 
 	dependencyManagement {
 		imports {
-			mavenBom("org.springframework.boot:spring-boot-dependencies:2.3.0.RELEASE")
+			mavenBom("org.springframework.boot:spring-boot-dependencies:$springBootGradlePluginVersion")
+			mavenBom("org.springframework.boot:spring-boot-starter-parent:$springBootGradlePluginVersion")
 		}
+	}
+
+	dependencies {
+		compileOnly("org.projectlombok:lombok:$lombokVersion")
+		annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 	}
 
 	compileJava {

@@ -31,9 +31,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@SpringBootApplication
 @EnableTransactionManagement
 @EnableConfigurationProperties({ ApplicationProperties.class })
+@SpringBootApplication
 public class BundleManagementApplication extends SpringBootServletInitializer
 {
 

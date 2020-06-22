@@ -24,24 +24,31 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
+import de.alpharogroup.bundlemanagement.BundleManagementApplication;
+import org.junit.Ignore;
+import org.junit.runner.RunWith;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import de.alpharogroup.bundlemanagement.BundleManagementApplication;
-import org.junit.Ignore;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@EntityScan(basePackages = "de.alpharogroup.bundlemanagement.jpa.entity")
+@EnableJpaRepositories(basePackages = { "de.alpharogroup.bundlemanagement.jpa.repository" })
 @AutoConfigureTestDatabase(replace = NONE)
-@ContextConfiguration(classes = {CoreTestConfiguration.class})
+@ContextConfiguration(classes = {BundleManagementApplication.class, })
+@EnableAutoConfiguration(exclude= FlywayAutoConfiguration.class)
+@Ignore
 public class BaseJpaTest
 {
 

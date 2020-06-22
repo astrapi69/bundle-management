@@ -11,5 +11,7 @@ dependencies {
     implementation("de.alpharogroup:ent-api:$entApiVersion")
     implementation("de.alpharogroup:ent-core:$entCoreVersion")
     implementation("org.springframework.boot:spring-boot-starter")
+    testImplementation project(":bundle-application")
+    testImplementation("de.alpharogroup:silly-collections:$sillyCollectionsVersion")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

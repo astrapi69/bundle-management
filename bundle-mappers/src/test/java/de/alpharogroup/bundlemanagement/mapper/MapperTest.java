@@ -29,10 +29,12 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.UUID;
 
+import de.alpharogroup.bundlemanagement.BundleManagementApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
@@ -56,6 +58,7 @@ import de.alpharogroup.bundlemanagement.viewmodel.Resourcebundle;
 import de.alpharogroup.collections.set.SetFactory;
 
 @RunWith(SpringRunner.class)
+@ContextConfiguration(classes = { BundleManagementApplication.class, })
 @SpringBootTest
 public class MapperTest
 {

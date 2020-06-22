@@ -17,6 +17,16 @@ spring:
     exclude:
     - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
   datasource:
+    hikari:
+      connection-timeout: 60000
+      maximum-pool-size: 200
+      minimum-idle: 30
+      idle-timeout: 3000
+      pool-name: HikariCP
+      jdbc-url: ${spring.datasource.url}
+      username: ${app.db-username}
+      password: ${app.db-password}
+      driver-class-name: org.postgresql.Driver
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -39,3 +49,4 @@ spring:
     url: ${spring.datasource.url}
     user: ${app.db-username}
     password: ${app.db-password}
+    enabled: false
