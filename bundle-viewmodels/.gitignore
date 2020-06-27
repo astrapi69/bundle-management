@@ -37,7 +37,6 @@
 /nbbuild/
 /nbdist/
 /.nb-gradle/
-/build/
 
 #########################
 # maven generated files #
@@ -80,6 +79,7 @@
 # gradle files #
 ################
 /build
+/build/
 /.gradle
 /gradle
 /out
