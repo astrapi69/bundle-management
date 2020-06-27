@@ -29,7 +29,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import de.alpharogroup.bundlemanagement.integration.AbstractIntegrationTest;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
@@ -40,8 +42,11 @@ import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
 import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesValues;
 import de.alpharogroup.bundlemanagement.jpa.entity.Resourcebundles;
 import de.alpharogroup.collections.set.SetFactory;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-public class ResourcebundlesRepositoryTest extends BaseJpaTest
+public class ResourcebundlesRepositoryTest extends AbstractIntegrationTest
 {
 
 	@Autowired
@@ -49,7 +54,6 @@ public class ResourcebundlesRepositoryTest extends BaseJpaTest
 
 	@Autowired
 	private ResourcebundlesRepository repository;
-
 
 	@Test
 	public void findResourceKey()

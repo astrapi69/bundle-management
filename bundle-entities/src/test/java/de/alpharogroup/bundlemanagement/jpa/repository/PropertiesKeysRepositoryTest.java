@@ -29,12 +29,17 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import de.alpharogroup.bundlemanagement.integration.AbstractIntegrationTest;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import de.alpharogroup.bundlemanagement.jpa.entity.PropertiesKeys;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-public class PropertiesKeysRepositoryTest extends BaseJpaTest
+public class PropertiesKeysRepositoryTest extends AbstractIntegrationTest
 {
 
 	@Autowired

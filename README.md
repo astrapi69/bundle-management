@@ -52,3 +52,31 @@ or over flattr: <a href="https://flattr.com/submit/auto?fid=r7vp62&url=https%3A%
 <img src="http://button.flattr.com/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0">
 </a>
 
+
+# Testing
+
+Preconditions before start of the unit tests is to install docker on your system. 
+The prefered way for ubuntu is descripted [here](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
+After install you have to restart your system
+
+If you get an exception by unit tests on ubuntu like this
+```shell
+[ers-lifecycle-0] tAndSystemPropertyClientProviderStrategy : ping failed with configuration Environment variables, system properties and defaults. Resolved dockerHost=unix:///var/run/docker.sock due to org.rnorth.ducttape.TimeoutException: Timeout waiting for result with exception
+
+org.rnorth.ducttape.TimeoutException: Timeout waiting for result with exception
+
+...
+
+Caused by: java.lang.RuntimeException: java.io.IOException: native connect() failed : Permission denied
+```
+
+You can try this.
+[official website description](https://docs.docker.com/engine/install/linux-postinstall/)
+
+if this did not help you have to grand permissions to the docker.sock with the following command (use this with caution!!!)
+
+```shell
+sudo chmod 666 /var/run/docker.sock
+```
+
+

@@ -24,14 +24,14 @@
  */
 package de.alpharogroup.bundlemanagement.jpa.repository;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
+import de.alpharogroup.bundlemanagement.integration.AbstractIntegrationTest;
+import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import de.alpharogroup.bundlemanagement.jpa.entity.BaseNames;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class BaseNamesRepositoryTest extends BaseJpaTest
+public class BaseNamesRepositoryTest extends AbstractIntegrationTest
 {
 
 	@Autowired

@@ -12,6 +12,7 @@ dependencies {
     testImplementation("de.alpharogroup:silly-collections:$sillyCollectionsVersion")
     testImplementation("org.flywaydb:flyway-core")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
 }
 
 

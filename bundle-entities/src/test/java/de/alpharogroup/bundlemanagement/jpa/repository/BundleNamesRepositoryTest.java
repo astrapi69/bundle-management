@@ -28,6 +28,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import java.util.List;
 
+import de.alpharogroup.bundlemanagement.integration.AbstractIntegrationTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -37,7 +38,7 @@ import de.alpharogroup.bundlemanagement.jpa.entity.BundleNames;
 import de.alpharogroup.bundlemanagement.jpa.entity.LanguageLocales;
 import de.alpharogroup.collections.set.SetFactory;
 
-public class BundleNamesRepositoryTest extends BaseJpaTest
+public class BundleNamesRepositoryTest extends AbstractIntegrationTest
 {
 
 	@Autowired
