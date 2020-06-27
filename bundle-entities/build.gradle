@@ -7,6 +7,8 @@ dependencies {
 
     runtime("org.postgresql:postgresql")
     testImplementation project(':bundle-application')
+    testImplementation("org.testcontainers:testcontainers:$testcontainersVersion")
+    testImplementation("org.testcontainers:postgresql:$testcontainersVersion")
     testImplementation("de.alpharogroup:silly-collections:$sillyCollectionsVersion")
     testImplementation("org.flywaydb:flyway-core")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
