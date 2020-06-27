@@ -47,7 +47,6 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @EnableJpaRepositories(basePackages = { "de.alpharogroup.bundlemanagement.jpa.repository" })
 @AutoConfigureTestDatabase(replace = NONE)
 @ContextConfiguration(classes = {BundleManagementApplication.class, })
-@EnableAutoConfiguration(exclude= FlywayAutoConfiguration.class)
 @Ignore
 public class BaseJpaTest
 {
