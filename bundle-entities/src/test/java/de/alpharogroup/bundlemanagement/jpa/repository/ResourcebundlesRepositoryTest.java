@@ -137,6 +137,7 @@ public class ResourcebundlesRepositoryTest extends AbstractIntegrationTest
 		// then
 		assertNotNull(byName);
 		assertTrue(byName.contains(entity));
+		repository.delete(entity);
 	}
 
 }
