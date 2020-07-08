@@ -71,6 +71,9 @@ public class ApplicationConfiguration implements WebMvcConfigurer
 
 	ApplicationProperties applicationProperties;
 
+	@SuppressWarnings("unused")
+	Environment env;
+
 	public static ObjectMapper initialize(final @NonNull ObjectMapper objectMapper)
 	{
 		SimpleModule module;
@@ -87,10 +90,6 @@ public class ApplicationConfiguration implements WebMvcConfigurer
 		return objectMapper;
 	}
 
-
-	@SuppressWarnings("unused")
-	Environment env;
-
 	@Override
 	public void addCorsMappings(CorsRegistry registry)
 	{
@@ -105,12 +104,6 @@ public class ApplicationConfiguration implements WebMvcConfigurer
 		converters.add(newMappingJackson2HttpMessageConverter());
 	}
 
-	// @Override
-	// public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-	// MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-	// converter.setObjectMapper(objectMapper());
-	// converters.add(converter);
-	// }
 	private MappingJackson2HttpMessageConverter newMappingJackson2HttpMessageConverter()
 	{
 		MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();

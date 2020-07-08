@@ -51,9 +51,4 @@ public abstract class BaseTestController
 		ApplicationConfiguration.initialize(objectMapper = new ObjectMapper());
 	}
 
-	public String getBaseUrl(int serverPort)
-	{
-		return "http://localhost:" + serverPort + ApplicationConfiguration.REST_VERSION;
-	}
-
 }
