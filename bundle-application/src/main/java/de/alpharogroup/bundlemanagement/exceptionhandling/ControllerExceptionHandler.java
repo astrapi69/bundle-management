@@ -61,8 +61,8 @@ import java.util.NoSuchElementException;
 	{
 		return ExceptionHandlerExtensions.newResponseEntity(ExceptionHandlerExtensions
 			.newExceptionViewModel(request, HttpStatus.INTERNAL_SERVER_ERROR,
-				ExceptionExtensions.getStackTrace(exception, "Application error"),
-				"Application error"));
+				ExceptionExtensions.getStackTrace(exception, exception.getMessage()),
+				exception.getLocalizedMessage()));
 	}
 
 	@ExceptionHandler({
