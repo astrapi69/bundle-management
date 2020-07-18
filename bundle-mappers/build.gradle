@@ -4,6 +4,7 @@ dependencies {
     implementation project(":bundle-viewmodels")
     implementation project(":bundle-entities")
     implementation("com.google.code.findbugs:jsr305:3.0.2")
+    implementation("com.google.code.findbugs:annotations:3.0.1")
     implementation("de.alpharogroup:bean-mapper-api:$beanMapperApiVersion")
     implementation("de.alpharogroup:generic-mapper:$genericMapperVersion")
     implementation("de.alpharogroup:ent-api:$entApiVersion")

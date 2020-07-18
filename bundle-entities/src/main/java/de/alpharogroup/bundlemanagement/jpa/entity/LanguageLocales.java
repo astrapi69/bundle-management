@@ -31,7 +31,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
-import de.alpharogroup.db.entity.version.VersionableUUIDEntity;
+import de.alpharogroup.db.entity.versionable.VersionableUUIDEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

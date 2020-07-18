@@ -37,7 +37,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
-import de.alpharogroup.db.entity.version.VersionableUUIDEntity;
+import de.alpharogroup.db.entity.versionable.VersionableUUIDEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

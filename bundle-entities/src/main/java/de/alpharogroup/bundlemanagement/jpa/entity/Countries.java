@@ -30,12 +30,12 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import de.alpharogroup.db.entity.nameable.Nameable;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
-import de.alpharogroup.db.entity.name.NameEntity;
-import de.alpharogroup.db.entity.name.NameUUIDEntity;
+import de.alpharogroup.db.entity.nameable.NameUUIDEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,13 +50,13 @@ import lombok.experimental.SuperBuilder;
 @Table(name = Countries.TABLE_NAME, uniqueConstraints = {
 		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX + Countries.TABLE_NAME
 			+ DatabasePrefix.UNDERSCORE
-			+ NameEntity.COLUMN_NAME_NAME, columnNames = NameEntity.COLUMN_NAME_NAME),
+			+ Nameable.COLUMN_NAME_NAME, columnNames = Nameable.COLUMN_NAME_NAME),
 		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX + Countries.TABLE_NAME
 			+ DatabasePrefix.UNDERSCORE
 			+ Countries.COLUMN_NAME_ISO_3166_A2_NAME, columnNames = Countries.COLUMN_NAME_ISO_3166_A2_NAME) }, indexes = {
 					@Index(name = DatabasePrefix.INDEX_PREFIX + Countries.TABLE_NAME
 						+ DatabasePrefix.UNDERSCORE
-						+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME),
+						+ Nameable.COLUMN_NAME_NAME, columnList = Nameable.COLUMN_NAME_NAME),
 					@Index(name = DatabasePrefix.INDEX_PREFIX + Countries.TABLE_NAME
 						+ DatabasePrefix.UNDERSCORE
 						+ Countries.COLUMN_NAME_ISO_3166_A2_NAME, columnList = Countries.COLUMN_NAME_ISO_3166_A2_NAME) })

@@ -31,8 +31,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
-import de.alpharogroup.db.entity.name.NameEntity;
-import de.alpharogroup.db.entity.name.versionable.VersionableNameUUIDEntity;
+import de.alpharogroup.db.entity.nameable.Nameable;
+import de.alpharogroup.db.entity.nameable.versionable.VersionableNameUUIDEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,13 +48,13 @@ import lombok.experimental.SuperBuilder;
 @Table(name = Languages.TABLE_NAME, uniqueConstraints = {
 		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX + Languages.TABLE_NAME
 			+ DatabasePrefix.UNDERSCORE
-			+ NameEntity.COLUMN_NAME_NAME, columnNames = NameEntity.COLUMN_NAME_NAME),
+			+ Nameable.COLUMN_NAME_NAME, columnNames = Nameable.COLUMN_NAME_NAME),
 		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX + Languages.TABLE_NAME
 			+ DatabasePrefix.UNDERSCORE
 			+ Languages.COLUMN_NAME_ISO_639_DASH1, columnNames = Languages.COLUMN_NAME_ISO_639_DASH1) }, indexes = {
 					@Index(name = DatabasePrefix.INDEX_PREFIX + Languages.TABLE_NAME
 						+ DatabasePrefix.UNDERSCORE
-						+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME),
+						+ Nameable.COLUMN_NAME_NAME, columnList = Nameable.COLUMN_NAME_NAME),
 					@Index(name = DatabasePrefix.INDEX_PREFIX + Languages.TABLE_NAME
 						+ DatabasePrefix.UNDERSCORE
 						+ Languages.COLUMN_NAME_ISO_639_DASH1, columnList = Languages.COLUMN_NAME_ISO_639_DASH1) })

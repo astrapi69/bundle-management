@@ -52,16 +52,15 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = { ControllerExceptionHandler.class })
+@ContextConfiguration(classes = { ApplicationExceptionHandler.class })
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ControllerExceptionHandlerTest
+public class ApplicationExceptionHandlerTest
 {
 
 	BindException bindException;
 	@Mock
 	BindingResult bindingResult;
-	@Autowired
-	ControllerExceptionHandler controllerExceptionHandler;
+	@Autowired ApplicationExceptionHandler applicationExceptionHandler;
 	Exception exception;
 
 	@Mock
@@ -98,7 +97,7 @@ public class ControllerExceptionHandlerTest
 		String actual;
 		String expected;
 		when(fieldError.getDefaultMessage()).thenReturn("An error");
-		ResponseEntity<Object> responseEntity = controllerExceptionHandler
+		ResponseEntity<Object> responseEntity = applicationExceptionHandler
 			.handleException(exception, httpServletRequest);
 		HttpStatus statusCode = responseEntity.getStatusCode();
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, statusCode);
@@ -116,7 +115,7 @@ public class ControllerExceptionHandlerTest
 		String actual;
 		String expected;
 		when(fieldError.getDefaultMessage()).thenReturn("An error");
-		ResponseEntity<Object> responseEntity = controllerExceptionHandler
+		ResponseEntity<Object> responseEntity = applicationExceptionHandler
 			.handleIllegalArgumentException(illegalArgumentException, httpServletRequest);
 		HttpStatus statusCode = responseEntity
 			.getStatusCode();
@@ -135,7 +134,7 @@ public class ControllerExceptionHandlerTest
 		String actual;
 		String expected;
 		when(fieldError.getDefaultMessage()).thenReturn("An error");
-		ResponseEntity<Object> responseEntity = controllerExceptionHandler
+		ResponseEntity<Object> responseEntity = applicationExceptionHandler
 			.handleNoSuchElementException(noSuchElementException, httpServletRequest);
 		HttpStatus statusCode = responseEntity
 			.getStatusCode();
@@ -154,7 +153,7 @@ public class ControllerExceptionHandlerTest
 		String actual;
 		String expected;
 		when(fieldError.getDefaultMessage()).thenReturn("An error");
-		ResponseEntity<Object> responseEntity = controllerExceptionHandler
+		ResponseEntity<Object> responseEntity = applicationExceptionHandler
 			.handleUnsupportedOperationException(unsupportedOperationException, httpServletRequest);
 		HttpStatus statusCode = responseEntity
 			.getStatusCode();

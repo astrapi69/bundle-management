@@ -42,8 +42,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
-import de.alpharogroup.db.entity.name.NameEntity;
-import de.alpharogroup.db.entity.name.versionable.VersionableNameUUIDEntity;
+import de.alpharogroup.db.entity.nameable.Nameable;
+import de.alpharogroup.db.entity.nameable.versionable.VersionableNameUUIDEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -73,10 +73,10 @@ import lombok.experimental.SuperBuilder;
 @Table(name = BundleApplications.TABLE_NAME, uniqueConstraints = {
 		@UniqueConstraint(name = DatabasePrefix.UNIQUE_CONSTRAINT_PREFIX
 			+ BundleApplications.TABLE_NAME + DatabasePrefix.UNDERSCORE
-			+ NameEntity.COLUMN_NAME_NAME, columnNames = NameEntity.COLUMN_NAME_NAME) }, indexes = {
+			+ Nameable.COLUMN_NAME_NAME, columnNames = Nameable.COLUMN_NAME_NAME) }, indexes = {
 					@Index(name = DatabasePrefix.INDEX_PREFIX + BundleApplications.TABLE_NAME
 						+ DatabasePrefix.UNDERSCORE
-						+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME, unique = true) })
+						+ Nameable.COLUMN_NAME_NAME, columnList = Nameable.COLUMN_NAME_NAME, unique = true) })
 @Getter
 @Setter
 @ToString(callSuper = true)

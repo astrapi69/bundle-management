@@ -29,11 +29,13 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
-import de.alpharogroup.db.entity.name.NameEntity;
-import de.alpharogroup.db.entity.name.versionable.VersionableNameUUIDEntity;
+import de.alpharogroup.db.entity.nameable.Nameable;
+import de.alpharogroup.db.entity.nameable.versionable.VersionableNameUUIDEntity;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+
+import java.util.UUID;
 
 /**
  * Entity class for saving in database base names of the resource bundles. The base name if you see
@@ -42,7 +44,7 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Table(name = BaseNames.TABLE_NAME, indexes = {
 		@Index(name = DatabasePrefix.INDEX_PREFIX + BaseNames.TABLE_NAME + DatabasePrefix.UNDERSCORE
-			+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME) })
+			+ Nameable.COLUMN_NAME_NAME, columnList = Nameable.COLUMN_NAME_NAME) })
 @ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder

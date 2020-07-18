@@ -29,8 +29,8 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 
 import de.alpharogroup.db.entity.enums.DatabasePrefix;
-import de.alpharogroup.db.entity.name.NameEntity;
-import de.alpharogroup.db.entity.name.versionable.VersionableNameUUIDEntity;
+import de.alpharogroup.db.entity.nameable.Nameable;
+import de.alpharogroup.db.entity.nameable.versionable.VersionableNameUUIDEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -46,7 +46,7 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Table(name = PropertiesKeys.TABLE_NAME, indexes = { @Index(name = DatabasePrefix.INDEX_PREFIX
 	+ PropertiesKeys.TABLE_NAME + DatabasePrefix.UNDERSCORE
-	+ NameEntity.COLUMN_NAME_NAME, columnList = NameEntity.COLUMN_NAME_NAME) })
+	+ Nameable.COLUMN_NAME_NAME, columnList = Nameable.COLUMN_NAME_NAME) })
 @Getter
 @Setter
 @ToString
