@@ -1,17 +1,6 @@
 
 buildscript {
-	ext {
-		gradlePluginLombokVersion = "4.0.0"
-		springBootGradlePluginVersion = "2.3.1.RELEASE"
-		springGradlePluginDependencyManagementVersion = "1.0.9.RELEASE"
-		gradlePluginVersionsVersion = "0.28.0"
-		licenseGradlePluginVersion = "0.15.0"
-		gradleAptPluginVersion = "0.21"
-	}
 	repositories {
-		mavenCentral()
-		google()
-		jcenter()
 		maven {
 			url "https://plugins.gradle.org/m2/"
 		}
@@ -31,8 +20,9 @@ allprojects {
 	version = "$projectVersion"
 
 	repositories {
-		jcenter()
+		mavenLocal()
 		mavenCentral()
+		jcenter()
 	}
 }
 
