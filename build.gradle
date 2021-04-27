@@ -6,7 +6,7 @@ buildscript {
 		}
 	}
 	dependencies {
-		classpath "io.franzbecker:gradle-lombok:$gradlePluginLombokVersion"
+		classpath "io.freefair.gradle:lombok-plugin:$gradlePluginLombokVersion"
 		classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootGradlePluginVersion"
 		classpath "io.spring.gradle:dependency-management-plugin:$springGradlePluginDependencyManagementVersion"
 		classpath "com.github.ben-manes:gradle-versions-plugin:$gradlePluginVersionsVersion"
@@ -22,7 +22,6 @@ allprojects {
 	repositories {
 		mavenLocal()
 		mavenCentral()
-		jcenter()
 	}
 }
 
