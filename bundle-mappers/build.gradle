@@ -1,16 +1,16 @@
 
 
 dependencies {
-    implementation project(":bundle-viewmodels")
     implementation project(":bundle-entities")
-    implementation("com.google.code.findbugs:jsr305:3.0.2")
-    implementation("com.google.code.findbugs:annotations:3.0.1")
-    implementation("de.alpharogroup:bean-mapper-api:$beanMapperApiVersion")
-    implementation("de.alpharogroup:generic-mapper:$genericMapperVersion")
-    implementation("de.alpharogroup:ent-api:$entApiVersion")
-    implementation("de.alpharogroup:ent-core:$entCoreVersion")
+    implementation project(":bundle-viewmodels")
+    implementation("com.google.code.findbugs:jsr305:$findbugsJsr305Version")
+    implementation("com.google.code.findbugs:annotations:$findbugsAnnotationsVersion")
+    implementation("io.github.astrapi69:bean-mapper-api:$beanMapperApiVersion")
+    implementation("io.github.astrapi69:generic-mapper:$genericMapperVersion")
+    implementation("io.github.astrapi69:ent-api:$entApiVersion")
+    implementation("io.github.astrapi69:ent-core:$entCoreVersion")
     implementation("org.springframework.boot:spring-boot-starter")
     testImplementation project(":bundle-application")
-    testImplementation("de.alpharogroup:silly-collections:$sillyCollectionsVersion")
+    testImplementation("io.github.astrapi69:silly-collections:$sillyCollectionsVersion")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
