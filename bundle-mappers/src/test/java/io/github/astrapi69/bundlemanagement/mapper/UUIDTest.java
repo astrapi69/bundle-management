@@ -24,10 +24,11 @@
  */
 package io.github.astrapi69.bundlemanagement.mapper;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
-
 
 public class UUIDTest
 {
@@ -35,6 +36,6 @@ public class UUIDTest
 	public void testGenerateUUID()
 	{
 		UUID uuid = UUID.randomUUID();
-		System.out.println(uuid);
+		assertNotNull(uuid);
 	}
 }

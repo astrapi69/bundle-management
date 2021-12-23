@@ -77,4 +77,8 @@ public class Countries extends NameUUIDEntity implements Cloneable
 	@Column(name = "iso3166_a2name", length = 2)
 	String iso3166a2name;
 
+	public Countries(String name)
+	{
+		super(name);
+	}
 }

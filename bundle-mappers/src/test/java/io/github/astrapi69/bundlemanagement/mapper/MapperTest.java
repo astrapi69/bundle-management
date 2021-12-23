@@ -27,17 +27,9 @@ package io.github.astrapi69.bundlemanagement.mapper;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.UUID;
 
-import io.github.astrapi69.bundlemanagement.BundleManagementApplication;
-
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.junit.jupiter.api.Test;
 
 import io.github.astrapi69.bundlemanagement.jpa.entity.BaseNames;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
@@ -59,25 +51,32 @@ import io.github.astrapi69.bundlemanagement.viewmodel.PropertiesValue;
 import io.github.astrapi69.bundlemanagement.viewmodel.Resourcebundle;
 import io.github.astrapi69.collections.set.SetFactory;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { BundleManagementApplication.class, })
-@SpringBootTest
 public class MapperTest
 {
-	@Autowired BaseNamesMapper baseNamesMapper;
-	@Autowired BundleApplicationsMapper bundleApplicationsMapper;
-	@Autowired BundleNamesMapper bundleNamesMapper;
-	@Autowired CountriesMapper countriesMapper;
-	@Autowired LanguageLocalesMapper languageLocalesMapper;
-	@Autowired LanguagesMapper languagesMapper;
-	@Autowired PropertiesKeysMapper propertiesKeysMapper;
-	@Autowired PropertiesValuesMapper propertiesValuesMapper;
-	@Autowired ResourcebundlesMapper resourcebundlesMapper;
+	BaseNamesMapper baseNamesMapper;
+	BundleApplicationsMapper bundleApplicationsMapper;
+	BundleNamesMapper bundleNamesMapper;
+	CountriesMapper countriesMapper;
+	LanguageLocalesMapper languageLocalesMapper;
+	LanguagesMapper languagesMapper;
+	PropertiesKeysMapper propertiesKeysMapper;
+	PropertiesValuesMapper propertiesValuesMapper;
+	ResourcebundlesMapper resourcebundlesMapper;
 
-	// @Ignore
+
 	@Test
 	public void testToDto()
 	{
+
+		baseNamesMapper = new BaseNamesMapper();
+		bundleNamesMapper = new BundleNamesMapper();
+		propertiesKeysMapper = new PropertiesKeysMapper();
+		propertiesValuesMapper = new PropertiesValuesMapper();
+		languageLocalesMapper = new LanguageLocalesMapper();
+		countriesMapper = new CountriesMapper();
+		bundleApplicationsMapper = new BundleApplicationsMapper();
+		resourcebundlesMapper = new ResourcebundlesMapper();
+		languagesMapper = new LanguagesMapper();
 		PropertiesKeys propertiesKeys = PropertiesKeys.builder().id(UUID.randomUUID())
 			.name("foo.key").build();
 		PropertiesKey propertiesKey = propertiesKeysMapper.toDto(propertiesKeys);
@@ -115,9 +114,10 @@ public class MapperTest
 		Languages languageEntity = languagesMapper.toEntity(language);
 		assertEquals(languages, languageEntity);
 
-		BundleApplications bundleApplications = BundleApplications.builder().name("test-bundle-app")
-			.defaultLocale(languageLocales).supportedLocales(SetFactory.newHashSet(languageLocales))
-			.build();
+		BundleApplications bundleApplications = new BundleApplications();
+		bundleApplications.setName("test-bundle-app");
+		bundleApplications.setDefaultLocale(languageLocales);
+		bundleApplications.setSupportedLocales(SetFactory.newHashSet(languageLocales));
 
 		BundleApplication bundleApplication = bundleApplicationsMapper.toDto(bundleApplications);
 		assertNotNull(bundleApplication);

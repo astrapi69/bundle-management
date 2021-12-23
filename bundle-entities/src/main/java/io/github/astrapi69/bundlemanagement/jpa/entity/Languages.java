@@ -34,6 +34,7 @@ import io.github.astrapi69.entity.enums.DatabasePrefix;
 import io.github.astrapi69.entity.nameable.Nameable;
 import io.github.astrapi69.entity.nameable.versionable.VersionableNameUUIDEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -77,4 +78,8 @@ public class Languages extends VersionableNameUUIDEntity implements Cloneable
 	@Column(name = "iso639_1", length = 2)
 	String iso639Dash1;
 
+	public Languages(String name)
+	{
+		super(name);
+	}
 }

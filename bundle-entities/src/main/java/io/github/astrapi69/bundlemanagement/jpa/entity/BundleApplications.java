@@ -116,8 +116,12 @@ public class BundleApplications extends VersionableNameUUIDEntity implements Clo
 					@JoinColumn(name = "language_locales_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundle_application_language_locales_id")) })
 	Set<LanguageLocales> supportedLocales = new HashSet<>();
 
-	public BundleApplications(String name){
+	public BundleApplications(String name) {
 		super(name);
+	}
+	public BundleApplications(String name, Integer version) {
+		super(name);
+		setVersion(version);
 	}
 
 	/**

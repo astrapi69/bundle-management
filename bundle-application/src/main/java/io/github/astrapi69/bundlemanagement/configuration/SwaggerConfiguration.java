@@ -31,6 +31,7 @@ import java.util.Collections;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -54,11 +55,15 @@ public class SwaggerConfiguration
 
 	private ApiInfo metaData()
 	{
-		return new ApiInfo("Resourcebundles REST API",
-			"REST API for manage several resourcebundles applications",
-			ApplicationConfiguration.VERSION_API_1, "",
-			new Contact("resourcebundles org.", "www.resourcebundles-applications.com", ""), "", "",
-			Collections.emptyList());
+		return new ApiInfoBuilder()
+			.title("Resourcebundles REST API")
+			.description("REST API for manage several resourcebundles applications")
+			.version(ApplicationConfiguration.VERSION_API_1)
+			.license("MIT License")
+			.licenseUrl("https://opensource.org/licenses/MIT")
+			.contact(new Contact("resourcebundles org.",
+				"www.resourcebundles-applications.com", ""))
+			.build();
 	}
 
 }

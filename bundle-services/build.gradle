@@ -16,8 +16,6 @@ dependencies {
     implementation("io.github.astrapi69:throw-able:$throwAbleVersion")
     implementation("io.github.astrapi69:spring-tool-extensions:$springToolExtensionsVersion")
     implementation("io.github.astrapi69:spring-boot-extensions:$springBootExtensionsVersion")
-    implementation("io.springfox:springfox-swagger2:$springfoxSwaggerVersion")
-    implementation("io.springfox:springfox-swagger-ui:$springfoxSwaggerVersion")
     implementation("com.thoughtworks.xstream:xstream:$xstreamVersion")
     implementation("org.apache.commons:commons-lang3:$commonsLang3Version")
     implementation("org.postgresql:postgresql")
