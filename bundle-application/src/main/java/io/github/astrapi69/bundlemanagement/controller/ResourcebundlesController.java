@@ -210,4 +210,5 @@ public class ResourcebundlesController
 			imprortableBundleName.getFilepath(), imprortableBundleName.getLocale(), true);
 		return ResponseEntity.ok(mapper.map(bundleName, BundleName.class));
 	}
+	// TODO new method for new bundlename with all parameters of bundle-app-ui
 }

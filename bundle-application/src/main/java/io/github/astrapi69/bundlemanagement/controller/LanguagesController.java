@@ -24,8 +24,12 @@
  */
 package io.github.astrapi69.bundlemanagement.controller;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.UUID;
 
+import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
+import io.github.astrapi69.bundlemanagement.viewmodel.LanguageLocale;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -55,6 +59,7 @@ public class LanguagesController
 
 	public static final String REST_PATH = "/language";
 	public static final String REST_PATH_FIND = "/find";
+	public static final String REST_PATH_FIND_ALL = "/find/all";
 	public static final String REST_PATH_FIND_BY_CODE = "/find/by/code";
 
 	LanguagesMapper mapper;
@@ -92,5 +97,14 @@ public class LanguagesController
 	{
 		Languages languages = this.service.findByCode(code);
 		return ResponseEntity.ok(mapper.toDto(languages));
+	}
+
+	@CrossOrigin(origins = "*")
+	@GetMapping(path = LanguageLocalesController.REST_PATH_FIND_ALL, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "Find all LanguageLocales objects")
+	public ResponseEntity<Iterable<Language>> findAllLanguageLocales()
+	{
+		Iterable<Languages> all = super.findAll();
+		return ResponseEntity.ok(mapper.toDtos(new HashSet<>((Collection)all)));
 	}
 }

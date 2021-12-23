@@ -24,12 +24,15 @@
  */
 package io.github.astrapi69.bundlemanagement.controller;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 import javax.validation.Valid;
 
+import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -69,7 +72,7 @@ public class BundleApplicationsController
 	public static final String REST_PATH = "/bundle/applications";
 	public static final String REST_PATH_FIND = "/find";
 	public static final String REST_PATH_FIND_ALL = "/find/all";
-	public static final String REST_PATH_FIND_ALL_BUNDLENAMES = "/find/all/bundlenames";
+	public static final String REST_PATH_FIND_ALL_BUNDLENAMES = "/find/bundlenames";
 	public static final String REST_PATH_BY_BUNDLENAME = "/find/by/bundlename";
 	public static final String REST_PATH_DELETE = "/delete";
 
@@ -98,10 +101,11 @@ public class BundleApplicationsController
 	@CrossOrigin(origins = "*")
 	@GetMapping(path = BundleApplicationsController.REST_PATH_FIND_ALL, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find all BundleApplications objects")
-	public ResponseEntity<Iterable<BundleApplications>> findAllBundleApplications()
+	public ResponseEntity<Iterable<BundleApplication>> findAllBundleApplications()
 	{
 		Iterable<BundleApplications> all = super.findAll();
-		return ResponseEntity.ok(all);
+
+		return ResponseEntity.ok(mapper.toDtos(new HashSet<>((Collection)all)));
 	}
 
 	@CrossOrigin(origins = "*")
