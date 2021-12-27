@@ -28,13 +28,24 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
+import io.github.astrapi69.bundlemanagement.jpa.entity.Resourcebundles;
+import io.github.astrapi69.bundlemanagement.viewmodel.Resourcebundle;
+import io.github.astrapi69.resourcebundle.locale.LocaleResolver;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.github.astrapi69.bundlemanagement.configuration.ApplicationConfiguration;
@@ -59,6 +70,8 @@ public class BundleNamesController
 	public static final String REST_PATH_FIND_ALL_BUNDLENAMES = "/find/all/bundlenames";
 	public static final String REST_PATH_BY_BUNDLENAME = "/find/by/bundlename";
 	public static final String REST_PATH_DELETE = "/delete";
+	public static final String REST_PATH_SAVE_OR_UPDATE = "/save/or/update";
+
 
 	@Autowired
 	BundleNamesMapper mapper;
@@ -80,4 +93,22 @@ public class BundleNamesController
 		this.service.delete(bundleNames);
 	}
 
+	@CrossOrigin(origins = "*")
+	@RequestMapping(path = BundleNamesController.REST_PATH_SAVE_OR_UPDATE,
+		method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "save the value from the given arguments.")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query"),
+		@ApiImplicitParam(name = "basename", value = "the base name", dataType = "string", paramType = "query"),
+		@ApiImplicitParam(name = "locale", value = "the locale", dataType = "string", paramType = "query") })
+	public ResponseEntity<BundleName> saveOrUpdate(@RequestParam("bundleappname") String bundleappname,
+		@RequestParam("basename") String basename, @RequestParam("locale") String locale)
+	{
+		BundleNames bundleNames = this.service.getOrCreateNewBundleNames(bundleappname, basename, locale);
+
+		return ResponseEntity
+			.status(
+				bundleNames != null ? HttpStatus.OK.value() : HttpStatus.BAD_REQUEST.value())
+			.body(mapper.toDto(bundleNames));
+	}
 }

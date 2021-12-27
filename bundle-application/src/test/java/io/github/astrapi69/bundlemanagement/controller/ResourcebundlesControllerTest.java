@@ -30,6 +30,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -198,6 +199,32 @@ public class ResourcebundlesControllerTest
 
 
 	@Test
+	public void testSaveOrUpdate()
+	{
+		String[] requestParams = { "bundleappname", "basename", "locale", "key", "value" };
+		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			ResourcebundlesController.REST_PATH_SAVE_OR_UPDATE, requestParams);
+
+		String newValue = RandomStringUtils.randomAlphabetic(10);
+		HttpHeaders headers = new HttpHeaders();
+		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("bundleappname", "test-bundle-application");
+		map.put("basename", "test");
+		map.put("locale", "de_DE");
+		map.put("key", "com.example.gui.prop.with.new.label");
+		map.put("value", newValue);
+		// http://localhost:5000/v1/resourcebundle/save/or/update?bundleappname=test-bundle-application&basename=test&locale=de_DE&key=com.example.gui.prop.with.new.label&value=foo
+
+		ResponseEntity<Resourcebundle> entity = this.restTemplate.postForEntity(restUrl, requestEntity,
+			Resourcebundle.class, map);
+		assertNotNull(entity);
+		Resourcebundle resourcebundle = entity.getBody();
+		assertEquals(resourcebundle.getValue().getName(), newValue);
+	}
+
+
+	@Test
 	public void testUpdateProperties() throws JsonProcessingException
 	{
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
@@ -260,7 +287,7 @@ public class ResourcebundlesControllerTest
 		assertNotNull(newentity);
 
 		actual = newentity.getBody();
-		assertEquals(actual.size(), 7);
+		assertEquals(actual.size(), 8);
 		Resourcebundle first = ListExtensions.getFirst(actual);
 		assertEquals(first.getValue().getName(), "Speichern");
 

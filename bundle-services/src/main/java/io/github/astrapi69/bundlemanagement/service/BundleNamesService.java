@@ -29,6 +29,12 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.experimental.FieldDefaults;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,11 +49,6 @@ import io.github.astrapi69.collections.CollectionExtensions;
 import io.github.astrapi69.collections.list.ListExtensions;
 import io.github.astrapi69.resourcebundle.locale.LocaleExtensions;
 import io.github.astrapi69.spring.service.api.GenericService;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.experimental.FieldDefaults;
 
 /**
  * The class {@link BundleNamesService}
@@ -111,6 +112,11 @@ public class BundleNamesService implements GenericService<BundleNames, UUID, Bun
 			locale);
 	}
 
+	public BundleNames find(final String ownerName, final String baseName, final String locale)
+	{
+		return repository.findDistinctByOwnerAndBaseNameAndLocale(ownerName, baseName, locale);
+	}
+
 	public LanguageLocales getDefaultLocale(final BundleApplications owner, final String baseName)
 	{
 		final List<BundleNames> list = find(owner, baseName);
@@ -132,29 +138,39 @@ public class BundleNamesService implements GenericService<BundleNames, UUID, Bun
 		return null;
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public BundleNames getOrCreateNewBundleNames(BundleApplications owner, final String baseName,
 		final Locale locale)
 	{
-		BundleNames bundleNames = find(owner, baseName, locale);
+		return getOrCreateNewBundleNames(owner.getName(), baseName,
+			LocaleExtensions.getLocaleFilenameSuffix(locale));
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public BundleNames getOrCreateNewBundleNames(String ownerName, final String baseName,
+		final String locale)
+	{
+		BundleNames bundleNames = find(ownerName, baseName, locale);
 		if (bundleNames == null)
 		{
+			BundleApplications ownerByName = bundleApplicationsRepository
+				.findDistinctByName(ownerName);
 			final LanguageLocales dbLocale = languageLocalesService
 				.getOrCreateNewLanguageLocales(locale);
 			final BaseNames bn = baseNamesService.getOrCreateNewNameEntity(baseName);
-			bundleNames = BundleNames.builder().owner(owner).baseName(bn).locale(dbLocale).build();
+			bundleNames = BundleNames.builder().owner(ownerByName).baseName(bn).locale(dbLocale)
+				.build();
 
 			bundleNames = merge(bundleNames);
 
-			if (!owner.isSupported(dbLocale))
+			if (!ownerByName.isSupported(dbLocale))
 			{
 				Optional<BundleApplications> byId = bundleApplicationsRepository
-					.findById(owner.getId());
+					.findById(ownerByName.getId());
 				if (byId.isPresent())
 				{
-					owner = byId.get();
-					owner.addSupportedLanguageLocale(dbLocale);
-					bundleApplicationsRepository.save(owner);
+					ownerByName = byId.get();
+					ownerByName.addSupportedLanguageLocale(dbLocale);
+					bundleApplicationsRepository.save(ownerByName);
 				}
 			}
 		}
@@ -163,29 +179,32 @@ public class BundleNamesService implements GenericService<BundleNames, UUID, Bun
 
 	public BundleNames merge(BundleNames object)
 	{
-		Optional<BundleNames> byId = repository.findById(object.getId());
-		if (!byId.isPresent())
+		if (object.getId() != null)
 		{
-			BundleNames dbBundleNames = byId.get();
-			BaseNames dbBaseName;
-			dbBaseName = dbBundleNames.getBaseName();
-			// check if basename have changed
-			if (!dbBaseName.equals(object.getBaseName()))
+			Optional<BundleNames> byId = repository.findById(object.getId());
+			if (!byId.isPresent())
 			{
-				// find all bundlenames with the same basename
-				List<BundleNames> applicationBundleNames = find(object.getOwner(), dbBaseName);
-				// get or create new name entity
-				BaseNames newBaseName = baseNamesService
-					.getOrCreateNewNameEntity(object.getBaseName().getName());
-				// update this bundlenames object with the new basename
-				object.setBaseName(newBaseName);
-				// update all other bundlenames object with the same basename
-				for (BundleNames bn : applicationBundleNames)
+				BundleNames dbBundleNames = byId.get();
+				BaseNames dbBaseName;
+				dbBaseName = dbBundleNames.getBaseName();
+				// check if basename have changed
+				if (!dbBaseName.equals(object.getBaseName()))
 				{
-					bn.setBaseName(newBaseName);
-					if (!bn.equals(object))
+					// find all bundlenames with the same basename
+					List<BundleNames> applicationBundleNames = find(object.getOwner(), dbBaseName);
+					// get or create new name entity
+					BaseNames newBaseName = baseNamesService
+						.getOrCreateNewNameEntity(object.getBaseName().getName());
+					// update this bundlenames object with the new basename
+					object.setBaseName(newBaseName);
+					// update all other bundlenames object with the same basename
+					for (BundleNames bn : applicationBundleNames)
 					{
-						repository.save(bn);
+						bn.setBaseName(newBaseName);
+						if (!bn.equals(object))
+						{
+							repository.save(bn);
+						}
 					}
 				}
 			}

@@ -26,6 +26,7 @@ package io.github.astrapi69.bundlemanagement.configuration;
 
 import java.util.List;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -79,6 +80,8 @@ public class ApplicationConfiguration implements WebMvcConfigurer
 		SimpleModule module;
 		JavaTimeModule javaTimeModule;
 		SimpleAbstractTypeResolver resolver;
+
+		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
 		module = new SimpleModule("bundles", Version.unknownVersion());
 		resolver = new SimpleAbstractTypeResolver();

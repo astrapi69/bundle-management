@@ -334,11 +334,17 @@ public class ResourcebundlesService
 			resourcebundle.getValue().getName(), true);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Resourcebundles saveOrUpdateEntry(final BundleNames bundleName, final String baseName,
 		final Locale locale, final String key, final String value, final boolean update)
 	{
-		Resourcebundles resourcebundle = getResourcebundle(bundleName.getOwner(), baseName, locale,
+		return saveOrUpdateEntry(bundleName.getOwner(), baseName, locale, key, value, update);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public Resourcebundles saveOrUpdateEntry(final @NonNull BundleApplications owner, final String baseName,
+		final Locale locale, final String key, final String value, final boolean update)
+	{
+		Resourcebundles resourcebundle = getResourcebundle(owner, baseName, locale,
 			key);
 		PropertiesValues pvalue = propertiesValuesService.getOrCreateNewNameEntity(value);
 		if (resourcebundle != null)
@@ -350,8 +356,9 @@ public class ResourcebundlesService
 		}
 		else
 		{
+			BundleNames bundleNames = bundleNamesService.find(owner, baseName, locale);
 			final PropertiesKeys pkey = propertiesKeysService.getOrCreateNewNameEntity(key);
-			resourcebundle = Resourcebundles.builder().bundleName(bundleName).key(pkey)
+			resourcebundle = Resourcebundles.builder().bundleName(bundleNames).key(pkey)
 				.value(pvalue).build();
 		}
 		resourcebundle = merge(resourcebundle);

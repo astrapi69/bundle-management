@@ -79,6 +79,7 @@ public class ResourcebundlesController
 	public static final String REST_PATH_VALUE = "/value";
 	public static final String REST_PATH_VALUE_WITH_PARAMS = REST_PATH_VALUE + "/withparams";
 	public static final String REST_PATH_PERSIST = "/persist";
+	public static final String REST_PATH_SAVE_OR_UPDATE = "/save/or/update";
 
 	ResourcebundlesMapper mapper;
 
@@ -210,5 +211,30 @@ public class ResourcebundlesController
 			imprortableBundleName.getFilepath(), imprortableBundleName.getLocale(), true);
 		return ResponseEntity.ok(mapper.map(bundleName, BundleName.class));
 	}
-	// TODO new method for new bundlename with all parameters of bundle-app-ui
+
+	@CrossOrigin(origins = "*")
+	@RequestMapping(path = ResourcebundlesController.REST_PATH_SAVE_OR_UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "save the value from the given arguments.")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query"),
+		@ApiImplicitParam(name = "basename", value = "the base name", dataType = "string", paramType = "query"),
+		@ApiImplicitParam(name = "locale", value = "the locale", dataType = "string", paramType = "query"),
+		@ApiImplicitParam(name = "key", value = "the key", dataType = "string", paramType = "query"),
+		@ApiImplicitParam(name = "value", value = "the value of the resourcebundle", dataType = "string", paramType = "query") })
+	public ResponseEntity<Resourcebundle> saveOrUpdate(@RequestParam("bundleappname") String bundleappname,
+		@RequestParam("basename") String basename, @RequestParam("locale") String locale,
+		@RequestParam("key") String key, @RequestParam("value") final String value)
+	{
+		final BundleApplications owner = this.service.find(bundleappname);
+		final Resourcebundles resourcebundles = this.service.contains(owner, basename,
+			LocaleResolver.resolveLocaleCode(locale), key);
+		boolean update = resourcebundles != null;
+		Resourcebundles saveOrUpdatedEntry = this.service.saveOrUpdateEntry(owner, basename,
+			LocaleResolver.resolveLocaleCode(locale), key, value, update);
+		return ResponseEntity
+			.status(
+				saveOrUpdatedEntry != null ? HttpStatus.OK.value() : HttpStatus.BAD_REQUEST.value())
+			.body(mapper.toDto(saveOrUpdatedEntry));
+	}
+
 }
