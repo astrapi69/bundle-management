@@ -27,6 +27,8 @@ package io.github.astrapi69.bundlemanagement.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.HashMap;
@@ -65,7 +67,7 @@ public class LanguageLocalesControllerTest
 	public String getBaseUrl(int serverPort)
 	{
 		return UrlExtensions.getBaseUrl("http", "localhost", serverPort,
-			ApplicationConfiguration.REST_VERSION, LanguageLocalesController.REST_PATH);
+			AppRestPath.REST_VERSION + AppRestPath.REST_LANGUAGE_LOCALES);
 	}
 
 	@BeforeEach
@@ -78,7 +80,7 @@ public class LanguageLocalesControllerTest
 	{
 		String[] requestParams = ArrayFactory.newArray("locale");
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			LanguageLocalesController.REST_PATH_FIND, requestParams);
+			ActionRestPath.ACTION_FIND, requestParams);
 
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);

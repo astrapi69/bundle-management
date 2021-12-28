@@ -30,6 +30,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
 import io.github.astrapi69.bundlemanagement.viewmodel.Resourcebundle;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -67,7 +69,7 @@ public class BundleNamesControllerTest
 	public String getBaseUrl(int serverPort)
 	{
 		return UrlExtensions.getBaseUrl("http", "localhost", serverPort,
-			ApplicationConfiguration.REST_VERSION, BundleNamesController.REST_PATH);
+			AppRestPath.REST_VERSION + AppRestPath.REST_BUNDLE_NAMES);
 	}
 
 	@Test
@@ -75,7 +77,7 @@ public class BundleNamesControllerTest
 	{
 		String[] requestParams = { "bundleappname", "basename", "locale" };
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			BundleNamesController.REST_PATH_SAVE_OR_UPDATE, requestParams);
+			ActionRestPath.ACTION_SAVE_OR_UPDATE, requestParams);
 
 		String newValue = RandomStringUtils.randomAlphabetic(10);
 		HttpHeaders headers = new HttpHeaders();

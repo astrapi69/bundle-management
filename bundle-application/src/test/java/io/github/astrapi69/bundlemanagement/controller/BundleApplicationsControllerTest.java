@@ -27,6 +27,9 @@ package io.github.astrapi69.bundlemanagement.controller;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
+import io.github.astrapi69.json.ObjectToJsonExtensions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -77,7 +80,7 @@ public class BundleApplicationsControllerTest
 	public String getBaseUrl(int serverPort)
 	{
 		return UrlExtensions.getBaseUrl("http", "localhost", serverPort,
-			ApplicationConfiguration.REST_VERSION, BundleApplicationsController.REST_PATH);
+			AppRestPath.REST_VERSION + AppRestPath.REST_BUNDLE_APPLICATIONS);
 	}
 
 	@BeforeEach
@@ -91,7 +94,6 @@ public class BundleApplicationsControllerTest
 		}
 	}
 
-
 	@Test
 	public void testFindListAll()
 	{
@@ -103,6 +105,20 @@ public class BundleApplicationsControllerTest
 			HttpMethod.GET, requestEntity, ParameterizedTypeReferenceFactory
 				.newIterableParameterizedTypeReference(BundleApplication.class));
 		assertNotNull(entities);
+	}
+
+	@Test
+	public void testFindAll()
+	{
+		String restUrl;
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), ActionRestPath.ACTION_FIND_ALL);
+		HttpHeaders headers = new HttpHeaders();
+		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+		ResponseEntity<Iterable<BundleApplication>> entities = this.restTemplate.exchange(restUrl,
+			HttpMethod.GET, requestEntity, ParameterizedTypeReferenceFactory
+				.newIterableParameterizedTypeReference(BundleApplication.class));
+		assertNotNull(entities);
+
 	}
 
 	@Test
@@ -127,6 +143,19 @@ public class BundleApplicationsControllerTest
 		assertNotNull(bundleApplication);
 	}
 
+
+
+	@Test
+	public void testDelete() throws JsonProcessingException
+	{
+		String restUrl;
+		HttpHeaders headers;
+		HttpEntity<String> requestEntity;
+		// TODO
+
+	}
+
+
 	@Test
 	public void testFind()
 	{
@@ -139,7 +168,7 @@ public class BundleApplicationsControllerTest
 
 		requestParams = ArrayFactory.newArray("bundleappname");
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			BundleApplicationsController.REST_PATH_FIND, requestParams);
+			ActionRestPath.ACTION_FIND, requestParams);
 		headers = new HttpHeaders();
 		requestEntity = new HttpEntity<>(headers);
 		urlParams = new HashMap<String, String>();
@@ -147,10 +176,13 @@ public class BundleApplicationsControllerTest
 		entity = this.restTemplate.exchange(restUrl, HttpMethod.GET, requestEntity,
 			BundleApplication.class, urlParams);
 		assertNotNull(entity);
+		BundleApplication bundleApplication = entity.getBody();
+		assertNotNull(bundleApplication);
 		// bundle app not exists case...
 		requestParams = ArrayFactory.newArray("bundleappname");
+
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			BundleApplicationsController.REST_PATH_FIND, requestParams);
+			ActionRestPath.ACTION_FIND, requestParams);
 		headers = new HttpHeaders();
 		requestEntity = new HttpEntity<>(headers);
 		urlParams = new HashMap<String, String>();
@@ -168,7 +200,7 @@ public class BundleApplicationsControllerTest
 
 		String[] requestParams = ArrayFactory.newArray("bundleappname");
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			BundleApplicationsController.REST_PATH_FIND_ALL_BUNDLENAMES, requestParams);
+			ActionRestPath.ACTION_FIND_ALL_BUNDLE_NAMES, requestParams);
 
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
@@ -192,7 +224,7 @@ public class BundleApplicationsControllerTest
 
 		String json = "{\"id\":\"8024acb3-362b-4cbd-a3b9-1cd4cfd88974\",\"version\":1,\"baseName\":{\"id\":\"711af8a1-466a-4393-9b4a-e83bff605330\",\"version\":1,\"name\":\"test\"},\"filepath\":\"/src/test/resources/errors\",\"locale\":{\"id\":\"286dbfda-9035-4eda-a6b7-76b0dbe7697b\",\"version\":1,\"locale\":\"en_US\"},\"owner\":{\"id\":\"0084d910-d153-4bd4-86bf-f5e5a8492c7e\",\"version\":1,\"name\":\"test-bundle-application\",\"defaultLocale\":{\"id\":\"f910d316-add9-463f-8bc7-e4281c5c44f1\",\"version\":1,\"locale\":\"en\"},\"supportedLocales\":[{\"id\":\"6afa59eb-1c2b-4767-9ce8-166b405369a4\",\"version\":1,\"locale\":\"de\"},{\"id\":\"f910d316-add9-463f-8bc7-e4281c5c44f1\",\"version\":1,\"locale\":\"en\"},{\"id\":\"c513ed08-e65f-4352-b789-a8bbc5d2f1db\",\"version\":1,\"locale\":\"en_GB\"},{\"id\":\"0f178aab-52f9-4459-83a9-c3078ca9d4d9\",\"version\":1,\"locale\":\"de_DE\"},{\"id\":\"286dbfda-9035-4eda-a6b7-76b0dbe7697b\",\"version\":1,\"locale\":\"en_US\"}]}}";
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			BundleApplicationsController.REST_PATH_BY_BUNDLENAME);
+			ActionRestPath.ACTION_FIND_BY_BUNDLE_NAME);
 		headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		requestEntity = new HttpEntity<>(json, headers);

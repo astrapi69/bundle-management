@@ -37,6 +37,7 @@ subprojects {
 	apply plugin: "eclipse"
 	apply plugin: "idea"
 	apply plugin: "com.github.ben-manes.versions"
+	apply plugin: "com.github.hierynomus.license"
 
 	bootJar {
 		enabled = false
@@ -56,6 +57,10 @@ subprojects {
 		compileOnly("org.projectlombok:lombok:$lombokVersion")
 		annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 	}
+
+	// workhack for license issue #76
+	gradle.startParameter.excludedTaskNames += "licenseMain"
+	gradle.startParameter.excludedTaskNames += "licenseTest"
 
 	compileJava {
 		sourceCompatibility = "$projectSourceCompatibility"

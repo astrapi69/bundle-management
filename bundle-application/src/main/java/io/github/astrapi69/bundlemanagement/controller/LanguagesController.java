@@ -28,6 +28,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.UUID;
 
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
 import io.github.astrapi69.bundlemanagement.viewmodel.LanguageLocale;
 import org.springframework.http.MediaType;
@@ -50,17 +52,12 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 @RestController
-@RequestMapping(ApplicationConfiguration.REST_VERSION + LanguagesController.REST_PATH)
+@RequestMapping(AppRestPath.REST_VERSION + AppRestPath.REST_LANGUAGES)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class LanguagesController
 	extends
 		AbstractRestController<Languages, UUID, LanguagesRepository, Language>
 {
-
-	public static final String REST_PATH = "/language";
-	public static final String REST_PATH_FIND = "/find";
-	public static final String REST_PATH_FIND_ALL = "/find/all";
-	public static final String REST_PATH_FIND_BY_CODE = "/find/by/code";
 
 	LanguagesMapper mapper;
 
@@ -78,7 +75,7 @@ public class LanguagesController
 	 * your parameters.
 	 */
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = LanguagesController.REST_PATH_FIND, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = ActionRestPath.ACTION_FIND, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the Language object from the given name")
 	public ResponseEntity<Language> findByName(@RequestParam("name") String name)
 	{
@@ -91,7 +88,7 @@ public class LanguagesController
 	 * adapt to your parameters.
 	 */
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = LanguagesController.REST_PATH_FIND_BY_CODE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = ActionRestPath.ACTION_FIND_BY_CODE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the Language object from the given name")
 	public ResponseEntity<Language> findByCode(@RequestParam("code") String code)
 	{
@@ -100,7 +97,7 @@ public class LanguagesController
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = LanguageLocalesController.REST_PATH_FIND_ALL, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = ActionRestPath.ACTION_FIND_ALL, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find all LanguageLocales objects")
 	public ResponseEntity<Iterable<Language>> findAllLanguageLocales()
 	{

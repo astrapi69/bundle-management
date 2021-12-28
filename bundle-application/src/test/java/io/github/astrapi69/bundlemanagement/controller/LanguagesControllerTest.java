@@ -29,6 +29,8 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -64,7 +66,7 @@ public class LanguagesControllerTest
 	public String getBaseUrl(int serverPort)
 	{
 		return UrlExtensions.getBaseUrl("http", "localhost", serverPort,
-			ApplicationConfiguration.REST_VERSION, LanguagesController.REST_PATH);
+			AppRestPath.REST_VERSION + AppRestPath.REST_LANGUAGES);
 	}
 
 	@Test
@@ -72,7 +74,7 @@ public class LanguagesControllerTest
 	{
 		String[] requestParams = ArrayFactory.newArray("name");
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			LanguagesController.REST_PATH_FIND, requestParams);
+			ActionRestPath.ACTION_FIND, requestParams);
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		Map<String, String> map = new HashMap<String, String>();
@@ -88,7 +90,7 @@ public class LanguagesControllerTest
 	{
 		String[] requestParams = ArrayFactory.newArray("code");
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			LanguagesController.REST_PATH_FIND_BY_CODE, requestParams);
+			ActionRestPath.ACTION_FIND_BY_CODE, requestParams);
 
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);

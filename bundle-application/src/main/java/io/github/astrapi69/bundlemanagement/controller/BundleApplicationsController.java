@@ -32,6 +32,8 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,19 +64,12 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 @RestController
-@RequestMapping(ApplicationConfiguration.REST_VERSION + BundleApplicationsController.REST_PATH)
+@RequestMapping(AppRestPath.REST_VERSION + AppRestPath.REST_BUNDLE_APPLICATIONS)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BundleApplicationsController
 	extends
 		AbstractRestController<BundleApplications, UUID, BundleApplicationsRepository, BundleApplication>
 {
-
-	public static final String REST_PATH = "/bundle/applications";
-	public static final String REST_PATH_FIND = "/find";
-	public static final String REST_PATH_FIND_ALL = "/find/all";
-	public static final String REST_PATH_FIND_ALL_BUNDLENAMES = "/find/bundlenames";
-	public static final String REST_PATH_BY_BUNDLENAME = "/find/by/bundlename";
-	public static final String REST_PATH_DELETE = "/delete";
 
 	@Autowired
 	BundleApplicationsMapper mapper;
@@ -89,7 +84,8 @@ public class BundleApplicationsController
 		this.service = service;
 	}
 
-	@RequestMapping(value = BundleApplicationsController.REST_PATH_DELETE, method = RequestMethod.DELETE)
+	@RequestMapping(value = ActionRestPath.ACTION_DELETE, method = RequestMethod.POST,
+		consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Delete the given bundle application")
 	public void delete(@Valid @RequestBody BundleApplication bundleApplication)
 	{
@@ -99,7 +95,7 @@ public class BundleApplicationsController
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = BundleApplicationsController.REST_PATH_FIND_ALL, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = ActionRestPath.ACTION_FIND_ALL, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find all BundleApplications objects")
 	public ResponseEntity<Iterable<BundleApplication>> findAllBundleApplications()
 	{
@@ -109,7 +105,7 @@ public class BundleApplicationsController
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = BundleApplicationsController.REST_PATH_FIND_ALL_BUNDLENAMES, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = ActionRestPath.ACTION_FIND_ALL_BUNDLE_NAMES, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find all BundleName objects from the given name of the owner")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query") })
@@ -123,7 +119,8 @@ public class BundleApplicationsController
 	}
 
 	@CrossOrigin(origins = "*")
-	@RequestMapping(path = BundleApplicationsController.REST_PATH_BY_BUNDLENAME, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = ActionRestPath.ACTION_FIND_BY_BUNDLE_NAME, method = RequestMethod.POST,
+		consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the BundleApplication object from the given BundleName object")
 	public ResponseEntity<BundleApplication> findByBundleName(
 		@Valid @RequestBody BundleName bundlename)
@@ -137,7 +134,7 @@ public class BundleApplicationsController
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = BundleApplicationsController.REST_PATH_FIND, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = ActionRestPath.ACTION_FIND, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the Resourcebundle from the given arguments.")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query") })

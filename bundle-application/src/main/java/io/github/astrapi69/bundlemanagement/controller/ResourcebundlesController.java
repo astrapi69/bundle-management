@@ -31,6 +31,8 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -64,22 +66,12 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 @RestController
-@RequestMapping(ApplicationConfiguration.REST_VERSION + ResourcebundlesController.REST_PATH)
+@RequestMapping(AppRestPath.REST_VERSION + AppRestPath.REST_RESOURCE_BUNDLES)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ResourcebundlesController
 	extends
 		AbstractRestController<Resourcebundles, UUID, ResourcebundlesRepository, Resourcebundle>
 {
-
-	public static final String REST_PATH = "/resourcebundle";
-	public static final String REST_PATH_FIND = "/find";
-	public static final String REST_PATH_PROPERTIES = "/properties";
-	public static final String REST_PATH_RESOURCES = "/resourcebundles";
-	public static final String REST_PATH_UPDATE_BUNDLENAME = "/update/bundlename";
-	public static final String REST_PATH_VALUE = "/value";
-	public static final String REST_PATH_VALUE_WITH_PARAMS = REST_PATH_VALUE + "/withparams";
-	public static final String REST_PATH_PERSIST = "/persist";
-	public static final String REST_PATH_SAVE_OR_UPDATE = "/save/or/update";
 
 	ResourcebundlesMapper mapper;
 
@@ -93,7 +85,7 @@ public class ResourcebundlesController
 	}
 
 	@CrossOrigin(origins = "*")
-	@RequestMapping(path = ResourcebundlesController.REST_PATH_PERSIST, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = ActionRestPath.ACTION_PERSIST, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Persist the given resourcebundle object")
 	@ResponseBody
 	public ResponseEntity<Resourcebundle> persist(@Valid @RequestBody Resourcebundle resourcebundle)
@@ -103,7 +95,7 @@ public class ResourcebundlesController
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = ResourcebundlesController.REST_PATH_FIND, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = ActionRestPath.ACTION_FIND, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the resourcebundle from the given arguments.")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query"),
@@ -124,7 +116,7 @@ public class ResourcebundlesController
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = ResourcebundlesController.REST_PATH_RESOURCES, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = ActionRestPath.ACTION_RESOURCE_BUNDLES, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the resourcebundles from the given arguments.")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query"),
@@ -142,13 +134,13 @@ public class ResourcebundlesController
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = ResourcebundlesController.REST_PATH_PROPERTIES, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = ActionRestPath.ACTION_PROPERTIES, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the properties from the given arguments.")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query"),
 			@ApiImplicitParam(name = "basename", value = "the base name", dataType = "string", paramType = "query"),
 			@ApiImplicitParam(name = "locale", value = "the locale", dataType = "string", paramType = "query") })
-	ResponseEntity<Properties> getProperties(@RequestParam("bundleappname") String bundleappname,
+	public ResponseEntity<Properties> getProperties(@RequestParam("bundleappname") String bundleappname,
 		@RequestParam("basename") String baseName, @RequestParam("locale") String locale)
 	{
 		BundleApplications bundleApplications = this.service.find(bundleappname);
@@ -157,7 +149,7 @@ public class ResourcebundlesController
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = ResourcebundlesController.REST_PATH_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = ActionRestPath.ACTION_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the value from the given arguments.")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query"),
@@ -177,7 +169,7 @@ public class ResourcebundlesController
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = ResourcebundlesController.REST_PATH_VALUE_WITH_PARAMS, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = ActionRestPath.ACTION_VALUE_WITH_PARAMETERS, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the value from the given arguments.")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query"),
@@ -199,7 +191,7 @@ public class ResourcebundlesController
 	}
 
 	@CrossOrigin(origins = "*")
-	@RequestMapping(path = ResourcebundlesController.REST_PATH_UPDATE_BUNDLENAME, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = ActionRestPath.ACTION_UPDATE_BUNDLENAME, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "updates the given bundlename")
 	public ResponseEntity<BundleName> updateProperties(
 		@Valid @RequestBody ImprortableBundleName imprortableBundleName)
@@ -213,7 +205,7 @@ public class ResourcebundlesController
 	}
 
 	@CrossOrigin(origins = "*")
-	@RequestMapping(path = ResourcebundlesController.REST_PATH_SAVE_OR_UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = ActionRestPath.ACTION_SAVE_OR_UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "save the value from the given arguments.")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query"),

@@ -30,6 +30,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -78,7 +80,7 @@ public class ResourcebundlesControllerTest
 	public String getBaseUrl(int serverPort)
 	{
 		return UrlExtensions.getBaseUrl("http", "localhost", serverPort,
-			ApplicationConfiguration.REST_VERSION, ResourcebundlesController.REST_PATH);
+			AppRestPath.REST_VERSION + AppRestPath.REST_RESOURCE_BUNDLES);
 	}
 
 	@BeforeEach
@@ -93,7 +95,7 @@ public class ResourcebundlesControllerTest
 		Resourcebundle expected;
 		String[] requestParams = { "basename", "bundleappname", "key", "locale" };
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ResourcebundlesController.REST_PATH_FIND, requestParams);
+			ActionRestPath.ACTION_FIND, requestParams);
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		Map<String, String> map = new HashMap<String, String>();
@@ -115,7 +117,7 @@ public class ResourcebundlesControllerTest
 		List<Resourcebundle> actual;
 		String[] requestParams = { "basename", "bundleappname", "locale" };
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ResourcebundlesController.REST_PATH_RESOURCES, requestParams);
+			ActionRestPath.ACTION_RESOURCE_BUNDLES, requestParams);
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		Map<String, String> map = new HashMap<String, String>();
@@ -139,7 +141,7 @@ public class ResourcebundlesControllerTest
 	{
 		String[] requestParams = { "basename", "bundleappname", "locale" };
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ResourcebundlesController.REST_PATH_VALUE, requestParams);
+			ActionRestPath.ACTION_PROPERTIES, requestParams);
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		Map<String, String> map = new HashMap<String, String>();
@@ -158,7 +160,7 @@ public class ResourcebundlesControllerTest
 
 		String[] requestParams = { "basename", "bundleappname", "key", "locale" };
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ResourcebundlesController.REST_PATH_VALUE, requestParams);
+			ActionRestPath.ACTION_VALUE, requestParams);
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		Map<String, String> map = new HashMap<String, String>();
@@ -181,7 +183,7 @@ public class ResourcebundlesControllerTest
 		final String[] paramsGerman = { "Fritz", "Berlin" };
 		String[] requestParams = { "basename", "bundleappname", "key", "locale" };
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ResourcebundlesController.REST_PATH_VALUE_WITH_PARAMS, requestParams, "params",
+			ActionRestPath.ACTION_VALUE_WITH_PARAMETERS, requestParams, "params",
 			paramsGerman);
 
 		HttpHeaders headers = new HttpHeaders();
@@ -203,7 +205,7 @@ public class ResourcebundlesControllerTest
 	{
 		String[] requestParams = { "bundleappname", "basename", "locale", "key", "value" };
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ResourcebundlesController.REST_PATH_SAVE_OR_UPDATE, requestParams);
+			ActionRestPath.ACTION_SAVE_OR_UPDATE, requestParams);
 
 		String newValue = RandomStringUtils.randomAlphabetic(10);
 		HttpHeaders headers = new HttpHeaders();
@@ -228,7 +230,7 @@ public class ResourcebundlesControllerTest
 	public void testUpdateProperties() throws JsonProcessingException
 	{
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ResourcebundlesController.REST_PATH_UPDATE_BUNDLENAME);
+			ActionRestPath.ACTION_UPDATE_BUNDLENAME);
 
 		List<Resourcebundle> actual;
 		Properties properties;
@@ -270,7 +272,7 @@ public class ResourcebundlesControllerTest
 
 		String[] requestParams = { "basename", "bundleappname", "locale" };
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ResourcebundlesController.REST_PATH_RESOURCES, requestParams);
+			ActionRestPath.ACTION_RESOURCE_BUNDLES, requestParams);
 
 		headers = new HttpHeaders();
 		requestEntity = new HttpEntity<>(headers);

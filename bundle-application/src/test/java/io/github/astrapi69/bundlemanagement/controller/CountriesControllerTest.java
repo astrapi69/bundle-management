@@ -25,11 +25,12 @@
 package io.github.astrapi69.bundlemanagement.controller;
 
 
-import java.util.HashMap;
-import java.util.Map;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,13 +42,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-
-import io.github.astrapi69.bundlemanagement.configuration.ApplicationConfiguration;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import io.github.astrapi69.bundlemanagement.viewmodel.Country;
 import io.github.astrapi69.collections.array.ArrayFactory;
 import io.github.astrapi69.spring.web.util.UrlExtensions;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
@@ -64,7 +64,7 @@ public class CountriesControllerTest
 	public String getBaseUrl(int serverPort)
 	{
 		return UrlExtensions.getBaseUrl("http", "localhost", serverPort,
-			ApplicationConfiguration.REST_VERSION, CountriesController.REST_PATH);
+			AppRestPath.REST_VERSION + AppRestPath.REST_COUNTRIES);
 	}
 
 	@Test
@@ -72,7 +72,7 @@ public class CountriesControllerTest
 	{
 		String[] requestParams = ArrayFactory.newArray("name");
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			CountriesController.REST_PATH_FIND, requestParams);
+			ActionRestPath.ACTION_FIND, requestParams);
 
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
