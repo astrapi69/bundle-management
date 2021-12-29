@@ -83,7 +83,8 @@ public class BundleApplicationsController
 		this.service = service;
 	}
 
-	@RequestMapping(value = ActionRestPath.ACTION_DELETE, method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = ActionRestPath.ACTION_DELETE,
+		method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Delete the given bundle application")
 	public ResponseEntity<BundleApplication> delete(
 		@Valid @RequestBody BundleApplication bundleApplication)

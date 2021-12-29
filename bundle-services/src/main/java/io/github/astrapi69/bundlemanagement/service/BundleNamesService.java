@@ -29,6 +29,8 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
+import io.github.astrapi69.bundlemanagement.jpa.entity.Resourcebundles;
+import io.github.astrapi69.bundlemanagement.jpa.repository.ResourcebundlesRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -68,6 +70,34 @@ public class BundleNamesService implements GenericService<BundleNames, UUID, Bun
 	LanguageLocalesService languageLocalesService;
 
 	BundleNamesRepository repository;
+
+	ResourcebundlesRepository resourcebundlesRepository;
+
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void delete(BundleNames bundleNames)
+	{
+		List<Resourcebundles> list = resourcebundlesRepository.findByOwnerAndBaseName(
+			bundleNames.getOwner().getName(),
+			bundleNames.getBaseName().getName());
+		for (final Resourcebundles resourcebundle : list)
+		{
+			resourcebundlesRepository.delete(resourcebundle);
+		}
+		BaseNames baseName = bundleNames.getBaseName();
+		bundleNames.setBaseName(null);
+		bundleNames.setLocale(null);
+		bundleNames.setOwner(null);
+		final BundleNames merged = merge(bundleNames);
+		repository.delete(merged);
+		if (0 == find(baseName).size())
+		{
+			baseNamesService.delete(baseName);
+		}
+	}
+
 
 	public List<BundleNames> find(final @NonNull BaseNames baseName)
 	{

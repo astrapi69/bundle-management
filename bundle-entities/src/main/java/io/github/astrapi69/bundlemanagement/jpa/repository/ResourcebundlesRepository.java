@@ -39,6 +39,13 @@ import io.github.astrapi69.bundlemanagement.jpa.entity.Resourcebundles;
 public interface ResourcebundlesRepository extends JpaRepository<Resourcebundles, UUID>
 {
 	@Transactional
+	@Query("select rb from Resourcebundles rb "
+		+ "where rb.bundleName.owner.name=:owner "
+		+ "and rb.bundleName.baseName.name=:basename")
+	List<Resourcebundles> findByOwnerAndBaseName(@Param("owner") String owner,
+		@Param("basename") String baseName);
+
+	@Transactional
 	@Query("select rb from Resourcebundles rb " + "where rb.bundleName.owner.name=:owner "
 		+ "and rb.bundleName.baseName.name=:basename " + "and rb.bundleName.locale.locale=:locale")
 	List<Resourcebundles> findByOwnerAndBaseNameAndLocale(@Param("owner") String owner,
