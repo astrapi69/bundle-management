@@ -32,9 +32,9 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
-import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
-import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -47,7 +47,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.github.astrapi69.bundlemanagement.configuration.ApplicationConfiguration;
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleNames;
 import io.github.astrapi69.bundlemanagement.jpa.repository.BundleApplicationsRepository;
@@ -60,8 +61,6 @@ import io.github.astrapi69.spring.controller.AbstractRestController;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 
 @RestController
 @RequestMapping(AppRestPath.REST_VERSION + AppRestPath.REST_BUNDLE_APPLICATIONS)
@@ -84,10 +83,10 @@ public class BundleApplicationsController
 		this.service = service;
 	}
 
-	@RequestMapping(value = ActionRestPath.ACTION_DELETE, method = RequestMethod.DELETE,
-		consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = ActionRestPath.ACTION_DELETE, method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Delete the given bundle application")
-	public ResponseEntity<BundleApplication> delete(@Valid @RequestBody BundleApplication bundleApplication)
+	public ResponseEntity<BundleApplication> delete(
+		@Valid @RequestBody BundleApplication bundleApplication)
 	{
 		final BundleApplications bundleApplications = this.service
 			.find(bundleApplication.getName());
@@ -120,8 +119,7 @@ public class BundleApplicationsController
 	}
 
 	@CrossOrigin(origins = "*")
-	@RequestMapping(path = ActionRestPath.ACTION_FIND_BY_BUNDLE_NAME, method = RequestMethod.POST,
-		consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = ActionRestPath.ACTION_FIND_BY_BUNDLE_NAME, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the BundleApplication object from the given BundleName object")
 	public ResponseEntity<BundleApplication> findByBundleName(
 		@Valid @RequestBody BundleName bundlename)
