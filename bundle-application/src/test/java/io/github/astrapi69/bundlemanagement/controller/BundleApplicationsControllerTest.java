@@ -26,10 +26,12 @@ package io.github.astrapi69.bundlemanagement.controller;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
 import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import io.github.astrapi69.json.ObjectToJsonExtensions;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -56,7 +58,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import io.github.astrapi69.bundlemanagement.configuration.ApplicationConfiguration;
 import io.github.astrapi69.bundlemanagement.viewmodel.BundleApplication;
 import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
 import io.github.astrapi69.collections.array.ArrayFactory;
@@ -122,16 +123,22 @@ public class BundleApplicationsControllerTest
 	}
 
 	@Test
-	public void testPersist()
+	public void testPersist() throws JsonProcessingException
 	{
 		String restUrl;
 		HttpHeaders headers;
 		HttpEntity<String> requestEntity;
+		List<MediaType> acceptableMediaTypes;
+		String json;
 
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), "");
-		List<MediaType> acceptableMediaTypes = ListFactory.newArrayList();
+		acceptableMediaTypes = ListFactory.newArrayList();
 		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
-		String json = "{\"id\":null,\"version\":null,\"name\":\"test-foo-del-app\",\"defaultLocale\":{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"},\"supportedLocales\":[{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"}]}";
+
+		String newUniqueName = RandomStringUtils.randomAlphabetic(10);
+		json = "{\"id\":null,\"version\":null,\"name\":\"" +
+			newUniqueName +
+			"\",\"defaultLocale\":{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"},\"supportedLocales\":[{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"}]}";
 		headers = new HttpHeaders();
 		headers.setAccept(acceptableMediaTypes);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -141,9 +148,62 @@ public class BundleApplicationsControllerTest
 		assertNotNull(entity);
 		BundleApplication bundleApplication = entity.getBody();
 		assertNotNull(bundleApplication);
+
+		headers = new HttpHeaders();
+		headers.setAccept(acceptableMediaTypes);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		json = ObjectToJsonExtensions.toJson(bundleApplication);
+		requestEntity = new HttpEntity<String>(json, headers);
+
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), ActionRestPath.ACTION_DELETE);
+
+		entity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity, BundleApplication.class);
+
+		assertNotNull(entity);
 	}
 
+	@Test
+	public void testSuperDelete() throws JsonProcessingException
+	{
+		String restUrl;
+		HttpHeaders headers;
+		HttpEntity<String> requestEntity;
+		List<MediaType> acceptableMediaTypes;
+		String json;
 
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), "");
+		acceptableMediaTypes = ListFactory.newArrayList();
+		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+
+		String newUniqueName = RandomStringUtils.randomAlphabetic(10);
+		json = "{\"id\":null,\"version\":null,\"name\":\"" +
+			newUniqueName +
+			"\",\"defaultLocale\":{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"},\"supportedLocales\":[{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"}]}";
+		headers = new HttpHeaders();
+		headers.setAccept(acceptableMediaTypes);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		requestEntity = new HttpEntity<>(json, headers);
+		ResponseEntity<BundleApplication> entity = this.restTemplate.postForEntity(restUrl,
+			requestEntity, BundleApplication.class);
+		assertNotNull(entity);
+		BundleApplication bundleApplication = entity.getBody();
+		assertNotNull(bundleApplication);
+
+		headers = new HttpHeaders();
+		headers.setAccept(acceptableMediaTypes);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		json = ObjectToJsonExtensions.toJson(bundleApplication);
+		requestEntity = new HttpEntity<String>(json, headers);
+
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), "/"+bundleApplication.getId().toString());
+
+		ResponseEntity<Map> resp = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity, Map.class);
+
+		assertNotNull(resp);
+		Map body = (Map)resp.getBody();
+		Boolean success = (Boolean)body.get("success");
+		assertTrue(success);
+	}
 
 	@Test
 	public void testDelete() throws JsonProcessingException
@@ -151,8 +211,39 @@ public class BundleApplicationsControllerTest
 		String restUrl;
 		HttpHeaders headers;
 		HttpEntity<String> requestEntity;
-		// TODO
+		List<MediaType> acceptableMediaTypes;
+		String json;
+		ResponseEntity<BundleApplication> entity;
 
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), "");
+		acceptableMediaTypes = ListFactory.newArrayList();
+		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+
+		String newUniqueName = RandomStringUtils.randomAlphabetic(10);
+		json = "{\"id\":null,\"version\":null,\"name\":\"" +
+			newUniqueName +
+			"\",\"defaultLocale\":{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"},\"supportedLocales\":[{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"}]}";
+		headers = new HttpHeaders();
+		headers.setAccept(acceptableMediaTypes);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		requestEntity = new HttpEntity<>(json, headers);
+		entity = this.restTemplate.postForEntity(restUrl,
+			requestEntity, BundleApplication.class);
+		assertNotNull(entity);
+		BundleApplication bundleApplication = entity.getBody();
+		assertNotNull(bundleApplication);
+
+		headers = new HttpHeaders();
+		headers.setAccept(acceptableMediaTypes);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		json = ObjectToJsonExtensions.toJson(bundleApplication);
+		requestEntity = new HttpEntity<String>(json, headers);
+
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), ActionRestPath.ACTION_DELETE);
+
+		entity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity, BundleApplication.class);
+
+		assertNotNull(entity);
 	}
 
 

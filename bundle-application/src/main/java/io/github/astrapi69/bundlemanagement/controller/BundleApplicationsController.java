@@ -84,14 +84,15 @@ public class BundleApplicationsController
 		this.service = service;
 	}
 
-	@RequestMapping(value = ActionRestPath.ACTION_DELETE, method = RequestMethod.POST,
+	@RequestMapping(value = ActionRestPath.ACTION_DELETE, method = RequestMethod.DELETE,
 		consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Delete the given bundle application")
-	public void delete(@Valid @RequestBody BundleApplication bundleApplication)
+	public ResponseEntity<BundleApplication> delete(@Valid @RequestBody BundleApplication bundleApplication)
 	{
 		final BundleApplications bundleApplications = this.service
 			.find(bundleApplication.getName());
 		this.service.delete(bundleApplications);
+		return ResponseEntity.ok(mapper.toDto(bundleApplications));
 	}
 
 	@CrossOrigin(origins = "*")

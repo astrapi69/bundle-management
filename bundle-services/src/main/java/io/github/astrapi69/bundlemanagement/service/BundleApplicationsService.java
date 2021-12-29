@@ -62,6 +62,11 @@ public class BundleApplicationsService
 
 	BundleApplicationsRepository repository;
 
+	@Override public void deleteById(@NonNull UUID uuid)
+	{
+		findById(uuid).ifPresent(bundleApplications -> delete(bundleApplications));
+	}
+
 	@Override
 	public void delete(BundleApplications bundleApplications)
 	{
