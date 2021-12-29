@@ -30,10 +30,7 @@ import javax.validation.Valid;
 
 import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
 import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
-import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
-import io.github.astrapi69.bundlemanagement.jpa.entity.Resourcebundles;
-import io.github.astrapi69.bundlemanagement.viewmodel.Resourcebundle;
-import io.github.astrapi69.resourcebundle.locale.LocaleResolver;
+import io.github.astrapi69.bundlemanagement.service.BundleNamesService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import lombok.AccessLevel;
@@ -50,11 +47,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.github.astrapi69.bundlemanagement.configuration.ApplicationConfiguration;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleNames;
 import io.github.astrapi69.bundlemanagement.jpa.repository.BundleNamesRepository;
 import io.github.astrapi69.bundlemanagement.mapper.BundleNamesMapper;
-import io.github.astrapi69.bundlemanagement.service.BundleNamesService;
 import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
 import io.github.astrapi69.spring.controller.AbstractRestController;
 import io.swagger.annotations.ApiOperation;
@@ -79,9 +74,9 @@ public class BundleNamesController
 		this.service = service;
 	}
 
-	@RequestMapping(value = ActionRestPath.ACTION_DELETE, method = RequestMethod.POST,
-		consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(value = "Delete the given bundle application")
+	@RequestMapping(value = ActionRestPath.ACTION_DELETE,
+		method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "Delete the given bundle name")
 	public void delete(@Valid @RequestBody BundleName bundleName)
 	{
 		BundleNames bundleNames = this.mapper.toEntity(bundleName);
