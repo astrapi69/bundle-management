@@ -32,6 +32,9 @@ import java.util.Properties;
 
 import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
 import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
+import io.github.astrapi69.bundlemanagement.viewmodel.BundleApplication;
+import io.github.astrapi69.collections.array.ArrayFactory;
+import io.github.astrapi69.collections.list.ListFactory;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,6 +51,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -86,6 +90,52 @@ public class ResourcebundlesControllerTest
 	@BeforeEach
 	public void prepare()
 	{
+	}
+
+	@Test
+	public void testSuperDelete() throws JsonProcessingException
+	{
+		String restUrl;
+		HttpHeaders headers;
+		HttpEntity<String> requestEntity;
+		Map<String, String> urlVariables;
+		String newPropertiesValue;
+		String[] requestParameters;
+		ResponseEntity<Resourcebundle> responseEntity;
+		Resourcebundle resourcebundle;
+
+		Class<Resourcebundle> responseType = Resourcebundle.class;
+
+		requestParameters = ArrayFactory.newArray( "bundleappname", "basename", "locale", "key", "value" );
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			ActionRestPath.ACTION_SAVE_OR_UPDATE, requestParameters);
+
+		newPropertiesValue = RandomStringUtils.randomAlphabetic(10);
+		headers = new HttpHeaders();
+		requestEntity = new HttpEntity<>(headers);
+		urlVariables = new HashMap<String, String>();
+		urlVariables.put("bundleappname", "test-bundle-application");
+		urlVariables.put("basename", "test");
+		urlVariables.put("locale", "de_DE");
+		urlVariables.put("key", "com.example.gui.prop.with.new.label."+newPropertiesValue);
+		urlVariables.put("value", newPropertiesValue);
+
+		responseEntity = this.restTemplate.postForEntity(restUrl, requestEntity,
+			responseType, urlVariables);
+		assertNotNull(responseEntity);
+		resourcebundle = responseEntity.getBody();
+		assertEquals(resourcebundle.getValue().getName(), newPropertiesValue);
+
+		requestEntity = new HttpEntity<>(headers);
+
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), "/"+resourcebundle.getId().toString());
+
+		ResponseEntity<Map> responseMapEntity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity, Map.class);
+
+		assertNotNull(responseMapEntity);
+		Map body = (Map)responseMapEntity.getBody();
+		Boolean success = (Boolean)body.get("success");
+		assertTrue(success);
 	}
 
 	@Test
@@ -157,7 +207,6 @@ public class ResourcebundlesControllerTest
 	@Test
 	public void testGetString()
 	{
-
 		String[] requestParams = { "basename", "bundleappname", "key", "locale" };
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
 			ActionRestPath.ACTION_VALUE, requestParams);

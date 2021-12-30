@@ -73,6 +73,10 @@ public class BundleNamesService implements GenericService<BundleNames, UUID, Bun
 
 	ResourcebundlesRepository resourcebundlesRepository;
 
+	@Override public void deleteById(@NonNull UUID uuid)
+	{
+		findById(uuid).ifPresent(bundleNames -> delete(bundleNames));
+	}
 
 	/**
 	 * {@inheritDoc}

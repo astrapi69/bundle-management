@@ -28,14 +28,6 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
-import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
-import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
-import io.github.astrapi69.bundlemanagement.jpa.entity.Resourcebundles;
-import io.github.astrapi69.bundlemanagement.viewmodel.Resourcebundle;
-import io.github.astrapi69.resourcebundle.locale.LocaleResolver;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
@@ -48,15 +40,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.github.astrapi69.bundlemanagement.configuration.ApplicationConfiguration;
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleNames;
 import io.github.astrapi69.bundlemanagement.jpa.repository.BundleNamesRepository;
 import io.github.astrapi69.bundlemanagement.mapper.BundleNamesMapper;
 import io.github.astrapi69.bundlemanagement.service.BundleNamesService;
 import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
 import io.github.astrapi69.spring.controller.AbstractRestController;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -79,31 +75,33 @@ public class BundleNamesController
 		this.service = service;
 	}
 
-	@RequestMapping(value = ActionRestPath.ACTION_DELETE, method = RequestMethod.POST,
+	@RequestMapping(value = ActionRestPath.ACTION_DELETE, method = RequestMethod.DELETE,
 		consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Delete the given bundle application")
-	public void delete(@Valid @RequestBody BundleName bundleName)
+	@ResponseBody
+	public ResponseEntity<BundleName> delete(@Valid @RequestBody BundleName bundleName)
 	{
 		BundleNames bundleNames = this.mapper.toEntity(bundleName);
 		this.service.delete(bundleNames);
+		return ResponseEntity.ok(mapper.toDto(bundleNames));
 	}
 
 	@CrossOrigin(origins = "*")
-	@RequestMapping(path = ActionRestPath.ACTION_SAVE_OR_UPDATE,
-		method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = ActionRestPath.ACTION_SAVE_OR_UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "save the value from the given arguments.")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query"),
-		@ApiImplicitParam(name = "basename", value = "the base name", dataType = "string", paramType = "query"),
-		@ApiImplicitParam(name = "locale", value = "the locale", dataType = "string", paramType = "query") })
-	public ResponseEntity<BundleName> saveOrUpdate(@RequestParam("bundleappname") String bundleappname,
+			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query"),
+			@ApiImplicitParam(name = "basename", value = "the base name", dataType = "string", paramType = "query"),
+			@ApiImplicitParam(name = "locale", value = "the locale", dataType = "string", paramType = "query") })
+	public ResponseEntity<BundleName> saveOrUpdate(
+		@RequestParam("bundleappname") String bundleappname,
 		@RequestParam("basename") String basename, @RequestParam("locale") String locale)
 	{
-		BundleNames bundleNames = this.service.getOrCreateNewBundleNames(bundleappname, basename, locale);
+		BundleNames bundleNames = this.service.getOrCreateNewBundleNames(bundleappname, basename,
+			locale);
 
 		return ResponseEntity
-			.status(
-				bundleNames != null ? HttpStatus.OK.value() : HttpStatus.BAD_REQUEST.value())
+			.status(bundleNames != null ? HttpStatus.OK.value() : HttpStatus.BAD_REQUEST.value())
 			.body(mapper.toDto(bundleNames));
 	}
 }

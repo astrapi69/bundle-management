@@ -18,8 +18,9 @@ public enum AppRestPath
 	BUNDLE_APPLICATIONS(AppRestPath.REST_BUNDLE_APPLICATIONS),
 	BUNDLE_NAMES(AppRestPath.REST_BUNDLE_NAMES);
 
+	public static final String SLASH = "/";
 	public static final String REST_API_VERSION_1 = "v1";
-	public static final String REST_VERSION = "/" + REST_API_VERSION_1;
+	public static final String REST_VERSION = SLASH + REST_API_VERSION_1;
 	public static final String REST_RESOURCE_BUNDLES = "/resourcebundles";
 	public static final String REST_COUNTRIES = "/countries";
 	public static final String REST_LANGUAGES = "/languages";

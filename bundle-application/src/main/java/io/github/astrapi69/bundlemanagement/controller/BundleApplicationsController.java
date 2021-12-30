@@ -83,8 +83,8 @@ public class BundleApplicationsController
 		this.service = service;
 	}
 
-	@RequestMapping(value = ActionRestPath.ACTION_DELETE,
-		method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = ActionRestPath.ACTION_DELETE, method = RequestMethod.DELETE,
+		consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Delete the given bundle application")
 	public ResponseEntity<BundleApplication> delete(
 		@Valid @RequestBody BundleApplication bundleApplication)
@@ -92,6 +92,17 @@ public class BundleApplicationsController
 		final BundleApplications bundleApplications = this.service
 			.find(bundleApplication.getName());
 		this.service.delete(bundleApplications);
+		return ResponseEntity.ok(mapper.toDto(bundleApplications));
+	}
+
+	@RequestMapping(value = ActionRestPath.ACTION_UPDATE, method = RequestMethod.PUT,
+		consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "Update the given bundle application")
+	public ResponseEntity<BundleApplication> update(
+		@Valid @RequestBody BundleApplication bundleApplication)
+	{
+		BundleApplications bundleApplications = this.service
+			.update(mapper.toEntity(bundleApplication));
 		return ResponseEntity.ok(mapper.toDto(bundleApplications));
 	}
 

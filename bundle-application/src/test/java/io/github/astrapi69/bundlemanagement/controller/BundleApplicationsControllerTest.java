@@ -213,7 +213,7 @@ public class BundleApplicationsControllerTest
 		HttpEntity<String> requestEntity;
 		List<MediaType> acceptableMediaTypes;
 		String json;
-		ResponseEntity<BundleApplication> entity;
+		ResponseEntity<BundleApplication> responseEntity;
 
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), "");
 		acceptableMediaTypes = ListFactory.newArrayList();
@@ -227,10 +227,10 @@ public class BundleApplicationsControllerTest
 		headers.setAccept(acceptableMediaTypes);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		requestEntity = new HttpEntity<>(json, headers);
-		entity = this.restTemplate.postForEntity(restUrl,
+		responseEntity = this.restTemplate.postForEntity(restUrl,
 			requestEntity, BundleApplication.class);
-		assertNotNull(entity);
-		BundleApplication bundleApplication = entity.getBody();
+		assertNotNull(responseEntity);
+		BundleApplication bundleApplication = responseEntity.getBody();
 		assertNotNull(bundleApplication);
 
 		headers = new HttpHeaders();
@@ -241,9 +241,9 @@ public class BundleApplicationsControllerTest
 
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), ActionRestPath.ACTION_DELETE);
 
-		entity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity, BundleApplication.class);
+		responseEntity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity, BundleApplication.class);
 
-		assertNotNull(entity);
+		assertNotNull(responseEntity);
 	}
 
 

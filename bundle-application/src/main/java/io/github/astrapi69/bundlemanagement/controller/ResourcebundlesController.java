@@ -33,6 +33,8 @@ import javax.validation.Valid;
 
 import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
 import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
+import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesKeys;
+import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesValues;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
