@@ -149,7 +149,7 @@ public class BundleApplications extends VersionableNameUUIDEntity implements Clo
 	 */
 	public boolean isSupported(LanguageLocales supportedLocale)
 	{
-		return getSupportedLocales().contains(supportedLocale);
+		return supportedLocales.contains(supportedLocale);
 	}
 
 	/**
