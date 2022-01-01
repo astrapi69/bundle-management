@@ -80,7 +80,7 @@ public class LanguageLocalesControllerTest
 	{
 		String[] requestParams = ArrayFactory.newArray("locale");
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ActionRestPath.ACTION_FIND, requestParams);
+			ActionRestPath.ACTION_FIND_BY_LOCALE, requestParams);
 
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);

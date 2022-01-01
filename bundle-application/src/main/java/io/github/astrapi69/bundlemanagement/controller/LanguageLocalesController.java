@@ -69,17 +69,15 @@ public class LanguageLocalesController
 		this.service = service;
 	}
 
-	/**
-	 * Call this link <a href="http://localhost:5000/v1/locale/find?locale=de_DE"></a> and adapt to
-	 * your parameters.
-	 */
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = ActionRestPath.ACTION_FIND, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = ActionRestPath.ACTION_FIND_BY_LOCALE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the LanguageLocale object from the given locale name")
 	public ResponseEntity<LanguageLocale> findByName(@RequestParam("locale") String locale)
 	{
 		LanguageLocales languageLocales = this.service.find(locale);
-		return ResponseEntity.ok(mapper.toDto(languageLocales));
+		return languageLocales != null ?
+			ResponseEntity.ok(mapper.toDto(languageLocales)):
+			ResponseEntity.ok(null);
 	}
 
 	@CrossOrigin(origins = "*")

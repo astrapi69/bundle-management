@@ -109,7 +109,7 @@ public class BundleNamesRepositoryTest extends BaseJpaTest
 			.findDistinctByName("foo-bar.com");
 		List<BundleNames> byOwner = repository.findByOwner(distinctByName);
 
-		assertThat(byOwner.size()).isEqualTo(3);
+		assertThat(byOwner.size()).isEqualTo(2);
 	}
 
 

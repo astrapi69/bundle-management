@@ -41,6 +41,7 @@ public enum ActionRestPath
 	public static final String ACTION_FIND_BY = ACTION_FIND + "/by";
 	public static final String ACTION_FIND_BY_NAME = ACTION_FIND_BY + "/name";
 	public static final String ACTION_FIND_BY_CODE = ACTION_FIND_BY + "/code";
+	public static final String ACTION_FIND_BY_LOCALE = ACTION_FIND_BY + "/locale";
 	public static final String ACTION_FIND_BY_BUNDLE_NAME = ACTION_FIND_BY + "/bundlename";
 
 	String value;

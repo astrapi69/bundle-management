@@ -98,18 +98,7 @@ public class ResourcebundlesService
 
 	public void delete(BundleNames bundleNames)
 	{
-		List<Resourcebundles> list = find(bundleNames);
-		delete(list);
-		BaseNames baseName = bundleNames.getBaseName();
-		bundleNames.setBaseName(null);
-		bundleNames.setLocale(null);
-		bundleNames.setOwner(null);
-		final BundleNames merged = bundleNamesService.save(bundleNames);
-		bundleNamesService.delete(merged);
-		if (0 == bundleNamesService.find(baseName).size())
-		{
-			baseNamesService.delete(baseName);
-		}
+		bundleNamesService.delete(bundleNames);
 	}
 
 	public void delete(final List<Resourcebundles> resourcebundles)
