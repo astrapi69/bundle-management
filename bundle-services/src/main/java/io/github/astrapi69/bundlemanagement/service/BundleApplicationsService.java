@@ -28,6 +28,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,12 +43,10 @@ import io.github.astrapi69.bundlemanagement.jpa.entity.BundleNames;
 import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
 import io.github.astrapi69.bundlemanagement.jpa.repository.BundleApplicationsRepository;
 import io.github.astrapi69.collections.set.SetFactory;
+import io.github.astrapi69.copy.object.CopyObjectExtensions;
+import io.github.astrapi69.reflection.ReflectionExtensions;
 import io.github.astrapi69.spring.service.api.GenericService;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import io.github.astrapi69.throwable.RuntimeExceptionDecorator;
 
 /**
  * The class {@link BundleApplicationsService}
@@ -62,7 +67,8 @@ public class BundleApplicationsService
 
 	BundleApplicationsRepository repository;
 
-	@Override public void deleteById(@NonNull UUID uuid)
+	@Override
+	public void deleteById(@NonNull UUID uuid)
 	{
 		findById(uuid).ifPresent(bundleApplications -> delete(bundleApplications));
 	}
@@ -79,6 +85,29 @@ public class BundleApplicationsService
 		bundleApplications.getSupportedLocales().clear();
 		BundleApplications merged = repository.save(bundleApplications);
 		repository.delete(merged);
+	}
+
+	@Override
+	public BundleApplications update(BundleApplications entity)
+	{
+		BundleApplications merged;
+		BundleApplications distinctByName = repository.getById(entity.getId());
+		if (distinctByName != null && entity.getName() != distinctByName.getName())
+		{
+			repository.setNameById(entity.getName(), entity.getId());
+		}
+		if (distinctByName != null)
+		{
+			merged = RuntimeExceptionDecorator
+				.decorate(() -> CopyObjectExtensions.copyObject(entity, distinctByName,
+					ArrayUtils.addAll(ReflectionExtensions.getDefaultIgnoreFieldNames())));
+		}
+		else
+		{
+			merged = entity;
+		}
+		BundleApplications saved = repository.save(merged);
+		return saved;
 	}
 
 	@Override

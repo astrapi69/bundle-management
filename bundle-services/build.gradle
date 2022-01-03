@@ -7,6 +7,7 @@ dependencies {
     implementation("io.github.astrapi69:generic-mapper:$genericMapperVersion")
     implementation("io.github.astrapi69:ent-api:$entApiVersion")
     implementation("io.github.astrapi69:ent-core:$entCoreVersion")
+    implementation("io.github.astrapi69:jobj-core:$jobjCoreVersion")
     implementation("io.github.astrapi69:silly-jdbc:$sillyJdbcVersion")
     implementation("io.github.astrapi69:silly-collections:$sillyCollectionsVersion")
     implementation("io.github.astrapi69:silly-beans:$sillyBeansVersion")

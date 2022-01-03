@@ -28,6 +28,9 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
@@ -36,6 +39,10 @@ import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
 @Repository
 public interface BundleApplicationsRepository extends JpaRepository<BundleApplications, UUID>
 {
+	@Modifying
+	@Query("update BundleApplications ba set ba.name =:name where ba.id =:id")
+	void setNameById(@Param("name") String name,  @Param("id") UUID id);
+
 	List<BundleApplications> findByName(String name);
 
 	BundleApplications findDistinctByName(String name);

@@ -101,8 +101,8 @@ public class BundleApplicationsController
 	public ResponseEntity<BundleApplication> update(
 		@Valid @RequestBody BundleApplication bundleApplication)
 	{
-		BundleApplications bundleApplications = this.service
-			.update(mapper.toEntity(bundleApplication));
+		BundleApplications entity = mapper.toEntity(bundleApplication);
+		BundleApplications bundleApplications = this.service.update(entity);
 		return ResponseEntity.ok(mapper.toDto(bundleApplications));
 	}
 

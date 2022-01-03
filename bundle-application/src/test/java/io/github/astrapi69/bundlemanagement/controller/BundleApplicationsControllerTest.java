@@ -24,6 +24,7 @@
  */
 package io.github.astrapi69.bundlemanagement.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -33,6 +34,7 @@ import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import io.github.astrapi69.json.ObjectToJsonExtensions;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -123,7 +125,7 @@ public class BundleApplicationsControllerTest
 	}
 
 	@Test
-	public void testPersist() throws JsonProcessingException
+	public void testSuperSave() throws JsonProcessingException
 	{
 		String restUrl;
 		HttpHeaders headers;
@@ -214,7 +216,7 @@ public class BundleApplicationsControllerTest
 		List<MediaType> acceptableMediaTypes;
 		String json;
 		ResponseEntity<BundleApplication> responseEntity;
-
+		// save a new BundleApplication for the delete action
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), "");
 		acceptableMediaTypes = ListFactory.newArrayList();
 		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
@@ -232,7 +234,68 @@ public class BundleApplicationsControllerTest
 		assertNotNull(responseEntity);
 		BundleApplication bundleApplication = responseEntity.getBody();
 		assertNotNull(bundleApplication);
+		// Now we can delete the just created BundleApplication object
+		headers = new HttpHeaders();
+		headers.setAccept(acceptableMediaTypes);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		json = ObjectToJsonExtensions.toJson(bundleApplication);
+		requestEntity = new HttpEntity<String>(json, headers);
 
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), ActionRestPath.ACTION_DELETE);
+
+		responseEntity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity, BundleApplication.class);
+
+		assertNotNull(responseEntity);
+	}
+
+	@Test
+//	@Disabled
+	public void testUpdate() throws JsonProcessingException
+	{
+		String restUrl;
+		HttpHeaders headers;
+		HttpEntity<String> requestEntity;
+		List<MediaType> acceptableMediaTypes;
+		String json;
+		ResponseEntity<BundleApplication> responseEntity;
+		BundleApplication bundleApplication;
+
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), "");
+		acceptableMediaTypes = ListFactory.newArrayList();
+		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+
+		String newUniqueName = RandomStringUtils.randomAlphabetic(10);
+		json = "{\"id\":null,\"version\":null,\"name\":\"" +
+			newUniqueName +
+			"\",\"defaultLocale\":{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"},\"supportedLocales\":[{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"}]}";
+		headers = new HttpHeaders();
+		headers.setAccept(acceptableMediaTypes);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		requestEntity = new HttpEntity<>(json, headers);
+		responseEntity = this.restTemplate.postForEntity(restUrl,
+			requestEntity, BundleApplication.class);
+		assertNotNull(responseEntity);
+		bundleApplication = responseEntity.getBody();
+		assertNotNull(bundleApplication);
+		// update the just created BundleApplication object
+		String updatedName = RandomStringUtils.randomAlphabetic(3);
+		bundleApplication.setName(updatedName);
+
+		headers = new HttpHeaders();
+		headers.setAccept(acceptableMediaTypes);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		json = ObjectToJsonExtensions.toJson(bundleApplication);
+		requestEntity = new HttpEntity<>(json, headers);
+
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), ActionRestPath.ACTION_UPDATE);
+
+		responseEntity = this.restTemplate.exchange(restUrl, HttpMethod.PUT, requestEntity, BundleApplication.class);
+
+		assertNotNull(responseEntity);
+		bundleApplication = responseEntity.getBody();
+		assertNotNull(bundleApplication);
+		assertEquals(updatedName, bundleApplication.getName());
+		// Now we can delete the just updated BundleApplication object
 		headers = new HttpHeaders();
 		headers.setAccept(acceptableMediaTypes);
 		headers.setContentType(MediaType.APPLICATION_JSON);
