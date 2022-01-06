@@ -101,7 +101,7 @@ public class LanguagesController
 	@ApiOperation(value = "Find all LanguageLocales objects")
 	public ResponseEntity<Iterable<Language>> findAllLanguageLocales()
 	{
-		Iterable<Languages> all = super.findAll();
-		return ResponseEntity.ok(mapper.toDtos(new HashSet<>((Collection)all)));
+		Iterable<Language> all = super.findAll();
+		return ResponseEntity.ok(new HashSet<>((Collection)all));
 	}
 }

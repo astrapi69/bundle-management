@@ -88,7 +88,7 @@ public class CountriesController
 	@ApiOperation(value = "Find all Countries objects")
 	public ResponseEntity<Iterable<Country>> findAllCountries()
 	{
-		Iterable<Countries> all = super.findAll();
-		return ResponseEntity.ok(mapper.toDtos(new HashSet<>((Collection)all)));
+		Iterable<Country> all = super.findAll();
+		return ResponseEntity.ok(new HashSet<>((Collection)all));
 	}
 }

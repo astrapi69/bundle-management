@@ -373,11 +373,13 @@ public class ResourcebundlesService
 		final @NonNull Properties properties, final @NonNull String baseName, final String filepath,
 		final @NonNull Locale locale, final boolean update)
 	{
-		final BundleNames bundleName = bundleNamesService.getOrCreateNewBundleNames(owner, baseName,
+		BundleNames bundleName = bundleNamesService.getOrCreateNewBundleNames(owner, baseName,
 			locale);
+		final BundleApplications bundleNameOwner = bundleName.getOwner();
 		if (filepath != null)
 		{
 			bundleName.setFilepath(filepath);
+			bundleName = bundleNamesService.merge(bundleName);
 		}
 		final Properties dbProperties = getProperties(bundleName);
 
@@ -392,7 +394,7 @@ public class ResourcebundlesService
 					return;
 				}
 			}
-			saveOrUpdateEntry(bundleName, baseName, locale, key, value, update);
+			saveOrUpdateEntry(bundleNameOwner, baseName, locale, key, value, update);
 		});
 		return bundleName;
 	}

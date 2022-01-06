@@ -83,8 +83,7 @@ public class BundleApplicationsController
 		this.service = service;
 	}
 
-	@RequestMapping(value = ActionRestPath.ACTION_DELETE, method = RequestMethod.DELETE,
-		consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = ActionRestPath.ACTION_DELETE, method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Delete the given bundle application")
 	public ResponseEntity<BundleApplication> delete(
 		@Valid @RequestBody BundleApplication bundleApplication)
@@ -95,8 +94,7 @@ public class BundleApplicationsController
 		return ResponseEntity.ok(mapper.toDto(bundleApplications));
 	}
 
-	@RequestMapping(value = ActionRestPath.ACTION_UPDATE, method = RequestMethod.PUT,
-		consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = ActionRestPath.ACTION_UPDATE, method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Update the given bundle application")
 	public ResponseEntity<BundleApplication> update(
 		@Valid @RequestBody BundleApplication bundleApplication)
@@ -111,9 +109,9 @@ public class BundleApplicationsController
 	@ApiOperation(value = "Find all BundleApplications objects")
 	public ResponseEntity<Iterable<BundleApplication>> findAllBundleApplications()
 	{
-		Iterable<BundleApplications> all = super.findAll();
+		Iterable<BundleApplication> all = super.findAll();
 
-		return ResponseEntity.ok(mapper.toDtos(new HashSet<>((Collection)all)));
+		return ResponseEntity.ok(new HashSet<>((Collection)all));
 	}
 
 	@CrossOrigin(origins = "*")
@@ -146,10 +144,11 @@ public class BundleApplicationsController
 
 	@CrossOrigin(origins = "*")
 	@GetMapping(path = ActionRestPath.ACTION_FIND, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(value = "Find the Resourcebundle from the given arguments.")
+	@ApiOperation(value = "Find the bundle application from the given arguments.")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query") })
-	public ResponseEntity<BundleApplication> getBundleApp(
+			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application",
+				dataType = "string", paramType = "query") })
+	public ResponseEntity<BundleApplication> find(
 		@RequestParam("bundleappname") String bundleappname)
 	{
 		final BundleApplications bundleApplication = this.service.find(bundleappname);
