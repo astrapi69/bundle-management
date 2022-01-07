@@ -93,6 +93,6 @@ public class BundleApplicationsRepositoryTest extends BaseJpaTest
 		bundleApplications = repository
 			.findAllByLanguageLocaleWithInnerJoin(languageLocales.getId());
 		// then
-		assertThat(bundleApplications.size()).isEqualTo(1);
+		assertThat(bundleApplications.size()).isEqualTo(2);
 	}
 }
