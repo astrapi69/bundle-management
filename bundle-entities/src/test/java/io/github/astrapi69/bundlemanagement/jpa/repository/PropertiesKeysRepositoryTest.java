@@ -24,16 +24,15 @@
  */
 package io.github.astrapi69.bundlemanagement.jpa.repository;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import de.alpharogroup.bundlemanagement.integration.AbstractIntegrationTest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
+import io.github.astrapi69.bundlemanagement.integration.AbstractIntegrationTest;
 import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesKeys;
 
 public class PropertiesKeysRepositoryTest extends AbstractIntegrationTest

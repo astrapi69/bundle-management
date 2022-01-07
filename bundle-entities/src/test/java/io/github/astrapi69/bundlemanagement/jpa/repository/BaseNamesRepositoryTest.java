@@ -27,12 +27,10 @@ package io.github.astrapi69.bundlemanagement.jpa.repository;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import org.junit.jupiter.api.Test;
-import de.alpharogroup.bundlemanagement.integration.AbstractIntegrationTest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
+import io.github.astrapi69.bundlemanagement.integration.AbstractIntegrationTest;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BaseNames;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class BaseNamesRepositoryTest extends AbstractIntegrationTest
 {

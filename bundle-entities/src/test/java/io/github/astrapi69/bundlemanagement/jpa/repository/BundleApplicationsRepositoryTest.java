@@ -27,14 +27,11 @@ package io.github.astrapi69.bundlemanagement.jpa.repository;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import de.alpharogroup.bundlemanagement.integration.AbstractIntegrationTest;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import io.github.astrapi69.bundlemanagement.integration.AbstractIntegrationTest;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
 import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
 import io.github.astrapi69.collections.set.SetFactory;
@@ -95,6 +92,6 @@ public class BundleApplicationsRepositoryTest extends AbstractIntegrationTest
 		bundleApplications = repository
 			.findAllByLanguageLocaleWithInnerJoin(languageLocales.getId());
 		// then
-		assertThat(bundleApplications.size()).isEqualTo(2);
+		assertThat(bundleApplications.size()).isEqualTo(1);
 	}
 }

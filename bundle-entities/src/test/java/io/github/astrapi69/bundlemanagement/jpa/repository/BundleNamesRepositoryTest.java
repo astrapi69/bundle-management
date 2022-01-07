@@ -28,14 +28,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import org.junit.jupiter.api.Test;
-import de.alpharogroup.bundlemanagement.integration.AbstractIntegrationTest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
+import io.github.astrapi69.bundlemanagement.integration.AbstractIntegrationTest;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BaseNames;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleNames;
@@ -111,7 +107,7 @@ public class BundleNamesRepositoryTest extends AbstractIntegrationTest
 			.findDistinctByName("foo-bar.com");
 		List<BundleNames> byOwner = repository.findByOwner(distinctByName);
 
-		assertThat(byOwner.size()).isEqualTo(3);
+		assertThat(byOwner.size()).isEqualTo(2);
 	}
 
 

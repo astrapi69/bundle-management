@@ -1,7 +1,10 @@
-package de.alpharogroup.bundlemanagement.integration;
+package io.github.astrapi69.bundlemanagement.integration;
 
-import org.jetbrains.annotations.NotNull;
-import org.junit.runner.RunWith;
+import java.time.Duration;
+import java.util.Map;
+import java.util.stream.Stream;
+
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -11,28 +14,26 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.lifecycle.Startables;
 import org.testcontainers.shaded.com.google.common.collect.ImmutableMap;
 
-import java.time.Duration;
-import java.util.Map;
-import java.util.stream.Stream;
-
-@RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(initializers = AbstractIntegrationTest.Initializer.class)
 public class AbstractIntegrationTest {
 
+	/**
+	 * see 'https://hub.docker.com/_/postgres?tab=tags&page=1&name=12.5'
+	 */
+	private static final String IMAGE_VERSION = "postgres:12.5";
     @Autowired
     protected TestEntityManager entityManager;
 
     static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-        static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>()
-                .withDatabaseName("lottery")
+		static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(IMAGE_VERSION)
+			.withDatabaseName("bundles")
                 .withUsername("postgres")
                 .withPassword("postgres")
                 .withStartupTimeout(Duration.ofSeconds(600));
@@ -43,7 +44,7 @@ public class AbstractIntegrationTest {
             // here like rabbitmq or other databases
         }
 
-        private static @NotNull Map<String, Object> createConnectionConfiguration() {
+        private static @NonNull Map<String, Object> createConnectionConfiguration() {
             return ImmutableMap.of(
                     "spring.datasource.url", postgres.getJdbcUrl(),
                     "spring.datasource.username", postgres.getUsername(),
@@ -53,8 +54,8 @@ public class AbstractIntegrationTest {
 
 
         @Override
-        public void initialize(@NotNull ConfigurableApplicationContext applicationContext) {
-
+		public void initialize(@NonNull ConfigurableApplicationContext applicationContext)
+		{
             startContainers();
             ConfigurableEnvironment environment = applicationContext.getEnvironment();
             MapPropertySource testcontainers = new MapPropertySource("testcontainers",
