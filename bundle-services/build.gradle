@@ -4,19 +4,19 @@ dependencies {
     implementation project(":bundle-mappers")
     implementation project(":bundle-viewmodels")
 
-    implementation("de.alpharogroup:generic-mapper:$genericMapperVersion")
-    implementation("de.alpharogroup:ent-api:$entApiVersion")
-    implementation("de.alpharogroup:ent-core:$entCoreVersion")
-    implementation("de.alpharogroup:silly-jdbc:$sillyJdbcVersion")
-    implementation("de.alpharogroup:silly-collections:$sillyCollectionsVersion")
-    implementation("de.alpharogroup:resourcebundle-core:$resourcebundleCoreVersion")
-    implementation("de.alpharogroup:jobj-copy:$jobjCopyVersion")
-    implementation("de.alpharogroup:xml-extensions:$xmlExtensionsVersion")
-    implementation("de.alpharogroup:throw-able:$throwAbleVersion")
-    implementation("de.alpharogroup:spring-tool-extensions:$springToolExtensionsVersion")
-    implementation("de.alpharogroup:spring-boot-extensions:$springBootExtensionsVersion")
-    implementation("io.springfox:springfox-swagger2:$springfoxSwaggerVersion")
-    implementation("io.springfox:springfox-swagger-ui:$springfoxSwaggerVersion")
+    implementation("io.github.astrapi69:generic-mapper:$genericMapperVersion")
+    implementation("io.github.astrapi69:ent-api:$entApiVersion")
+    implementation("io.github.astrapi69:ent-core:$entCoreVersion")
+    implementation("io.github.astrapi69:jobj-core:$jobjCoreVersion")
+    implementation("io.github.astrapi69:silly-jdbc:$sillyJdbcVersion")
+    implementation("io.github.astrapi69:silly-collections:$sillyCollectionsVersion")
+    implementation("io.github.astrapi69:silly-beans:$sillyBeansVersion")
+    implementation("io.github.astrapi69:resourcebundle-core:$resourcebundleCoreVersion")
+    implementation("io.github.astrapi69:jobj-copy:$jobjCopyVersion")
+    implementation("io.github.astrapi69:xml-extensions:$xmlExtensionsVersion")
+    implementation("io.github.astrapi69:throw-able:$throwAbleVersion")
+    implementation("io.github.astrapi69:spring-tool-extensions:$springToolExtensionsVersion")
+    implementation("io.github.astrapi69:spring-boot-extensions:$springBootExtensionsVersion")
     implementation("com.thoughtworks.xstream:xstream:$xstreamVersion")
     implementation("org.apache.commons:commons-lang3:$commonsLang3Version")
     implementation("org.postgresql:postgresql")
@@ -29,3 +29,112 @@ dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
+
+license {
+    ext.year = "$projectInceptionYear"
+    ext.owner = "$projectLeaderName"
+    header rootProject.file('src/main/resources/LICENSE.txt')
+    excludes(["**/README",
+              "**/README.md",
+              "**/LICENSE",
+              "**/NOTICE",
+              "**/*.yml",
+              "**/*.xml",
+              "**/*.xsl",
+              "**/*.xsd",
+              "**/*.dtd",
+              "**/*.html",
+              "**/*.jsp",
+              "**/*.jpa",
+              "**/*.sql",
+              "**/*.properties",
+              "**/*.bat",
+              "**/*.gradle",
+              "**/*.MF",
+              "**/*.txt",
+              "**/*.vm",
+              "**/*.log",
+              "**/*.map",
+              "**/*.js.map",
+              "**/*.tmpl",
+              "**/*.js.tmpl",
+              "**/*.editorconfig",
+              "**/*.lombok.config",
+              "src/test/resources/**",
+              "src/main/resources/**",
+              "out/**",
+              "build/**"])
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier.set("sources")
+    from(sourceSets.main.allJava)
+}
+
+task javadocJar(type: Jar) {
+    from javadoc
+    archiveClassifier.set("javadoc")
+    javadoc.properties.failOnError = false
+}
+
+def releaseVersion = !version.endsWith("SNAPSHOT")
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = "$project.name"
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            pom {
+                name = "$project.name"
+                description = "$projectSerivcesDescription"
+                url = "$projectScmProviderUrl" + "$projectHolderUsername" + "/" + "$rootProject.name"
+                organization {
+                    name = "$projectOrganizationName"
+                    url = "$projectOrganizationUrl"
+                }
+                issueManagement {
+                    system = "$projectIssueManagementSystem"
+                    url = "$projectScmProviderUrl" + "$projectHolderUsername" + "/" + "$rootProject.name" + "/issues"
+                }
+                licenses {
+                    license {
+                        name = "$projectLicenseName"
+                        url = "$projectLicenseUrl"
+                        distribution = "$projectLicenseDistribution"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "$projectHolderUsername"
+                        name = "$projectLeaderName"
+                    }
+                }
+                scm {
+                    connection = "$projectScmGitUrlPrefix" + "$projectScmProviderDomain" + ":" + "$projectHolderUsername" + "/" + "$rootProject.name" + ".git"
+                    developerConnection = "$projectScmGitUrlPrefix" + "$projectScmProviderDomain" + ":" + "$projectHolderUsername" + "/" + "$rootProject.name" + ".git"
+                    url = "$projectScmGitUrlPrefix" + "$projectScmProviderDomain" + ":" + "$projectHolderUsername" + "/" + "$rootProject.name" + ".git"
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username System.getenv("$projectRepositoriesUserNameKey") ?: project.property("$projectRepositoriesUserNameKey")
+                password System.getenv("$projectRepositoriesPasswordKey") ?: project.property("$projectRepositoriesPasswordKey")
+            }
+            def releasesRepoUrl = "$projectRepositoriesReleasesRepoUrl"
+            def snapshotsRepoUrl = "$projectRepositoriesSnapshotsRepoUrl"
+            url = releaseVersion ? releasesRepoUrl : snapshotsRepoUrl
+        }
+    }
+}
+
+signing {
+    if (releaseVersion) {
+        sign publishing.publications.mavenJava
+    }
+}
+

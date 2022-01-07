@@ -1,23 +1,12 @@
 
 buildscript {
-	ext {
-		gradlePluginLombokVersion = "4.0.0"
-		springBootGradlePluginVersion = "2.3.1.RELEASE"
-		springGradlePluginDependencyManagementVersion = "1.0.9.RELEASE"
-		gradlePluginVersionsVersion = "0.28.0"
-		licenseGradlePluginVersion = "0.15.0"
-		gradleAptPluginVersion = "0.21"
-	}
 	repositories {
-		mavenCentral()
-		google()
-		jcenter()
 		maven {
 			url "https://plugins.gradle.org/m2/"
 		}
 	}
 	dependencies {
-		classpath "io.franzbecker:gradle-lombok:$gradlePluginLombokVersion"
+		classpath "io.freefair.gradle:lombok-plugin:$gradlePluginLombokVersion"
 		classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootGradlePluginVersion"
 		classpath "io.spring.gradle:dependency-management-plugin:$springGradlePluginDependencyManagementVersion"
 		classpath "com.github.ben-manes:gradle-versions-plugin:$gradlePluginVersionsVersion"
@@ -31,17 +20,24 @@ allprojects {
 	version = "$projectVersion"
 
 	repositories {
-		jcenter()
+		mavenLocal()
 		mavenCentral()
 	}
 }
 
 subprojects {
 
-	apply plugin: 'java'
-	apply plugin: 'org.springframework.boot'
-	apply plugin: 'io.spring.dependency-management'
+	apply plugin: "io.freefair.lombok"
+	apply plugin: "org.springframework.boot"
+	apply plugin: "io.spring.dependency-management"
+	apply plugin: "java"
+	apply plugin: "maven-publish"
+	apply plugin: "signing"
+	apply plugin: "jacoco"
+	apply plugin: "eclipse"
+	apply plugin: "idea"
 	apply plugin: "com.github.ben-manes.versions"
+	apply plugin: "com.github.hierynomus.license"
 
 	bootJar {
 		enabled = false
@@ -62,9 +58,21 @@ subprojects {
 		annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 	}
 
+	// workhack for license issue #76
+	gradle.startParameter.excludedTaskNames += "licenseMain"
+	gradle.startParameter.excludedTaskNames += "licenseTest"
+
 	compileJava {
 		sourceCompatibility = "$projectSourceCompatibility"
 		targetCompatibility = "$projectTargetCompatibility"
+	}
+
+	tasks.withType(JavaCompile) {
+		options.encoding = "UTF-8"
+		// uncomment the next line for build with compiler argument -Xlint:deprecation
+		// options.compilerArgs << "-Xlint:deprecation"
+		// uncomment the next line for build with compiler argument -Xlint:unchecked
+		// options.compilerArgs << "-Xlint:unchecked"
 	}
 
 	test {
