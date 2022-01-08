@@ -24,12 +24,13 @@
  */
 package io.github.astrapi69.bundlemanagement;
 
-import io.github.astrapi69.bundlemanagement.configuration.ApplicationProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import io.github.astrapi69.bundlemanagement.configuration.ApplicationProperties;
 
 @EnableTransactionManagement
 @EnableConfigurationProperties({ ApplicationProperties.class })

@@ -28,9 +28,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesKeyParts;
-import io.github.astrapi69.bundlemanagement.jpa.repository.PropertiesKeyPartsRepository;
-import io.github.astrapi69.resourcebundle.properties.PropertiesKeyExtensions;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,10 +37,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesKeys;
-import io.github.astrapi69.bundlemanagement.jpa.repository.PropertiesKeysRepository;
+import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesKeyParts;
+import io.github.astrapi69.bundlemanagement.jpa.repository.PropertiesKeyPartsRepository;
+import io.github.astrapi69.resourcebundle.properties.PropertiesKeyExtensions;
 import io.github.astrapi69.spring.service.api.GenericService;
-import io.github.astrapi69.spring.service.api.NameEntityService;
 
 /**
  * The class {@link PropertiesKeyPartsService}.
@@ -68,33 +65,32 @@ public class PropertiesKeyPartsService
 		for (int i = 0; i < keyParts.length; i++)
 		{
 			String keyPart = keyParts[i];
-			if(i == 0) {
+			if (i == 0)
+			{
 				Optional<PropertiesKeyParts> rootByValue = repository.findRootByValue(keyPart);
-				if(rootByValue.isPresent()){
+				if (rootByValue.isPresent())
+				{
 					parent = rootByValue.get();
-				} else {
-					PropertiesKeyParts root = PropertiesKeyParts.builder()
-						.parent(null)
-						.depth(i)
-						.node(true)
-						.value(keyPart)
-						.build();
+				}
+				else
+				{
+					PropertiesKeyParts root = PropertiesKeyParts.builder().parent(null).depth(i)
+						.node(true).value(keyPart).build();
 					parent = repository.save(root);
 				}
 				continue;
 			}
 
-			List<PropertiesKeyParts> byDepthAndValueAndParent = repository.findByDepthAndValueAndParent(
-				i, keyPart, parent);
-			if(!byDepthAndValueAndParent.isEmpty()) {
+			List<PropertiesKeyParts> byDepthAndValueAndParent = repository
+				.findByDepthAndValueAndParent(i, keyPart, parent);
+			if (!byDepthAndValueAndParent.isEmpty())
+			{
 				parent = byDepthAndValueAndParent.get(0);
-			} else {
-				PropertiesKeyParts propertiesKeyParts = PropertiesKeyParts.builder()
-					.parent(parent)
-					.depth(i)
-					.node(true)
-					.value(keyPart)
-					.build();
+			}
+			else
+			{
+				PropertiesKeyParts propertiesKeyParts = PropertiesKeyParts.builder().parent(parent)
+					.depth(i).node(true).value(keyPart).build();
 				parent = repository.save(propertiesKeyParts);
 			}
 		}

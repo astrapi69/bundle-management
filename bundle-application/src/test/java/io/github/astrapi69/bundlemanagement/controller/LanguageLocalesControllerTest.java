@@ -24,16 +24,13 @@
  */
 package io.github.astrapi69.bundlemanagement.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -44,13 +41,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-
-import io.github.astrapi69.bundlemanagement.configuration.ApplicationConfiguration;
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import io.github.astrapi69.bundlemanagement.viewmodel.LanguageLocale;
 import io.github.astrapi69.collections.array.ArrayFactory;
 import io.github.astrapi69.spring.web.util.UrlExtensions;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
@@ -58,11 +55,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class LanguageLocalesControllerTest
 {
 
-	@Autowired
-	private TestRestTemplate restTemplate;
-
 	@LocalServerPort
 	int randomServerPort;
+	@Autowired
+	private TestRestTemplate restTemplate;
 
 	public String getBaseUrl(int serverPort)
 	{

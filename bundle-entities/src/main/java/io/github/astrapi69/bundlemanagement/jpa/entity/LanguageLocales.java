@@ -30,8 +30,6 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import io.github.astrapi69.entity.enums.DatabasePrefix;
-import io.github.astrapi69.entity.versionable.VersionableUUIDEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,6 +38,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
+import io.github.astrapi69.entity.enums.DatabasePrefix;
+import io.github.astrapi69.entity.versionable.VersionableUUIDEntity;
 
 /**
  * The entity class {@link LanguageLocales} holds the data for the locale as {@link String} object.
@@ -63,11 +63,9 @@ public class LanguageLocales extends VersionableUUIDEntity implements Cloneable
 {
 
 	public static final String COLUMN_NAME_LOCALE = "locale";
-
+	public static final String TABLE_NAME = "language_locales";
 	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;
-	public static final String TABLE_NAME = "language_locales";
-
 	/** The locale of this entry. */
 	@Column(length = 64)
 	String locale;

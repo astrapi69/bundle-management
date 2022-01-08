@@ -30,7 +30,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +43,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
 import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import io.github.astrapi69.bundlemanagement.viewmodel.Country;
 import io.github.astrapi69.collections.array.ArrayFactory;
@@ -55,11 +55,10 @@ import io.github.astrapi69.spring.web.util.UrlExtensions;
 public class CountriesControllerTest
 {
 
-	@Autowired
-	private TestRestTemplate restTemplate;
-
 	@LocalServerPort
 	int randomServerPort;
+	@Autowired
+	private TestRestTemplate restTemplate;
 
 	public String getBaseUrl(int serverPort)
 	{

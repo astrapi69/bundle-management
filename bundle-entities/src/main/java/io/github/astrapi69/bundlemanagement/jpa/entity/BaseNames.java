@@ -28,12 +28,12 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
-import io.github.astrapi69.entity.enums.DatabasePrefix;
-import io.github.astrapi69.entity.nameable.Nameable;
-import io.github.astrapi69.entity.nameable.versionable.VersionableNameUUIDEntity;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import io.github.astrapi69.entity.enums.DatabasePrefix;
+import io.github.astrapi69.entity.nameable.Nameable;
+import io.github.astrapi69.entity.nameable.versionable.VersionableNameUUIDEntity;
 
 /**
  * Entity class for saving in database base names of the resource bundles. The base name if you see
@@ -49,10 +49,9 @@ import lombok.experimental.SuperBuilder;
 public class BaseNames extends VersionableNameUUIDEntity implements Cloneable
 {
 
+	public static final String TABLE_NAME = "basenames";
 	/**
 	 * Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
-
-	public static final String TABLE_NAME = "basenames";
 }

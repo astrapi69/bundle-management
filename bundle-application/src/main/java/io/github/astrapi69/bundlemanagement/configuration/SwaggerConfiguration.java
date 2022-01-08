@@ -26,8 +26,6 @@ package io.github.astrapi69.bundlemanagement.configuration;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
-import java.util.Collections;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -55,14 +53,12 @@ public class SwaggerConfiguration
 
 	private ApiInfo metaData()
 	{
-		return new ApiInfoBuilder()
-			.title("Resourcebundles REST API")
+		return new ApiInfoBuilder().title("Resourcebundles REST API")
 			.description("REST API for manage several resourcebundles applications")
-			.version(ApplicationConfiguration.VERSION_API_1)
-			.license("MIT License")
+			.version(ApplicationConfiguration.VERSION_API_1).license("MIT License")
 			.licenseUrl("https://opensource.org/licenses/MIT")
-			.contact(new Contact("resourcebundles org.",
-				"www.resourcebundles-applications.com", ""))
+			.contact(
+				new Contact("resourcebundles org.", "www.resourcebundles-applications.com", ""))
 			.build();
 	}
 

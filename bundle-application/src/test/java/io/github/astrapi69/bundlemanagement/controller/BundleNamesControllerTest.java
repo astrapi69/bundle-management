@@ -30,10 +30,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
-import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
-import io.github.astrapi69.bundlemanagement.viewmodel.Resourcebundle;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,15 +39,13 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import io.github.astrapi69.bundlemanagement.configuration.ApplicationConfiguration;
-import io.github.astrapi69.bundlemanagement.viewmodel.Country;
-import io.github.astrapi69.collections.array.ArrayFactory;
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
+import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
 import io.github.astrapi69.spring.web.util.UrlExtensions;
 
 @ExtendWith(SpringExtension.class)
@@ -60,11 +54,10 @@ import io.github.astrapi69.spring.web.util.UrlExtensions;
 public class BundleNamesControllerTest
 {
 
-	@Autowired
-	private TestRestTemplate restTemplate;
-
 	@LocalServerPort
 	int randomServerPort;
+	@Autowired
+	private TestRestTemplate restTemplate;
 
 	public String getBaseUrl(int serverPort)
 	{

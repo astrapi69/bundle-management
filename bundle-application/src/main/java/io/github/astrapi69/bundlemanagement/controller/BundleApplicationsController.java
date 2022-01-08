@@ -146,8 +146,7 @@ public class BundleApplicationsController
 	@GetMapping(path = ActionRestPath.ACTION_FIND, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the bundle application from the given arguments.")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application",
-				dataType = "string", paramType = "query") })
+			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query") })
 	public ResponseEntity<BundleApplication> find(
 		@RequestParam("bundleappname") String bundleappname)
 	{

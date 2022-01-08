@@ -34,11 +34,17 @@ import java.util.Properties;
 import java.util.UUID;
 import java.util.logging.Level;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.java.Log;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.github.astrapi69.bundlemanagement.jpa.entity.BaseNames;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleNames;
 import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
@@ -55,12 +61,6 @@ import io.github.astrapi69.collections.properties.PropertiesExtensions;
 import io.github.astrapi69.resourcebundle.locale.LocaleExtensions;
 import io.github.astrapi69.resourcebundle.locale.LocaleResolver;
 import io.github.astrapi69.spring.service.api.GenericService;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.experimental.FieldDefaults;
-import lombok.extern.java.Log;
 
 /**
  * The class {@link ResourcebundlesService}
@@ -330,11 +330,11 @@ public class ResourcebundlesService
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public Resourcebundles saveOrUpdateEntry(final @NonNull BundleApplications owner, final String baseName,
-		final Locale locale, final String key, final String value, final boolean update)
+	public Resourcebundles saveOrUpdateEntry(final @NonNull BundleApplications owner,
+		final String baseName, final Locale locale, final String key, final String value,
+		final boolean update)
 	{
-		Resourcebundles resourcebundle = getResourcebundle(owner, baseName, locale,
-			key);
+		Resourcebundles resourcebundle = getResourcebundle(owner, baseName, locale, key);
 		PropertiesValues pvalue = propertiesValuesService.getOrCreateNewNameEntity(value);
 		if (resourcebundle != null)
 		{

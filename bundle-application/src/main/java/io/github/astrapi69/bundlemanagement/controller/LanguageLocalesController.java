@@ -28,9 +28,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.UUID;
 
-import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
-import io.github.astrapi69.bundlemanagement.jpa.entity.Countries;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -39,7 +39,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.github.astrapi69.bundlemanagement.configuration.ApplicationConfiguration;
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
 import io.github.astrapi69.bundlemanagement.jpa.repository.LanguageLocalesRepository;
 import io.github.astrapi69.bundlemanagement.mapper.LanguageLocalesMapper;
@@ -47,8 +48,6 @@ import io.github.astrapi69.bundlemanagement.service.LanguageLocalesService;
 import io.github.astrapi69.bundlemanagement.viewmodel.LanguageLocale;
 import io.github.astrapi69.spring.controller.AbstractRestController;
 import io.swagger.annotations.ApiOperation;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 
 @RestController
 @RequestMapping(AppRestPath.REST_VERSION + AppRestPath.REST_LANGUAGE_LOCALES)
@@ -75,9 +74,9 @@ public class LanguageLocalesController
 	public ResponseEntity<LanguageLocale> findByName(@RequestParam("locale") String locale)
 	{
 		LanguageLocales languageLocales = this.service.find(locale);
-		return languageLocales != null ?
-			ResponseEntity.ok(mapper.toDto(languageLocales)):
-			ResponseEntity.ok(null);
+		return languageLocales != null
+			? ResponseEntity.ok(mapper.toDto(languageLocales))
+			: ResponseEntity.ok(null);
 	}
 
 	@CrossOrigin(origins = "*")

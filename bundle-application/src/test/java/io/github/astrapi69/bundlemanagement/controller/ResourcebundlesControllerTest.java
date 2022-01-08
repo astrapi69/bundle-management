@@ -24,19 +24,19 @@
  */
 package io.github.astrapi69.bundlemanagement.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
-import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
-import io.github.astrapi69.bundlemanagement.viewmodel.BundleApplication;
-import io.github.astrapi69.collections.array.ArrayFactory;
-import io.github.astrapi69.collections.list.ListFactory;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -49,25 +49,22 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.junit.jupiter.api.Test;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import io.github.astrapi69.bundlemanagement.configuration.ApplicationConfiguration;
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
 import io.github.astrapi69.bundlemanagement.viewmodel.ImprortableBundleName;
 import io.github.astrapi69.bundlemanagement.viewmodel.Resourcebundle;
+import io.github.astrapi69.collections.array.ArrayFactory;
 import io.github.astrapi69.collections.list.ListExtensions;
+import io.github.astrapi69.json.ObjectToJsonExtensions;
 import io.github.astrapi69.resourcebundle.locale.LocaleExtensions;
 import io.github.astrapi69.resourcebundle.locale.LocaleResolver;
 import io.github.astrapi69.spring.generics.ParameterizedTypeReferenceFactory;
 import io.github.astrapi69.spring.web.util.UrlExtensions;
-import io.github.astrapi69.json.ObjectToJsonExtensions;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
@@ -75,11 +72,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class ResourcebundlesControllerTest
 {
 
-	@Autowired
-	private TestRestTemplate restTemplate;
-
 	@LocalServerPort
 	int randomServerPort;
+	@Autowired
+	private TestRestTemplate restTemplate;
 
 	public String getBaseUrl(int serverPort)
 	{
@@ -106,7 +102,8 @@ public class ResourcebundlesControllerTest
 
 		Class<Resourcebundle> responseType = Resourcebundle.class;
 
-		requestParameters = ArrayFactory.newArray( "bundleappname", "basename", "locale", "key", "value" );
+		requestParameters = ArrayFactory.newArray("bundleappname", "basename", "locale", "key",
+			"value");
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
 			ActionRestPath.ACTION_SAVE_OR_UPDATE, requestParameters);
 
@@ -117,20 +114,22 @@ public class ResourcebundlesControllerTest
 		urlVariables.put("bundleappname", "test-bundle-application");
 		urlVariables.put("basename", "test");
 		urlVariables.put("locale", "de_DE");
-		urlVariables.put("key", "com.example.gui.prop.with.new.label."+newPropertiesValue);
+		urlVariables.put("key", "com.example.gui.prop.with.new.label." + newPropertiesValue);
 		urlVariables.put("value", newPropertiesValue);
 
-		responseEntity = this.restTemplate.postForEntity(restUrl, requestEntity,
-			responseType, urlVariables);
+		responseEntity = this.restTemplate.postForEntity(restUrl, requestEntity, responseType,
+			urlVariables);
 		assertNotNull(responseEntity);
 		resourcebundle = responseEntity.getBody();
 		assertEquals(resourcebundle.getValue().getName(), newPropertiesValue);
 
 		requestEntity = new HttpEntity<>(headers);
 
-		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), "/"+resourcebundle.getId().toString());
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			"/" + resourcebundle.getId().toString());
 
-		ResponseEntity<Map> responseMapEntity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity, Map.class);
+		ResponseEntity<Map> responseMapEntity = this.restTemplate.exchange(restUrl,
+			HttpMethod.DELETE, requestEntity, Map.class);
 
 		assertNotNull(responseMapEntity);
 		Map body = (Map)responseMapEntity.getBody();
@@ -232,8 +231,7 @@ public class ResourcebundlesControllerTest
 		final String[] paramsGerman = { "Fritz", "Berlin" };
 		String[] requestParams = { "basename", "bundleappname", "key", "locale" };
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ActionRestPath.ACTION_VALUE_WITH_PARAMETERS, requestParams, "params",
-			paramsGerman);
+			ActionRestPath.ACTION_VALUE_WITH_PARAMETERS, requestParams, "params", paramsGerman);
 
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
@@ -267,8 +265,8 @@ public class ResourcebundlesControllerTest
 		map.put("value", newValue);
 		// http://localhost:5000/v1/resourcebundle/save/or/update?bundleappname=test-bundle-application&basename=test&locale=de_DE&key=com.example.gui.prop.with.new.label&value=foo
 
-		ResponseEntity<Resourcebundle> entity = this.restTemplate.postForEntity(restUrl, requestEntity,
-			Resourcebundle.class, map);
+		ResponseEntity<Resourcebundle> entity = this.restTemplate.postForEntity(restUrl,
+			requestEntity, Resourcebundle.class, map);
 		assertNotNull(entity);
 		Resourcebundle resourcebundle = entity.getBody();
 		assertEquals(resourcebundle.getValue().getName(), newValue);

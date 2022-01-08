@@ -1,3 +1,27 @@
+/**
+ * The MIT License
+ *
+ * Copyright (C) 2015 Asterios Raptis
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package io.github.astrapi69.bundlemanagement.enums;
 
 import lombok.AccessLevel;
@@ -54,18 +78,17 @@ public enum ActionRestPath
 	public static final String ACTION_DELETE = "/delete";
 	public static final String ACTION_FIND = "/find";
 	public static final String ACTION_FIND_BY = ACTION_FIND + "/by";
-	public static final String ACTION_FIND_ALL = ACTION_FIND + "/all";
-	public static final String ACTION_VALUE = "/value";
-	public static final String ACTION_VALUE_WITH_PARAMETERS = ActionRestPath.ACTION_VALUE + "/with/parameters";
-
-	public static final String ACTION_PROPERTIES = "/properties";
-	public static final String ACTION_RESOURCE_BUNDLES = "/resourcebundles";
-	public static final String ACTION_UPDATE_BUNDLENAME = ACTION_UPDATE + "/bundlename";
-	public static final String ACTION_FIND_ALL_BUNDLE_NAMES = ACTION_FIND_ALL + "/bundlenames";
 	public static final String ACTION_FIND_BY_NAME = ACTION_FIND_BY + "/name";
 	public static final String ACTION_FIND_BY_CODE = ACTION_FIND_BY + "/code";
 	public static final String ACTION_FIND_BY_LOCALE = ACTION_FIND_BY + "/locale";
 	public static final String ACTION_FIND_BY_BUNDLE_NAME = ACTION_FIND_BY + "/bundlename";
-
+	public static final String ACTION_FIND_ALL = ACTION_FIND + "/all";
+	public static final String ACTION_FIND_ALL_BUNDLE_NAMES = ACTION_FIND_ALL + "/bundlenames";
+	public static final String ACTION_VALUE = "/value";
+	public static final String ACTION_VALUE_WITH_PARAMETERS = ActionRestPath.ACTION_VALUE
+		+ "/with/parameters";
+	public static final String ACTION_PROPERTIES = "/properties";
+	public static final String ACTION_RESOURCE_BUNDLES = "/resourcebundles";
+	public static final String ACTION_UPDATE_BUNDLENAME = ACTION_UPDATE + "/bundlename";
 	String value;
 }

@@ -26,9 +26,9 @@ package io.github.astrapi69.bundlemanagement.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.UUID;
+
+import org.junit.jupiter.api.Test;
 
 public class UUIDTest
 {

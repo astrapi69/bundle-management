@@ -30,18 +30,19 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import io.github.astrapi69.entity.nameable.Nameable;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import io.github.astrapi69.entity.enums.DatabasePrefix;
-import io.github.astrapi69.entity.nameable.NameUUIDEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import io.github.astrapi69.entity.enums.DatabasePrefix;
+import io.github.astrapi69.entity.nameable.NameUUIDEntity;
+import io.github.astrapi69.entity.nameable.Nameable;
 
 /**
  * The entity class {@link Countries} is keeping the information for all countries in the world
@@ -70,9 +71,9 @@ public class Countries extends NameUUIDEntity implements Cloneable
 {
 
 	public static final String COLUMN_NAME_ISO_3166_A2_NAME = "iso3166_a2name";
+	public static final String TABLE_NAME = "countries";
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;
-	public static final String TABLE_NAME = "countries";
 	/** The iso3166 name with two characters. */
 	@Column(name = "iso3166_a2name", length = 2)
 	String iso3166a2name;

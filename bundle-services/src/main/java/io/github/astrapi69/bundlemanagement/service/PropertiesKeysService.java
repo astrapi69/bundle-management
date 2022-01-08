@@ -27,6 +27,11 @@ package io.github.astrapi69.bundlemanagement.service;
 import java.util.List;
 import java.util.UUID;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,10 +40,6 @@ import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesKeys;
 import io.github.astrapi69.bundlemanagement.jpa.repository.PropertiesKeysRepository;
 import io.github.astrapi69.spring.service.api.GenericService;
 import io.github.astrapi69.spring.service.api.NameEntityService;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.experimental.FieldDefaults;
 
 /**
  * The class {@link PropertiesKeysService}.

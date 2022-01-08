@@ -41,9 +41,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import io.github.astrapi69.entity.enums.DatabasePrefix;
-import io.github.astrapi69.entity.nameable.Nameable;
-import io.github.astrapi69.entity.nameable.versionable.VersionableNameUUIDEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -52,6 +49,9 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
+import io.github.astrapi69.entity.enums.DatabasePrefix;
+import io.github.astrapi69.entity.nameable.Nameable;
+import io.github.astrapi69.entity.nameable.versionable.VersionableNameUUIDEntity;
 
 /**
  * The entity class {@link BundleApplications} is the root of every bundle application. Every entity
@@ -93,12 +93,9 @@ public class BundleApplications extends VersionableNameUUIDEntity implements Clo
 
 	public static final String NQ_FIND_ALL_BY_LANGUAGE_LOCALE = "BundleApplications."
 		+ "findAllByLanguageLocale";
+	public static final String TABLE_NAME = "bundle_applications";
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-
-
-	public static final String TABLE_NAME = "bundle_applications";
-
 	/**
 	 * The default locale of this bundle application.
 	 */
@@ -116,10 +113,13 @@ public class BundleApplications extends VersionableNameUUIDEntity implements Clo
 					@JoinColumn(name = "language_locales_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundle_application_language_locales_id")) })
 	Set<LanguageLocales> supportedLocales = new HashSet<>();
 
-	public BundleApplications(String name) {
+	public BundleApplications(String name)
+	{
 		super(name);
 	}
-	public BundleApplications(String name, Integer version) {
+
+	public BundleApplications(String name, Integer version)
+	{
 		super(name);
 		setVersion(version);
 	}

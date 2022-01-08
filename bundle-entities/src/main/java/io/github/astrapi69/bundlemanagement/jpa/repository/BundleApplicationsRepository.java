@@ -41,7 +41,7 @@ public interface BundleApplicationsRepository extends JpaRepository<BundleApplic
 {
 	@Modifying
 	@Query("update BundleApplications ba set ba.name =:name where ba.id =:id")
-	void setNameById(@Param("name") String name,  @Param("id") UUID id);
+	void setNameById(@Param("name") String name, @Param("id") UUID id);
 
 	List<BundleApplications> findByName(String name);
 

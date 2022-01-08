@@ -31,10 +31,9 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
-import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
-import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesKeys;
-import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesValues;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +46,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.github.astrapi69.bundlemanagement.configuration.ApplicationConfiguration;
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleNames;
 import io.github.astrapi69.bundlemanagement.jpa.entity.Resourcebundles;
@@ -64,8 +64,6 @@ import io.github.astrapi69.spring.controller.AbstractRestController;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 
 @RestController
 @RequestMapping(AppRestPath.REST_VERSION + AppRestPath.REST_RESOURCE_BUNDLES)
@@ -142,7 +140,8 @@ public class ResourcebundlesController
 			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query"),
 			@ApiImplicitParam(name = "basename", value = "the base name", dataType = "string", paramType = "query"),
 			@ApiImplicitParam(name = "locale", value = "the locale", dataType = "string", paramType = "query") })
-	public ResponseEntity<Properties> getProperties(@RequestParam("bundleappname") String bundleappname,
+	public ResponseEntity<Properties> getProperties(
+		@RequestParam("bundleappname") String bundleappname,
 		@RequestParam("basename") String baseName, @RequestParam("locale") String locale)
 	{
 		BundleApplications bundleApplications = this.service.find(bundleappname);
@@ -210,12 +209,13 @@ public class ResourcebundlesController
 	@RequestMapping(path = ActionRestPath.ACTION_SAVE_OR_UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "save the value from the given arguments.")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query"),
-		@ApiImplicitParam(name = "basename", value = "the base name", dataType = "string", paramType = "query"),
-		@ApiImplicitParam(name = "locale", value = "the locale", dataType = "string", paramType = "query"),
-		@ApiImplicitParam(name = "key", value = "the key", dataType = "string", paramType = "query"),
-		@ApiImplicitParam(name = "value", value = "the value of the resourcebundle", dataType = "string", paramType = "query") })
-	public ResponseEntity<Resourcebundle> saveOrUpdate(@RequestParam("bundleappname") String bundleappname,
+			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query"),
+			@ApiImplicitParam(name = "basename", value = "the base name", dataType = "string", paramType = "query"),
+			@ApiImplicitParam(name = "locale", value = "the locale", dataType = "string", paramType = "query"),
+			@ApiImplicitParam(name = "key", value = "the key", dataType = "string", paramType = "query"),
+			@ApiImplicitParam(name = "value", value = "the value of the resourcebundle", dataType = "string", paramType = "query") })
+	public ResponseEntity<Resourcebundle> saveOrUpdate(
+		@RequestParam("bundleappname") String bundleappname,
 		@RequestParam("basename") String basename, @RequestParam("locale") String locale,
 		@RequestParam("key") String key, @RequestParam("value") final String value)
 	{

@@ -24,24 +24,19 @@
  */
 package io.github.astrapi69.bundlemanagement.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
-import io.github.astrapi69.json.ObjectToJsonExtensions;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -54,16 +49,18 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.test.context.ActiveProfiles;
-
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import io.github.astrapi69.bundlemanagement.viewmodel.BundleApplication;
 import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
 import io.github.astrapi69.collections.array.ArrayFactory;
 import io.github.astrapi69.collections.list.ListFactory;
+import io.github.astrapi69.json.ObjectToJsonExtensions;
 import io.github.astrapi69.spring.generics.ParameterizedTypeReferenceFactory;
 import io.github.astrapi69.spring.web.util.UrlExtensions;
 
@@ -73,12 +70,11 @@ import io.github.astrapi69.spring.web.util.UrlExtensions;
 public class BundleApplicationsControllerTest
 {
 
-	@Autowired
-	private TestRestTemplate restTemplate;
-
 	@LocalServerPort
 	int randomServerPort;
 	RestTemplate decoratedRestTemplate;
+	@Autowired
+	private TestRestTemplate restTemplate;
 
 	public String getBaseUrl(int serverPort)
 	{
@@ -114,7 +110,8 @@ public class BundleApplicationsControllerTest
 	public void testFindAll()
 	{
 		String restUrl;
-		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), ActionRestPath.ACTION_FIND_ALL);
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			ActionRestPath.ACTION_FIND_ALL);
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		ResponseEntity<Iterable<BundleApplication>> entities = this.restTemplate.exchange(restUrl,
@@ -138,9 +135,8 @@ public class BundleApplicationsControllerTest
 		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
 
 		String newUniqueName = RandomStringUtils.randomAlphabetic(10);
-		json = "{\"id\":null,\"version\":null,\"name\":\"" +
-			newUniqueName +
-			"\",\"defaultLocale\":{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"},\"supportedLocales\":[{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"}]}";
+		json = "{\"id\":null,\"version\":null,\"name\":\"" + newUniqueName
+			+ "\",\"defaultLocale\":{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"},\"supportedLocales\":[{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"}]}";
 		headers = new HttpHeaders();
 		headers.setAccept(acceptableMediaTypes);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -157,9 +153,11 @@ public class BundleApplicationsControllerTest
 		json = ObjectToJsonExtensions.toJson(bundleApplication);
 		requestEntity = new HttpEntity<String>(json, headers);
 
-		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), ActionRestPath.ACTION_DELETE);
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			ActionRestPath.ACTION_DELETE);
 
-		entity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity, BundleApplication.class);
+		entity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity,
+			BundleApplication.class);
 
 		assertNotNull(entity);
 	}
@@ -178,9 +176,8 @@ public class BundleApplicationsControllerTest
 		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
 
 		String newUniqueName = RandomStringUtils.randomAlphabetic(10);
-		json = "{\"id\":null,\"version\":null,\"name\":\"" +
-			newUniqueName +
-			"\",\"defaultLocale\":{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"},\"supportedLocales\":[{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"}]}";
+		json = "{\"id\":null,\"version\":null,\"name\":\"" + newUniqueName
+			+ "\",\"defaultLocale\":{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"},\"supportedLocales\":[{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"}]}";
 		headers = new HttpHeaders();
 		headers.setAccept(acceptableMediaTypes);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -197,9 +194,11 @@ public class BundleApplicationsControllerTest
 		json = ObjectToJsonExtensions.toJson(bundleApplication);
 		requestEntity = new HttpEntity<String>(json, headers);
 
-		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), "/"+bundleApplication.getId().toString());
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			"/" + bundleApplication.getId().toString());
 
-		ResponseEntity<Map> resp = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity, Map.class);
+		ResponseEntity<Map> resp = this.restTemplate.exchange(restUrl, HttpMethod.DELETE,
+			requestEntity, Map.class);
 
 		assertNotNull(resp);
 		Map body = (Map)resp.getBody();
@@ -222,15 +221,14 @@ public class BundleApplicationsControllerTest
 		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
 
 		String newUniqueName = RandomStringUtils.randomAlphabetic(10);
-		json = "{\"id\":null,\"version\":null,\"name\":\"" +
-			newUniqueName +
-			"\",\"defaultLocale\":{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"},\"supportedLocales\":[{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"}]}";
+		json = "{\"id\":null,\"version\":null,\"name\":\"" + newUniqueName
+			+ "\",\"defaultLocale\":{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"},\"supportedLocales\":[{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"}]}";
 		headers = new HttpHeaders();
 		headers.setAccept(acceptableMediaTypes);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		requestEntity = new HttpEntity<>(json, headers);
-		responseEntity = this.restTemplate.postForEntity(restUrl,
-			requestEntity, BundleApplication.class);
+		responseEntity = this.restTemplate.postForEntity(restUrl, requestEntity,
+			BundleApplication.class);
 		assertNotNull(responseEntity);
 		BundleApplication bundleApplication = responseEntity.getBody();
 		assertNotNull(bundleApplication);
@@ -241,9 +239,11 @@ public class BundleApplicationsControllerTest
 		json = ObjectToJsonExtensions.toJson(bundleApplication);
 		requestEntity = new HttpEntity<String>(json, headers);
 
-		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), ActionRestPath.ACTION_DELETE);
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			ActionRestPath.ACTION_DELETE);
 
-		responseEntity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity, BundleApplication.class);
+		responseEntity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity,
+			BundleApplication.class);
 
 		assertNotNull(responseEntity);
 	}
@@ -265,15 +265,14 @@ public class BundleApplicationsControllerTest
 		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
 
 		String newUniqueName = RandomStringUtils.randomAlphabetic(10);
-		json = "{\"id\":null,\"version\":null,\"name\":\"" +
-			newUniqueName +
-			"\",\"defaultLocale\":{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"},\"supportedLocales\":[{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"}]}";
+		json = "{\"id\":null,\"version\":null,\"name\":\"" + newUniqueName
+			+ "\",\"defaultLocale\":{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"},\"supportedLocales\":[{\"id\":\"4bc772e6-e7b8-43af-89e3-99a66962bfca\",\"version\":1,\"locale\":\"el\"}]}";
 		headers = new HttpHeaders();
 		headers.setAccept(acceptableMediaTypes);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		requestEntity = new HttpEntity<>(json, headers);
-		responseEntity = this.restTemplate.postForEntity(restUrl,
-			requestEntity, BundleApplication.class);
+		responseEntity = this.restTemplate.postForEntity(restUrl, requestEntity,
+			BundleApplication.class);
 		assertNotNull(responseEntity);
 		bundleApplication = responseEntity.getBody();
 		assertNotNull(bundleApplication);
@@ -287,14 +286,16 @@ public class BundleApplicationsControllerTest
 		json = ObjectToJsonExtensions.toJson(bundleApplication);
 		requestEntity = new HttpEntity<>(json, headers);
 
-		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), ActionRestPath.ACTION_UPDATE);
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			ActionRestPath.ACTION_UPDATE);
 
-		responseEntity = this.restTemplate.exchange(restUrl, HttpMethod.PUT, requestEntity, BundleApplication.class);
+		responseEntity = this.restTemplate.exchange(restUrl, HttpMethod.PUT, requestEntity,
+			BundleApplication.class);
 
 		assertNotNull(responseEntity);
 		bundleApplication = responseEntity.getBody();
 		assertNotNull(bundleApplication);
-//		assertEquals(updatedName, bundleApplication.getName());
+		// assertEquals(updatedName, bundleApplication.getName());
 		// Now we can delete the just updated BundleApplication object
 		headers = new HttpHeaders();
 		headers.setAccept(acceptableMediaTypes);
@@ -302,9 +303,11 @@ public class BundleApplicationsControllerTest
 		json = ObjectToJsonExtensions.toJson(bundleApplication);
 		requestEntity = new HttpEntity<String>(json, headers);
 
-		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort), ActionRestPath.ACTION_DELETE);
+		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
+			ActionRestPath.ACTION_DELETE);
 
-		responseEntity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity, BundleApplication.class);
+		responseEntity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity,
+			BundleApplication.class);
 
 		assertNotNull(responseEntity);
 	}

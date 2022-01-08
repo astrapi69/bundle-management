@@ -24,7 +24,10 @@
  */
 package io.github.astrapi69.bundlemanagement.jpa.repository;
 
-import io.github.astrapi69.bundlemanagement.BundleManagementApplication;
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,17 +38,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
+import io.github.astrapi69.bundlemanagement.BundleManagementApplication;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @EntityScan(basePackages = "io.github.astrapi69.bundlemanagement.jpa.entity")
 @EnableJpaRepositories(basePackages = { "io.github.astrapi69.bundlemanagement.jpa.repository" })
 @AutoConfigureTestDatabase(replace = NONE)
-@ContextConfiguration(classes = {BundleManagementApplication.class, })
+@ContextConfiguration(classes = { BundleManagementApplication.class, })
 @Disabled
 public class BaseJpaTest
 {

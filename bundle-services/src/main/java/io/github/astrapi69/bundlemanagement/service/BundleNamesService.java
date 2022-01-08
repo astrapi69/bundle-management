@@ -29,8 +29,6 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
-import io.github.astrapi69.bundlemanagement.jpa.entity.Resourcebundles;
-import io.github.astrapi69.bundlemanagement.jpa.repository.ResourcebundlesRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,8 +43,10 @@ import io.github.astrapi69.bundlemanagement.jpa.entity.BaseNames;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleNames;
 import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
+import io.github.astrapi69.bundlemanagement.jpa.entity.Resourcebundles;
 import io.github.astrapi69.bundlemanagement.jpa.repository.BundleApplicationsRepository;
 import io.github.astrapi69.bundlemanagement.jpa.repository.BundleNamesRepository;
+import io.github.astrapi69.bundlemanagement.jpa.repository.ResourcebundlesRepository;
 import io.github.astrapi69.collections.CollectionExtensions;
 import io.github.astrapi69.collections.list.ListExtensions;
 import io.github.astrapi69.resourcebundle.locale.LocaleExtensions;
@@ -73,7 +73,8 @@ public class BundleNamesService implements GenericService<BundleNames, UUID, Bun
 
 	ResourcebundlesRepository resourcebundlesRepository;
 
-	@Override public void deleteById(@NonNull UUID uuid)
+	@Override
+	public void deleteById(@NonNull UUID uuid)
 	{
 		findById(uuid).ifPresent(bundleNames -> delete(bundleNames));
 	}
@@ -84,8 +85,7 @@ public class BundleNamesService implements GenericService<BundleNames, UUID, Bun
 	public void delete(BundleNames bundleNames)
 	{
 		List<Resourcebundles> list = resourcebundlesRepository.findByOwnerAndBaseName(
-			bundleNames.getOwner().getName(),
-			bundleNames.getBaseName().getName());
+			bundleNames.getOwner().getName(), bundleNames.getBaseName().getName());
 		for (final Resourcebundles resourcebundle : list)
 		{
 			resourcebundlesRepository.delete(resourcebundle);

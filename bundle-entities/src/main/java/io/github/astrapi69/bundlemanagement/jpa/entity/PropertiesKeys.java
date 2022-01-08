@@ -28,14 +28,14 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
-import io.github.astrapi69.entity.enums.DatabasePrefix;
-import io.github.astrapi69.entity.nameable.Nameable;
-import io.github.astrapi69.entity.nameable.versionable.VersionableNameUUIDEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import io.github.astrapi69.entity.enums.DatabasePrefix;
+import io.github.astrapi69.entity.nameable.Nameable;
+import io.github.astrapi69.entity.nameable.versionable.VersionableNameUUIDEntity;
 
 /**
  * The entity class {@link PropertiesKeys} holds the data only for the properties keys not the
@@ -55,8 +55,8 @@ import lombok.experimental.SuperBuilder;
 public class PropertiesKeys extends VersionableNameUUIDEntity implements Cloneable
 {
 
+	public static final String TABLE_NAME = "properties_keys";
 	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;
-	public static final String TABLE_NAME = "properties_keys";
 
 }

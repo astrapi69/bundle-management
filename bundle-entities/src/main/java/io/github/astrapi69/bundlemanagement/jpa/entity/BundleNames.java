@@ -36,8 +36,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import io.github.astrapi69.entity.enums.DatabasePrefix;
-import io.github.astrapi69.entity.versionable.VersionableUUIDEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -46,6 +44,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
+import io.github.astrapi69.entity.enums.DatabasePrefix;
+import io.github.astrapi69.entity.versionable.VersionableUUIDEntity;
 
 /**
  * The entity class {@link BundleNames} holds the data from the {@link BaseNames} and the
@@ -87,11 +87,9 @@ public class BundleNames extends VersionableUUIDEntity implements Cloneable
 	public static final String COLUMN_NAME_OWNER = "owner_id";
 	/** The Constant for the named query for find BundleNames by the owner. */
 	public static final String NQ_FIND_BY_OWNER = "BundleNames." + "findByOwner";
+	public static final String TABLE_NAME = "bundlenames";
 	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;
-
-	public static final String TABLE_NAME = "bundlenames";
-
 	/** The base name of this bundle. */
 	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinColumn(name = "base_name_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_bundlenames_base_name_id"))

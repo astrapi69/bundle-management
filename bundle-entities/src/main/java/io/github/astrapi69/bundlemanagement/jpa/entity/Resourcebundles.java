@@ -32,8 +32,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import io.github.astrapi69.entity.enums.DatabasePrefix;
-import io.github.astrapi69.entity.versionable.VersionableUUIDEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,6 +40,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
+import io.github.astrapi69.entity.enums.DatabasePrefix;
+import io.github.astrapi69.entity.versionable.VersionableUUIDEntity;
 
 /**
  * The entity class {@link Resourcebundles} holds the all data of the values of the resource
@@ -70,11 +70,9 @@ public class Resourcebundles extends VersionableUUIDEntity implements Cloneable
 	public static final String COLUMN_NAME_BUNDLE_NAME = "bundlename_id";
 	public static final String COLUMN_NAME_PROPRERTIES_KEY = "properties_key_id";
 	public static final String COLUMN_NAME_PROPRERTIES_VALUE = "properties_value_id";
-
+	public static final String TABLE_NAME = "resourcebundles";
 	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;
-	public static final String TABLE_NAME = "resourcebundles";
-
 	/** The bundleName from this {@link BundleNames} object. */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "bundlename_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_resourcebundles_bundlename_id"))

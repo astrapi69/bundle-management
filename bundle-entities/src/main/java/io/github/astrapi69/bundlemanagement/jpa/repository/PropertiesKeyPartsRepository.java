@@ -28,13 +28,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesKeyParts;
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
+import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesKeyParts;
 
 
 @Repository
@@ -42,38 +43,30 @@ public interface PropertiesKeyPartsRepository extends JpaRepository<PropertiesKe
 {
 
 	@Transactional
-	@Query("select entity from PropertiesKeyParts entity where entity.depth=:depth " +
-		" and entity.value=:value")
+	@Query("select entity from PropertiesKeyParts entity where entity.depth=:depth "
+		+ " and entity.value=:value")
 	List<PropertiesKeyParts> findByDepthAndValue(@Param("depth") int depth,
 		@Param("value") String value);
 
 	@Transactional
-	@Query("select entity from PropertiesKeyParts entity where entity.depth=:depth " +
-		" and entity.value=:value " +
-		" and entity.parent=:parent")
+	@Query("select entity from PropertiesKeyParts entity where entity.depth=:depth "
+		+ " and entity.value=:value " + " and entity.parent=:parent")
 	List<PropertiesKeyParts> findByDepthAndValueAndParent(@Param("depth") int depth,
-		@Param("value") String value,
-		@Param("parent") PropertiesKeyParts parent);
+		@Param("value") String value, @Param("parent") PropertiesKeyParts parent);
 
 	@Transactional
-	@Query("select entity from PropertiesKeyParts entity where entity.value=:value " +
-		" and entity.parent is null")
+	@Query("select entity from PropertiesKeyParts entity where entity.value=:value "
+		+ " and entity.parent is null")
 	Optional<PropertiesKeyParts> findRootByValue(@Param("value") String value);
 
 	List<PropertiesKeyParts> findByValue(String value);
 
-	@Query(
-		value = "WITH RECURSIVE ancestors(id, parent_id, value, level) AS ("
-			+ "   SELECT pkp.id, pkp.parent_id, pkp.value, 1 AS level "
-			+ "   FROM properties_key_parts pkp "
-			+ "   WHERE pkp.id = :treeId "
-			+ "   UNION ALL "
-			+ "   SELECT parent.id, parent.parent_id, parent.value, child.level + 1 AS level "
-			+ "   FROM properties_key_parts parent "
-			+ "   JOIN ancestors child "
-			+ "   ON parent.id = child.parent_id "
-			+ " )"
-			+ "SELECT value from ancestors ORDER BY level DESC"
-		, nativeQuery = true)
+	@Query(value = "WITH RECURSIVE ancestors(id, parent_id, value, level) AS ("
+		+ "   SELECT pkp.id, pkp.parent_id, pkp.value, 1 AS level "
+		+ "   FROM properties_key_parts pkp " + "   WHERE pkp.id = :treeId " + "   UNION ALL "
+		+ "   SELECT parent.id, parent.parent_id, parent.value, child.level + 1 AS level "
+		+ "   FROM properties_key_parts parent " + "   JOIN ancestors child "
+		+ "   ON parent.id = child.parent_id " + " )"
+		+ "SELECT value from ancestors ORDER BY level DESC", nativeQuery = true)
 	List<String> findAncestry(@Param("treeId") UUID treeId);
 }

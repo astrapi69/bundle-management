@@ -28,10 +28,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.UUID;
 
-import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
-import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
-import io.github.astrapi69.bundlemanagement.viewmodel.LanguageLocale;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -40,7 +39,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.github.astrapi69.bundlemanagement.configuration.ApplicationConfiguration;
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import io.github.astrapi69.bundlemanagement.jpa.entity.Languages;
 import io.github.astrapi69.bundlemanagement.jpa.repository.LanguagesRepository;
 import io.github.astrapi69.bundlemanagement.mapper.LanguagesMapper;
@@ -48,8 +48,6 @@ import io.github.astrapi69.bundlemanagement.service.LanguagesService;
 import io.github.astrapi69.bundlemanagement.viewmodel.Language;
 import io.github.astrapi69.spring.controller.AbstractRestController;
 import io.swagger.annotations.ApiOperation;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 
 @RestController
 @RequestMapping(AppRestPath.REST_VERSION + AppRestPath.REST_LANGUAGES)

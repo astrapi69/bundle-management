@@ -30,17 +30,16 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import io.github.astrapi69.entity.enums.DatabasePrefix;
-import io.github.astrapi69.entity.nameable.Nameable;
-import io.github.astrapi69.entity.nameable.versionable.VersionableNameUUIDEntity;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
+import io.github.astrapi69.entity.enums.DatabasePrefix;
+import io.github.astrapi69.entity.nameable.Nameable;
+import io.github.astrapi69.entity.nameable.versionable.VersionableNameUUIDEntity;
 
 /**
  * The entity class {@link LanguageLocales} holds the data for the languages.
@@ -69,11 +68,9 @@ public class Languages extends VersionableNameUUIDEntity implements Cloneable
 {
 
 	public static final String COLUMN_NAME_ISO_639_DASH1 = "iso639_1";
-
+	public static final String TABLE_NAME = "languages";
 	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;
-	public static final String TABLE_NAME = "languages";
-
 	/** The iso639_1 code with two characters. */
 	@Column(name = "iso639_1", length = 2)
 	String iso639Dash1;
