@@ -242,7 +242,7 @@ public class ResourcebundlesService
 		{
 			final File propertiesFile = entry.getKey();
 			final Locale locale = entry.getValue();
-			final String bundlename = LocaleResolver.resolveBundlename(propertiesFile);
+			final String bundlename = LocaleResolver.resolveBundleName(propertiesFile);
 			final Properties properties = PropertiesExtensions.loadProperties(propertiesFile);
 			final BundleNames bundleNames = updateProperties(bundleApplication, properties,
 				bundlename, locale, false);

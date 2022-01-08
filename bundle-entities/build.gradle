@@ -7,12 +7,13 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     testImplementation project(':bundle-application')
-    testImplementation("io.github.astrapi69:silly-collections:$sillyCollectionsVersion")
+    testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
     testImplementation("org.testcontainers:testcontainers:$testcontainersVersion")
     testImplementation("org.testcontainers:postgresql:$testcontainersVersion")
+    testImplementation("io.github.astrapi69:silly-collections:$sillyCollectionsVersion")
+    testImplementation("io.github.astrapi69:resourcebundle-core:$resourcebundleCoreVersion")
     testImplementation("org.flywaydb:flyway-core")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
 }
 
 license {
