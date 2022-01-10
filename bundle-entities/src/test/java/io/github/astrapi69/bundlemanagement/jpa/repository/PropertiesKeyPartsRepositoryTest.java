@@ -44,6 +44,41 @@ class PropertiesKeyPartsRepositoryTest extends AbstractIntegrationTest
 	@Autowired
 	PropertiesKeyPartsRepository repository;
 
+
+	@Test
+	public void whenFindAncestors()
+	{
+		String value;
+		value = "foo";
+		PropertiesKeyParts root = PropertiesKeyParts.builder().parent(null).depth(0).node(true)
+			.value(value).build();
+
+		value = "bar";
+		PropertiesKeyParts foobar = PropertiesKeyParts.builder().parent(root).value(value)
+			.node(true).depth(1).build();
+
+		PropertiesKeyParts savedRoot = repository.save(root);
+		repository.save(foobar);
+
+		List<PropertiesKeyParts> byValue = repository.findByValue(value);
+		assertNotNull(byValue);
+		assertEquals(1, byValue.size());
+
+		PropertiesKeyParts propertiesKeyParts = byValue.get(0);
+		PropertiesKeyParts parent = propertiesKeyParts.getParent();
+		assertEquals(savedRoot, parent);
+
+		value = "foo";
+		PropertiesKeyParts foofoo = PropertiesKeyParts.builder().parent(root).value(value)
+			.node(true).depth(1).build();
+		repository.save(foofoo);
+
+		List<String> ancestors = repository.findAncestors(propertiesKeyParts.getId());
+
+		String concatenate = PropertiesKeyExtensions.concatenate(ancestors);
+		assertEquals("foo.bar", concatenate);
+	}
+
 	@Test
 	public void whenFindByValue()
 	{
@@ -67,11 +102,14 @@ class PropertiesKeyPartsRepositoryTest extends AbstractIntegrationTest
 		PropertiesKeyParts parent = propertiesKeyParts.getParent();
 		assertEquals(savedRoot, parent);
 
-		assertEquals(savedRoot, parent);
+		value = "foo";
+		PropertiesKeyParts foofoo = PropertiesKeyParts.builder().parent(root).value(value)
+			.node(true).depth(1).build();
+		repository.save(foofoo);
 
-		List<String> ancestry = repository.findAncestry(propertiesKeyParts.getId());
+		List<String> ancestors = repository.findAncestors(propertiesKeyParts.getId());
 
-		String concatenate = PropertiesKeyExtensions.concatenate(ancestry);
+		String concatenate = PropertiesKeyExtensions.concatenate(ancestors);
 		assertEquals("foo.bar", concatenate);
 
 		value = "key";
@@ -81,9 +119,9 @@ class PropertiesKeyPartsRepositoryTest extends AbstractIntegrationTest
 
 		PropertiesKeyParts keyParts = repository.save(foobarkey);
 
-		ancestry = repository.findAncestry(keyParts.getId());
+		ancestors = repository.findAncestors(keyParts.getId());
 
-		concatenate = PropertiesKeyExtensions.concatenate(ancestry);
+		concatenate = PropertiesKeyExtensions.concatenate(ancestors);
 		assertEquals("foo.bar.key", concatenate);
 
 
@@ -106,6 +144,17 @@ class PropertiesKeyPartsRepositoryTest extends AbstractIntegrationTest
 		assertNotNull(foo);
 		assertTrue(foo.isPresent());
 		assertEquals(savedRoot, foo.get());
+
+		List<PropertiesKeyParts> children = repository.getAllChildrenWithParent(savedRoot.getId());
+		assertNotNull(children);
+		// remove parent
+		children.remove(savedRoot);
+		assertEquals(children.size(), 3);
+
+		children = repository.getChildren(savedRoot.getId());
+		assertNotNull(children);
+		assertEquals(2, children.size());
+
 
 	}
 

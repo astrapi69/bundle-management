@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import io.github.astrapi69.entity.treeable.TreeableUUIDEntity;
+import io.github.astrapi69.entity.treeable.TreeUUIDEntity;
 
 @Entity
 @Table(name = PropertiesKeyParts.TABLE_NAME)
@@ -41,7 +41,7 @@ import io.github.astrapi69.entity.treeable.TreeableUUIDEntity;
 @ToString
 @NoArgsConstructor
 @SuperBuilder
-public class PropertiesKeyParts extends TreeableUUIDEntity<String, PropertiesKeyParts>
+public class PropertiesKeyParts extends TreeUUIDEntity<String, PropertiesKeyParts>
 {
 	public static final String TABLE_NAME = "properties_key_parts";
 	/** Serial Version UID */

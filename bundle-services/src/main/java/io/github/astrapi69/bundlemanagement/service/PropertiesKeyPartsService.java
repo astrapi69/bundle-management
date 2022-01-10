@@ -43,13 +43,12 @@ import io.github.astrapi69.resourcebundle.properties.PropertiesKeyExtensions;
 import io.github.astrapi69.spring.service.api.GenericService;
 
 /**
- * The class {@link PropertiesKeyPartsService}.
+ * The class {@link PropertiesKeyPartsService}
  */
-@Transactional
 @Service
+@Getter
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@Getter
 public class PropertiesKeyPartsService
 	implements
 		GenericService<PropertiesKeyParts, UUID, PropertiesKeyPartsRepository>
@@ -100,6 +99,29 @@ public class PropertiesKeyPartsService
 	public PropertiesKeyParts merge(PropertiesKeyParts object)
 	{
 		return repository.save(object);
+	}
+
+	public String getPropertiesKey(PropertiesKeyParts propertiesKeyParts) {
+		List<String> ancestors = repository.findAncestors(propertiesKeyParts.getId());
+		String propertiesKey = PropertiesKeyExtensions.concatenate(ancestors);
+		return propertiesKey;
+	}
+
+	public List<PropertiesKeyParts> getAllChildren(PropertiesKeyParts parent){
+		List<PropertiesKeyParts> allChildrenWithParent = repository.getAllChildrenWithParent(
+			parent.getId());
+		allChildrenWithParent.remove(parent);
+		return allChildrenWithParent;
+	}
+
+	public boolean hasChildren(final PropertiesKeyParts object){
+		boolean empty = repository.getChildren(object.getId()).isEmpty();
+		return !empty;
+	}
+
+	public boolean hasParent(final PropertiesKeyParts object)
+	{
+		return null != object.getParent();
 	}
 
 }
