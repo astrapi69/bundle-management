@@ -1,6 +1,19 @@
 # default properties
+
+environment: dev
+
 server:
   port: 8080
+
+logging:
+  level:
+    .: debug
+    org.springframework: DEBUG
+    org.hibernate:
+      SQL: DEBUG
+      type.descriptor.sql: trace
+  file:
+    name: ${HOME}/logs/bundle-management.log
 
 app:
   name: bundle-management
@@ -22,14 +35,13 @@ app:
   db-username: postgres
   db-password: postgres
 
-spring:  
+spring:
   datasource:
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
     type: com.zaxxer.hikari.HikariDataSource
     url: ${app.db-url-prefix}${app.db-host}:${app.db-port}/${app.db-name}
-    initialization-mode: never
   jpa:
     properties:
       hibernate:
@@ -45,3 +57,7 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
+
+  sql:
+    init:
+      mode: never
