@@ -89,7 +89,15 @@ public class SwaggerConfiguration extends AbstractSwaggerConfiguration
 	{
 		return applicationProperties.getApiInfoLicense() != null
 			? applicationProperties.getApiInfoLicense()
-			: super.newApiInfoLicense();
+			: "MIT";
+	}
+
+	@Override
+	public String newApiInfoLicenseUrl()
+	{
+		return applicationProperties.getApiInfoLicenseUrl() != null
+			? applicationProperties.getApiInfoLicenseUrl()
+			: "https://opensource.org/licenses/MIT";
 	}
 
 	@Override
@@ -113,7 +121,7 @@ public class SwaggerConfiguration extends AbstractSwaggerConfiguration
 	{
 		return applicationProperties.getDocketPathsRegex() != null
 			? applicationProperties.getDocketPathsRegex()
-			: AppRestPath.DOCKET_PATHS_REGEX;
+			: AppRestPath.REST_DOCKET_PATHS_REGEX;
 	}
 
 }
