@@ -15,8 +15,8 @@ buildscript {
 }
 
 allprojects {
-	group = "$groupPackage"
-	version = "$projectVersion"
+	group = "$groupPackage" as Object
+	version = "$projectVersion" as Object
 
 	repositories {
 		mavenLocal()
