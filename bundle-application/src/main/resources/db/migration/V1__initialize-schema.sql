@@ -138,6 +138,19 @@ create index if not exists idx_languages_name
 create index if not exists idx_languages_iso639_1
     on languages (iso639_1);
 
+create table if not exists properties_key_parts
+(
+    id        uuid not null
+        constraint properties_key_parts_pkey
+            primary key,
+    depth     integer,
+    node      boolean,
+    value     text,
+    parent_id uuid
+        constraint fk_treeable_parent_id
+            references properties_key_parts
+);
+
 create table if not exists properties_keys
 (
     id      uuid not null
