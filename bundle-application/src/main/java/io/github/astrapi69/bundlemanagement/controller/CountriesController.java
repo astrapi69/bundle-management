@@ -24,8 +24,6 @@
  */
 package io.github.astrapi69.bundlemanagement.controller;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.UUID;
 
 import lombok.AccessLevel;

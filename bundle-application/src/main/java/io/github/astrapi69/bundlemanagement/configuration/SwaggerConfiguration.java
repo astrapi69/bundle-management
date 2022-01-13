@@ -24,7 +24,6 @@
  */
 package io.github.astrapi69.bundlemanagement.configuration;
 
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +31,7 @@ import org.springframework.context.annotation.Configuration;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import io.github.astrapi69.spring.configuration.AbstractSwaggerConfiguration;
 
 @Configuration
@@ -79,7 +79,7 @@ public class SwaggerConfiguration extends AbstractSwaggerConfiguration
 	@Override
 	public String newApiInfoVersion()
 	{
-		return applicationProperties.getApiInfoVersion()!= null
+		return applicationProperties.getApiInfoVersion() != null
 			? applicationProperties.getApiInfoVersion()
 			: AppRestPath.REST_API_VERSION_1;
 	}

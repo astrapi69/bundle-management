@@ -26,7 +26,6 @@ package io.github.astrapi69.bundlemanagement.configuration;
 
 import java.util.List;
 
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
