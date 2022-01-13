@@ -87,7 +87,6 @@ public class CountriesController
 	@ApiOperation(value = "Find all Countries objects")
 	public ResponseEntity<Iterable<Country>> findAllCountries()
 	{
-		Iterable<Country> all = super.findAll();
-		return ResponseEntity.ok(new HashSet<>((Collection)all));
+		return super.findAll();
 	}
 }

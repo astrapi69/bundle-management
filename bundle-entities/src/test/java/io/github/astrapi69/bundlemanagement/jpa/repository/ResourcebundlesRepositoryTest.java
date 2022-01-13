@@ -124,7 +124,6 @@ public class ResourcebundlesRepositoryTest extends AbstractIntegrationTest
 			.value(propertiesValues).build();
 
 		entityManager.persist(entity);
-		entityManager.flush();
 
 		// when
 		byName = repository.findByOwnerAndBaseNameAndLocaleAndKeyAndValue(

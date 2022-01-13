@@ -24,42 +24,96 @@
  */
 package io.github.astrapi69.bundlemanagement.configuration;
 
-import static springfox.documentation.builders.PathSelectors.regex;
-
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import io.github.astrapi69.spring.configuration.AbstractSwaggerConfiguration;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfiguration
+public class SwaggerConfiguration extends AbstractSwaggerConfiguration
 {
+	@Autowired
+	ApplicationProperties applicationProperties;
 
 	@Bean
 	public Docket api()
 	{
-		return new Docket(DocumentationType.SWAGGER_2).select()
-			.apis(RequestHandlerSelectors.basePackage("io.github.astrapi69.bundlemanagement"))
-			.paths(regex(ApplicationConfiguration.REST_VERSION + "/.*|")).build()
-			.apiInfo(metaData());
+		return super.api();
 	}
 
-	private ApiInfo metaData()
+	protected ApiInfo metaData()
 	{
-		return new ApiInfoBuilder().title("Resourcebundles REST API")
-			.description("REST API for manage several resourcebundles applications")
-			.version(ApplicationConfiguration.VERSION_API_1).license("MIT License")
-			.licenseUrl("https://opensource.org/licenses/MIT")
-			.contact(
-				new Contact("resourcebundles org.", "www.resourcebundles-applications.com", ""))
-			.build();
+		return super.metaData();
+	}
+
+	@Override
+	public String newBasePackage()
+	{
+		return applicationProperties.getBasePackage() != null
+			? applicationProperties.getBasePackage()
+			: "io.github.astrapi69.bundlemanagement";
+	}
+
+	@Override
+	public String newApiInfoTitle()
+	{
+		return applicationProperties.getApiInfoTitle() != null
+			? applicationProperties.getApiInfoTitle()
+			: "Resourcebundles REST API";
+	}
+
+	@Override
+	public String newApiInfoDescription()
+	{
+		return applicationProperties.getApiInfoDescription() != null
+			? applicationProperties.getApiInfoDescription()
+			: "REST API for manage several resourcebundles applications";
+	}
+
+	@Override
+	public String newApiInfoVersion()
+	{
+		return applicationProperties.getApiInfoVersion()!= null
+			? applicationProperties.getApiInfoVersion()
+			: AppRestPath.REST_API_VERSION_1;
+	}
+
+	@Override
+	public String newApiInfoLicense()
+	{
+		return applicationProperties.getApiInfoLicense() != null
+			? applicationProperties.getApiInfoLicense()
+			: super.newApiInfoLicense();
+	}
+
+	@Override
+	public String newContactName()
+	{
+		return applicationProperties.getContactName() != null
+			? applicationProperties.getContactName()
+			: "bundlemanagement inc.";
+	}
+
+	@Override
+	public String newContactUrl()
+	{
+		return applicationProperties.getContactUrl() != null
+			? applicationProperties.getContactUrl()
+			: "www.bundlemanagement.org";
+	}
+
+	@Override
+	public String newDocketPathsRegex()
+	{
+		return applicationProperties.getDocketPathsRegex() != null
+			? applicationProperties.getDocketPathsRegex()
+			: AppRestPath.DOCKET_PATHS_REGEX;
 	}
 
 }

@@ -4,6 +4,16 @@ server:
 
 app:
   name: bundle-management
+  api-info-title: Resourcebundles REST API
+  api-info-description: REST API for manage several resourcebundles applications
+  api-info-version: /v1
+  api-info-license: MIT
+  api-info-license-url: https://opensource.org/licenses/MIT
+  contact-name: bundlemanagement inc.
+  contact-url: www.bundlemanagement.org
+  contact-email: info@bundlemanagement.org
+  base-package: io.github.astrapi69.bundlemanagement
+  docket-paths-regex: /v1/.*|
   dir: ${user.home}/.${app.name}
   db-name: bundles
   db-host: localhost

@@ -73,12 +73,12 @@ public class Resourcebundles extends VersionableUUIDEntity implements Cloneable
 	public static final String TABLE_NAME = "resourcebundles";
 	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;
-	/** The bundleName from this {@link BundleNames} object. */
+	/** The bundleName from this {@link Resourcebundles} object. */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "bundlename_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_resourcebundles_bundlename_id"))
 	BundleNames bundleName;
 
-	/** The properties key from this {@link BundleNames} object. */
+	/** The properties key from this {@link Resourcebundles} object. */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "properties_key_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_resourcebundles_properties_key_id"))
 	PropertiesKeys key;

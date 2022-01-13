@@ -109,9 +109,7 @@ public class BundleApplicationsController
 	@ApiOperation(value = "Find all BundleApplications objects")
 	public ResponseEntity<Iterable<BundleApplication>> findAllBundleApplications()
 	{
-		Iterable<BundleApplication> all = super.findAll();
-
-		return ResponseEntity.ok(new HashSet<>((Collection)all));
+		return super.findAll();
 	}
 
 	@CrossOrigin(origins = "*")

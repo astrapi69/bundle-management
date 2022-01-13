@@ -26,6 +26,7 @@ package io.github.astrapi69.bundlemanagement.configuration;
 
 import java.util.List;
 
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -67,11 +68,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 @Log
 public class ApplicationConfiguration implements WebMvcConfigurer
 {
-
-	public static final String VERSION_API_1 = "v1";
-	public static final String REST_VERSION = "/" + VERSION_API_1;
-
-	ApplicationProperties applicationProperties;
 
 	@SuppressWarnings("unused")
 	Environment env;

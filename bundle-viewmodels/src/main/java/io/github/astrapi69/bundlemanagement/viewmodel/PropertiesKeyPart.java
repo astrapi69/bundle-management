@@ -22,40 +22,33 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package io.github.astrapi69.bundlemanagement.configuration;
+package io.github.astrapi69.bundlemanagement.viewmodel;
+
+import java.util.UUID;
 
 import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Getter
-@Setter
-@ConfigurationProperties(prefix = "app")
+/**
+ * The class {@link PropertiesKeyPart}.
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ApplicationProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class PropertiesKeyPart
 {
-
-	String dbHost;
-	String dbName;
-	int dbPort;
-	String dbUrlPrefix;
-	String dbUsername;
-	String dbPassword;
-	String dir;
-	String name;
-	String basePackage;
-	String apiInfoTitle;
-	String apiInfoTermsOfServiceUrl;
-	String apiInfoDescription;
-	String apiInfoVersion;
-	String apiInfoLicense;
-	String apiInfoLicenseUrl;
-	String contactName;
-	String contactUrl;
-	String contactEmail;
-	String docketPathsRegex;
-
+	UUID id;
+	int depth;
+	boolean node;
+	PropertiesKeyPart parent;
+	String value;
 }

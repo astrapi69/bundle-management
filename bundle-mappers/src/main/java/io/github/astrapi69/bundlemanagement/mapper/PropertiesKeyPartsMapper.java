@@ -22,40 +22,18 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package io.github.astrapi69.bundlemanagement.configuration;
+package io.github.astrapi69.bundlemanagement.mapper;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.FieldDefaults;
+import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesKeyParts;
+import io.github.astrapi69.bundlemanagement.viewmodel.PropertiesKeyPart;
+import org.springframework.stereotype.Component;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import io.github.astrapi69.bean.mapper.AbstractGenericMapper;
 
-@Getter
-@Setter
-@ConfigurationProperties(prefix = "app")
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class ApplicationProperties
+/**
+ * The class {@link PropertiesKeyPartsMapper}.
+ */
+@Component
+public class PropertiesKeyPartsMapper extends AbstractGenericMapper<PropertiesKeyParts, PropertiesKeyPart>
 {
-
-	String dbHost;
-	String dbName;
-	int dbPort;
-	String dbUrlPrefix;
-	String dbUsername;
-	String dbPassword;
-	String dir;
-	String name;
-	String basePackage;
-	String apiInfoTitle;
-	String apiInfoTermsOfServiceUrl;
-	String apiInfoDescription;
-	String apiInfoVersion;
-	String apiInfoLicense;
-	String apiInfoLicenseUrl;
-	String contactName;
-	String contactUrl;
-	String contactEmail;
-	String docketPathsRegex;
-
 }
