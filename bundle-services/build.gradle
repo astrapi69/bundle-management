@@ -77,6 +77,15 @@ task javadocJar(type: Jar) {
     javadoc.properties.failOnError = false
 }
 
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption("html5", true)
+    }
+    dependsOn delombok
+    failOnError = false
+    exclude 'io/github/astrapi69/bundlemanagement/**'
+}
+
 def releaseVersion = !version.endsWith("SNAPSHOT")
 
 publishing {
