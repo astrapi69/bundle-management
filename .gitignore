@@ -12,6 +12,8 @@
 !.idea/runConfigurations
 .idea/**
 .idea/*.*
+.jpb/**
+.jpb/*.*
 
 #################
 # eclipse files #
