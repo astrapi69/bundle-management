@@ -40,9 +40,9 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import io.github.astrapi69.entity.enums.DatabasePrefix;
+import io.github.astrapi69.data.enums.DatabasePrefix;
 import io.github.astrapi69.entity.nameable.NameUUIDEntity;
-import io.github.astrapi69.entity.nameable.Nameable;
+import io.github.astrapi69.data.nameable.Nameable;
 
 /**
  * The entity class {@link Countries} is keeping the information for all countries in the world

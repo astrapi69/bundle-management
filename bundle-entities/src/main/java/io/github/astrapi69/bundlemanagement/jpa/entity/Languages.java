@@ -37,8 +37,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import io.github.astrapi69.entity.enums.DatabasePrefix;
-import io.github.astrapi69.entity.nameable.Nameable;
+import io.github.astrapi69.data.enums.DatabasePrefix;
+import io.github.astrapi69.data.nameable.Nameable;
 import io.github.astrapi69.entity.nameable.versionable.VersionableNameUUIDEntity;
 
 /**

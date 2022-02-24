@@ -5,7 +5,7 @@ dependencies {
     implementation project(":bundle-viewmodels")
 
     implementation("io.github.astrapi69:generic-mapper:$genericMapperVersion")
-    implementation("io.github.astrapi69:ent-api:$entApiVersion")
+    implementation("io.github.astrapi69:data-api:$dataApiVersion")
     implementation("io.github.astrapi69:ent-core:$entCoreVersion")
     implementation("io.github.astrapi69:jobj-core:$jobjCoreVersion")
     implementation("io.github.astrapi69:silly-jdbc:$sillyJdbcVersion")

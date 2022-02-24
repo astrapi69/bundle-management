@@ -6,7 +6,7 @@ dependencies {
 
     implementation("io.github.astrapi69:bean-mapper-api:$beanMapperApiVersion")
     implementation("io.github.astrapi69:generic-mapper:$genericMapperVersion")
-    implementation("io.github.astrapi69:ent-api:$entApiVersion")
+    implementation("io.github.astrapi69:data-api:$dataApiVersion")
     implementation("io.github.astrapi69:ent-core:$entCoreVersion")
     implementation("io.github.astrapi69:spring-tool-extensions:$springToolExtensionsVersion")
     implementation("io.springfox:springfox-swagger2:$springfoxSwaggerVersion")

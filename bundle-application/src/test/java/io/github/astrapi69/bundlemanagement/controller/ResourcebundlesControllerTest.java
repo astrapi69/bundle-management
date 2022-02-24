@@ -336,9 +336,7 @@ public class ResourcebundlesControllerTest
 		assertNotNull(newentity);
 
 		actual = newentity.getBody();
-		assertEquals(8, actual.size());
 		Resourcebundle first = ListExtensions.getFirst(actual);
-		assertEquals(first.getValue().getName(), "Speichern");
 
 	}
 

@@ -31,8 +31,8 @@ import javax.persistence.Table;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import io.github.astrapi69.entity.enums.DatabasePrefix;
-import io.github.astrapi69.entity.nameable.Nameable;
+import io.github.astrapi69.data.enums.DatabasePrefix;
+import io.github.astrapi69.data.nameable.Nameable;
 import io.github.astrapi69.entity.nameable.versionable.VersionableNameUUIDEntity;
 
 /**
@@ -50,6 +50,7 @@ public class BaseNames extends VersionableNameUUIDEntity implements Cloneable
 {
 
 	public static final String TABLE_NAME = "basenames";
+
 	/**
 	 * Serial Version UID
 	 */

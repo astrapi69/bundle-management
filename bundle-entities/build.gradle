@@ -1,6 +1,6 @@
 
 dependencies {
-    implementation("io.github.astrapi69:ent-api:$entApiVersion")
+    implementation("io.github.astrapi69:data-api:$dataApiVersion")
     implementation("io.github.astrapi69:ent-core:$entCoreVersion")
     implementation("org.postgresql:postgresql")
     implementation("org.springframework.boot:spring-boot-starter-validation")
