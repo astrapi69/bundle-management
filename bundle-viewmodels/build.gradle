@@ -1,4 +1,3 @@
-
 dependencies {
     implementation("io.github.astrapi69:spring-tool-extensions:$springToolExtensionsVersion")
     implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
@@ -53,7 +52,7 @@ task javadocJar(type: Jar) {
 }
 
 javadoc {
-    if(JavaVersion.current().isJava9Compatible()) {
+    if (JavaVersion.current().isJava9Compatible()) {
         options.addBooleanOption("html5", true)
     }
     dependsOn delombok

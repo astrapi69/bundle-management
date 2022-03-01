@@ -1,4 +1,3 @@
-
 dependencies {
     implementation("io.github.astrapi69:data-api:$dataApiVersion")
     implementation("io.github.astrapi69:ent-core:$entCoreVersion")
@@ -65,7 +64,7 @@ task javadocJar(type: Jar) {
 }
 
 javadoc {
-    if(JavaVersion.current().isJava9Compatible()) {
+    if (JavaVersion.current().isJava9Compatible()) {
         options.addBooleanOption("html5", true)
     }
     dependsOn delombok
@@ -133,5 +132,3 @@ signing {
         sign publishing.publications.mavenJava
     }
 }
-
-

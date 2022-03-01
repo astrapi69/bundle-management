@@ -1,8 +1,8 @@
 /**
  * The MIT License
- *
+ * <p>
  * Copyright (C) 2015 Asterios Raptis
- *
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- *
+ * <p>
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,17 +24,20 @@
  */
 package io.github.astrapi69.bundlemanagement.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Properties;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
+import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
+import io.github.astrapi69.bundlemanagement.viewmodel.ImprortableBundleName;
+import io.github.astrapi69.bundlemanagement.viewmodel.Resourcebundle;
+import io.github.astrapi69.collections.array.ArrayFactory;
+import io.github.astrapi69.collections.list.ListExtensions;
+import io.github.astrapi69.json.ObjectToJsonExtensions;
+import io.github.astrapi69.resourcebundle.locale.LocaleExtensions;
+import io.github.astrapi69.resourcebundle.locale.LocaleResolver;
+import io.github.astrapi69.spring.generics.ParameterizedTypeReferenceFactory;
 import io.github.astrapi69.spring.rest.BaseActionRestPath;
+import io.github.astrapi69.spring.web.util.UrlExtensions;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,20 +55,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Properties;
 
-import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
-import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
-import io.github.astrapi69.bundlemanagement.viewmodel.ImprortableBundleName;
-import io.github.astrapi69.bundlemanagement.viewmodel.Resourcebundle;
-import io.github.astrapi69.collections.array.ArrayFactory;
-import io.github.astrapi69.collections.list.ListExtensions;
-import io.github.astrapi69.json.ObjectToJsonExtensions;
-import io.github.astrapi69.resourcebundle.locale.LocaleExtensions;
-import io.github.astrapi69.resourcebundle.locale.LocaleResolver;
-import io.github.astrapi69.spring.generics.ParameterizedTypeReferenceFactory;
-import io.github.astrapi69.spring.web.util.UrlExtensions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
@@ -106,7 +104,7 @@ public class ResourcebundlesControllerTest
 		requestParameters = ArrayFactory.newArray("bundleappname", "basename", "locale", "key",
 			"value");
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-				BaseActionRestPath.ACTION_SAVE_OR_UPDATE, requestParameters);
+			BaseActionRestPath.ACTION_SAVE_OR_UPDATE, requestParameters);
 
 		newPropertiesValue = RandomStringUtils.randomAlphabetic(10);
 		headers = new HttpHeaders();
@@ -145,7 +143,7 @@ public class ResourcebundlesControllerTest
 		Resourcebundle expected;
 		String[] requestParams = { "basename", "bundleappname", "key", "locale" };
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-				BaseActionRestPath.ACTION_FIND, requestParams);
+			BaseActionRestPath.ACTION_FIND, requestParams);
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		Map<String, String> map = new HashMap<String, String>();
@@ -253,7 +251,7 @@ public class ResourcebundlesControllerTest
 	{
 		String[] requestParams = { "bundleappname", "basename", "locale", "key", "value" };
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-				BaseActionRestPath.ACTION_SAVE_OR_UPDATE, requestParams);
+			BaseActionRestPath.ACTION_SAVE_OR_UPDATE, requestParams);
 
 		String newValue = RandomStringUtils.randomAlphabetic(10);
 		HttpHeaders headers = new HttpHeaders();

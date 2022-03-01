@@ -1,80 +1,97 @@
-
 buildscript {
-	repositories {
-		maven {
-			url "https://plugins.gradle.org/m2/"
-		}
-	}
-	dependencies {
-		classpath "io.freefair.gradle:lombok-plugin:$gradlePluginLombokVersion"
-		classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootGradlePluginVersion"
-		classpath "io.spring.gradle:dependency-management-plugin:$springGradlePluginDependencyManagementVersion"
-		classpath "com.github.ben-manes:gradle-versions-plugin:$gradlePluginVersionsVersion"
-		classpath "gradle.plugin.com.hierynomus.gradle.plugins:license-gradle-plugin:$licenseGradlePluginVersion"
-	}
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "io.freefair.gradle:lombok-plugin:$gradlePluginLombokVersion"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootGradlePluginVersion"
+        classpath "io.spring.gradle:dependency-management-plugin:$springGradlePluginDependencyManagementVersion"
+        classpath "com.github.ben-manes:gradle-versions-plugin:$gradlePluginVersionsVersion"
+        classpath "gradle.plugin.com.hierynomus.gradle.plugins:license-gradle-plugin:$licenseGradlePluginVersion"
+        classpath "com.diffplug.spotless:spotless-plugin-gradle:$spotlessGradlePluginVersion"
+    }
 }
 
 allprojects {
-	group = "$groupPackage" as Object
-	version = "$projectVersion" as Object
+    group = "$groupPackage" as Object
+    version = "$projectVersion" as Object
 
-	repositories {
-		mavenLocal()
-		mavenCentral()
-	}
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
 }
 
 subprojects {
 
-	apply plugin: "io.freefair.lombok"
-	apply plugin: "org.springframework.boot"
-	apply plugin: "io.spring.dependency-management"
-	apply plugin: "java"
-	apply plugin: "maven-publish"
-	apply plugin: "signing"
-	apply plugin: "jacoco"
-	apply plugin: "eclipse"
-	apply plugin: "idea"
-	apply plugin: "com.github.ben-manes.versions"
-	apply plugin: "com.github.hierynomus.license"
+    apply plugin: "io.freefair.lombok"
+    apply plugin: "org.springframework.boot"
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "java"
+    apply plugin: "maven-publish"
+    apply plugin: "signing"
+    apply plugin: "jacoco"
+    apply plugin: "eclipse"
+    apply plugin: "idea"
+    apply plugin: "com.github.ben-manes.versions"
+    apply plugin: "com.github.hierynomus.license"
+    apply plugin: "com.diffplug.spotless"
 
-	bootJar {
-		enabled = false
-	}
+    spotless {
 
-	jar {
-		enabled = true
-	}
+        format "misc", {
+            // define the files to apply `misc` to
+            target "*.gradle", "*.md", ".gitignore"
 
-	dependencyManagement {
-		imports {
-			mavenBom("org.springframework.boot:spring-boot-dependencies:$springBootGradlePluginVersion")
-		}
-	}
+            // define the steps to apply to those files
+            trimTrailingWhitespace()
+            indentWithSpaces() // or spaces. Takes an integer argument if you don"t like 4
+            endWithNewline()
+        }
+        java {
+            eclipse("4.19.0").configFile("../src/test/resources/alpharo-formatter.xml")
+        }
+    }
 
-	dependencies {
-		compileOnly("org.projectlombok:lombok:$lombokVersion")
-		annotationProcessor("org.projectlombok:lombok:$lombokVersion")
-	}
+    bootJar {
+        enabled = false
+    }
 
-	// workhack for license issue #76
-	gradle.startParameter.excludedTaskNames += "licenseMain"
-	gradle.startParameter.excludedTaskNames += "licenseTest"
+    jar {
+        enabled = true
+    }
 
-	compileJava {
-		sourceCompatibility = "$projectSourceCompatibility"
-		targetCompatibility = "$projectTargetCompatibility"
-	}
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.boot:spring-boot-dependencies:$springBootGradlePluginVersion")
+        }
+    }
 
-	tasks.withType(JavaCompile) {
-		options.encoding = "UTF-8"
-		// uncomment the next line for build with compiler argument -Xlint:deprecation
-		// options.compilerArgs << "-Xlint:deprecation"
-		// uncomment the next line for build with compiler argument -Xlint:unchecked
-		// options.compilerArgs << "-Xlint:unchecked"
-	}
+    dependencies {
+        compileOnly("org.projectlombok:lombok:$lombokVersion")
+        annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+    }
 
-	test {
-		useJUnitPlatform()
-	}
+    // workhack for license issue #76
+    gradle.startParameter.excludedTaskNames += "licenseMain"
+    gradle.startParameter.excludedTaskNames += "licenseTest"
+
+    compileJava {
+        sourceCompatibility = "$projectSourceCompatibility"
+        targetCompatibility = "$projectTargetCompatibility"
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        // uncomment the next line for build with compiler argument -Xlint:deprecation
+        // options.compilerArgs << "-Xlint:deprecation"
+        // uncomment the next line for build with compiler argument -Xlint:unchecked
+        // options.compilerArgs << "-Xlint:unchecked"
+    }
+
+    test {
+        useJUnitPlatform()
+    }
 }

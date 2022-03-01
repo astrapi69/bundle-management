@@ -1,8 +1,8 @@
 /**
  * The MIT License
- *
+ * <p>
  * Copyright (C) 2015 Asterios Raptis
- *
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -10,10 +10,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- *
+ * <p>
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,16 +24,17 @@
  */
 package io.github.astrapi69.bundlemanagement.controller;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
+import io.github.astrapi69.bundlemanagement.viewmodel.BundleApplication;
+import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
+import io.github.astrapi69.collections.array.ArrayFactory;
+import io.github.astrapi69.collections.list.ListFactory;
+import io.github.astrapi69.json.ObjectToJsonExtensions;
+import io.github.astrapi69.spring.generics.ParameterizedTypeReferenceFactory;
 import io.github.astrapi69.spring.rest.BaseActionRestPath;
+import io.github.astrapi69.spring.web.util.UrlExtensions;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -53,17 +54,14 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
-import io.github.astrapi69.bundlemanagement.viewmodel.BundleApplication;
-import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
-import io.github.astrapi69.collections.array.ArrayFactory;
-import io.github.astrapi69.collections.list.ListFactory;
-import io.github.astrapi69.json.ObjectToJsonExtensions;
-import io.github.astrapi69.spring.generics.ParameterizedTypeReferenceFactory;
-import io.github.astrapi69.spring.web.util.UrlExtensions;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
@@ -112,7 +110,7 @@ public class BundleApplicationsControllerTest
 	{
 		String restUrl;
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-				BaseActionRestPath.ACTION_FIND_ALL);
+			BaseActionRestPath.ACTION_FIND_ALL);
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		ResponseEntity<Iterable<BundleApplication>> entities = this.restTemplate.exchange(restUrl,
@@ -155,7 +153,7 @@ public class BundleApplicationsControllerTest
 		requestEntity = new HttpEntity<String>(json, headers);
 
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-				BaseActionRestPath.ACTION_DELETE);
+			BaseActionRestPath.ACTION_DELETE);
 
 		entity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity,
 			BundleApplication.class);
@@ -241,7 +239,7 @@ public class BundleApplicationsControllerTest
 		requestEntity = new HttpEntity<String>(json, headers);
 
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-				BaseActionRestPath.ACTION_DELETE);
+			BaseActionRestPath.ACTION_DELETE);
 
 		responseEntity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity,
 			BundleApplication.class);
@@ -288,7 +286,7 @@ public class BundleApplicationsControllerTest
 		requestEntity = new HttpEntity<>(json, headers);
 
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-				BaseActionRestPath.ACTION_UPDATE);
+			BaseActionRestPath.ACTION_UPDATE);
 
 		responseEntity = this.restTemplate.exchange(restUrl, HttpMethod.PUT, requestEntity,
 			BundleApplication.class);
@@ -305,7 +303,7 @@ public class BundleApplicationsControllerTest
 		requestEntity = new HttpEntity<String>(json, headers);
 
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-				BaseActionRestPath.ACTION_DELETE);
+			BaseActionRestPath.ACTION_DELETE);
 
 		responseEntity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity,
 			BundleApplication.class);
@@ -326,7 +324,7 @@ public class BundleApplicationsControllerTest
 
 		requestParams = ArrayFactory.newArray("bundleappname");
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-				BaseActionRestPath.ACTION_FIND, requestParams);
+			BaseActionRestPath.ACTION_FIND, requestParams);
 		headers = new HttpHeaders();
 		requestEntity = new HttpEntity<>(headers);
 		urlParams = new HashMap<String, String>();
@@ -340,7 +338,7 @@ public class BundleApplicationsControllerTest
 		requestParams = ArrayFactory.newArray("bundleappname");
 
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-				BaseActionRestPath.ACTION_FIND, requestParams);
+			BaseActionRestPath.ACTION_FIND, requestParams);
 		headers = new HttpHeaders();
 		requestEntity = new HttpEntity<>(headers);
 		urlParams = new HashMap<String, String>();
