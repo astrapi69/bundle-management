@@ -30,6 +30,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import io.github.astrapi69.spring.rest.BaseActionRestPath;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
@@ -81,7 +82,7 @@ public class BundleApplicationsController
 		this.service = service;
 	}
 
-	@RequestMapping(value = ActionRestPath.ACTION_DELETE, method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = BaseActionRestPath.ACTION_DELETE, method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Delete the given bundle application")
 	public ResponseEntity<BundleApplication> delete(
 		@Valid @RequestBody BundleApplication bundleApplication)
@@ -92,7 +93,7 @@ public class BundleApplicationsController
 		return ResponseEntity.ok(mapper.toDto(bundleApplications));
 	}
 
-	@RequestMapping(value = ActionRestPath.ACTION_UPDATE, method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = BaseActionRestPath.ACTION_UPDATE, method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Update the given bundle application")
 	public ResponseEntity<BundleApplication> update(
 		@Valid @RequestBody BundleApplication bundleApplication)
@@ -103,7 +104,7 @@ public class BundleApplicationsController
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = ActionRestPath.ACTION_FIND_ALL, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = BaseActionRestPath.ACTION_FIND_ALL, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find all BundleApplications objects")
 	public ResponseEntity<Iterable<BundleApplication>> findAllBundleApplications()
 	{
@@ -139,7 +140,7 @@ public class BundleApplicationsController
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = ActionRestPath.ACTION_FIND, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = BaseActionRestPath.ACTION_FIND, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the bundle application from the given arguments.")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query") })

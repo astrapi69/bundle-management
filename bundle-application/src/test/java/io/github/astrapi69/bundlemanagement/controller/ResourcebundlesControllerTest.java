@@ -34,6 +34,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
+import io.github.astrapi69.spring.rest.BaseActionRestPath;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -105,7 +106,7 @@ public class ResourcebundlesControllerTest
 		requestParameters = ArrayFactory.newArray("bundleappname", "basename", "locale", "key",
 			"value");
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ActionRestPath.ACTION_SAVE_OR_UPDATE, requestParameters);
+				BaseActionRestPath.ACTION_SAVE_OR_UPDATE, requestParameters);
 
 		newPropertiesValue = RandomStringUtils.randomAlphabetic(10);
 		headers = new HttpHeaders();
@@ -144,7 +145,7 @@ public class ResourcebundlesControllerTest
 		Resourcebundle expected;
 		String[] requestParams = { "basename", "bundleappname", "key", "locale" };
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ActionRestPath.ACTION_FIND, requestParams);
+				BaseActionRestPath.ACTION_FIND, requestParams);
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		Map<String, String> map = new HashMap<String, String>();
@@ -252,7 +253,7 @@ public class ResourcebundlesControllerTest
 	{
 		String[] requestParams = { "bundleappname", "basename", "locale", "key", "value" };
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ActionRestPath.ACTION_SAVE_OR_UPDATE, requestParams);
+				BaseActionRestPath.ACTION_SAVE_OR_UPDATE, requestParams);
 
 		String newValue = RandomStringUtils.randomAlphabetic(10);
 		HttpHeaders headers = new HttpHeaders();

@@ -31,6 +31,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import io.github.astrapi69.spring.rest.BaseActionRestPath;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
@@ -85,7 +86,7 @@ public class ResourcebundlesController
 	}
 
 	@CrossOrigin(origins = "*")
-	@RequestMapping(path = ActionRestPath.ACTION_PERSIST, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = BaseActionRestPath.ACTION_PERSIST, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Persist the given resourcebundle object")
 	@ResponseBody
 	public ResponseEntity<Resourcebundle> persist(@Valid @RequestBody Resourcebundle resourcebundle)
@@ -95,7 +96,7 @@ public class ResourcebundlesController
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = ActionRestPath.ACTION_FIND, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = BaseActionRestPath.ACTION_FIND, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find the resourcebundle from the given arguments.")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query"),
@@ -206,7 +207,7 @@ public class ResourcebundlesController
 	}
 
 	@CrossOrigin(origins = "*")
-	@RequestMapping(path = ActionRestPath.ACTION_SAVE_OR_UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = BaseActionRestPath.ACTION_SAVE_OR_UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "save the value from the given arguments.")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query"),

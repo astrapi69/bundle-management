@@ -26,6 +26,7 @@ package io.github.astrapi69.bundlemanagement.controller;
 
 import java.util.UUID;
 
+import io.github.astrapi69.spring.rest.BaseActionRestPath;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
@@ -78,7 +79,7 @@ public class LanguageLocalesController
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = ActionRestPath.ACTION_FIND_ALL, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = BaseActionRestPath.ACTION_FIND_ALL, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Find all LanguageLocales objects")
 	public ResponseEntity<Iterable<LanguageLocale>> findAllLanguageLocales()
 	{

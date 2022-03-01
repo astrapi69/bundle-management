@@ -28,6 +28,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import io.github.astrapi69.spring.rest.BaseActionRestPath;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
@@ -75,7 +76,7 @@ public class BundleNamesController
 		this.service = service;
 	}
 
-	@RequestMapping(value = ActionRestPath.ACTION_DELETE, method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = BaseActionRestPath.ACTION_DELETE, method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Delete the given bundle application")
 	@ResponseBody
 	public ResponseEntity<BundleName> delete(@Valid @RequestBody BundleName bundleName)
@@ -86,7 +87,7 @@ public class BundleNamesController
 	}
 
 	@CrossOrigin(origins = "*")
-	@RequestMapping(path = ActionRestPath.ACTION_SAVE_OR_UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = BaseActionRestPath.ACTION_SAVE_OR_UPDATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "save the value from the given arguments.")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "bundleappname", value = "the name of the bundle application", dataType = "string", paramType = "query"),

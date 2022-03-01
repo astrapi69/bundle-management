@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import io.github.astrapi69.spring.rest.BaseActionRestPath;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -111,7 +112,7 @@ public class BundleApplicationsControllerTest
 	{
 		String restUrl;
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ActionRestPath.ACTION_FIND_ALL);
+				BaseActionRestPath.ACTION_FIND_ALL);
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		ResponseEntity<Iterable<BundleApplication>> entities = this.restTemplate.exchange(restUrl,
@@ -154,7 +155,7 @@ public class BundleApplicationsControllerTest
 		requestEntity = new HttpEntity<String>(json, headers);
 
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ActionRestPath.ACTION_DELETE);
+				BaseActionRestPath.ACTION_DELETE);
 
 		entity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity,
 			BundleApplication.class);
@@ -240,7 +241,7 @@ public class BundleApplicationsControllerTest
 		requestEntity = new HttpEntity<String>(json, headers);
 
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ActionRestPath.ACTION_DELETE);
+				BaseActionRestPath.ACTION_DELETE);
 
 		responseEntity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity,
 			BundleApplication.class);
@@ -287,7 +288,7 @@ public class BundleApplicationsControllerTest
 		requestEntity = new HttpEntity<>(json, headers);
 
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ActionRestPath.ACTION_UPDATE);
+				BaseActionRestPath.ACTION_UPDATE);
 
 		responseEntity = this.restTemplate.exchange(restUrl, HttpMethod.PUT, requestEntity,
 			BundleApplication.class);
@@ -304,7 +305,7 @@ public class BundleApplicationsControllerTest
 		requestEntity = new HttpEntity<String>(json, headers);
 
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ActionRestPath.ACTION_DELETE);
+				BaseActionRestPath.ACTION_DELETE);
 
 		responseEntity = this.restTemplate.exchange(restUrl, HttpMethod.DELETE, requestEntity,
 			BundleApplication.class);
@@ -325,7 +326,7 @@ public class BundleApplicationsControllerTest
 
 		requestParams = ArrayFactory.newArray("bundleappname");
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ActionRestPath.ACTION_FIND, requestParams);
+				BaseActionRestPath.ACTION_FIND, requestParams);
 		headers = new HttpHeaders();
 		requestEntity = new HttpEntity<>(headers);
 		urlParams = new HashMap<String, String>();
@@ -339,7 +340,7 @@ public class BundleApplicationsControllerTest
 		requestParams = ArrayFactory.newArray("bundleappname");
 
 		restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ActionRestPath.ACTION_FIND, requestParams);
+				BaseActionRestPath.ACTION_FIND, requestParams);
 		headers = new HttpHeaders();
 		requestEntity = new HttpEntity<>(headers);
 		urlParams = new HashMap<String, String>();

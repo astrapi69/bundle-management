@@ -29,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.github.astrapi69.spring.rest.BaseActionRestPath;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +71,7 @@ public class LanguagesControllerTest
 	{
 		String[] requestParams = ArrayFactory.newArray("name");
 		String restUrl = UrlExtensions.generateUrl(getBaseUrl(randomServerPort),
-			ActionRestPath.ACTION_FIND, requestParams);
+				BaseActionRestPath.ACTION_FIND, requestParams);
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 		Map<String, String> map = new HashMap<String, String>();
