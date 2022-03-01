@@ -24,8 +24,8 @@
  */
 package io.github.astrapi69.bundlemanagement.controller;
 
-import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
+import io.github.astrapi69.bundlemanagement.enumtype.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enumtype.AppRestPath;
 import io.github.astrapi69.bundlemanagement.viewmodel.LanguageLocale;
 import io.github.astrapi69.collections.array.ArrayFactory;
 import io.github.astrapi69.spring.web.util.UrlExtensions;

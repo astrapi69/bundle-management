@@ -24,7 +24,7 @@
  */
 package io.github.astrapi69.bundlemanagement.controller;
 
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
+import io.github.astrapi69.bundlemanagement.enumtype.AppRestPath;
 import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
 import io.github.astrapi69.spring.rest.BaseActionRestPath;
 import io.github.astrapi69.spring.web.util.UrlExtensions;

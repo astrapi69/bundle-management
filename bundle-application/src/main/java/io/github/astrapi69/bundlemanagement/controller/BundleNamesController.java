@@ -24,7 +24,7 @@
  */
 package io.github.astrapi69.bundlemanagement.controller;
 
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
+import io.github.astrapi69.bundlemanagement.enumtype.AppRestPath;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleNames;
 import io.github.astrapi69.bundlemanagement.jpa.repository.BundleNamesRepository;
 import io.github.astrapi69.bundlemanagement.mapper.BundleNamesMapper;

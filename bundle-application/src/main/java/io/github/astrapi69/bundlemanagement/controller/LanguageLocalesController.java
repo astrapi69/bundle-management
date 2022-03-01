@@ -24,8 +24,8 @@
  */
 package io.github.astrapi69.bundlemanagement.controller;
 
-import io.github.astrapi69.bundlemanagement.enums.ActionRestPath;
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
+import io.github.astrapi69.bundlemanagement.enumtype.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enumtype.AppRestPath;
 import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
 import io.github.astrapi69.bundlemanagement.jpa.repository.LanguageLocalesRepository;
 import io.github.astrapi69.bundlemanagement.mapper.LanguageLocalesMapper;

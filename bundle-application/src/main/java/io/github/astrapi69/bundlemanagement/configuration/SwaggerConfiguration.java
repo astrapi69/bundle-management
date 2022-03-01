@@ -24,7 +24,7 @@
  */
 package io.github.astrapi69.bundlemanagement.configuration;
 
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
+import io.github.astrapi69.bundlemanagement.enumtype.AppRestPath;
 import io.github.astrapi69.spring.configuration.AbstractSwaggerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

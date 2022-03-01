@@ -25,7 +25,7 @@
 package io.github.astrapi69.bundlemanagement.controller;
 
 
-import io.github.astrapi69.bundlemanagement.enums.AppRestPath;
+import io.github.astrapi69.bundlemanagement.enumtype.AppRestPath;
 import io.github.astrapi69.bundlemanagement.viewmodel.Country;
 import io.github.astrapi69.collections.array.ArrayFactory;
 import io.github.astrapi69.spring.rest.BaseActionRestPath;

@@ -22,7 +22,7 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package io.github.astrapi69.bundlemanagement.enums;
+package io.github.astrapi69.bundlemanagement.enumtype;
 
 import io.github.astrapi69.spring.rest.BaseActionRestPath;
 import lombok.AccessLevel;
