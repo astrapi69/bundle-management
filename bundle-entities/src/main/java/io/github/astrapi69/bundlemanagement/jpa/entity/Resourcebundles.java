@@ -24,7 +24,7 @@
  */
 package io.github.astrapi69.bundlemanagement.jpa.entity;
 
-import io.github.astrapi69.data.enums.DatabasePrefix;
+import io.github.astrapi69.data.enumtype.DatabasePrefix;
 import io.github.astrapi69.entity.versionable.VersionableUUIDEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
