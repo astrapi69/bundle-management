@@ -42,7 +42,7 @@ import io.github.astrapi69.bundlemanagement.viewmodel.LanguageLocale;
 import io.github.astrapi69.bundlemanagement.viewmodel.PropertiesKey;
 import io.github.astrapi69.bundlemanagement.viewmodel.PropertiesValue;
 import io.github.astrapi69.bundlemanagement.viewmodel.Resourcebundle;
-import io.github.astrapi69.collections.set.SetFactory;
+import io.github.astrapi69.collection.set.SetFactory;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;

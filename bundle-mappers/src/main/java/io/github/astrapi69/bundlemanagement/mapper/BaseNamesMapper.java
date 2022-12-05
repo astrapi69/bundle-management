@@ -24,7 +24,7 @@
  */
 package io.github.astrapi69.bundlemanagement.mapper;
 
-import io.github.astrapi69.bean.mapper.AbstractGenericMapper;
+import io.github.astrapi69.model.mapper.AbstractGenericMapper;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BaseNames;
 import io.github.astrapi69.bundlemanagement.viewmodel.BaseName;
 import org.springframework.stereotype.Component;

@@ -32,7 +32,7 @@ import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
 import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesKeys;
 import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesValues;
 import io.github.astrapi69.bundlemanagement.jpa.entity.Resourcebundles;
-import io.github.astrapi69.collections.set.SetFactory;
+import io.github.astrapi69.collection.set.SetFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

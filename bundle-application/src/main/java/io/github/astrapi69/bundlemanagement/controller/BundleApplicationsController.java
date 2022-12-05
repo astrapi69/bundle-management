@@ -33,7 +33,7 @@ import io.github.astrapi69.bundlemanagement.mapper.BundleApplicationsMapper;
 import io.github.astrapi69.bundlemanagement.service.BundleApplicationsService;
 import io.github.astrapi69.bundlemanagement.viewmodel.BundleApplication;
 import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
-import io.github.astrapi69.collections.set.SetExtensions;
+import io.github.astrapi69.collection.set.SetExtensions;
 import io.github.astrapi69.spring.controller.AbstractRestController;
 import io.github.astrapi69.spring.rest.BaseActionRestPath;
 import io.swagger.annotations.ApiImplicitParam;

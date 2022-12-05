@@ -5,6 +5,7 @@ dependencies {
     implementation("com.google.code.findbugs:annotations:$findbugsAnnotationsVersion")
     implementation("io.github.astrapi69:bean-mapper-api:$beanMapperApiVersion")
     implementation("io.github.astrapi69:generic-mapper:$genericMapperVersion")
+    implementation("org.modelmapper:modelmapper:$modelmapperVersion")
     implementation("io.github.astrapi69:data-api:$dataApiVersion")
     implementation("io.github.astrapi69:ent-core:$entCoreVersion")
     implementation("org.springframework.boot:spring-boot-starter")

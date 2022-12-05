@@ -27,7 +27,7 @@ package io.github.astrapi69.bundlemanagement.controller;
 import io.github.astrapi69.bundlemanagement.enumtype.ActionRestPath;
 import io.github.astrapi69.bundlemanagement.enumtype.AppRestPath;
 import io.github.astrapi69.bundlemanagement.viewmodel.Language;
-import io.github.astrapi69.collections.array.ArrayFactory;
+import io.github.astrapi69.collection.array.ArrayFactory;
 import io.github.astrapi69.spring.rest.BaseActionRestPath;
 import io.github.astrapi69.spring.web.util.UrlExtensions;
 import org.junit.jupiter.api.Test;

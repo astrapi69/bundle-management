@@ -35,7 +35,7 @@ import io.github.astrapi69.bundlemanagement.service.ResourcebundlesService;
 import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
 import io.github.astrapi69.bundlemanagement.viewmodel.ImprortableBundleName;
 import io.github.astrapi69.bundlemanagement.viewmodel.Resourcebundle;
-import io.github.astrapi69.collections.list.ListExtensions;
+import io.github.astrapi69.collection.list.ListExtensions;
 import io.github.astrapi69.resourcebundle.locale.LocaleResolver;
 import io.github.astrapi69.resourcebundle.locale.ResourceBundleExtensions;
 import io.github.astrapi69.spring.controller.AbstractRestController;

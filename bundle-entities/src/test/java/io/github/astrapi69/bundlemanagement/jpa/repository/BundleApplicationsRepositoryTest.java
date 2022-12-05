@@ -27,7 +27,7 @@ package io.github.astrapi69.bundlemanagement.jpa.repository;
 import io.github.astrapi69.bundlemanagement.integration.AbstractIntegrationTest;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
 import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
-import io.github.astrapi69.collections.set.SetFactory;
+import io.github.astrapi69.collection.set.SetFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

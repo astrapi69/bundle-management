@@ -28,7 +28,7 @@ import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleNames;
 import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
 import io.github.astrapi69.bundlemanagement.jpa.repository.BundleApplicationsRepository;
-import io.github.astrapi69.collections.set.SetFactory;
+import io.github.astrapi69.collection.set.SetFactory;
 import io.github.astrapi69.copy.object.CopyObjectExtensions;
 import io.github.astrapi69.reflection.ReflectionExtensions;
 import io.github.astrapi69.spring.service.api.GenericService;

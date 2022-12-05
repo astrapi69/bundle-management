@@ -34,9 +34,9 @@ import io.github.astrapi69.bundlemanagement.jpa.repository.BundleApplicationsRep
 import io.github.astrapi69.bundlemanagement.jpa.repository.ResourcebundlesRepository;
 import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
 import io.github.astrapi69.bundlemanagement.viewmodel.Resourcebundle;
-import io.github.astrapi69.collections.list.ListFactory;
+import io.github.astrapi69.collection.list.ListFactory;
 import io.github.astrapi69.collections.pairs.KeyValuePair;
-import io.github.astrapi69.collections.properties.PropertiesExtensions;
+import io.github.astrapi69.collection.properties.PropertiesExtensions;
 import io.github.astrapi69.resourcebundle.locale.LocaleExtensions;
 import io.github.astrapi69.resourcebundle.locale.LocaleResolver;
 import io.github.astrapi69.spring.service.api.GenericService;
