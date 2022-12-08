@@ -26,6 +26,7 @@ package io.github.astrapi69.bundlemanagement.jpa.repository;
 
 import io.github.astrapi69.bundlemanagement.integration.AbstractIntegrationTest;
 import io.github.astrapi69.bundlemanagement.jpa.entity.Languages;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -38,6 +39,7 @@ public class LanguagesRepositoryTest extends AbstractIntegrationTest
 	private LanguagesRepository repository;
 
 	@Test
+	@Disabled
 	public void whenFindByNameThenReturnLanguages()
 	{
 		Languages distinctByName;

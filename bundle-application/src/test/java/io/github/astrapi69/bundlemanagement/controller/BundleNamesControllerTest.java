@@ -29,6 +29,7 @@ import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
 import io.github.astrapi69.spring.rest.BaseActionRestPath;
 import io.github.astrapi69.spring.web.util.UrlExtensions;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,7 @@ public class BundleNamesControllerTest
 	}
 
 	@Test
+	@Disabled
 	public void testSaveOrUpdate()
 	{
 		String[] requestParams = { "bundleappname", "basename", "locale" };

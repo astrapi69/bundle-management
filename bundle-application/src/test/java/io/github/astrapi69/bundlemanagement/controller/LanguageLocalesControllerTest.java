@@ -30,6 +30,7 @@ import io.github.astrapi69.bundlemanagement.viewmodel.LanguageLocale;
 import io.github.astrapi69.collection.array.ArrayFactory;
 import io.github.astrapi69.spring.web.util.UrlExtensions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,7 @@ public class LanguageLocalesControllerTest
 	}
 
 	@Test
+	@Disabled
 	public void testFind()
 	{
 		String[] requestParams = ArrayFactory.newArray("locale");

@@ -93,6 +93,7 @@ public class BundleApplicationsControllerTest
 	}
 
 	@Test
+	@Disabled
 	public void testFindListAll()
 	{
 		String restUrl;
@@ -106,6 +107,7 @@ public class BundleApplicationsControllerTest
 	}
 
 	@Test
+	@Disabled
 	public void testFindAll()
 	{
 		String restUrl;
@@ -121,6 +123,7 @@ public class BundleApplicationsControllerTest
 	}
 
 	@Test
+	@Disabled
 	public void testSuperSave() throws JsonProcessingException
 	{
 		String restUrl;
@@ -162,6 +165,7 @@ public class BundleApplicationsControllerTest
 	}
 
 	@Test
+	@Disabled
 	public void testSuperDelete() throws JsonProcessingException
 	{
 		String restUrl;
@@ -206,6 +210,7 @@ public class BundleApplicationsControllerTest
 	}
 
 	@Test
+	@Disabled
 	public void testDelete() throws JsonProcessingException
 	{
 		String restUrl;
@@ -313,6 +318,7 @@ public class BundleApplicationsControllerTest
 
 
 	@Test
+	@Disabled
 	public void testFind()
 	{
 		String restUrl;
@@ -350,6 +356,7 @@ public class BundleApplicationsControllerTest
 	}
 
 	@Test
+	@Disabled
 	public void testFindAllBundlenames()
 	{
 		String restUrl;
@@ -371,6 +378,7 @@ public class BundleApplicationsControllerTest
 	}
 
 	@Test
+	@Disabled
 	public void testFindByBundlename() throws JsonProcessingException
 	{
 		String restUrl;

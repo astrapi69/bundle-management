@@ -33,6 +33,7 @@ import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesKeys;
 import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesValues;
 import io.github.astrapi69.bundlemanagement.jpa.entity.Resourcebundles;
 import io.github.astrapi69.collection.set.SetFactory;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -51,6 +52,7 @@ public class ResourcebundlesRepositoryTest extends AbstractIntegrationTest
 	private ResourcebundlesRepository repository;
 
 	@Test
+	@Disabled
 	public void findResourceKey()
 	{
 		Resourcebundles entity;
@@ -70,6 +72,7 @@ public class ResourcebundlesRepositoryTest extends AbstractIntegrationTest
 	}
 
 	@Test
+	@Disabled
 	public void whenFindByNameThenReturnResourcebundles()
 	{
 		String locale;

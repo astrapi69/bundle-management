@@ -4,6 +4,7 @@ dependencies {
     implementation project(":bundle-services")
     implementation project(":bundle-viewmodels")
 
+
     implementation("io.github.astrapi69:bean-mapper-api:$beanMapperApiVersion")
     implementation("io.github.astrapi69:generic-mapper:$genericMapperVersion")
     implementation("org.modelmapper:modelmapper:$modelmapperVersion")

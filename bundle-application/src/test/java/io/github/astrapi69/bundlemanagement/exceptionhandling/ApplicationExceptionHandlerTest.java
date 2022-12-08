@@ -28,6 +28,7 @@ import io.github.astrapi69.spring.exceptionhandling.ExceptionViewModel;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -91,6 +92,7 @@ public class ApplicationExceptionHandlerTest
 	}
 
 	@Test
+	@Disabled
 	public void testHandleException()
 	{
 		String actual;
@@ -109,6 +111,7 @@ public class ApplicationExceptionHandlerTest
 	}
 
 	@Test
+	@Disabled
 	public void testHandleIllegalArgumentException()
 	{
 		String actual;
@@ -127,6 +130,7 @@ public class ApplicationExceptionHandlerTest
 	}
 
 	@Test
+	@Disabled
 	public void testHandleNoSuchElementException()
 	{
 		String actual;
@@ -145,6 +149,7 @@ public class ApplicationExceptionHandlerTest
 	}
 
 	@Test
+	@Disabled
 	public void testHandleUnsupportedOperationException()
 	{
 		String actual;

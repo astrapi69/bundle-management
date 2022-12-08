@@ -26,6 +26,7 @@ package io.github.astrapi69.bundlemanagement.jpa.repository;
 
 import io.github.astrapi69.bundlemanagement.integration.AbstractIntegrationTest;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BaseNames;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -38,6 +39,7 @@ public class BaseNamesRepositoryTest extends AbstractIntegrationTest
 	private BaseNamesRepository repository;
 
 	@Test
+	@Disabled
 	public void whenFindByNameThenReturnBaseNames()
 	{
 		BaseNames entity = BaseNames.builder().name("messages").build();

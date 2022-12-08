@@ -30,6 +30,7 @@ import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleNames;
 import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
 import io.github.astrapi69.collection.set.SetFactory;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -50,6 +51,7 @@ public class BundleNamesRepositoryTest extends AbstractIntegrationTest
 	private BundleApplicationsRepository bundleApplicationsRepository;
 
 	@Test
+	@Disabled
 	public void whenFindByNameThenReturnBundleNames()
 	{
 		BundleApplications bundleApplications;
@@ -100,6 +102,7 @@ public class BundleNamesRepositoryTest extends AbstractIntegrationTest
 	}
 
 	@Test
+	@Disabled
 	public void testFindByOwner()
 	{
 		BundleApplications distinctByName = bundleApplicationsRepository

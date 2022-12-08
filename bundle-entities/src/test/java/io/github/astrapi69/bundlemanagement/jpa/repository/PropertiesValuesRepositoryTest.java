@@ -26,6 +26,7 @@ package io.github.astrapi69.bundlemanagement.jpa.repository;
 
 import io.github.astrapi69.bundlemanagement.integration.AbstractIntegrationTest;
 import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesValues;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,6 +42,7 @@ public class PropertiesValuesRepositoryTest extends AbstractIntegrationTest
 	private PropertiesValuesRepository repository;
 
 	@Test
+	@Disabled
 	public void whenFindByNameThenReturnPropertiesValues()
 	{
 		PropertiesValues entity = PropertiesValues.builder().name("foo-value").build();

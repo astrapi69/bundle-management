@@ -26,6 +26,7 @@ package io.github.astrapi69.bundlemanagement.jpa.repository;
 
 import io.github.astrapi69.bundlemanagement.integration.AbstractIntegrationTest;
 import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesKeys;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,6 +42,7 @@ public class PropertiesKeysRepositoryTest extends AbstractIntegrationTest
 	private PropertiesKeysRepository repository;
 
 	@Test
+	@Disabled
 	public void whenFindByNameThenReturnPropertiesKeys()
 	{
 		PropertiesKeys entity = PropertiesKeys.builder().name("foo.key").build();

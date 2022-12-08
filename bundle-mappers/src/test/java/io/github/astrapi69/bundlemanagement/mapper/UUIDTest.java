@@ -24,6 +24,7 @@
  */
 package io.github.astrapi69.bundlemanagement.mapper;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -33,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class UUIDTest
 {
 	@Test
+	@Disabled
 	public void testGenerateUUID()
 	{
 		UUID uuid = UUID.randomUUID();

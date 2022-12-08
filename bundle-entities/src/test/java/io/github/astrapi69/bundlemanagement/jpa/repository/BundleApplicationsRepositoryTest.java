@@ -28,6 +28,7 @@ import io.github.astrapi69.bundlemanagement.integration.AbstractIntegrationTest;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
 import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
 import io.github.astrapi69.collection.set.SetFactory;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -45,6 +46,7 @@ public class BundleApplicationsRepositoryTest extends AbstractIntegrationTest
 	private BundleApplicationsRepository repository;
 
 	@Test
+	@Disabled
 	public void whenFindByNameThenReturnBundleApplications()
 	{
 		String locale = "de";
@@ -70,6 +72,7 @@ public class BundleApplicationsRepositoryTest extends AbstractIntegrationTest
 	}
 
 	@Test
+	@Disabled
 	public void testFindByLanguageLocale()
 	{
 		List<BundleApplications> bundleApplications;
@@ -82,6 +85,7 @@ public class BundleApplicationsRepositoryTest extends AbstractIntegrationTest
 	}
 
 	@Test
+	@Disabled
 	public void testFindAllByLanguageLocaleWithInnerJoin()
 	{
 		List<BundleApplications> bundleApplications;
