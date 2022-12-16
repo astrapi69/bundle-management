@@ -11,6 +11,7 @@ buildscript {
         classpath "com.github.ben-manes:gradle-versions-plugin:$gradlePluginVersionsVersion"
         classpath "gradle.plugin.com.hierynomus.gradle.plugins:license-gradle-plugin:$licenseGradlePluginVersion"
         classpath "com.diffplug.spotless:spotless-plugin-gradle:$spotlessGradlePluginVersion"
+        classpath "org.openapitools:openapi-generator-gradle-plugin:6.2.1"
     }
 }
 
