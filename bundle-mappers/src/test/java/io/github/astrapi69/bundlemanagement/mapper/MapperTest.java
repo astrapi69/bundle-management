@@ -24,6 +24,14 @@
  */
 package io.github.astrapi69.bundlemanagement.mapper;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.util.UUID;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
 import io.github.astrapi69.bundlemanagement.jpa.entity.BaseNames;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleNames;
@@ -43,13 +51,6 @@ import io.github.astrapi69.bundlemanagement.viewmodel.PropertiesKey;
 import io.github.astrapi69.bundlemanagement.viewmodel.PropertiesValue;
 import io.github.astrapi69.bundlemanagement.viewmodel.Resourcebundle;
 import io.github.astrapi69.collection.set.SetFactory;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class MapperTest
 {

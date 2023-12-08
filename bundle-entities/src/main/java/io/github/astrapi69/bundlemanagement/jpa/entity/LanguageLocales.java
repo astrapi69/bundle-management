@@ -24,6 +24,12 @@
  */
 package io.github.astrapi69.bundlemanagement.jpa.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
 import io.github.astrapi69.data.enumtype.DatabasePrefix;
 import io.github.astrapi69.entity.versionable.VersionableUUIDEntity;
 import lombok.AccessLevel;
@@ -34,12 +40,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 /**
  * The entity class {@link LanguageLocales} holds the data for the locale as {@link String} object.

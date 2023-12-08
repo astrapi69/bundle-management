@@ -24,17 +24,6 @@
  */
 package io.github.astrapi69.bundlemanagement.jpa.entity;
 
-import io.github.astrapi69.data.enumtype.DatabasePrefix;
-import io.github.astrapi69.entity.versionable.VersionableUUIDEntity;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.FieldDefaults;
-import lombok.experimental.SuperBuilder;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,6 +35,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import io.github.astrapi69.data.enumtype.DatabasePrefix;
+import io.github.astrapi69.entity.versionable.VersionableUUIDEntity;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 
 /**
  * The entity class {@link BundleNames} holds the data from the {@link BaseNames} and the

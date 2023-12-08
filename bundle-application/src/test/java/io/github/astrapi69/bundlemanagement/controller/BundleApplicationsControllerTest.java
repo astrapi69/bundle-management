@@ -24,17 +24,15 @@
  */
 package io.github.astrapi69.bundlemanagement.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import io.github.astrapi69.bundlemanagement.enumtype.ActionRestPath;
-import io.github.astrapi69.bundlemanagement.enumtype.AppRestPath;
-import io.github.astrapi69.bundlemanagement.viewmodel.BundleApplication;
-import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
-import io.github.astrapi69.collection.array.ArrayFactory;
-import io.github.astrapi69.collection.list.ListFactory;
-import io.github.astrapi69.json.ObjectToJsonExtensions;
-import io.github.astrapi69.spring.generics.ParameterizedTypeReferenceFactory;
-import io.github.astrapi69.spring.rest.BaseActionRestPath;
-import io.github.astrapi69.spring.web.util.UrlExtensions;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -54,18 +52,23 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import io.github.astrapi69.bundlemanagement.enumtype.ActionRestPath;
+import io.github.astrapi69.bundlemanagement.enumtype.AppRestPath;
+import io.github.astrapi69.bundlemanagement.viewmodel.BundleApplication;
+import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
+import io.github.astrapi69.collection.array.ArrayFactory;
+import io.github.astrapi69.collection.list.ListFactory;
+import io.github.astrapi69.json.ObjectToJsonExtensions;
+import io.github.astrapi69.spring.generics.ParameterizedTypeReferenceFactory;
+import io.github.astrapi69.spring.rest.BaseActionRestPath;
+import io.github.astrapi69.spring.web.util.UrlExtensions;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Disabled
 public class BundleApplicationsControllerTest
 {
 

@@ -24,17 +24,8 @@
  */
 package io.github.astrapi69.bundlemanagement.jpa.entity;
 
-import io.github.astrapi69.data.enumtype.DatabasePrefix;
-import io.github.astrapi69.data.nameable.Nameable;
-import io.github.astrapi69.entity.nameable.versionable.VersionableNameUUIDEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.FieldDefaults;
-import lombok.experimental.SuperBuilder;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -49,8 +40,18 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import java.util.HashSet;
-import java.util.Set;
+
+import io.github.astrapi69.data.enumtype.DatabasePrefix;
+import io.github.astrapi69.data.nameable.Nameable;
+import io.github.astrapi69.entity.nameable.versionable.VersionableNameUUIDEntity;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 
 /**
  * The entity class {@link BundleApplications} is the root of every bundle application. Every entity

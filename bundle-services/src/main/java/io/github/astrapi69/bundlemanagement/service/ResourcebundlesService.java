@@ -24,6 +24,20 @@
  */
 package io.github.astrapi69.bundlemanagement.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.Properties;
+import java.util.UUID;
+import java.util.logging.Level;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleNames;
 import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
@@ -35,8 +49,8 @@ import io.github.astrapi69.bundlemanagement.jpa.repository.ResourcebundlesReposi
 import io.github.astrapi69.bundlemanagement.viewmodel.BundleName;
 import io.github.astrapi69.bundlemanagement.viewmodel.Resourcebundle;
 import io.github.astrapi69.collection.list.ListFactory;
-import io.github.astrapi69.collections.pairs.KeyValuePair;
 import io.github.astrapi69.collection.properties.PropertiesExtensions;
+import io.github.astrapi69.collections.pairs.KeyValuePair;
 import io.github.astrapi69.resourcebundle.locale.LocaleExtensions;
 import io.github.astrapi69.resourcebundle.locale.LocaleResolver;
 import io.github.astrapi69.spring.service.api.GenericService;
@@ -46,19 +60,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.UUID;
-import java.util.logging.Level;
 
 /**
  * The class {@link ResourcebundlesService}

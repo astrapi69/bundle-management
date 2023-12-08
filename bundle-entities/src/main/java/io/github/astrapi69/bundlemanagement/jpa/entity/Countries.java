@@ -24,6 +24,15 @@
  */
 package io.github.astrapi69.bundlemanagement.jpa.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import io.github.astrapi69.data.enumtype.DatabasePrefix;
 import io.github.astrapi69.data.nameable.Nameable;
 import io.github.astrapi69.entity.nameable.NameUUIDEntity;
@@ -33,14 +42,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 /**
  * The entity class {@link Countries} is keeping the information for all countries in the world

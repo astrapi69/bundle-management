@@ -2,11 +2,14 @@
 apply plugin: "org.openapi.generator"
 
 dependencies {
+
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+
     implementation project(":bundle-entities")
     implementation project(":bundle-mappers")
     implementation project(":bundle-services")
     implementation project(":bundle-viewmodels")
-
 
     implementation("io.github.astrapi69:bean-mapper-api:$beanMapperApiVersion")
     implementation("io.github.astrapi69:generic-mapper:$genericMapperVersion")
@@ -25,21 +28,22 @@ dependencies {
     implementation("io.github.astrapi69:throw-able:$throwAbleVersion")
     implementation("io.github.astrapi69:spring-boot-extensions:$springBootExtensionsVersion")
     implementation("org.apache.commons:commons-lang3:$commonsLang3Version")
+    implementation("org.openapitools:openapi-generator:$openapiGeneratorVersion") {
+        exclude module: "slf4j-simple"
+    }
     implementation("org.postgresql:postgresql")
     implementation("org.flywaydb:flyway-core")
     implementation("org.springframework:spring-oxm")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
     testCompileOnly("org.projectlombok:lombok:$lombokVersion")
     testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
     testImplementation("io.github.astrapi69:json-extensions:$jsonExtensionsVersion")
-    implementation("org.openapitools:openapi-generator:6.2.1")
 }
 
 license {

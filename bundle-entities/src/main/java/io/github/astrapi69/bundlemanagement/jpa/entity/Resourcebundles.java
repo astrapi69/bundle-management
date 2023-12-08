@@ -24,6 +24,14 @@
  */
 package io.github.astrapi69.bundlemanagement.jpa.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import io.github.astrapi69.data.enumtype.DatabasePrefix;
 import io.github.astrapi69.entity.versionable.VersionableUUIDEntity;
 import lombok.AccessLevel;
@@ -34,14 +42,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
-import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 /**
  * The entity class {@link Resourcebundles} holds the all data of the values of the resource

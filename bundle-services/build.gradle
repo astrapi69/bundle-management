@@ -19,14 +19,38 @@ dependencies {
     implementation("com.thoughtworks.xstream:xstream:$xstreamVersion")
     implementation("org.apache.commons:commons-lang3:$commonsLang3Version")
     implementation("org.postgresql:postgresql")
-    implementation("org.flywaydb:flyway-core")
-    implementation("org.springframework:spring-oxm")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-starter-aop")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.flywaydb:flyway-core"){
+        exclude module: "spring-boot-starter-logging"
+        exclude module: "logback-classic"
+    }
+    implementation("org.springframework:spring-oxm"){
+        exclude module: "spring-boot-starter-logging"
+        exclude module: "logback-classic"
+    }
+    implementation("org.springframework.boot:spring-boot-starter-web"){
+        exclude module: "spring-boot-starter-logging"
+        exclude module: "logback-classic"
+    }
+    implementation("org.springframework.boot:spring-boot-starter-actuator"){
+        exclude module: "spring-boot-starter-logging"
+        exclude module: "logback-classic"
+    }
+    implementation("org.springframework.boot:spring-boot-starter-aop"){
+        exclude module: "spring-boot-starter-logging"
+        exclude module: "logback-classic"
+    }
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa"){
+        exclude module: "spring-boot-starter-logging"
+        exclude module: "logback-classic"
+    }
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor"){
+        exclude module: "spring-boot-starter-logging"
+        exclude module: "logback-classic"
+    }
+    testImplementation("org.springframework.boot:spring-boot-starter-test"){
+        exclude module: "spring-boot-starter-logging"
+        exclude module: "logback-classic"
+    }
 }
 
 license {

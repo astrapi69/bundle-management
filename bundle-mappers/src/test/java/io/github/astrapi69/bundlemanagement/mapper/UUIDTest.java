@@ -24,12 +24,12 @@
  */
 package io.github.astrapi69.bundlemanagement.mapper;
 
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class UUIDTest
 {

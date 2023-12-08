@@ -24,16 +24,16 @@
  */
 package io.github.astrapi69.bundlemanagement.jpa.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
+
 import io.github.astrapi69.data.enumtype.DatabasePrefix;
 import io.github.astrapi69.data.nameable.Nameable;
 import io.github.astrapi69.entity.nameable.versionable.VersionableNameUUIDEntity;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
 
 /**
  * Entity class for saving in database base names of the resource bundles. The base name if you see

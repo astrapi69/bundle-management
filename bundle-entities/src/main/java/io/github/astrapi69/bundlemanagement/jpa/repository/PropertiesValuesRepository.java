@@ -24,12 +24,13 @@
  */
 package io.github.astrapi69.bundlemanagement.jpa.repository;
 
-import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesValues;
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.UUID;
+import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesValues;
 
 @Repository
 public interface PropertiesValuesRepository extends JpaRepository<PropertiesValues, UUID>

@@ -24,11 +24,12 @@
  */
 package io.github.astrapi69.bundlemanagement.jpa.repository;
 
-import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
+import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
+import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
 
 @Repository
 public interface LanguageLocalesRepository extends JpaRepository<LanguageLocales, UUID>

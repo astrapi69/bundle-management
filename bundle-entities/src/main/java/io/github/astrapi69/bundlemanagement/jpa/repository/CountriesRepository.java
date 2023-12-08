@@ -24,12 +24,13 @@
  */
 package io.github.astrapi69.bundlemanagement.jpa.repository;
 
-import io.github.astrapi69.bundlemanagement.jpa.entity.Countries;
+import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
+import io.github.astrapi69.bundlemanagement.jpa.entity.Countries;
 
 @Repository
 public interface CountriesRepository extends JpaRepository<Countries, UUID>

@@ -1,0 +1,23 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="BundleManagementApplication dev" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" value="dev" />
+    <option name="DEBUG_MODE" value="true" />
+    <module name="io.github.astrapi69.bundle-management.bundle-application.main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="io.github.astrapi69.bundlemanagement.BundleManagementApplication" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="io.github.astrapi69.bundlemanagement.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <extension name="de.eudaemon.ideaswag.SwingspectorExtension">
+      <Swingspector>
+        <keystroke code="59" modifiers="130" />
+        <active value="false" />
+      </Swingspector>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

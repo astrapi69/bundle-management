@@ -24,6 +24,12 @@
  */
 package io.github.astrapi69.bundlemanagement.service;
 
+import java.util.Locale;
+import java.util.UUID;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
 import io.github.astrapi69.bundlemanagement.jpa.repository.LanguageLocalesRepository;
 import io.github.astrapi69.resourcebundle.locale.LocaleExtensions;
@@ -33,11 +39,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Locale;
-import java.util.UUID;
 
 /**
  * The class {@link LanguageLocalesService}

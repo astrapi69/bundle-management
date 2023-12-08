@@ -24,10 +24,11 @@
  */
 package io.github.astrapi69.bundlemanagement.mapper;
 
-import io.github.astrapi69.model.mapper.AbstractGenericMapper;
+import org.springframework.stereotype.Component;
+
 import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesValues;
 import io.github.astrapi69.bundlemanagement.viewmodel.PropertiesValue;
-import org.springframework.stereotype.Component;
+import io.github.astrapi69.model.mapper.AbstractGenericMapper;
 
 /**
  * The class {@link PropertiesValuesMapper}.

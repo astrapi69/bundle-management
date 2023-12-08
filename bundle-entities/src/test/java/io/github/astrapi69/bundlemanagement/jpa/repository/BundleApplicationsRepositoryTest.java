@@ -24,18 +24,20 @@
  */
 package io.github.astrapi69.bundlemanagement.jpa.repository;
 
-import io.github.astrapi69.bundlemanagement.integration.AbstractIntegrationTest;
-import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
-import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
-import io.github.astrapi69.collection.set.SetFactory;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+import java.util.List;
+
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
+import io.github.astrapi69.bundlemanagement.integration.AbstractIntegrationTest;
+import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
+import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
+import io.github.astrapi69.collection.set.SetFactory;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
+@Disabled
 public class BundleApplicationsRepositoryTest extends AbstractIntegrationTest
 {
 

@@ -24,10 +24,11 @@
  */
 package io.github.astrapi69.bundlemanagement.mapper;
 
-import io.github.astrapi69.model.mapper.AbstractGenericMapper;
+import org.springframework.stereotype.Component;
+
 import io.github.astrapi69.bundlemanagement.jpa.entity.Resourcebundles;
 import io.github.astrapi69.bundlemanagement.viewmodel.Resourcebundle;
-import org.springframework.stereotype.Component;
+import io.github.astrapi69.model.mapper.AbstractGenericMapper;
 
 /**
  * The class {@link ResourcebundlesMapper}.

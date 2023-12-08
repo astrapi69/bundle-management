@@ -24,6 +24,10 @@
  */
 package io.github.astrapi69.bundlemanagement.jpa.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
+
 import io.github.astrapi69.data.enumtype.DatabasePrefix;
 import io.github.astrapi69.data.nameable.Nameable;
 import io.github.astrapi69.entity.nameable.versionable.VersionableNameUUIDEntity;
@@ -32,10 +36,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
 
 /**
  * The entity class {@link PropertiesKeys} holds the data only for the properties keys not the

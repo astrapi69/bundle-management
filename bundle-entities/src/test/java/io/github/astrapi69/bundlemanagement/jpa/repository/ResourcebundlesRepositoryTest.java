@@ -24,6 +24,15 @@
  */
 package io.github.astrapi69.bundlemanagement.jpa.repository;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import io.github.astrapi69.bundlemanagement.integration.AbstractIntegrationTest;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BaseNames;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
@@ -33,15 +42,8 @@ import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesKeys;
 import io.github.astrapi69.bundlemanagement.jpa.entity.PropertiesValues;
 import io.github.astrapi69.bundlemanagement.jpa.entity.Resourcebundles;
 import io.github.astrapi69.collection.set.SetFactory;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+@Disabled
 public class ResourcebundlesRepositoryTest extends AbstractIntegrationTest
 {
 

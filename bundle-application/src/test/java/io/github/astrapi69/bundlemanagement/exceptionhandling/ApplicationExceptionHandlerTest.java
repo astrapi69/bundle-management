@@ -24,9 +24,15 @@
  */
 package io.github.astrapi69.bundlemanagement.exceptionhandling;
 
-import io.github.astrapi69.spring.exceptionhandling.ExceptionViewModel;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+
+import java.util.Collections;
+import java.util.NoSuchElementException;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -42,13 +48,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.context.request.ServletWebRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.NoSuchElementException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
+import io.github.astrapi69.spring.exceptionhandling.ExceptionViewModel;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { ApplicationExceptionHandler.class })

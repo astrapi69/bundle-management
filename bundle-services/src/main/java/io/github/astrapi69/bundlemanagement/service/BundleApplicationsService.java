@@ -24,6 +24,14 @@
  */
 package io.github.astrapi69.bundlemanagement.service;
 
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleApplications;
 import io.github.astrapi69.bundlemanagement.jpa.entity.BundleNames;
 import io.github.astrapi69.bundlemanagement.jpa.entity.LanguageLocales;
@@ -38,13 +46,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 
 /**
  * The class {@link BundleApplicationsService}

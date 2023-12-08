@@ -24,17 +24,8 @@
  */
 package io.github.astrapi69.bundlemanagement.configuration;
 
-import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NonNull;
-import lombok.experimental.FieldDefaults;
-import lombok.extern.java.Log;
+import java.util.List;
+
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -51,7 +42,18 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.List;
+import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.java.Log;
 
 @Configuration
 @ComponentScan(basePackages = { "io.github.astrapi69.bundlemanagement",
